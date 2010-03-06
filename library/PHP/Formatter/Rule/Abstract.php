@@ -25,7 +25,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     /**
      *
      * @param array $options
-     * @return <type>
+     * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
      */
     public function setOptions(array $options)
     {
@@ -37,7 +37,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     /**
      *
      * @param array $options
-     * @return <type>
+     * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
      */
     public function addOptions(array $options)
     {
@@ -51,7 +51,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      *
      * @param string $option
      * @param mixed $value
-     * @return <type> 
+     * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
      */
     public function setOption($option, $value)
     {
@@ -92,10 +92,11 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      * @todo support for Constraints with other prefix ?
      * @param PHP_Formatter_TokenConstraint_Interface|string $constraint
      * @param PHP_Formatter_Token $token
+     * @param mixed $params
      * @param boolean $autoPrefix
      * @return boolean
      */
-    public function checkTokenConstraint($constraint, PHP_Formatter_Token $token, $autoPrefix = true)
+    public function checkTokenConstraint($constraint, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
         if (is_string($constraint)) {
             $constraintClass = $constraint;
@@ -113,15 +114,18 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
             throw new PHP_Formatter_Exception($message);
         }
         /* @var $constraint PHP_Formatter_TokenConstraint_Interface */
-        return $constraint->evaluate($token);
+        return $constraint->evaluate($token, $params);
     }
 
     /**
+     * Runs a TokenManipulator on a Token
      *
-     * @param PHP_Formatter_TokenManipulator_Interface|string $manipulator
+     * @param PHP_Formatter_TokenManipulator_Interface $manipulator
      * @param PHP_Formatter_Token $token
+     * @param mixed $params
+     * @param boolean $autoPrefix
      */
-    public function manipulateToken($manipulator, PHP_Formatter_Token $token, $autoPrefix = true)
+    public function manipulateToken($manipulator, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
        if (is_string($manipulator)) {
             $manipulatorClass = $manipulator;
@@ -139,7 +143,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
             throw new PHP_Formatter_Exception($message);
         }
         /* @var $manipulator PHP_Formatter_TokenManipulator_Interface */
-        $manipulator->manipulate($token);
+        $manipulator->manipulate($token, $params);
     }
 
 //    /**

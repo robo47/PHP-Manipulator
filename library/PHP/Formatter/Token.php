@@ -46,7 +46,7 @@ class PHP_Formatter_Token
     public static function factory($input)
     {
         if (is_array($input)) {
-            if (!isset($input[0]) && isset($input[1])) {
+            if (!isset($input[0]) || !isset($input[1])) {
                 require_once 'PHP/Formatter/Exception.php';
                 $message = 'Array for creating token misses key 0 and/or 1';
                 throw new PHP_Formatter_Exception($message);

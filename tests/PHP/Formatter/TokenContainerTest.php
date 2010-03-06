@@ -6,6 +6,19 @@ require_once 'PHP/Formatter/TokenContainer.php';
 class PHP_Formatter_TokenContainerTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * 
+     */
+    public function testContainer()
+    {
+        
+    }
+
+    public function testDefaultConstruct()
+    {
+
+    }
+
+    /**
      * @covers PHP_Formatter_TokenContainer::insertAtPosition
      */
     public function testInsertAtPosition()

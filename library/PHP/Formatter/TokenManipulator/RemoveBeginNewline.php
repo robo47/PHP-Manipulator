@@ -9,8 +9,9 @@ implements PHP_Formatter_TokenManipulator_Interface
      * Manipulates a Token
      *
      * @param PHP_Formatter_Token $token
+     * @param mixed $params
      */
-    public function manipulate(PHP_Formatter_Token $token)
+    public function manipulate(PHP_Formatter_Token $token, $params = null)
     {
         $value = $token->getValue();
         if (substr($value, 0, 1) == "\n") {

@@ -8,10 +8,11 @@ implements PHP_Formatter_TokenConstraint_Interface
     /**
      * Evaluate if the token is a multiline comment
      *
+     * @param PHP_Formatter_Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Formatter_Token $token)
+    public function evaluate(PHP_Formatter_Token $token, $params = null)
     {
         $beginsWithNewline = false;
         $pattern = '~^[\n|\n\r|\r]~';
