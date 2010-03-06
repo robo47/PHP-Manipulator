@@ -130,6 +130,7 @@ class PHP_Formatter_TokenTest extends PHPUnit_Framework_TestCase
     /**
      * @covers PHP_Formatter_Token::factory
      * @dataProvider invalidInputFactoryProvider
+     * @covers PHP_Formatter_Exception
      */
     public function testFactoryWithInvalidInput($input, $exceptionMessage)
     {

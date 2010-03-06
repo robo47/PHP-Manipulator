@@ -129,7 +129,7 @@ class PHP_Formatter
      */
     public function formatCode($code)
     {
-        $tokens = PHP_Formatter_TokenContainer::createTokenArrayFromCode($code);
+        $tokens = PHP_Formatter_TokenContainer::createFromCode($code);
         foreach($this->_rules as $rule) {
             /* @var $rule PHP_Formatter_Rule_Interface */
             $rule->applyRuleToTokens($tokens);

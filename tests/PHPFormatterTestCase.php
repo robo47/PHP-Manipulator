@@ -37,8 +37,8 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
      */
     public function getTokenArrayFromFixtureFile($filename)
     {
-        $file = $this->getFixtureFilePath($filename);
-        return PHP_Formatter_TokenContainer::createTokenArrayFromFile($file);
+        $code = $this->getFixtureFileContent($filename);
+        return PHP_Formatter_TokenContainer::createFromCode($code);
     }
 
     /**
@@ -95,5 +95,15 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             $actualTokens->toString(),
             $expectedTokens->toString()
         );
+    }
+
+    /**
+     *
+     * @param string $code
+     * @return PHP_Formatter_TokenContainer
+     */
+    public static function getTokenContainerFromCode($code)
+    {
+        return PHP_Formatter_TokenContainer::createFromCode($code);
     }
 }

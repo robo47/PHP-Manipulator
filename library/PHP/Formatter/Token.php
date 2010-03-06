@@ -156,8 +156,8 @@ class PHP_Formatter_Token
     public function equals(PHP_Formatter_Token $token, $strict = false)
     {
         $match = false;
-        if ($this->_type === $token->getType()
-            && $this->_value == $token->getValue()) {
+        if ($this->getType() === $token->getType()
+            && $this->getValue() === $token->getValue()) {
             $match = true;
         }
         if (true === $strict &&

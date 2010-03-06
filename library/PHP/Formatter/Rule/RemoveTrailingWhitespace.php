@@ -30,7 +30,7 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abs
         }
 
         // @todo seems like a expensive task, with all type-checking and stuff like that ?
-        $tokenArrayContainer = PHP_Formatter_TokenContainer::createTokenArrayFromCode($code)
+        $tokenArrayContainer = PHP_Formatter_TokenContainer::createFromCode($code)
                                               ->getContainer();
 
         $tokens->setContainer($tokenArrayContainer);
