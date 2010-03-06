@@ -23,24 +23,30 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
         $removeDocComments = $this->getOption('removeDocComments');
         $removeStandardComments = $this->getOption('removeStandardComments');
         
-        $delete = array();
-
         $iterator = $tokens->getIterator();
 
         while($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-             $pos = $iterator->key();
-            if($this->checkTokenConstraint('IsMultilineComment', $token)) {
-                if (($token->isType(T_DOC_COMMENT) && $removeDocComments) ||
-                    ($token->isType(T_COMMENT) && $removeStandardComments)) {
-                    // check if next Token is whitespace and is a NewLine
+            
+            if (($token->isType(T_DOC_COMMENT) && $removeDocComments) ||
+                ($token->isType(T_COMMENT) && $removeStandardComments)) {
+                // delete comment
+                unset($tokens[$iterator->key()]);
+                if($this->checkTokenConstraint('IsMultilineComment', $token)) {
+                    // check if next Token is whitespace and begins with a NewLine
                     $iterator->next();
                     $token =  $iterator->current();
                     if(false !== $token &&
                        $token->isType(T_WHITESPACE)) {
+                        // if it is a single new line remove it
+                       if ($this->checkTokenConstraint('IsSingleNewline', $token)) {
+                           unset($tokens[$iterator->key()]);
+                       }
+                       // if it only begins with a new line remove that new line
                        if($this->checkTokenConstraint('BeginsWithNewline', $token)) {
-                           // @todo Manipulator which removes first Newline
+                           // @todo if it only contains a newline -> remove it ?
+                           $this->manipulateToken('RemoveBeginNewline', $token);
                        }
                     }
                 }

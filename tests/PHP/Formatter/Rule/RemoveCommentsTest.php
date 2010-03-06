@@ -68,7 +68,6 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
     {
         $rule = new PHP_Formatter_Rule_RemoveComments($options);
         $rule->applyRuleToTokens($input);
-
         $this->assertTokensMatch($expectedTokens, $input, 'Wrong output');
     }
 }
