@@ -47,7 +47,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
      * @param PHP_Formatter_TokenContainer $expectedTokens
      * @param PHP_Formatter_TokenContainer $actualTokens
      * @param string $message
-     * @todo refactor and look @phpunit how it
+     * @todo refactor and look @phpunit how it is done the right way ... 
      */
     public function assertTokensMatch($expectedTokens, $actualTokens, $message)
     {

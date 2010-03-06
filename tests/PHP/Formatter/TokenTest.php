@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . '/../../TestHelper.php';
 require_once 'PHP/Formatter/TokenContainer.php';
 
-class PHP_Formatter_TokenTest extends PHPUnit_Framework_TestCase
+class PHP_Formatter_TokenTest extends PHPFormatterTestCase
 {
     /**
      * @covers PHP_Formatter_Token::__construct

@@ -5,10 +5,18 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHP/FormatterTest.php';
 require_once 'PHP/Formatter/TokenContainerTest.php';
 require_once 'PHP/Formatter/TokenTest.php';
+
+// Rules
 require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AbstractTest.php';
 require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
 require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespaceTest.php';
+
+// TokenConstraints
+require_once 'PHP/Formatter/TokenConstraint/InterfaceTest.php';
+require_once 'PHP/Formatter/TokenConstraint/BeginsWithNewlineTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsMultilineCommentTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
 
 
 class AllTests
@@ -20,10 +28,18 @@ class AllTests
         $suite->addTestSuite('PHP_FormatterTest');
         $suite->addTestSuite('PHP_Formatter_TokenContainerTest');
         $suite->addTestSuite('PHP_Formatter_TokenTest');
+
+        // Rules
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_Rule_AbstractTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveCommentsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveTrailingWhitespaceTest');
+
+        // TokenConstraints
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_InterfaceTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_BeginsWithNewlineTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
 
         return $suite;
     }
