@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Some test code
+ */
+// Another Comment
+# One more
+/* And another */
+
+
+
+?>
+
+<?php
+$foo = 'baa';
+$blub = array(1,2,3,4,5);
+
+foreach ($blub as $key => $value) {
+    switch($value) {
+        case 1:
+            doSomething();
+            break;
+        case 2:
+            doSomethingElse();
+            break;
+        default:
+            doAnotherThing();
+    }
+}
+
+?>
