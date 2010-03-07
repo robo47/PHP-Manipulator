@@ -5,6 +5,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHP/FormatterTest.php';
 require_once 'PHP/Formatter/TokenContainerTest.php';
 require_once 'PHP/Formatter/TokenTest.php';
+require_once 'PHP/Formatter/UtilTest.php';
 
 // Rules
 require_once 'PHP/Formatter/Rule/InterfaceTest.php';
@@ -33,6 +34,7 @@ class AllTests
         $suite->addTestSuite('PHP_FormatterTest');
         $suite->addTestSuite('PHP_Formatter_TokenContainerTest');
         $suite->addTestSuite('PHP_Formatter_TokenTest');
+        $suite->addTestSuite('PHP_Formatter_UtilTest');
 
         // Rules
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
