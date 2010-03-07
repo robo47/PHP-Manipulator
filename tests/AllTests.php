@@ -30,6 +30,7 @@ require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewlineTest.php';
 
 // ContainerManipulators
 require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToTokenTest.php';
 
 class AllTests
 {
@@ -65,7 +66,7 @@ class AllTests
 
         // ContainerManipulators
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');
-
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest');
 
         return $suite;
     }

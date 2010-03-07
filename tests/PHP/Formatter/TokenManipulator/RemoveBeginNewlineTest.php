@@ -8,7 +8,7 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
     /**
      * @return array
      */
-    public function evaluateProvider()
+    public function manipluateProvider()
     {
         $data = array();
 
@@ -152,10 +152,10 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
     }
 
     /**
-     * @dataProvider evaluateProvider
+     * @dataProvider manipluateProvider
      * @covers PHP_Formatter_TokenManipulator_RemoveBeginNewline::manipulate
      */
-    public function testEvaluate($token, $newToken, $changed, $strict)
+    public function testManipulate($token, $newToken, $changed, $strict)
     {
         $manipulator = new PHP_Formatter_TokenManipulator_RemoveBeginNewline();
         
