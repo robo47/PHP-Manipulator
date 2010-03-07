@@ -4,10 +4,9 @@ class PHP_Formatter_Cli
 {
     /**
      *
-     * @param <type> $arguments
      * @return int
      */
-    public static function run($arguments)
+    public static function run()
     {
         $statusCode = 0;
         $start = microtime(true);
@@ -18,6 +17,16 @@ class PHP_Formatter_Cli
         echo 'Time: ' .  round(microtime(true) - $start, 4) , 's' . PHP_EOL;
         echo 'Memory: ' .  round(microtime(true) - $start, 4) , 's' . PHP_EOL;
         return $statusCode;
+    }
+
+    public function addRulesetPath()
+    {
+
+    }
+
+    public function addRulePath()
+    {
+
     }
 
     public function loadRule($rule)

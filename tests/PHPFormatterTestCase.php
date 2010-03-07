@@ -42,6 +42,34 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     *
+     * @param PHP_Formatter_Token $expectedToken
+     * @param PHP_Formatter_Token $actualToken
+     * @param boolean $strict
+     * @todo add message ? 
+     */
+    public function assertTokenMatch($expectedToken, $actualToken, $strict = false)
+    {
+        $this->assertType(
+            'PHP_Formatter_Token',
+            $expectedToken,
+            'expected Token should be a PHP_Formatter_Token'
+        );
+        $this->assertType(
+            'PHP_Formatter_Token',
+            $actualToken,
+            'actual Token should be a PHP_Formatter_Token'
+        );
+
+        $this->assertEquals($expectedToken->getValue(), $actualToken->getValue(), 'Different Values');
+        $this->assertEquals($expectedToken->getType(), $actualToken->getType(), 'Different Types');
+
+        if (true === $strict) {
+            $this->assertEquals($expectedToken->getLinenumber(), $actualToken->getLinenumber(), 'Different Linenumber');
+        }
+    }
+
+    /**
      * Compares if tokens match (ignores arrays third element [fileline])
      *
      * @param PHP_Formatter_TokenContainer $expectedTokens
@@ -54,12 +82,12 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
         $this->assertType(
             'PHP_Formatter_TokenContainer',
             $expectedTokens,
-            'expected Tokens should be an PHP_Formatter_TokenContainer'
+            'expected Tokens should be a PHP_Formatter_TokenContainer'
         );
         $this->assertType(
             'PHP_Formatter_TokenContainer',
             $actualTokens,
-            'actual Tokens should be an PHP_Formatter_TokenContainer'
+            'actual Tokens should be a PHP_Formatter_TokenContainer'
         );
 
         $expectedIterator = $expectedTokens->getIterator();

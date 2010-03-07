@@ -3,7 +3,11 @@
 interface PHP_Formatter_Ruleset_Interface
 {
     /**
-     * @return array Array with Robo47_Formatter_Rule_Abstract
+     * Get Rules
+     *
+     * Returns array with all Rules used by this ruleset
+     *
+     * @return array
      */
     public function getRules();
 }

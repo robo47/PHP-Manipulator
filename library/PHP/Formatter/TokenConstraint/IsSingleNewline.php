@@ -15,8 +15,10 @@ implements PHP_Formatter_TokenConstraint_Interface
     public function evaluate(PHP_Formatter_Token $token, $param = null)
     {
         $isNewline = false;
-        $pattern = '~^[\n|\n\r|\r]$~';
-        if(preg_match($pattern, $token->getValue())) {
+        $value = $token->getValue();
+        if($value === "\n" ||
+           $value === "\r\n" ||
+           $value === "\r") {
             $isNewline = true;
         }
         return $isNewline;
