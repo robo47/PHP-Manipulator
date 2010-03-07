@@ -2,7 +2,8 @@
 
 require_once 'PHP/Formatter/Token.php';
 
-class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAggregate
+class PHP_Formatter_TokenContainer
+implements ArrayAccess, Countable, IteratorAggregate
 {
 
     /**
@@ -13,7 +14,8 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     protected $_container = array();
 
     /**
-     *
+     * Constructor
+     * 
      * @param array $tokens
      */
     public function __construct(array $tokens = array())
@@ -54,10 +56,10 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Offset Set
      *
      * @param integer $offset
      * @param PHP_Formatter_Token $value
-     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
     public function offsetSet($offset, $value)
     {
@@ -69,7 +71,6 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
         } else {
             $this->_container[$offset] = $value;
         }
-        return $this;
     }
 
     /**
@@ -96,6 +97,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Offset Get
      *
      * @param integer $offset
      * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
@@ -112,6 +114,9 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Count
+     *
+     * Implements SPL::Countable
      *
      * @return integer
      */
@@ -214,10 +219,11 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Insert Token After
      *
      * @param PHP_Formatter_Token $after
      * @param PHP_Formatter_Token $newToken
-     * @return <type>
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
     public function insertTokenAfter(PHP_Formatter_Token $after, PHP_Formatter_Token $newToken)
     {
@@ -233,10 +239,11 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Insert Tokens After
      *
      * @param PHP_Formatter_Token $after
      * @param array $newTokens
-     * @return <type>
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
     public function insertTokensAfter(PHP_Formatter_Token $after, array $newTokens)
     {
@@ -252,49 +259,31 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
         return $this;
     }
 
-////
-////    /**
-//     *
-//     * @param integer $offset
-//     * @param PHP_Formatter_Token  $value
-//     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
-//     //*/
-////    public function insertAfterOffset($offset, $value)
-////    {
-////        $this->_checkOffsetType($offset);
-////        $this->_checkValueType($value);
-////        $this->insertAtOffset($offset + 1, $value);
-////        return $this;
-////    }
-////
-////    /**
-//     *
-//     * @param integer $offset
-//     * @param PHP_Formatter_Token  $value
-//     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
-//     //*/
-////    public function insertBeforeOffset($offset, $value)
-////    {
-////        $this->_checkOffsetType($offset);
-////        $this->_checkValueType($value);
-////        $this->insertAtPosition($offset-1, $value);
-////        return $this;
-////    }
     /**
-     * Creates a TokenArray from code
+     * Remove Tokens
      *
-     * @param string $code
-     * @return PHP_Formatter_TokenContainer
+     * @param array $tokens
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
-    public static function createFromCode($code)
+    public function removeTokens(array $tokens)
     {
-        $tokenArray = new PHP_Formatter_TokenContainer();
-        $tokens = token_get_all($code);
         foreach ($tokens as $token) {
-            /* @var $token array|string */
-            $tokenArray[] = PHP_Formatter_Token::factory($token);
+            $this->removeToken($token);
         }
-        return $tokenArray;
+        return $this;
+    }
+
+    /**
+     * Remove Token
+     *
+     * @param PHP_Formatter_Token $token
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
+     */
+    public function removeToken(PHP_Formatter_Token $token)
+    {
+        $offset = $this->getOffsetByToken($token);
+        unset($this[$offset]);
+        return $this;
     }
 
     /**
@@ -314,6 +303,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * __toString
      *
      * @return string
      */
@@ -323,6 +313,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Get Container
      *
      * @return array
      */
@@ -332,10 +323,11 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Set Container
      *
      * @todo strict checking ?
      * @param array $container
-     * @return <type>
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
     public function setContainer(array $container)
     {
@@ -344,6 +336,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     }
 
     /**
+     * Get Iterator
      *
      * @return ArrayIterator
      */
@@ -351,5 +344,22 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     {
         // @todo extra iterator only having iteration-stuff
         return new ArrayIterator($this->_container);
+    }
+
+    /**
+     * Creates a TokenArray from code
+     *
+     * @param string $code
+     * @return PHP_Formatter_TokenContainer
+     */
+    public static function createFromCode($code)
+    {
+        $container = new PHP_Formatter_TokenContainer();
+        $tokens = token_get_all($code);
+        foreach ($tokens as $token) {
+            /* @var $token array|string */
+            $container[] = PHP_Formatter_Token::factory($token);
+        }
+        return $container;
     }
 }

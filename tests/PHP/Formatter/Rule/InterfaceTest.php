@@ -21,7 +21,7 @@ class PHP_Formatter_Rule_InterfaceTest extends PHPFormatterTestCase
         $parameters = $applyRuleToTokensMethod->getParameters();
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
-        $this->assertSame('tokens', $tokenParameter->getName(), 'Parameter has wrong name');
+        $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');
         $this->assertEquals('PHP_Formatter_TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP_Formatter_TokenContainer');
         $this->assertFalse($tokenParameter->isPassedByReference(), 'Parameter is passed as reference');
         $this->assertFalse($tokenParameter->isOptional(), 'Parameter is optional');

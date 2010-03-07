@@ -103,22 +103,22 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
 
         // offsetSet
         $container[] = $token;
-        
+
         // offsetSet
         $container[5] = $token2;
-        
+
         // offsetGet
         $this->assertSame($token, $container[0]);
-        
+
         // offsetGet
         $this->assertSame($token2, $container[5]);
-        
+
         // offsetExists
         $this->assertTrue(isset($container[0]));
-            
+
         // offsetUnset
         unset($container[0]);
-        
+
         // offsetExists
         $this->assertFalse(isset($container[0]));
     }
@@ -474,7 +474,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $this->assertType('array', $array);
         $this->assertEquals(0, count($array));
     }
-    
+
     /**
      * @covers PHP_Formatter_TokenContainer::getIterator
      */
@@ -514,5 +514,53 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
             $this->assertTrue($tokenObject->equals($container[$i], true));
             $i++;
         }
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::removeTokens
+     */
+    public function testRemoveTokens()
+    {
+        $token1 = PHP_Formatter_Token::factory('Token1');
+        $token2 = PHP_Formatter_Token::factory('Token2');
+        $token3 = PHP_Formatter_Token::factory('Token3');
+        $container = new PHP_Formatter_TokenContainer();
+
+        $container[] = $token1;
+        $container[] = $token2;
+        $container[] = $token3;
+
+        $fluent = $container->removeTokens(array($token3, $token1));
+        $this->assertSame($fluent, $container, 'No fluent interface');
+
+        $this->assertEquals(1, count($container), 'Wrong count of Tokens in Container');
+
+        $this->assertFalse($container->contains($token1), 'Container contains Token1');
+        $this->assertFalse($container->contains($token3), 'Container contains Token3');
+        $this->assertTrue($container->contains($token2), 'Container not contains Token2');
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::removeToken
+     */
+    public function testRemoveToken()
+    {
+        $token1 = PHP_Formatter_Token::factory('Token1');
+        $token2 = PHP_Formatter_Token::factory('Token2');
+        $token3 = PHP_Formatter_Token::factory('Token3');
+        $container = new PHP_Formatter_TokenContainer();
+
+        $container[] = $token1;
+        $container[] = $token2;
+        $container[] = $token3;
+
+        $fluent = $container->removeToken($token2);
+        $this->assertSame($fluent, $container, 'No fluent interface');
+
+        $this->assertEquals(2, count($container), 'Wrong count of Tokens in Container');
+
+        $this->assertTrue($container->contains($token1), 'Container contains Token1');
+        $this->assertTrue($container->contains($token3), 'Container contains Token3');
+        $this->assertFalse($container->contains($token2), 'Container not contains Token2');
     }
 }

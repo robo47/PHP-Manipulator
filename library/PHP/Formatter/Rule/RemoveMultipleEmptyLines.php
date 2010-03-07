@@ -18,11 +18,11 @@ extends PHP_Formatter_Rule_Abstract
 
     /**
      *
-     * @param array $tokens
+     * @param PHP_Formatter_TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens)
+    public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        $iterator = $tokens->getIterator();
+        $iterator = $container->getIterator();
         $maxEmptyLines = $this->getOption('maxEmptyLines');
         $defaultBreak = $this->getOption('defaultBreak');
 

@@ -4,10 +4,10 @@ interface PHP_Formatter_Rule_Interface
 {
 
     /**
-     * Performs the rule on the tokens
+     * Performs the rule on the container
      *
-     * @param PHP_Formatter_TokenContainer $tokens
+     * @param PHP_Formatter_TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens);
+    public function applyRuleToTokens(PHP_Formatter_TokenContainer $container);
 
 }

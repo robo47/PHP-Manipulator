@@ -17,13 +17,13 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abs
 
     /**
      *
-     * @param array $tokens
+     * @param PHP_Formatter_TokenContainer $container
      * @todo always outputs linux-line-endings!
      * @todo possible without tokens2code2tokens ?
      */
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens)
+    public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        $code = $tokens->toString();
+        $code = $container->toString();
         $defaultBreak = $this->getOption('defaultBreak');
 
         $code = preg_split('~(\r\n|\n|\r)~', $code);
@@ -37,6 +37,6 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abs
         // @todo seems like a expensive task, with all type-checking and stuff like that ?
         $tokenArrayContainer = PHP_Formatter_TokenContainer::createFromCode($code)
             ->getContainer();
-        $tokens->setContainer($tokenArrayContainer);
+        $container->setContainer($tokenArrayContainer);
     }
 }

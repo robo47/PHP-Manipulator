@@ -12,11 +12,12 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
 
     /**
      * Unindents all Code
-     * @param array $tokens
+     * 
+     * @param PHP_Formatter_TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens)
+    public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        $code = $tokens->toString();
+        $code = $container->toString();
         // @todo ideas on how to remove all indention: all T_WHITESPACE -> check for \t and <space> and remove all expect 1 <space> and keep brakes, no need for \t or <space> between brakes
 
         $code = preg_split('~(\n|\r\n|\r)~', $code, - 1);
@@ -27,6 +28,6 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
         $tokenArrayContainer = PHP_Formatter_TokenContainer::createFromCode($code)
             ->getContainer();
 
-        $tokens->setContainer($tokenArrayContainer);
+        $container->setContainer($tokenArrayContainer);
     }
 }
