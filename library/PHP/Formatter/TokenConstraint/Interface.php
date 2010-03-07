@@ -2,6 +2,7 @@
 
 interface PHP_Formatter_TokenConstraint_Interface
 {
+
     /**
      * Evaluates a constraint for a token $token.
      *
@@ -10,4 +11,5 @@ interface PHP_Formatter_TokenConstraint_Interface
      * @return bool
      */
     public function evaluate(PHP_Formatter_Token $token, $params = null);
+
 }

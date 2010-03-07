@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Cli
 {
+
     /**
      *
      * @return int
@@ -14,31 +15,31 @@ class PHP_Formatter_Cli
         $formatter = new PHP_Formatter();
 
 
-        echo 'Time: ' .  round(microtime(true) - $start, 4) , 's' . PHP_EOL;
-        echo 'Memory: ' .  round(microtime(true) - $start, 4) , 's' . PHP_EOL;
+        echo 'Time: ' . round(microtime(true) - $start, 4), 's' . PHP_EOL;
+        echo 'Memory: ' . round(microtime(true) - $start, 4), 's' . PHP_EOL;
         return $statusCode;
     }
-
+    
     public function addRulesetPath()
     {
 
     }
-
+    
     public function addRulePath()
     {
 
     }
-
+    
     public function loadRule($rule)
     {
 
     }
-
+    
     public function loadRuleset($ruleset)
     {
 
     }
-
+    
     public function parseConfig($config, $type)
     {
         

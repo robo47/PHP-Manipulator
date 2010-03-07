@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rule_Abstract
 {
+
     public function init()
     {
         if (!isset($this->_options['onlyPreClass'])) {
@@ -47,7 +48,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
 
         $iterator = $tokens->getIterator();
         $iterator->rewind();
-        
+
         do {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
@@ -59,16 +60,16 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
                 // @todo use multi-line-comment to not mess with potential code behind the require/include
                 //       or add another option and add a break afterwards
                 $commentToken = PHP_Formatter_Token::factory(
-                    array(
+                        array(
                         0 => T_COMMENT,
                         1 => '//'
-                    )
+                        )
                 );
 
                 $tokens->insertBeforeKey($iterator->key(), $commentToken);
             }
 
-            
-        } while($iterator->next() || $iterator->valid());
+
+        } while ($iterator->next() || $iterator->valid());
     }
 }

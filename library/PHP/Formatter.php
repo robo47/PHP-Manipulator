@@ -5,9 +5,10 @@ require_once 'PHP/Formatter/Ruleset/Interface.php';
 
 class PHP_Formatter
 {
+
     /**
      * Array with used rules
-     * 
+     *
      * @var array
      */
     protected $_rules = array();
@@ -39,7 +40,7 @@ class PHP_Formatter
      */
     public function addRules(array $rules)
     {
-        foreach($rules as $rule) {
+        foreach ($rules as $rule) {
             $this->addRule($rule);
         }
         return $this;
@@ -47,13 +48,13 @@ class PHP_Formatter
 
     /**
      * Remove Rule
-     * 
+     *
      * @param PHP_Formatter_Rule_Interface $removeRule
      * @return PHP_Formatter *Provides Fluent Interface*
      */
     public function removeRule(PHP_Formatter_Rule_Interface $removeRule)
     {
-        foreach($this->_rules as $key => $rule) {
+        foreach ($this->_rules as $key => $rule) {
             if ($rule === $removeRule) {
                 unset($this->_rules[$key]);
             }
@@ -63,7 +64,7 @@ class PHP_Formatter
 
     /**
      * Get Rules
-     * 
+     *
      * @return array
      */
     public function getRules()
@@ -84,13 +85,13 @@ class PHP_Formatter
 
     /**
      * Extracts the Rules from the ruleset and adds them to the formatters rules
-     * 
+     *
      * @param array $rulesets
      * @return PHP_Formatter *Provides Fluent Interface*
      */
     public function addRulesets(array $rulesets)
     {
-        foreach($rulesets as $ruleset) {
+        foreach ($rulesets as $ruleset) {
             $this->addRuleset($ruleset);
         }
         return $this;
@@ -113,7 +114,7 @@ class PHP_Formatter
      */
     public function removeRuleByClassname($classname)
     {
-        foreach($this->_rules as $key => $rule) {
+        foreach ($this->_rules as $key => $rule) {
             if ($rule instanceof $classname) {
                 unset($this->_rules[$key]);
             }
@@ -123,14 +124,14 @@ class PHP_Formatter
 
     /**
      * Formats Code
-     * 
+     *
      * @param string $code
      * @return string
      */
     public function formatCode($code)
     {
         $tokens = PHP_Formatter_TokenContainer::createFromCode($code);
-        foreach($this->_rules as $rule) {
+        foreach ($this->_rules as $rule) {
             /* @var $rule PHP_Formatter_Rule_Interface */
             $rule->applyRuleToTokens($tokens);
         }

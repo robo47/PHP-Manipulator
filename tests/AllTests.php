@@ -10,6 +10,8 @@ require_once 'PHP/Formatter/TokenTest.php';
 require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AbstractTest.php';
 require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
+require_once 'PHP/Formatter/Rule/RemoveIndentionTest.php';
+require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLinesTest.php';
 require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespaceTest.php';
 
 // TokenConstraints
@@ -36,6 +38,8 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_Rule_AbstractTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveCommentsTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_RemoveIndentionTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveTrailingWhitespaceTest');
 
         // TokenConstraints

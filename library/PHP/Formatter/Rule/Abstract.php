@@ -4,9 +4,10 @@ require_once 'PHP/Formatter/Rule/Interface.php';
 
 abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interface
 {
+
     /**
      * Array with options
-     * 
+     *
      * @var array
      */
     protected $_options = array();
@@ -18,7 +19,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     public function __construct(array $options = array())
     {
         $this->addOptions($options);
-        $this->init();        
+        $this->init();
     }
 
     /**
@@ -28,10 +29,23 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function addOptions(array $options)
     {
-        foreach($options as $option => $value) {
+        foreach ($options as $option => $value) {
             $this->setOption($option, $value);
         }
         return $this;
+    }
+
+    /**
+     *
+     * @param string $option
+     * @return boolean
+     */
+    public function hasOption($option)
+    {
+        if (isset($this->_options[$option])) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -64,13 +78,12 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function getOption($option)
     {
-        if (isset($this->_options[$option])) {
-            return $this->_options[$option];
-        } else {
+        if (!$this->hasOption($option)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "Option '$option' not found";
             throw new PHP_Formatter_Exception($message);
         }
+        return $this->_options[$option];
     }
 
     /**
@@ -114,7 +127,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function manipulateToken($manipulator, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
-       if (is_string($manipulator)) {
+        if (is_string($manipulator)) {
             $manipulatorClass = $manipulator;
             if ($autoPrefix) {
                 $manipulatorClass = 'PHP_Formatter_TokenManipulator_' . $manipulator;
@@ -133,42 +146,12 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
         $manipulator->manipulate($token, $params);
     }
 
-//    /**
-//     * Check TokenArray Constraint
-//     *
-//     * @todo support for Constraints with other prefix ?
-//     * @param PHP_Formatter_TokenContainerConstraint_Interface|string $constraint
-//     * @param PHP_Formatter_TokenContainer $tokenArray
-//     * @param boolean $autoPrefix
-//     * @return boolean
-//     */
-//    public function checkTokenArrayConstraint($constraint, PHP_Formatter_TokenContainer $tokenArray, $autoPrefix = true)
-//    {
-//        if (is_string($constraint)) {
-//            $constraintClass = $constraint;
-//            if ($autoPrefix) {
-//                $constraintClass = 'PHP_Formatter_TokenContainerConstraint_' . $constraint;
-//            }
-//            if (!class_exists($constraintClass, false)) {
-//                require_once str_replace('_', '/', $constraintClass) . '.php';
-//            }
-//            $constraint = new $constraintClass();
-//        }
-//        if (!$constraint instanceof PHP_Formatter_TokenContainerConstraint_Interface) {
-//            require_once 'PHP/Formatter/Exception.php';
-//            $message = 'constraint is not instance of PHP_Formatter_TokenContainerConstraint_Interface';
-//            throw new PHP_Formatter_Exception($message);
-//        }
-//        /* @var $constraint PHP_Formatter_TokenContainerConstraint_Interface */
-//        return $constraint->evaluate($tokenArray);
-//    }
-
     /**
      * Called from constructor for checking options, adding default options
      * whatever you want to do.
      */
     public function init()
     {
-
+        
     }
 }

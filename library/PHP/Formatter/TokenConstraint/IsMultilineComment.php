@@ -5,6 +5,7 @@ require_once 'PHP/Formatter/TokenConstraint/Interface.php';
 class PHP_Formatter_TokenConstraint_IsMultilineComment
 implements PHP_Formatter_TokenConstraint_Interface
 {
+
     /**
      * Evaluate if the token is a multiline comment
      *

@@ -2,20 +2,19 @@
 
 class PHP_Formatter_Token
 {
+
     /**
      * Value
      *
      * @var string
      */
     protected $_value = null;
-
     /**
      * Linenumber
      *
      * @var integer|null
      */
     protected $_linenumber = null;
-
     /**
      * Type
      *
@@ -51,7 +50,7 @@ class PHP_Formatter_Token
                 $message = 'Array for creating token misses key 0 and/or 1';
                 throw new PHP_Formatter_Exception($message);
             }
-            if(!isset($input[2])) {
+            if (!isset($input[2])) {
                 $token = new PHP_Formatter_Token($input[1], $input[0]);
             } else {
                 $token = new PHP_Formatter_Token($input[1], $input[0], $input[2]);
@@ -140,7 +139,7 @@ class PHP_Formatter_Token
      */
     public function isType($type)
     {
-        if($this->_type === $type) {
+        if ($this->_type === $type) {
             return true;
         } else {
             return false;
@@ -169,11 +168,11 @@ class PHP_Formatter_Token
 
     /**
      * to string
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
-        return (string)$this->getValue();
+        return (string) $this->getValue();
     }
 }

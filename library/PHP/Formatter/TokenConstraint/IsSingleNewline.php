@@ -5,6 +5,7 @@ require_once 'PHP/Formatter/TokenConstraint/Interface.php';
 class PHP_Formatter_TokenConstraint_IsSingleNewline
 implements PHP_Formatter_TokenConstraint_Interface
 {
+
     /**
      * Evaluate if the token is a multiline comment
      *
@@ -16,9 +17,9 @@ implements PHP_Formatter_TokenConstraint_Interface
     {
         $isNewline = false;
         $value = $token->getValue();
-        if($value === "\n" ||
-           $value === "\r\n" ||
-           $value === "\r") {
+        if ($value === "\n" ||
+            $value === "\r\n" ||
+            $value === "\r") {
             $isNewline = true;
         }
         return $isNewline;

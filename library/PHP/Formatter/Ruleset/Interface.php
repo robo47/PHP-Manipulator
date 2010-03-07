@@ -2,6 +2,7 @@
 
 interface PHP_Formatter_Ruleset_Interface
 {
+
     /**
      * Get Rules
      *
@@ -10,4 +11,5 @@ interface PHP_Formatter_Ruleset_Interface
      * @return array
      */
     public function getRules();
+
 }

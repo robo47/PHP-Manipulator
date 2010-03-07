@@ -4,9 +4,10 @@ require_once 'PHP/Formatter/Token.php';
 
 class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAggregate
 {
+
     /**
      * Container with Tokens
-     * 
+     *
      * @var array
      */
     protected $_container = array();
@@ -41,7 +42,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
      * Checks if Value is PHP_Formatter_Token
      *
      * @throws PHP_Formatter_Exception
-     * @param mixed $value 
+     * @param mixed $value
      */
     protected function _checkValueType($value)
     {
@@ -62,7 +63,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     {
         $this->_checkOffsetType($offset);
         $this->_checkValueType($value);
-        
+
         if (null === $offset) {
             $this->_container[] = $value;
         } else {
@@ -85,7 +86,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
 
     /**
      * Offset unset
-     * 
+     *
      * @param integer $offset
      */
     public function offsetUnset($offset)
@@ -102,7 +103,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     public function offsetGet($offset)
     {
         $this->_checkOffsetType($offset);
-        if(!isset($this->_container[$offset])) {
+        if (!isset($this->_container[$offset])) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "Offset '$offset' does not exist";
             throw new PHP_Formatter_Exception($message);
@@ -145,7 +146,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
 
     /**
      * Get position for offset
-     * 
+     *
      * @param integer $offset
      * @return integer
      */
@@ -153,14 +154,14 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     {
         $this->_checkOffsetType($offset);
         $position = 0;
-        
-        if(!isset($this->_container[$offset])) {
+
+        if (!isset($this->_container[$offset])) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "Offset '$offset' does not exist";
             throw new PHP_Formatter_Exception($message);
         }
 
-        foreach($this->_container as $off => $element) {
+        foreach ($this->_container as $off => $element) {
             if ($offset === $off) {
                 break;
             }
@@ -181,7 +182,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
     public function getOffsetByToken(PHP_Formatter_Token $token)
     {
         $tokenOffset = null;
-        foreach($this->_container as $offset => $element) {
+        foreach ($this->_container as $offset => $element) {
             if ($element === $token) {
                 $tokenOffset = $offset;
             }
@@ -196,14 +197,14 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
 
     /**
      * Contains
-     * 
+     *
      * @param PHP_Formatter_Token $token
      * @return boolean
      */
     public function contains(PHP_Formatter_Token $token)
     {
         $contains = false;
-        foreach($this->_container as $element) {
+        foreach ($this->_container as $element) {
             if ($element === $token) {
                 $contains = true;
                 break;
@@ -220,13 +221,13 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
      */
     public function insertTokenAfter(PHP_Formatter_Token $after, PHP_Formatter_Token $newToken)
     {
-        if(!$this->contains($after)) {
+        if (!$this->contains($after)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "Container does not contain Token: $after";
             throw new PHP_Formatter_Exception($message);
         }
         $offset = $this->getOffsetByToken($after);
-        $position  = $this->getPositionForOffset($offset);
+        $position = $this->getPositionForOffset($offset);
         $this->insertAtPosition($position + 1, $newToken);
         return $this;
     }
@@ -239,17 +240,18 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
      */
     public function insertTokensAfter(PHP_Formatter_Token $after, array $newTokens)
     {
-        if(!$this->contains($after)) {
+        if (!$this->contains($after)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "Container does not contain Token: $after";
             throw new PHP_Formatter_Exception($message);
         }
-        foreach($newTokens as $newToken) {
+        foreach ($newTokens as $newToken) {
             $this->insertTokenAfter($after, $newToken);
             $after = $newToken;
         }
         return $this;
     }
+
 ////
 ////    /**
 //     *
@@ -278,7 +280,6 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
 ////        $this->insertAtPosition($offset-1, $value);
 ////        return $this;
 ////    }
-
     /**
      * Creates a TokenArray from code
      *
@@ -307,7 +308,7 @@ class PHP_Formatter_TokenContainer implements ArrayAccess, Countable, IteratorAg
         $code = '';
         foreach ($this as $token) {
             /* @var $token PHP_Formatter_Token */
-            $code .= (string)$token;
+            $code .= (string) $token;
         }
         return $code;
     }

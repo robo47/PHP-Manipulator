@@ -34,6 +34,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
      *
      * @param string $filename
      * @return PHP_Formatter_TokenContainer
+     * @todo rename + refactor
      */
     public function getTokenArrayFromFixtureFile($filename)
     {
@@ -42,13 +43,15 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Compares if two Tokens Match
      *
      * @param PHP_Formatter_Token $expectedToken
      * @param PHP_Formatter_Token $actualToken
      * @param boolean $strict
+     * @todo look @phpunit how asserts are done the right way ...
      * @todo add message ? 
      */
-    public function assertTokenMatch($expectedToken, $actualToken, $strict = false)
+    public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
     {
         $this->assertType(
             'PHP_Formatter_Token',
@@ -61,23 +64,36 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             'actual Token should be a PHP_Formatter_Token'
         );
 
-        $this->assertEquals($expectedToken->getValue(), $actualToken->getValue(), 'Different Values');
-        $this->assertEquals($expectedToken->getType(), $actualToken->getType(), 'Different Types');
+        $this->assertEquals(
+            $expectedToken->getValue(),
+            $actualToken->getValue(),
+            'Different Values' . $message
+        );
+
+        $this->assertEquals(
+            $expectedToken->getType(),
+            $actualToken->getType(),
+            'Different Types' . $message
+        );
 
         if (true === $strict) {
-            $this->assertEquals($expectedToken->getLinenumber(), $actualToken->getLinenumber(), 'Different Linenumber');
+            $this->assertEquals(
+                $expectedToken->getLinenumber(),
+                $actualToken->getLinenumber(),
+                'Different Linenumber' . $message
+            );
         }
     }
 
     /**
-     * Compares if tokens match (ignores arrays third element [fileline])
+     * Compares if two TokenContainer tokens match
      *
      * @param PHP_Formatter_TokenContainer $expectedTokens
      * @param PHP_Formatter_TokenContainer $actualTokens
      * @param string $message
-     * @todo refactor and look @phpunit how it is done the right way ... 
+     * @todo look @phpunit how asserts are done the right way ...
      */
-    public function assertTokensMatch($expectedTokens, $actualTokens, $message)
+    public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message)
     {
         $this->assertType(
             'PHP_Formatter_TokenContainer',
@@ -100,7 +116,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             $actualToken = $actualIterator->current();
             /* @var $actualToken PHP_Formatter_Token */
 
-            if(!$actualToken->equals($expectedToken)) {
+            if(!$actualToken->equals($expectedToken, $strict)) {
                 $message = $this->getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens);
                 $this->fail('Tokens are different: ' . PHP_EOL . $message);
             }

@@ -40,6 +40,6 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
         $rule = new PHP_Formatter_Rule_CommentOutIncludesAndRequires($options);
         $rule->applyRuleToTokens($input);
 
-        $this->assertTokensMatch($expectedTokens, $input, 'Wrong output');
+        $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

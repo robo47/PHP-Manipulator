@@ -5,6 +5,7 @@ require_once 'PHP/Formatter/TokenManipulator/Interface.php';
 class PHP_Formatter_TokenManipulator_RemoveBeginNewline
 implements PHP_Formatter_TokenManipulator_Interface
 {
+
     /**
      * Manipulates a Token
      *

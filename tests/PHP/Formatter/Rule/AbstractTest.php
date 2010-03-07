@@ -118,6 +118,16 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
+     * @covers PHP_Formatter_Rule_Abstract::hasOption
+     */
+    public function testHasOption()
+    {
+        $rule = new PHP_Formatter_Rule_NonAbstract(array('foo' => 'bla'));
+        $this->assertTrue($rule->hasOption('foo'));
+        $this->assertFalse($rule->hasOption('blub'));
+    }
+
+    /**
      * @covers PHP_Formatter_Rule_Abstract::evaluateConstraint
      */
     public function testEvaluateConstraint()
