@@ -18,7 +18,7 @@ implements PHP_Formatter_TokenConstraint_Interface
         $isMultilineComment = false;
         if ($token->isType(T_COMMENT)) {
             $value = $token->getValue();
-            if (strlen($value) >= 2) {
+            if (strlen($value) > 2) {
                 if (substr($value, 0, 2) == '/*') {
                     $isMultilineComment = true;
                 }

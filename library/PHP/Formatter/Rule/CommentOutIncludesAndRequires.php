@@ -7,34 +7,11 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
 
     public function init()
     {
-        if (!$this->hasOptions('onlyOutsideClass')) {
-            $this->setOption('onlyOutsideClass', true);
+        if (!$this->hasOption('globalScopeOnly')) {
+            $this->setOption('globalScopeOnly', true);
         }
     }
-
-    /**
-     *
-     * @param string $value
-     * @param integer $type
-     * @param integer $line
-     * @return array|string
-     */
-    public function tokenFactory($value, $type = null, $line = null)
-    {
-        if (null !== $type) {
-            $token = array (
-                0 => $type,
-                1 => $value
-            );
-            if (null !== $line) {
-                $token[2] = $line;
-            }
-        } else {
-            $token = $value;
-        }
-        return $token;
-    }
-
+    
     /**
      *
      * @param PHP_Formatter_TokenContainer $tokens
@@ -43,11 +20,20 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        if ($this->getOption('onlyPreClass')) {
-            throw new Exception('not supported yet');
+        if ($this->getOption('globalScopeOnly')) {
+            $this->_globalScopeOnly($container);
+        } else {
+            $this->_allComments($container);
         }
+    }
 
-        $iterator = $tokens->getIterator();
+    /**
+     *
+     * @param PHP_Formatter_TokenContainer $container
+     */
+    protected function _allComments($container)
+    {
+        $iterator = $container->getIterator();
         $iterator->rewind();
 
         $found = 0;
@@ -60,7 +46,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
         );
 
         $foundPairs = array();
-        
+
         $searchingColon = false;
         $foundToken = null;
 
@@ -83,6 +69,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
             }
             $iterator->next();
         }
+
         foreach($foundPairs as $params) {
             $this->manipulateContainer(
                 'CreateMultilineCommentFromTokenToToken',
@@ -90,5 +77,15 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
                 $params
             );
         }
+    }
+
+    /**
+     *
+     * @param PHP_Formatter_TokenContainer $container
+     */
+    protected function _globalScopeOnly($container)
+    {
+        throw new Exception('not implemented yet');
+        // finder which finds tokens with exceptions (not between Token X and Y and A and B ...
     }
 }

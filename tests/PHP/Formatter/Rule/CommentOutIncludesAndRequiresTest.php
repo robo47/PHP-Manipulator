@@ -21,17 +21,24 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
         $data = array();
         $path = '/Rule/CommentOutIncludesAndRequires/';
 
+        #0
         $data[] = array(
-            array(),
-            $this->getTokenArrayFromFixtureFile($path . 'singleLineComment1'),
-            $this->getTokenArrayFromFixtureFile($path . 'singleLineComment1Removed'),
+            array('globalScopeOnly' => false),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes1'),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes1Removed'),
+        );
+
+        #1
+        $data[] = array(
+            array('globalScopeOnly' => true),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2'),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2Removed'),
         );
 
         return $data;
     }
 
     /**
-     *
      * @covers PHP_Formatter_Rule_CommentOutIncludesAndRequires::applyRuleToTokens
      * @dataProvider ruleProvider
      */
@@ -39,7 +46,6 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
     {
         $rule = new PHP_Formatter_Rule_CommentOutIncludesAndRequires($options);
         $rule->applyRuleToTokens($input);
-
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

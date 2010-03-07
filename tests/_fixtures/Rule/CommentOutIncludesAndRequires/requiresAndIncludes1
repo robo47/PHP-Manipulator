@@ -25,3 +25,21 @@ class myClass
         }
     }
 }
+
+function requireFile($file, $once = false)
+{
+    if($once) {
+        require_once $file;
+    } else {
+        require $file;
+    }
+}
+
+function includeFile($file, $once = false)
+{
+    if($once) {
+        include_once $file;
+    } else {
+        include $file;
+    }
+}

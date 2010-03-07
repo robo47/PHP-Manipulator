@@ -14,14 +14,14 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
     public function getFixtureFileContent($filename)
     {
         $file = $this->getFixtureFilePath($filename);
-        if (!file_exists($file) && is_file($file)) {
+        if (!file_exists($file) || !is_file($file)) {
             throw new Exception('Fixture ' . $file . ' not found');
         }
         return file_get_contents($file);
     }
 
     /**
-     *
+     * Get Fixture Filepath
      * @param string $filename
      * @return string
      */
@@ -121,7 +121,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             /* @var $actualToken PHP_Formatter_Token */
 
             if(!$actualToken->equals($expectedToken, $strict)) {
-                $message = $this->getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens);
+                $message = PHP_Formatter_Util::compareContainers($actualTokens, $expectedTokens);
                 $this->fail('Tokens are different: [mismatch] : ' . $i . PHP_EOL . $message);
             }
             $i++;
@@ -129,34 +129,8 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             $actualIterator->next();
         }
         if($expectedIterator->valid() || $actualIterator->valid()) {
-            $message = $this->getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens);
+            $message = PHP_Formatter_Util::compareContainers($actualTokens, $expectedTokens);
             $this->fail('Tokens are different: [length]' . PHP_EOL . $message);
         }
-    }
-
-    /**
-     * Transforms the Tokens into Code and makes a diff of the code
-     *
-     * @param PHP_Formatter_TokenContainer $actualTokens
-     * @param PHP_Formatter_TokenContainer $expectedTokens
-     * @return string
-     */
-    public static function getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens)
-    {
-        return PHP_Formatter_Util::compareContainers($actualTokens, $expectedTokens);
-//        return PHPUnit_Util_Diff::diff(
-//            $actualTokens->toString(),
-//            $expectedTokens->toString()
-//        );
-    }
-
-    /**
-     *
-     * @param string $code
-     * @return PHP_Formatter_TokenContainer
-     */
-    public static function getTokenContainerFromCode($code)
-    {
-        return PHP_Formatter_TokenContainer::createFromCode($code);
     }
 }
