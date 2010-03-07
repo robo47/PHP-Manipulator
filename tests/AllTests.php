@@ -21,9 +21,15 @@ require_once 'PHP/Formatter/TokenConstraint/BeginsWithNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsMultilineCommentTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
 
+// ContainerConstraints
+require_once 'PHP/Formatter/ContainerConstraint/InterfaceTest.php';
+
 // TokenManipulators
 require_once 'PHP/Formatter/TokenManipulator/InterfaceTest.php';
 require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewlineTest.php';
+
+// ContainerManipulators
+require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
 
 class AllTests
 {
@@ -50,9 +56,15 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
 
+        // ContainerConstraints
+        $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');
+
         // TokenManipulators
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest');
+
+        // ContainerManipulators
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');
 
 
         return $suite;

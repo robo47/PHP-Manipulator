@@ -87,7 +87,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     }
 
     /**
-     * Check Token Constraint
+     * Load/Instantiate/Evaluate Token Constraint on a Token
      *
      * @param PHP_Formatter_TokenConstraint_Interface|string $constraint
      * @param PHP_Formatter_Token $token
@@ -108,7 +108,28 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     }
 
     /**
-     * Runs a TokenManipulator on a Token
+     * Load/Instantiate/Evaluate Container Constraint on a Container
+     *
+     * @param PHP_Formatter_ContainerConstraint_Interface|string $constraint
+     * @param PHP_Formatter_TokenContainer $container
+     * @param mixed $params
+     * @param boolean $autoPrefix
+     * @return boolean
+     */
+    public function evaluateContainerConstraint($constraint, PHP_Formatter_TokenContainer $container, $params = null, $autoPrefix = true)
+    {
+        $constraint = $this->getClassInstance($constraint, 'PHP_Formatter_ContainerConstraint_', $autoPrefix);
+        if (!$constraint instanceof PHP_Formatter_ContainerConstraint_Interface) {
+            require_once 'PHP/Formatter/Exception.php';
+            $message = 'constraint is not instance of PHP_Formatter_ContainerConstraint_Interface';
+            throw new PHP_Formatter_Exception($message);
+        }
+        /* @var $constraint PHP_Formatter_ContainerConstraint_Interface */
+        return $constraint->evaluate($container, $params);
+    }
+
+    /**
+     * Load/Instantiate/Run a TokenManipulator on a Token
      *
      * @param PHP_Formatter_TokenManipulator_Interface $manipulator
      * @param PHP_Formatter_Token $token
@@ -126,6 +147,27 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
         }
         /* @var $manipulator PHP_Formatter_TokenManipulator_Interface */
         $manipulator->manipulate($token, $params);
+    }
+
+    /**
+     * Load/Instantiate/Run a ContainManipulator on a Container
+     *
+     * @param PHP_Formatter_ContainerManipulator_Interface $manipulator
+     * @param PHP_Formatter_TokenContainer $container
+     * @param mixed $params
+     * @param boolean $autoPrefix
+     */
+    public function manipulateContainer($manipulator, PHP_Formatter_TokenContainer $container, $params = null, $autoPrefix = true)
+    {
+        $manipulator = $this->getClassInstance($manipulator, 'PHP_Formatter_ContainerManipulator_', $autoPrefix);
+
+        if (!$manipulator instanceof PHP_Formatter_ContainerManipulator_Interface) {
+            require_once 'PHP/Formatter/Exception.php';
+            $message = 'manipulator is not instance of PHP_Formatter_ContainerManipulator_Interface';
+            throw new PHP_Formatter_Exception($message);
+        }
+        /* @var $manipulator PHP_Formatter_ContainerManipulator_Interface */
+        $manipulator->manipulate($container, $params);
     }
 
     /**
