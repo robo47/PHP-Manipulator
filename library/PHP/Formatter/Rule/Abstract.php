@@ -150,8 +150,5 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      * Called from constructor for checking options, adding default options
      * whatever you want to do.
      */
-    public function init()
-    {
-        
-    }
+    abstract public function init();
 }
