@@ -35,8 +35,6 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $this->markTestIncomplete('not implemented yet');
-        
         $rule = new PHP_Formatter_Rule_RemoveIndention($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
