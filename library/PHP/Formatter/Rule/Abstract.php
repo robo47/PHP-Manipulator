@@ -89,7 +89,6 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
     /**
      * Check Token Constraint
      *
-     * @todo support for Constraints with other prefix ?
      * @param PHP_Formatter_TokenConstraint_Interface|string $constraint
      * @param PHP_Formatter_Token $token
      * @param mixed $params

@@ -142,4 +142,37 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     {
         $this->markTestIncomplete('not implemented yet');
     }
+
+    /**
+     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     */
+    public function testGetClassInstanceWithAutoPrefix()
+    {
+        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $instance = $rule->getClassInstance('Dummy1', 'PHP_Formatter_Rule_Temp_', true);
+        $this->assertTrue(class_exists('PHP_Formatter_Rule_Temp_Dummy1', false), 'Class not loaded');
+        $this->assertType('PHP_Formatter_Rule_Temp_Dummy1', $instance, 'Wrong type');
+    }
+
+    /**
+     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     */
+    public function testGetClassInstanceWithoutAutoPrefix()
+    {
+        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $instance = $rule->getClassInstance('PHP_Formatter_Rule_Temp_Dummy2', '', false);
+        $this->assertTrue(class_exists('PHP_Formatter_Rule_Temp_Dummy2', false), 'Class not loaded');
+        $this->assertType('PHP_Formatter_Rule_Temp_Dummy2', $instance, 'Wrong type');
+    }
+
+    /**
+     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     */
+    public function testGetClassInstanceWithDirectClass()
+    {
+        $class = new PHP_Formatter_Rule_Temp_Dummy2();
+        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $instance = $rule->getClassInstance($class, '', false);
+        $this->assertSame($class, $instance);
+    }
 }
