@@ -98,16 +98,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function evaluateConstraint($constraint, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
-        if (is_string($constraint)) {
-            $constraintClass = $constraint;
-            if ($autoPrefix) {
-                $constraintClass = 'PHP_Formatter_TokenConstraint_' . $constraint;
-            }
-            if (!class_exists($constraintClass, false)) {
-                require_once str_replace('_', '/', $constraintClass) . '.php';
-            }
-            $constraint = new $constraintClass();
-        }
+        $constraint = $this->getClassInstance($constraint, 'PHP_Formatter_TokenConstraint_', $autoPrefix);
         if (!$constraint instanceof PHP_Formatter_TokenConstraint_Interface) {
             require_once 'PHP/Formatter/Exception.php';
             $message = 'constraint is not instance of PHP_Formatter_TokenConstraint_Interface';
@@ -127,16 +118,8 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function manipulateToken($manipulator, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
-        if (is_string($manipulator)) {
-            $manipulatorClass = $manipulator;
-            if ($autoPrefix) {
-                $manipulatorClass = 'PHP_Formatter_TokenManipulator_' . $manipulator;
-            }
-            if (!class_exists($manipulatorClass, false)) {
-                require_once str_replace('_', '/', $manipulatorClass) . '.php';
-            }
-            $manipulator = new $manipulatorClass();
-        }
+        $manipulator = $this->getClassInstance($manipulator, 'PHP_Formatter_TokenManipulator_', $autoPrefix);
+
         if (!$manipulator instanceof PHP_Formatter_TokenManipulator_Interface) {
             require_once 'PHP/Formatter/Exception.php';
             $message = 'manipulator is not instance of PHP_Formatter_TokenManipulator_Interface';
@@ -144,6 +127,30 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
         }
         /* @var $manipulator PHP_Formatter_TokenManipulator_Interface */
         $manipulator->manipulate($token, $params);
+    }
+
+    /**
+     * Get class instance
+     * 
+     * @param string $class
+     * @param string $prefix
+     * @param boolean $autoPrefix
+     * @return object
+     */
+    public function getClassInstance($class, $prefix, $autoPrefix = true)
+    {
+        if (!is_string($class)) {
+            return $class;
+        }
+        $classname = $class;
+        if ($autoPrefix) {
+            $classname = $prefix . $class;
+        }
+        // run potential autoloaders, else fallback for standard-naming + path in include-path
+        if (!class_exists($classname)) {
+            require_once str_replace('_', '/', $classname) . '.php';
+        }
+        return new $classname;
     }
 
     /**
