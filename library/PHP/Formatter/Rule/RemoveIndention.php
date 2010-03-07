@@ -4,7 +4,7 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         

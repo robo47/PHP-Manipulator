@@ -16,7 +16,6 @@ implements PHP_Formatter_TokenManipulator_Interface
     public function manipulate(PHP_Formatter_Token $token, $params = null)
     {
         $value = $token->getValue();
-        //var_dump(str_replace("\n", '\n', str_replace("\r", '\r',$value)));
 
         if (substr($value, 0, 2) == "\r\n") {
             $token->setValue(substr($value, 2));

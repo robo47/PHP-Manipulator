@@ -1,6 +1,7 @@
 <?php
 
 require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHP/Formatter/Util.php';
 
 class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
 {
@@ -93,13 +94,14 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
      * @param string $message
      * @todo look @phpunit how asserts are done the right way ...
      */
-    public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message)
+    public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')
     {
         $this->assertType(
             'PHP_Formatter_TokenContainer',
             $expectedTokens,
             'expected Tokens should be a PHP_Formatter_TokenContainer'
         );
+        
         $this->assertType(
             'PHP_Formatter_TokenContainer',
             $actualTokens,
@@ -109,20 +111,26 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
         $expectedIterator = $expectedTokens->getIterator();
         $actualIterator = $actualTokens->getIterator();
 
-        while($expectedIterator->valid()) {
+        $i = 0;
+        while($expectedIterator->valid() && $actualIterator->valid()) {
 
             $expectedToken = $expectedIterator->current();
             /* @var $expectedToken PHP_Formatter_Token */
+            
             $actualToken = $actualIterator->current();
             /* @var $actualToken PHP_Formatter_Token */
 
             if(!$actualToken->equals($expectedToken, $strict)) {
                 $message = $this->getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens);
-                $this->fail('Tokens are different: ' . PHP_EOL . $message);
+                $this->fail('Tokens are different: [mismatch] : ' . $i . PHP_EOL . $message);
             }
-
+            $i++;
             $expectedIterator->next();
             $actualIterator->next();
+        }
+        if($expectedIterator->valid() || $actualIterator->valid()) {
+            $message = $this->getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens);
+            $this->fail('Tokens are different: [length]' . PHP_EOL . $message);
         }
     }
 
@@ -135,10 +143,11 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
      */
     public static function getTokenArrayDifferenceAsCodeDiff($actualTokens, $expectedTokens)
     {
-        return PHPUnit_Util_Diff::diff(
-            $actualTokens->toString(),
-            $expectedTokens->toString()
-        );
+        return PHP_Formatter_Util::compareContainers($actualTokens, $expectedTokens);
+//        return PHPUnit_Util_Diff::diff(
+//            $actualTokens->toString(),
+//            $expectedTokens->toString()
+//        );
     }
 
     /**

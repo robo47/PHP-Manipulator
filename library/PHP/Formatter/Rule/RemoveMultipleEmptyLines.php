@@ -5,10 +5,14 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 class PHP_Formatter_Rule_RemoveMultipleEmptyLines
 extends PHP_Formatter_Rule_Abstract
 {
+
     public function init()
     {
         if (!$this->hasOption('maxEmptyLines')) {
             $this->setOption('maxEmptyLines', 2);
+        }
+        if (!$this->hasOption('defaultBreak')) {
+            $this->setOption('defaultBreak', "\n");
         }
     }
 
@@ -20,14 +24,15 @@ extends PHP_Formatter_Rule_Abstract
     {
         $iterator = $tokens->getIterator();
         $maxEmptyLines = $this->getOption('maxEmptyLines');
+        $defaultBreak = $this->getOption('defaultBreak');
 
-        $pattern = '~([\n]{' . ($maxEmptyLines + 1) . ',})~';
-        $replace = str_repeat("\n", $maxEmptyLines);
+        $pattern = '~(((\r\n|\r|\n)[\t| ]{0,}){' . ($maxEmptyLines + 1) . ',})~';
+        $replace = str_repeat($defaultBreak, $maxEmptyLines);
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if($token->isType(T_WHITESPACE)) {
+            if ($token->isType(T_WHITESPACE)) {
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
             }

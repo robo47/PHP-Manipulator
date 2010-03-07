@@ -4,11 +4,14 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('removeEmptyLinesAtFileEnd')) {
             $this->setOption('removeEmptyLinesAtFileEnd', true);
+        }
+        if (!$this->hasOption('defaultBreak')) {
+            $this->setOption('defaultBreak', "\n");
         }
     }
 
@@ -21,19 +24,19 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abs
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens)
     {
         $code = $tokens->toString();
+        $defaultBreak = $this->getOption('defaultBreak');
 
-        $code = preg_split('~[\n|\r\n|\r]~', $code, - 1);
+        $code = preg_split('~(\r\n|\n|\r)~', $code);
         $code = array_map('rtrim', $code);
-        $code = implode("\n", $code);
+        $code = implode($defaultBreak, $code);
 
-        if ($this->getOption('removeEmptyLinesAtFileEnd')) {
+        if (true === $this->getOption('removeEmptyLinesAtFileEnd')) {
             $code = rtrim($code);
         }
 
         // @todo seems like a expensive task, with all type-checking and stuff like that ?
         $tokenArrayContainer = PHP_Formatter_TokenContainer::createFromCode($code)
             ->getContainer();
-
         $tokens->setContainer($tokenArrayContainer);
     }
 }
