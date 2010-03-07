@@ -13,6 +13,9 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
         $rule = new PHP_Formatter_Rule_CommentOutIncludesAndRequires();
     }
 
+    /**
+     * @return array
+     */
     public function ruleProvider()
     {
         $data = array();

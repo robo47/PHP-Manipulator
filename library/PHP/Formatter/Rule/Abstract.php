@@ -17,21 +17,8 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      */
     public function __construct(array $options = array())
     {
-        $this->setOptions($options);
-        $this->_options = $options;
-        $this->init();        
-    }
-
-    /**
-     *
-     * @param array $options
-     * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
-     */
-    public function setOptions(array $options)
-    {
-        $this->_options = array();
         $this->addOptions($options);
-        return $this;
+        $this->init();        
     }
 
     /**
@@ -81,7 +68,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
             return $this->_options[$option];
         } else {
             require_once 'PHP/Formatter/Exception.php';
-            $message = "option '$option' not found";
+            $message = "Option '$option' not found";
             throw new PHP_Formatter_Exception($message);
         }
     }
@@ -96,7 +83,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
      * @param boolean $autoPrefix
      * @return boolean
      */
-    public function checkTokenConstraint($constraint, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
+    public function evaluateConstraint($constraint, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
         if (is_string($constraint)) {
             $constraintClass = $constraint;
