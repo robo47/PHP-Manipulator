@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PHP_CodeFormatter" basedir=".">
+
+    <!-- Clean Project -->
+    <target name="clean">
+        <delete dir="${basedir}/build"          failonerror="false" />
+        <delete dir="${basedir}/tests/build"    failonerror="false" />
+        <delete dir="${basedir}/tests/tmp"      failonerror="false" />
+        <delete dir="${basedir}/website/api"    failonerror="false" />
+    </target>
+
+    <!-- Prepare -->
+    <target name="prepare">
+        <mkdir dir="${basedir}/build/logs" />
+        <mkdir dir="${basedir}/build/docs" />
+        <mkdir dir="${basedir}/build/reports" />
+        <mkdir dir="${basedir}/tests/tmp" />
+    </target>
+
+
+    <!-- Run php lint check on lib and tests -->
+    <target name="phplint">
+        <apply executable   = "php"
+               failonerror  = "true">
+            <arg value="-l" />
+            <fileset dir="library/PHP">
+                <include name="**/*.php" />
+            </fileset>
+            <fileset dir="tests">
+                <include name="**/*.php" />
+            </fileset>
+        </apply>
+    </target>
+
+    <!-- Run phpcpd -->
+    <target name="phpcpd">
+        <exec dir="${basedir}"
+            executable="phpcpd"
+            failonerror="true">
+            <arg line="--log-pmd &quot;${basedir}/build/logs/pmd.xml&quot; &quot;${basedir}/library/PHP&quot;"/>
+        </exec>
+    </target>
+
+    <!-- Run PDepend -->
+    <target name="pdepend">
+        <exec dir="${basedir}"
+            executable="pdepend"
+            failonerror="true">
+            <arg line="--jdepend-xml=&quot;${basedir}/build/logs/jdepend.xml&quot; &quot;${basedir}/library/PHP&quot;"/>
+        </exec>
+    </target>
+
+    <!-- Run PHP_Codesniffer -->
+    <target name="phpcs">
+        <exec dir="${basedir}"
+            executable="phpcs"
+            output="${basedir}/build/logs/checkstyle.xml"
+            failonerror="false">
+            <arg line="--report=checkstyle --standard=robo47 &quot;${basedir}/library/PHP&quot;"/>
+        </exec>
+    </target>
+
+    <!-- Run PHPUnit -->
+    <target name="phpunit" depends="phplint">
+        <exec dir="${basedir}/tests/"
+            executable="phpunit"
+            failonerror="true">
+            <arg line="--no-configuration
+                       --configuration &quot;${basedir}/tests/phpunit.xml&quot;
+                       --log-junit &quot;${basedir}/build/logs/junit.xml&quot;
+                       --coverage-html &quot;${basedir}/build/logs/coverage/&quot;
+                       --coverage-clover &quot;${basedir}/build/logs/clover.xml&quot;"/>
+        </exec>
+    </target>
+
+    <!-- Run PHP_CodeBrowser -->
+    <target name="phpcb">
+        <mkdir dir="${basedir}/build/reports/phpcb" />
+        <exec executable="phpcb" dir="${basedir}/build/reports/phpcb/">
+        <arg line="--log &quot;${basedir}/build/logs/&quot;
+        --source &quot;${basedir}/library/PHP/&quot;
+        --output &quot;${basedir}/build/reports/phpcb/&quot;" />
+        </exec>
+    </target>
+
+    <!-- Run Sloccount -->
+    <target name="sloccount">
+        <mkdir dir="${basedir}/build/logs/sloccount/" />
+        <exec executable="sloccount"
+              dir="${basedir}"
+              output="${basedir}/build/logs/sloccount.sc"
+              failonerror="true">
+            <arg line="--duplicates --wide --details --addlangall --datadir &quot;${basedir}/build/logs/sloccount/&quot; &quot;${basedir}/library/PHP/&quot;"/>
+        </exec>
+    </target>
+
+    <!-- Build complete Project -->
+    <target name="build" depends="clean, prepare, phpcs, phpcpd, pdepend, sloccount, phpunit, phpcb" />
+
+</project>
