@@ -63,7 +63,6 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest');
 
-
         // TokenConstraints
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_BeginsWithNewlineTest');

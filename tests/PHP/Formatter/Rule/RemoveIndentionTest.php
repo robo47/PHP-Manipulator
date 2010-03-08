@@ -11,6 +11,7 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
     public function testConstructorDefaults()
     {
         $rule = new PHP_Formatter_Rule_RemoveIndention();
+        $this->assertEquals("\n", $rule->getOption('defaultBreak'), 'Wrong default Option value for defaultBreak');
     }
 
     public function ruleProvider()
