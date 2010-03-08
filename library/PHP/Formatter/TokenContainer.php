@@ -15,7 +15,7 @@ implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Constructor
-     * 
+     *
      * @param array $tokens
      */
     public function __construct(array $tokens = array())
@@ -58,6 +58,8 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Offset Set
      *
+     * Implements SPL::ArrayAccess
+     *
      * @param integer $offset
      * @param PHP_Formatter_Token $value
      */
@@ -76,6 +78,8 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Offset exists
      *
+     * Implements SPL::ArrayAccess
+     *
      * @param integer $offset
      * @return boolean
      */
@@ -88,6 +92,8 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Offset unset
      *
+     * Implements SPL::ArrayAccess
+     *
      * @param integer $offset
      */
     public function offsetUnset($offset)
@@ -98,6 +104,8 @@ implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Offset Get
+     *
+     * Implements SPL::ArrayAccess
      *
      * @param integer $offset
      * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
@@ -126,7 +134,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * Insert at offset
+     * Insert at a position
      *
      * @param integer $position
      * @param PHP_Formatter_Token $value
@@ -260,6 +268,18 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
+     * Creates code from tokens and runs the tokenzier again on them
+     *
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
+     */
+    public function retokenize()
+    {
+        $code = $this->toString();
+        $this->_container = PHP_Formatter_TokenContainer::createTokenArrayFromCode($code);
+        return $this;
+    }
+
+    /**
      * Remove Tokens
      *
      * @param array $tokens
@@ -338,6 +358,8 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Get Iterator
      *
+     * Implements SPL::IteratorAggregate
+     *
      * @return ArrayIterator
      */
     public function getIterator()
@@ -347,19 +369,31 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * Creates a TokenArray from code
+     * Creates an array of tokens from code
+     *
+     * @param <type> $code
+     * @return <type>
+     */
+    public static function createTokenArrayFromCode($code)
+    {
+        $tokenArray = array();
+        $tokens = token_get_all($code);
+        foreach ($tokens as $token) {
+            /* @var $token array|string */
+            $tokenArray[] = PHP_Formatter_Token::factory($token);
+        }
+        return $tokenArray;
+    }
+
+    /**
+     * Creates a TokenContainer from code
      *
      * @param string $code
      * @return PHP_Formatter_TokenContainer
      */
     public static function createFromCode($code)
     {
-        $container = new PHP_Formatter_TokenContainer();
-        $tokens = token_get_all($code);
-        foreach ($tokens as $token) {
-            /* @var $token array|string */
-            $container[] = PHP_Formatter_Token::factory($token);
-        }
-        return $container;
+        $tokens = PHP_Formatter_TokenContainer::createTokenArrayFromCode($code);
+        return new PHP_Formatter_TokenContainer($tokens);
     }
 }

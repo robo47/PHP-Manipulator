@@ -15,10 +15,13 @@ require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
 require_once 'PHP/Formatter/Rule/RemoveIndentionTest.php';
 require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLinesTest.php';
 require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespaceTest.php';
+require_once 'PHP/Formatter/Rule/StripPhpTest.php';
+require_once 'PHP/Formatter/Rule/StripNonPhpTest.php';
 
 // TokenConstraints
 require_once 'PHP/Formatter/TokenConstraint/InterfaceTest.php';
 require_once 'PHP/Formatter/TokenConstraint/BeginsWithNewlineTest.php';
+require_once 'PHP/Formatter/TokenConstraint/EndsWithNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsMultilineCommentTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
 
@@ -52,10 +55,13 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveIndentionTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveTrailingWhitespaceTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_StripPhpTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_StripNonPhpTest');
 
         // TokenConstraints
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_BeginsWithNewlineTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_EndsWithNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
 

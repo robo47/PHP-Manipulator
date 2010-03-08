@@ -517,6 +517,42 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
     }
 
     /**
+     * @covers PHP_Formatter_TokenContainer::retokenize
+     */
+    public function testRetokenize()
+    {
+        $token0 = PHP_Formatter_Token::factory(array(0 => T_OPEN_TAG, 1 => "<?php\n"));
+        $token1 = PHP_Formatter_Token::factory(array(0 => T_WHITESPACE, 1 => " \n \n \n"));
+        $token2 = PHP_Formatter_Token::factory(array(0 => T_WHITESPACE, 1 => " \t \n "));
+        $token3 = PHP_Formatter_Token::factory(array(0 => T_CLOSE_TAG, 1 => "?>"));
+        $container = new PHP_Formatter_TokenContainer(array($token0, $token1, $token2, $token3));
+        $container->retokenize();
+        $this->assertEquals(3, count($container));
+        $string = $container->toString();
+        $this->assertEquals("<?php\n \n \n \n \t \n ?>", $container->toString());
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::createTokenArrayFromCode
+     */
+    public function testCreateTokenArrayFromCode()
+    {
+        $code = '<?php echo 1; ?>';
+        $array = PHP_Formatter_TokenContainer::createTokenArrayFromCode($code);
+
+        $this->assertEquals(7, count($array));
+
+        $tokens = token_get_all($code);
+
+        $i = 0;
+        foreach($tokens as $token) {
+            $tokenObject = PHP_Formatter_Token::factory($token);
+            $this->assertTrue($tokenObject->equals($array[$i], true));
+            $i++;
+        }
+    }
+
+    /**
      * @covers PHP_Formatter_TokenContainer::removeTokens
      */
     public function testRemoveTokens()

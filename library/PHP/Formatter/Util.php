@@ -71,6 +71,7 @@ class PHP_Formatter_Util
                 $iter2->next();
             }
 
+            // is STRICT! ignores not set linenumber
             if ($line1 != $line2) {
                 $code .= '####### NEXT IS DIFFERENT ## ' . PHP_EOL;
             }

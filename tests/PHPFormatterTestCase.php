@@ -22,6 +22,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Get Fixture Filepath
+     *
      * @param string $filename
      * @return string
      */
@@ -59,6 +60,7 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             $expectedToken,
             'expected Token should be a PHP_Formatter_Token'
         );
+
         $this->assertType(
             'PHP_Formatter_Token',
             $actualToken,
