@@ -17,6 +17,9 @@ require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLinesTest.php';
 require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespaceTest.php';
 require_once 'PHP/Formatter/Rule/StripPhpTest.php';
 require_once 'PHP/Formatter/Rule/StripNonPhpTest.php';
+require_once 'PHP/Formatter/Rule/ReplaceBooleanOperatorsWithLogicalOperatorsTest.php';
+require_once 'PHP/Formatter/Rule/ReplaceLogicalOperatorsWithBooleanOperatorsTest.php';
+
 
 // TokenConstraints
 require_once 'PHP/Formatter/TokenConstraint/InterfaceTest.php';
@@ -57,6 +60,9 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveTrailingWhitespaceTest');
         $suite->addTestSuite('PHP_Formatter_Rule_StripPhpTest');
         $suite->addTestSuite('PHP_Formatter_Rule_StripNonPhpTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest');
+
 
         // TokenConstraints
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_InterfaceTest');
