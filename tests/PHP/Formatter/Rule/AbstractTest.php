@@ -1,7 +1,5 @@
-
 <?php
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_NonAbstract extends PHP_Formatter_Rule_Abstract

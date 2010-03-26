@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHP/Formatter/Rule/CommentOutIncludesAndRequires.php';
 
 class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterTestCase

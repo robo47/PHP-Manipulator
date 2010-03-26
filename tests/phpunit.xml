@@ -15,7 +15,7 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" 
+        <log type="coverage-html"
              target="./tmp/report"
              charset="UTF-8"
              yui="true"

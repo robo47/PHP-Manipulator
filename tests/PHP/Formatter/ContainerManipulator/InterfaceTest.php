@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHP/Formatter/ContainerManipulator/Interface.php';
 
 class PHP_Formatter_ContainerManipulator_InterfaceTest extends PHPFormatterTestCase

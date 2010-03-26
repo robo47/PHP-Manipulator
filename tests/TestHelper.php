@@ -15,6 +15,7 @@ set_include_path(implode($pathes, PATH_SEPARATOR));
 require_once TESTS_PATH . '/PHPFormatterTestCase.php';
 
 /**
+ * Dumps a single token
  *
  * @param array|string $token
  */
@@ -36,7 +37,8 @@ function dumpToken($token) {
 }
 
 /**
- *
+ * Dump a TokenContainer
+ * 
  * @param array $tokens
  */
 function dumpTokens(PHP_Formatter_TokenContainer $tokens)

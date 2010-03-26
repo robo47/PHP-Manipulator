@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHP/Formatter/Ruleset/Interface.php';
 
 class PHP_Formatter_Ruleset_InterfaceTest extends PHPFormatterTestCase

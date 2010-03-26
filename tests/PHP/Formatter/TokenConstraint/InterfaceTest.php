@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHP/Formatter/TokenConstraint/Interface.php';
 
 class PHP_Formatter_TokenConstraint_InterfaceTest extends PHPFormatterTestCase
