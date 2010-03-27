@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLines.php';
 
 class PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_RemoveMultipleEmptyLines::init
      */
@@ -12,7 +13,7 @@ class PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest extends PHPFormatterTestCa
         $rule = new PHP_Formatter_Rule_RemoveMultipleEmptyLines();
         $this->assertEquals(2, $rule->getOption('maxEmptyLines'), 'Wrong default Option value for maxEmptyLines');
     }
-
+    
     public function ruleProvider()
     {
         $data = array();

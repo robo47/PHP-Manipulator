@@ -51,6 +51,7 @@ require_once 'PHP/Formatter/ContainerManipulator/UnifyCastsTest.php';
 
 class AllTests
 {
+
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_Formatter Test Suite');

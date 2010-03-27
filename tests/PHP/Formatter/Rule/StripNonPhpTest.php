@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/StripNonPhp.php';
 
 class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_StripNonPhp::init
      */
@@ -11,7 +12,7 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
     {
         $rule = new PHP_Formatter_Rule_StripNonPhp();
     }
-
+    
     public function ruleProvider()
     {
         $data = array();
@@ -27,7 +28,7 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
         if (ini_get('short_open_tags') == true) {
             // @todo tests with shorttags
         }
-        
+
         return $data;
     }
 

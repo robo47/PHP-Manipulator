@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromToken
 
 class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */
@@ -23,7 +24,7 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
             true,
             false
         );
-        
+
         $container = PHP_Formatter_TokenContainer::createFromCode("<?php \$blub =/* foo */ \$bla; ?>");
         $from = $container[1]; // $blub
         $to = $container[7];   // ;

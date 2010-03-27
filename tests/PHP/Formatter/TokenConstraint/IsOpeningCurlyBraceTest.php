@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenConstraint/IsOpeningCurlyBrace.php';
 
 class PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */
@@ -22,7 +23,7 @@ class PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest extends PHPFormatter
             PHP_Formatter_Token::factory(array(null, '}')),
             false
         );
-        
+
         #2
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_COMMENT, '{')),

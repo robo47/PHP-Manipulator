@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespace.php';
 
 class PHP_Formatter_Rule_RemoveTrailingWhitespaceTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_RemoveTrailingWhitespace::init
      */

@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/ReplaceBooleanOperatorsWithLogicalOperators.php
 
 class PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperators::init
      */

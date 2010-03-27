@@ -4,13 +4,14 @@ require_once 'PHP/Formatter/Rule/CommentOutIncludesAndRequires.php';
 
 class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_CommentOutIncludesAndRequires::init
      */
     public function testConstructorDefaults()
     {
         $rule = new PHP_Formatter_Rule_CommentOutIncludesAndRequires();
-        $this->assertTrue($rule->getOption('globalScopeOnly'),'Wrong default Option value for globalScopeOnly');
+        $this->assertTrue($rule->getOption('globalScopeOnly'), 'Wrong default Option value for globalScopeOnly');
     }
 
     /**

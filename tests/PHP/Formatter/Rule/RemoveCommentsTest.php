@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/Rule/RemoveComments.php';
 
 class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_RemoveComments::init
      */
@@ -13,7 +14,7 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
         $this->assertTrue($rule->getOption('removeDocComments'), 'Wrong default Option value for removeDocComments');
         $this->assertTrue($rule->getOption('removeStandardComments'), 'Wrong default Option value for removeStandardComments');
     }
-
+    
     public function ruleProvider()
     {
         $data = array();
@@ -74,7 +75,7 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'normalCommentOnly1'),
             $this->getTokenArrayFromFixtureFile($path . 'normalCommentOnly1Removed'),
         );
-        
+
         return $data;
     }
 

@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenManipulator/Mock.php';
 
 class PHP_Formatter_TokenManipulator_MockTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenManipulator_Mock
      */

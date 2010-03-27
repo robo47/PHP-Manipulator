@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenConstraint/IsType.php';
 
 class PHP_Formatter_TokenConstraint_IsTypeTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

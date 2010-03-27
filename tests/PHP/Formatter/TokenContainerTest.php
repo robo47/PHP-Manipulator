@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenContainer.php';
 
 class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenContainer
      */
@@ -374,7 +375,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $token2 = PHP_Formatter_Token::factory('Token2');
         $token3 = PHP_Formatter_Token::factory('Token3');
         $container = new PHP_Formatter_TokenContainer(array($token1));
-        $container->insertTokensAfter($token1,  array($token3, $token2));
+        $container->insertTokensAfter($token1, array($token3, $token2));
 
         $this->assertEquals(0, $container->getOffsetByToken($token1));
         $this->assertEquals(1, $container->getOffsetByToken($token3));
@@ -434,16 +435,16 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $token3 = PHP_Formatter_Token::factory('Token3');
         $container = new PHP_Formatter_TokenContainer();
 
-        $this->assertEquals('', (string)$container);
+        $this->assertEquals('', (string) $container);
 
         $container[] = $token1;
-        $this->assertEquals('Token1', (string)$container);
+        $this->assertEquals('Token1', (string) $container);
 
         $container[] = $token3;
-        $this->assertEquals('Token1Token3', (string)$container);
+        $this->assertEquals('Token1Token3', (string) $container);
 
         $container[] = $token2;
-        $this->assertEquals('Token1Token3Token2', (string)$container);
+        $this->assertEquals('Token1Token3Token2', (string) $container);
     }
 
     /**
@@ -508,7 +509,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $tokens = token_get_all($code);
 
         $i = 0;
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             $tokenObject = PHP_Formatter_Token::factory($token);
             $this->assertTrue($tokenObject->equals($container[$i], true));
             $i++;
@@ -544,7 +545,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $tokens = token_get_all($code);
 
         $i = 0;
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             $tokenObject = PHP_Formatter_Token::factory($token);
             $this->assertTrue($tokenObject->equals($array[$i], true));
             $i++;

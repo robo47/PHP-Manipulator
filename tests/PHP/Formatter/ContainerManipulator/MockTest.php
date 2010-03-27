@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/ContainerManipulator/Mock.php';
 
 class PHP_Formatter_ContainerManipulator_MockTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_ContainerManipulator_Mock
      */

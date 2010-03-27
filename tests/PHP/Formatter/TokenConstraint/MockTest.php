@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenConstraint/Mock.php';
 
 class PHP_Formatter_TokenConstraint_MockTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenConstraint_Mock
      */

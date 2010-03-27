@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewline.php';
 
 class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */
@@ -157,7 +158,7 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
     public function testManipulate($token, $newToken, $changed, $strict)
     {
         $manipulator = new PHP_Formatter_TokenManipulator_RemoveBeginNewline();
-        
+
         $this->assertSame($changed, $manipulator->manipulate($token), 'Wrong return value');
         $this->assertTokenMatch($token, $newToken, $strict);
     }

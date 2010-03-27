@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenContainer.php';
 
 class PHP_Formatter_TokenTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Token::__construct
      */
@@ -14,7 +15,7 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
         $this->assertNull($token->getLinenumber(), 'wrong linenumber');
         $this->assertNull($token->getType(), 'wrong type');
     }
-    
+
     /**
      * @covers PHP_Formatter_Token::__construct
      */
@@ -142,7 +143,7 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
             $this->assertEquals($exceptionMessage, $e->getMessage(), 'Wrong exception message');
         }
     }
-    
+
     /**
      * @return array
      */
@@ -155,19 +156,19 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
             null,
             true
         );
-        
+
         $data[] = array (
             PHP_Formatter_Token::factory(array(T_COMMENT, 'value')),
             T_COMMENT,
             true
         );
-        
+
         $data[] = array (
             PHP_Formatter_Token::factory(array(T_COMMENT, 'value')),
             T_WHITESPACE,
             false
         );
-        
+
         $data[] = array (
             PHP_Formatter_Token::factory('test'),
             T_WHITESPACE,
@@ -203,9 +204,9 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
      */
     public function test__toString($token, $string)
     {
-        $this->assertEquals($string, (string)$token);
+        $this->assertEquals($string, (string) $token);
     }
-    
+
     /**
      * @return array
      */
