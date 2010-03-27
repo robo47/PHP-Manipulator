@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/Rule/ChangeLineEndings.php';
 
 class PHP_Formatter_Rule_ChangeLineEndingsTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_Rule_ChangeLineEndings::init
      */
@@ -13,7 +12,7 @@ class PHP_Formatter_Rule_ChangeLineEndingsTest extends PHPFormatterTestCase
         $rule = new PHP_Formatter_Rule_ChangeLineEndings();
         $this->assertEquals("\n", $rule->getOption('newline'), 'Wrong default Option value for newline');
     }
-    
+
     public function ruleProvider()
     {
         $data = array();
@@ -63,7 +62,7 @@ class PHP_Formatter_Rule_ChangeLineEndingsTest extends PHPFormatterTestCase
             PHP_Formatter_TokenContainer::createFromCode($codeWindows),
             PHP_Formatter_TokenContainer::createFromCode($codeMac),
         );
-
+        
         return $data;
     }
 

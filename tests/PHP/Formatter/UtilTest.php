@@ -4,6 +4,7 @@ require_once 'PHP/Formatter/TokenContainer.php';
 
 class PHP_Formatter_UtilTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */
@@ -117,13 +118,13 @@ class PHP_Formatter_UtilTest extends PHPFormatterTestCase
         $data[] = array(
             PHP_Formatter_TokenContainer::createFromCode('<?php echo $foo; ?>'),
             'Token                       |  LEN | LINE | VALUE' . PHP_EOL . PHP_EOL .
-            'T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
-            'T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
-            'T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
-            'T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
-            '[SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
-            'T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
-            'T_CLOSE_TAG                 |    2 |    1 | ?>',
+                'T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
+                'T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
+                'T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
+                'T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
+                '[SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
+                'T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
+                'T_CLOSE_TAG                 |    2 |    1 | ?>',
         );
 
         return $data;
@@ -141,7 +142,7 @@ class PHP_Formatter_UtilTest extends PHPFormatterTestCase
         $dump = PHP_Formatter_Util::dumpContainer($container);
         $this->assertSame($expectedDump, $dump, 'Dump does not match');
     }
-    
+
     /**
      * @return array
      */
@@ -154,17 +155,17 @@ class PHP_Formatter_UtilTest extends PHPFormatterTestCase
             PHP_Formatter_TokenContainer::createFromCode("<?php echo \$foo; ?>"),
             PHP_Formatter_TokenContainer::createFromCode("<?php echo \$foo;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 7                        ' . PHP_EOL .
-            '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
-            '                                                         |  ' . PHP_EOL .
-            '  1) T_OPEN_TAG                  |    6 |    1 | <?php.  |  T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
-            '  2) T_ECHO                      |    4 |    1 | echo    |  T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
-            '  3) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
-            '  4) T_VARIABLE                  |    4 |    1 | $foo    |  T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
-            '  5) [SIMPLE]                    |    1 | NULL | ;       |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  6) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | \n' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  7) T_CLOSE_TAG                 |    2 |    1 | ?>      |  T_CLOSE_TAG                 |    2 |    2 | ?>' . PHP_EOL,
+                '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
+                '                                                         |  ' . PHP_EOL .
+                '  1) T_OPEN_TAG                  |    6 |    1 | <?php.  |  T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
+                '  2) T_ECHO                      |    4 |    1 | echo    |  T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
+                '  3) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
+                '  4) T_VARIABLE                  |    4 |    1 | $foo    |  T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
+                '  5) [SIMPLE]                    |    1 | NULL | ;       |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  6) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | \n' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  7) T_CLOSE_TAG                 |    2 |    1 | ?>      |  T_CLOSE_TAG                 |    2 |    2 | ?>' . PHP_EOL,
         );
 
         #1
@@ -172,27 +173,27 @@ class PHP_Formatter_UtilTest extends PHPFormatterTestCase
             PHP_Formatter_TokenContainer::createFromCode("<?php echo \$foo; ?>"),
             PHP_Formatter_TokenContainer::createFromCode("<?php echo \$foo;\n echo \$baa;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 12                       ' . PHP_EOL .
-            '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
-            '                                                         |  ' . PHP_EOL .
-            '  1) T_OPEN_TAG                  |    6 |    1 | <?php.  |  T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
-            '  2) T_ECHO                      |    4 |    1 | echo    |  T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
-            '  3) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
-            '  4) T_VARIABLE                  |    4 |    1 | $foo    |  T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
-            '  5) [SIMPLE]                    |    1 | NULL | ;       |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  6) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    2 |    1 | \n.' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  7) T_CLOSE_TAG                 |    2 |    1 | ?>      |  T_ECHO                      |    4 |    2 | echo' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  8)                                                     |  T_WHITESPACE                |    1 |    2 | .' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            '  9)                                                     |  T_VARIABLE                  |    4 |    2 | $baa' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            ' 10)                                                     |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL.
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            ' 11)                                                     |  T_WHITESPACE                |    1 |    2 | \n' . PHP_EOL .
-            '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
-            ' 12)                                                     |  T_CLOSE_TAG                 |    2 |    3 | ?>' . PHP_EOL,
+                '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
+                '                                                         |  ' . PHP_EOL .
+                '  1) T_OPEN_TAG                  |    6 |    1 | <?php.  |  T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
+                '  2) T_ECHO                      |    4 |    1 | echo    |  T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
+                '  3) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    1 |    1 | .' . PHP_EOL .
+                '  4) T_VARIABLE                  |    4 |    1 | $foo    |  T_VARIABLE                  |    4 |    1 | $foo' . PHP_EOL .
+                '  5) [SIMPLE]                    |    1 | NULL | ;       |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  6) T_WHITESPACE                |    1 |    1 | .       |  T_WHITESPACE                |    2 |    1 | \n.' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  7) T_CLOSE_TAG                 |    2 |    1 | ?>      |  T_ECHO                      |    4 |    2 | echo' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  8)                                                     |  T_WHITESPACE                |    1 |    2 | .' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                '  9)                                                     |  T_VARIABLE                  |    4 |    2 | $baa' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                ' 10)                                                     |  [SIMPLE]                    |    1 | NULL | ;' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                ' 11)                                                     |  T_WHITESPACE                |    1 |    2 | \n' . PHP_EOL .
+                '####### NEXT IS DIFFERENT ## ' . PHP_EOL .
+                ' 12)                                                     |  T_CLOSE_TAG                 |    2 |    3 | ?>' . PHP_EOL,
         );
 
         return $data;

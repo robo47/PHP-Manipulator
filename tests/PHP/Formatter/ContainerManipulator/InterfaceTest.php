@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/ContainerManipulator/Interface.php';
 
 class PHP_Formatter_ContainerManipulator_InterfaceTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_ContainerManipulator_Interface
      */

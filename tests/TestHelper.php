@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
 
-define('BASE_PATH', realpath(dirname(__FILE__ ) . '/../'));
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));
 define('TESTS_PATH', BASE_PATH . '/tests/');
 
 $pathes = array();
@@ -19,8 +19,7 @@ require_once TESTS_PATH . '/PHPFormatterTestCase.php';
  *
  * @param array|string $token
  */
-function dumpToken($token)
-{
+function dumpToken($token) {
     if (is_array($token)) {
         $string = str_replace(' ', '.', $token[1]);
         $string = str_replace("\t", '\t', $string);
@@ -28,8 +27,8 @@ function dumpToken($token)
         $string = str_replace("\r", '\r', $string);
 
         echo token_name($token[0]) . ' [Line: ' . $token[2] . PHP_EOL .
-            '###' . PHP_EOL .
-            $string . PHP_EOL . '###' . PHP_EOL;
+             '###' . PHP_EOL .
+             $string . PHP_EOL . '###' . PHP_EOL;
     } elseif(is_string($token)) {
         echo 'TOKEN: ' . $token . PHP_EOL;
     } else {
@@ -39,12 +38,12 @@ function dumpToken($token)
 
 /**
  * Dump a TokenContainer
- *
+ * 
  * @param array $tokens
  */
 function dumpTokens(PHP_Formatter_TokenContainer $tokens)
 {
-    foreach ($tokens as $token) {
+    foreach($tokens as $token) {
         dumpToken($token);
     }
 }

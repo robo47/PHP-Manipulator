@@ -8,9 +8,8 @@ require_once 'PHP/Formatter/ContainerManipulator/Mock.php';
 
 class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 {
-
     public $init = false;
-    
+
     public function init()
     {
         $this->init = true;
@@ -19,7 +18,6 @@ class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 
 class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_AbstractHelper
      */

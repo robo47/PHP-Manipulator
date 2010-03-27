@@ -4,7 +4,6 @@ require_once 'PHP/Formatter.php';
 
 class PHP_FormatterTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter::__construct
      * @covers PHP_Formatter::getRules
@@ -28,7 +27,7 @@ class PHP_FormatterTest extends PHPFormatterTestCase
 
         );
         $formatter = new PHP_Formatter($addRules);
-
+        
         $rules = $formatter->getRules();
 
         $this->assertEquals(3, count($rules), 'Wrong rules count');
@@ -51,6 +50,7 @@ class PHP_FormatterTest extends PHPFormatterTestCase
 
         $this->assertEquals(1, count($rules), 'Wrong rules count');
         $this->assertContains($rule, $rules, 'Rule not found');
+
     }
 
     /**

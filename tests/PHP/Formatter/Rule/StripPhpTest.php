@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/Rule/StripPhp.php';
 
 class PHP_Formatter_Rule_StripPhpTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_Rule_StripPhp::init
      */
@@ -12,7 +11,7 @@ class PHP_Formatter_Rule_StripPhpTest extends PHPFormatterTestCase
     {
         $rule = new PHP_Formatter_Rule_StripPhp();
     }
-    
+
     public function ruleProvider()
     {
         $data = array();
@@ -24,7 +23,7 @@ class PHP_Formatter_Rule_StripPhpTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'stripphp1'),
             $this->getTokenArrayFromFixtureFile($path . 'stripphp1Removed'),
         );
-
+        
         return $data;
     }
 

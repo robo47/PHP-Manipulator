@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/ContainerConstraint/Mock.php';
 
 class PHP_Formatter_ContainerConstraint_MockTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_ContainerConstraint_Mock
      */

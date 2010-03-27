@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/TokenConstraint/IsSingleNewline.php';
 
 class PHP_Formatter_TokenConstraint_IsSingleNewlineTest extends PHPFormatterTestCase
 {
-
     /**
      * @return array
      */

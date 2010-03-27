@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/Ruleset/Interface.php';
 
 class PHP_Formatter_Ruleset_InterfaceTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_Ruleset_Interface
      */

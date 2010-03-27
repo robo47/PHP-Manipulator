@@ -4,7 +4,6 @@ require_once 'PHP/Formatter/ContainerConstraint/Interface.php';
 
 class PHP_Formatter_ContainerConstraint_InterfaceTest extends PHPFormatterTestCase
 {
-
     /**
      * @covers PHP_Formatter_ContainerConstraint_Interface
      */
