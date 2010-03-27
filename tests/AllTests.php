@@ -43,6 +43,7 @@ require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewlineTest.php';
 // ContainerManipulators
 require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToTokenTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/UnifyCastsTest.php';
 
 class AllTests
 {
@@ -81,7 +82,6 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsClosingCurlyBraceTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest');
 
-
         // ContainerConstraints
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');
 
@@ -92,6 +92,7 @@ class AllTests
         // ContainerManipulators
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_UnifyCastsTest');
 
         return $suite;
     }
