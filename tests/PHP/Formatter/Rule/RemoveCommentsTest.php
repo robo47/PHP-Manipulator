@@ -19,36 +19,42 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
         $data = array();
         $path = '/Rule/RemoveComments/';
 
+        #0
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'singleLineComment1'),
             $this->getTokenArrayFromFixtureFile($path . 'singleLineComment1Removed'),
         );
 
+        #1
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'singleLineComment2'),
             $this->getTokenArrayFromFixtureFile($path . 'singleLineComment2Removed'),
         );
 
+        #2
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment1'),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment1Removed'),
         );
 
+        #3
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment2'),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment2Removed'),
         );
 
+        #4
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment3'),
             $this->getTokenArrayFromFixtureFile($path . 'multiLineComment3Removed'),
         );
 
+        #5
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'docComment1'),

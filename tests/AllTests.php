@@ -10,16 +10,17 @@ require_once 'PHP/Formatter/UtilTest.php';
 // Rules
 require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AbstractTest.php';
+require_once 'PHP/Formatter/Rule/AsptagsToLongTagsTest.php';
 require_once 'PHP/Formatter/Rule/CommentOutIncludesAndRequiresTest.php';
 require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
 require_once 'PHP/Formatter/Rule/RemoveIndentionTest.php';
 require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLinesTest.php';
 require_once 'PHP/Formatter/Rule/RemoveTrailingWhitespaceTest.php';
+require_once 'PHP/Formatter/Rule/ShorttagsToLongTagsTest.php';
 require_once 'PHP/Formatter/Rule/StripPhpTest.php';
 require_once 'PHP/Formatter/Rule/StripNonPhpTest.php';
 require_once 'PHP/Formatter/Rule/ReplaceBooleanOperatorsWithLogicalOperatorsTest.php';
 require_once 'PHP/Formatter/Rule/ReplaceLogicalOperatorsWithBooleanOperatorsTest.php';
-
 
 // TokenConstraints
 require_once 'PHP/Formatter/TokenConstraint/InterfaceTest.php';
@@ -54,11 +55,13 @@ class AllTests
         // Rules
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_Rule_AbstractTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_AsptagsToLongTagsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveCommentsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveIndentionTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveTrailingWhitespaceTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_ShorttagsToLongTagsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_StripPhpTest');
         $suite->addTestSuite('PHP_Formatter_Rule_StripNonPhpTest');
         $suite->addTestSuite('PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest');
