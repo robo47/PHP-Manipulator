@@ -43,6 +43,7 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
     /**
      * @dataProvider manipulateProvider
      * @covers PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken::<protected>
      */
     public function testManipulate($container, $params, $expectedContainer, $changed, $strict)
     {

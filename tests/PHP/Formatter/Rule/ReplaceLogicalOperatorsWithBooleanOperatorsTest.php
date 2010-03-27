@@ -55,6 +55,7 @@ class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends
 
     /**
      * @covers PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

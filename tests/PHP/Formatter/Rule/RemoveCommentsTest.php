@@ -60,6 +60,20 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'docComment1'),
             $this->getTokenArrayFromFixtureFile($path . 'docComment1Removed'),
         );
+
+        #6
+        $data[] = array(
+            array('removeDocComments' => true, 'removeStandardComments' => false),
+            $this->getTokenArrayFromFixtureFile($path . 'docCommentOnly1'),
+            $this->getTokenArrayFromFixtureFile($path . 'docCommentOnly1Removed'),
+        );
+
+        #7
+        $data[] = array(
+            array('removeDocComments' => false, 'removeStandardComments' => true),
+            $this->getTokenArrayFromFixtureFile($path . 'normalCommentOnly1'),
+            $this->getTokenArrayFromFixtureFile($path . 'normalCommentOnly1Removed'),
+        );
         
         return $data;
     }
@@ -67,6 +81,7 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
     /**
      *
      * @covers PHP_Formatter_Rule_RemoveComments::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_RemoveComments::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

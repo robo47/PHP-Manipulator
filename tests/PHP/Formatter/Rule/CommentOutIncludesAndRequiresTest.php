@@ -39,6 +39,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
 
     /**
      * @covers PHP_Formatter_Rule_CommentOutIncludesAndRequires::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_CommentOutIncludesAndRequires::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

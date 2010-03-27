@@ -34,6 +34,7 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
     /**
      *
      * @covers PHP_Formatter_Rule_StripNonPhp::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_StripNonPhp::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
