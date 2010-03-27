@@ -30,6 +30,8 @@ require_once 'PHP/Formatter/TokenConstraint/EndsWithNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsMultilineCommentTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsTypeTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsClosingCurlyBraceTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsOpeningCurlyBraceTest.php';
 
 // ContainerConstraints
 require_once 'PHP/Formatter/ContainerConstraint/InterfaceTest.php';
@@ -76,6 +78,9 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsTypeTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsClosingCurlyBraceTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest');
+
 
         // ContainerConstraints
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');

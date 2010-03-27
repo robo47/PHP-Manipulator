@@ -41,12 +41,12 @@ class PHP_Formatter_Token
     public static function factory($input)
     {
         if (is_array($input)) {
-            if (!isset($input[0]) || !isset($input[1])) {
+            if (!array_key_exists(0, $input) || !array_key_exists(1, $input)) {
                 require_once 'PHP/Formatter/Exception.php';
                 $message = 'Array for creating token misses key 0 and/or 1';
                 throw new PHP_Formatter_Exception($message);
             }
-            if (!isset($input[2])) {
+            if (!array_key_exists(2, $input)) {
                 $token = new PHP_Formatter_Token($input[1], $input[0]);
             } else {
                 $token = new PHP_Formatter_Token($input[1], $input[0], $input[2]);

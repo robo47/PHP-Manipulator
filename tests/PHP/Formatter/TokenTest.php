@@ -91,6 +91,8 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
         $data[] = array('foo', 'foo', null, null);
         $data[] = array(array(0 => T_COMMENT, 1 => '//', 2 => 5), '//', T_COMMENT, 5);
         $data[] = array(array(0 => T_COMMENT, 1 => '//'), '//', T_COMMENT, null);
+        $data[] = array(array(0 => null, 1 => '//', 2 => 5), '//', null, 5);
+        $data[] = array(array(null, '//', 5), '//', null, 5);
 
         return $data;
     }

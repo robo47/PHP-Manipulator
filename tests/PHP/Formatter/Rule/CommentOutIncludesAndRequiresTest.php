@@ -10,6 +10,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
     public function testConstructorDefaults()
     {
         $rule = new PHP_Formatter_Rule_CommentOutIncludesAndRequires();
+        $this->assertTrue($rule->getOption('globalScopeOnly'),'Wrong default Option value for globalScopeOnly');
     }
 
     /**
@@ -27,12 +28,12 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
             $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes1Removed'),
         );
 
-//        #1
-//        $data[] = array(
-//            array('globalScopeOnly' => true),
-//            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2'),
-//            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2Removed'),
-//        );
+        #1
+        $data[] = array(
+            array('globalScopeOnly' => true),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2'),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2Removed'),
+        );
 
         return $data;
     }

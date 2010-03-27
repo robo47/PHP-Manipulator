@@ -5,6 +5,24 @@ require 'test2.php';
 include_once 'test3.php';
 require_once 'test4.php';
 
+function requireFile($file, $once = false)
+{
+    if($once) {
+        require_once $file;
+    } else {
+        require $file;
+    }
+}
+
+function includeFile($file, $once = false)
+{
+    if($once) {
+        include_once $file;
+    } else {
+        include $file;
+    }
+}
+
 class myClass
 {
     public function requireFile($file, $once = false)
@@ -26,7 +44,7 @@ class myClass
     }
 }
 
-function requireFile($file, $once = false)
+function requireFile2($file, $once = false)
 {
     if($once) {
         require_once $file;
@@ -35,7 +53,7 @@ function requireFile($file, $once = false)
     }
 }
 
-function includeFile($file, $once = false)
+function includeFile2($file, $once = false)
 {
     if($once) {
         include_once $file;
@@ -43,3 +61,8 @@ function includeFile($file, $once = false)
         include $file;
     }
 }
+
+include 'test1.php';
+require 'test2.php';
+include_once 'test3.php';
+require_once 'test4.php';

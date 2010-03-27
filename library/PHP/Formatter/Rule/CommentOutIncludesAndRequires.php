@@ -15,28 +15,12 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
     /**
      *
      * @param PHP_Formatter_TokenContainer $tokens
-     * @todo checking if something is in the same line after the require which get's commented out too ? what about multi-line-comment ARROUND the require ?
      * @todo Wont work with nested include/require yet: include implode('', include 'test1.php');
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        if ($this->getOption('globalScopeOnly')) {
-            $this->_globalScopeOnly($container);
-        } else {
-            $this->_allComments($container);
-        }
-    }
-
-    /**
-     *
-     * @param PHP_Formatter_TokenContainer $container
-     */
-    protected function _allComments($container)
-    {
         $iterator = $container->getIterator();
         $iterator->rewind();
-
-        $found = 0;
 
         $searchedTokens = array(
             T_INCLUDE,
@@ -49,23 +33,51 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
 
         $searchingColon = false;
         $foundToken = null;
+        $inClass = false;
+        $inFunction = false;
+        $bracesStatus = 0;
 
         while($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Formatter_Token */
-            if (in_array($token->getType(), $searchedTokens)) {
-                $searchingColon = true;
-                $foundToken = $token;
+            if($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+                $inClass = true;
+                $bracesStatus = 0;
             }
+            if($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+                $inFunction = true;
+                $bracesStatus = 0;
+            }
+            if ($inClass || $inFunction) {
+                if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+                    $bracesStatus++;
+                }
+                if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+                    $bracesStatus--;
+                    if($bracesStatus == 0) {
+                        if ($inClass) {
+                            $inClass = false;
+                        }
+                        if ($inFunction) {
+                            $inFunction = false;
+                        }
+                    }
+                }
+            }
+            if($this->_shouldCheckAndReplace($inClass , $inFunction)) {
+                /* @var $token PHP_Formatter_Token */
+                if($this->evaluateConstraint('IsType', $token, $searchedTokens)) {
+                    $searchingColon = true;
+                    $foundToken = $token;
+                }
 
-            if (true === $searchingColon &&
-                $token->getValue() == ';') {
-                $foundPairs[] = array(
-                    'from' => $foundToken,
-                    'to' => $token,
-                );
-                $searchingColon = false;
-                $foundToken = null;
+                if ($this->_isSearchingColon($searchingColon, $token)) {
+                    $foundPairs[] = array(
+                        'from' => $foundToken,
+                        'to' => $token,
+                    );
+                    $searchingColon = false;
+                    $foundToken = null;
+                }
             }
             $iterator->next();
         }
@@ -80,12 +92,30 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
     }
 
     /**
-     *
-     * @param PHP_Formatter_TokenContainer $container
+     * @param boolean $searchingColon
+     * @param PHP_Formatter_Token $token
+     * @return boolean
      */
-    protected function _globalScopeOnly($container)
+    protected function _isSearchingColon($searchingColon, $token)
     {
-        throw new Exception('not implemented yet');
-        // finder which finds tokens with exceptions (not between Token X and Y and A and B ...
+        return true === $searchingColon &&
+               $token->getValue() == ';';
+    }
+
+    /**
+     *
+     * @param boolean $inClass
+     * @param boolean $inFunction
+     * @return boolean
+     */
+    protected function _shouldCheckAndReplace($inClass, $inFunction)
+    {
+        $globalScopeOnly = $this->getOption('globalScopeOnly');
+        if(true === $globalScopeOnly && !($inClass || $inFunction)) {
+            return true;
+        } elseif (false === $globalScopeOnly) {
+            return true;
+        }
+        return false;
     }
 }
