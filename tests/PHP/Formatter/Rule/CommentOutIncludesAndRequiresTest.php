@@ -35,6 +35,13 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterT
             $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes2Removed'),
         );
 
+        #2
+        $data[] = array(
+            array('globalScopeOnly' => true),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes3'),
+            $this->getTokenArrayFromFixtureFile($path . 'requiresAndIncludes3Removed'),
+        );
+
         return $data;
     }
 

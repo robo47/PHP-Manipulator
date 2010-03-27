@@ -15,7 +15,6 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
     /**
      *
      * @param PHP_Formatter_TokenContainer $tokens
-     * @todo Wont work with nested include/require yet: include implode('', include 'test1.php');
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
@@ -36,6 +35,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
         $inClass = false;
         $inFunction = false;
         $bracesStatus = 0;
+        $openInclude = false;
 
         while($iterator->valid()) {
             $token = $iterator->current();
@@ -65,18 +65,20 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
             }
             if($this->_shouldCheckAndReplace($inClass , $inFunction)) {
                 /* @var $token PHP_Formatter_Token */
-                if($this->evaluateConstraint('IsType', $token, $searchedTokens)) {
+                if($this->evaluateConstraint('IsType', $token, $searchedTokens) && !$openInclude) {
                     $searchingColon = true;
                     $foundToken = $token;
+                    $openInclude = true;
                 }
 
-                if ($this->_isSearchingColon($searchingColon, $token)) {
+                if ($this->_isSearchingColon($searchingColon, $token) && $openInclude) {
                     $foundPairs[] = array(
                         'from' => $foundToken,
                         'to' => $token,
                     );
                     $searchingColon = false;
                     $foundToken = null;
+                    $openInclude = false;
                 }
             }
             $iterator->next();
