@@ -23,6 +23,19 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
             true,
             false
         );
+        
+        $container = PHP_Formatter_TokenContainer::createFromCode("<?php \$blub =/* foo */ \$bla; ?>");
+        $from = $container[1]; // $blub
+        $to = $container[7];   // ;
+
+        # 1
+        $data[] = array(
+            $container,
+            array('from' => $from, 'to' => $to),
+            PHP_Formatter_TokenContainer::createFromCode("<?php /*\$blub = \$bla;*/ ?>"),
+            true,
+            false
+        );
 
         return $data;
     }

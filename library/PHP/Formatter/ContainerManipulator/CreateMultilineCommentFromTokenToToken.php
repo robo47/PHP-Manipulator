@@ -62,32 +62,16 @@ implements PHP_Formatter_ContainerManipulator_Interface
 
         $endOffset = $container->getOffsetByToken($to);
 
-        $iterator = $container->getIterator();
-        $iterator->seek($startPosition);
-
         if ($startOffset > $endOffset) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "startOffset is behind endOffset";
             throw new PHP_Formatter_Exception($message);
         }
 
-        $tokens = array();
-        $allFound = false;
-        while($iterator->valid()) {
-            $tokens[] = $iterator->current();
-            if($iterator->key() == $endOffset) {
-                break;
-            }
-            $iterator->next();
-        }
+        $tokens = $this->_getTokensFromStartToEnd($container, $startPosition, $endOffset);
 
-        $value = '';
-        foreach($tokens as $token) {
-            /* @var $token PHP_Formatter_Token */
-            $value .= $token->getValue();
-        }
+        $value = $this->_mergeTokenValuesIntoString($tokens);
 
-        // @todo remove all /* and */ in the value
         $value = '/*' . $value . '*/';
 
         $commentToken = new PHP_Formatter_Token($value, T_COMMENT);
@@ -97,5 +81,54 @@ implements PHP_Formatter_ContainerManipulator_Interface
         $container->removeTokens($tokens);
 
         return true;
+    }
+
+    /**
+     * @param PHP_Formatter_TokenContainer $container
+     * @param integer $startPosition
+     * @param integer $endOffset
+     * @return array
+     */
+    protected function _getTokensFromStartToEnd($container, $startPosition, $endOffset)
+    {
+        $iterator = $container->getIterator();
+        $iterator->seek($startPosition);
+
+        $tokens = array();
+        while($iterator->valid()) {
+            $tokens[] = $iterator->current();
+            if($iterator->key() == $endOffset) {
+                break;
+            }
+            $iterator->next();
+        }
+        return $tokens;
+    }
+
+    /**
+     * @param array $tokens
+     * @return string
+     */
+    protected function _mergeTokenValuesIntoString($tokens)
+    {
+        $value = '';
+        foreach($tokens as $token) {
+            /* @var $token PHP_Formatter_Token */
+            if (!$this->_isMultilineComment($token)) {
+                $value .= $token->getValue();
+            }
+        }
+        return $value;
+    }
+
+
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isMultilineComment($token)
+    {
+        $constraint = new PHP_Formatter_TokenConstraint_IsMultilineComment();
+        return $constraint->evaluate($token);
     }
 }

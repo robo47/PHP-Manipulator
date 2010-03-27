@@ -177,7 +177,7 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
         $message = 'Tokens are different: [length]' . PHP_EOL .
                     PHP_EOL . $containerDiff;
 
-        $this->fail($other, $message);
+        return $message;
     }
 
     /**
