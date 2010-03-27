@@ -27,6 +27,7 @@ require_once 'PHP/Formatter/TokenConstraint/BeginsWithNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/EndsWithNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsMultilineCommentTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsTypeTest.php';
 
 // ContainerConstraints
 require_once 'PHP/Formatter/ContainerConstraint/InterfaceTest.php';
@@ -69,6 +70,7 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_EndsWithNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsTypeTest');
 
         // ContainerConstraints
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');

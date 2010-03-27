@@ -28,9 +28,6 @@ extends PHP_Formatter_Rule_Abstract
     {
         $iterator = $container->getIterator();
 
-        $replaceAnd = $this->getOption('replaceAnd');
-        $replaceOr = $this->getOption('replaceOr');
-
         if ($this->getOption('uppercase')) {
             $and = 'AND';
             $or = 'OR';
@@ -42,16 +39,32 @@ extends PHP_Formatter_Rule_Abstract
         while($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if ($replaceAnd
-                && $token->isType(T_BOOLEAN_AND)) {
+            if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_LOGICAL_AND);
-            } elseif ($replaceOr &&
-                      $token->isType(T_BOOLEAN_OR)) {
+            } elseif ($this->_isBooleanOrAndShouldBeReplaced($token)) {
                 $token->setValue($or);
                 $token->setType(T_LOGICAL_OR);
             }
             $iterator->next();
         }
+    }
+
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isBooleanAndAndShouldBeReplaced($token)
+    {
+        return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
+    }
+    
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isBooleanOrAndShouldBeReplaced($token)
+    {
+        return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_OR) && $this->getOption('replaceOr'));
     }
 }

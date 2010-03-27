@@ -16,14 +16,14 @@ implements PHP_Formatter_TokenConstraint_Interface
     public function evaluate(PHP_Formatter_Token $token, $param = null)
     {
         $isMultilineComment = false;
-        if ($token->isType(T_COMMENT)) {
+        if ($token->getType() === T_COMMENT) {
             $value = $token->getValue();
             if (strlen($value) > 2) {
                 if (substr($value, 0, 2) == '/*') {
                     $isMultilineComment = true;
                 }
             }
-        } elseif($token->isType(T_DOC_COMMENT)) {
+        } elseif($token->getType() === T_DOC_COMMENT) {
             $isMultilineComment = true;
         }
         return $isMultilineComment;

@@ -176,16 +176,6 @@ class PHP_Formatter_TokenTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Token::isType
-     * @dataProvider isTypeProvider
-     */
-    public function testIsType($token, $type, $result)
-    {
-        /* @var $token PHP_Formatter_Token */
-        $this->assertSame($result, $token->isType($type));
-    }
-
-    /**
      * @return array
      */
     public function __toStringProvider()

@@ -32,7 +32,7 @@ extends PHP_Formatter_Rule_Abstract
         while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if ($token->isType(T_WHITESPACE)) {
+            if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
             }

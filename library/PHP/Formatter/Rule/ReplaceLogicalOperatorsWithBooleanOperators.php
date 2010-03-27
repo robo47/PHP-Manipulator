@@ -25,25 +25,38 @@ extends PHP_Formatter_Rule_Abstract
     {
         $iterator = $container->getIterator();
 
-        $replaceAnd = $this->getOption('replaceAnd');
-        $replaceOr = $this->getOption('replaceOr');
-
         $and = '&&';
         $or = '||';
 
         while($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if ($replaceAnd
-                && $token->isType(T_LOGICAL_AND)) {
+            if ($this->_isLogicalAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_BOOLEAN_AND);
-            } elseif ($replaceOr &&
-                      $token->isType(T_LOGICAL_OR)) {
+            } elseif ($this->_isLogicalOrAndShouldBeReplaced($token)) {
                 $token->setValue($or);
                 $token->setType(T_BOOLEAN_OR);
             }
             $iterator->next();
         }
+    }
+
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isLogicalAndAndShouldBeReplaced($token)
+    {
+        return ($this->evaluateConstraint('IsType', $token, T_LOGICAL_AND) && $this->getOption('replaceAnd'));
+    }
+
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isLogicalOrAndShouldBeReplaced($token)
+    {
+        return ($this->evaluateConstraint('IsType', $token, T_LOGICAL_OR) && $this->getOption('replaceOr'));
     }
 }

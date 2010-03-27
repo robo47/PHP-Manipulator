@@ -22,17 +22,13 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        $removeDocComments = $this->getOption('removeDocComments');
-        $removeStandardComments = $this->getOption('removeStandardComments');
-
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
 
-            if (($token->isType(T_DOC_COMMENT) && $removeDocComments) ||
-                ($token->isType(T_COMMENT) && $removeStandardComments)) {
+            if ($this->_isCommentAndShouldBeRemoved($token)) {
                 // delete comment
                 unset($container[$iterator->key()]);
                 if ($this->evaluateConstraint('IsMultilineComment', $token)) {
@@ -40,7 +36,7 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
                     $iterator->next();
                     $token = $iterator->current();
                     if (false !== $token &&
-                        $token->isType(T_WHITESPACE)) {
+                        $this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                         // if it is a single new line remove it
                         if ($this->evaluateConstraint('IsSingleNewline', $token)) {
                             unset($container[$iterator->key()]);
@@ -55,5 +51,18 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
             }
             $iterator->next();
         }
+    }
+
+    /**
+     *
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isCommentAndShouldBeRemoved($token)
+    {
+        // $token->isType(T_COMMENT) && $removeStandardComments
+        return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
+                ||
+               ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
     }
 }

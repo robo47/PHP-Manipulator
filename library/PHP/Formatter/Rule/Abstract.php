@@ -187,7 +187,7 @@ abstract class PHP_Formatter_Rule_Abstract implements PHP_Formatter_Rule_Interfa
         if ($autoPrefix) {
             $classname = $prefix . $class;
         }
-        // run potential autoloaders, else fallback for standard-naming + path in include-path
+        // run potential autoloaders, else fallback for standard-naming + path in include-path [any pear-installable standard-only-autoloader there ?]
         if (!class_exists($classname)) {
             require_once str_replace('_', '/', $classname) . '.php';
         }

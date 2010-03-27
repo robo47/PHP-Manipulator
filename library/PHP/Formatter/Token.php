@@ -4,20 +4,16 @@ class PHP_Formatter_Token
 {
 
     /**
-     * Value
-     *
      * @var string
      */
     protected $_value = null;
+
     /**
-     * Linenumber
-     *
      * @var integer|null
      */
     protected $_linenumber = null;
+
     /**
-     * Type
-     *
      * @var integer|null
      */
     protected $_type = null;
@@ -129,21 +125,6 @@ class PHP_Formatter_Token
     {
         $this->_type = $type;
         return $this;
-    }
-
-    /**
-     * Is Type
-     *
-     * @param integer|null $type
-     * @return boolean
-     */
-    public function isType($type)
-    {
-        if ($this->_type === $type) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

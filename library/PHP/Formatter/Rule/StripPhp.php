@@ -23,13 +23,13 @@ class PHP_Formatter_Rule_StripPhp extends PHP_Formatter_Rule_Abstract
         while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if ($token->isType(T_OPEN_TAG) || $token->isType(T_OPEN_TAG_WITH_ECHO)) {
+            if ($this->evaluateConstraint('IsType', $token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
                 $open = true;
             }
             if ($open) {
                 $deleteTokens[] = $token;
             }
-            if ($token->isType(T_CLOSE_TAG)) {
+            if ($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
                 $open = false;
             }
             $iterator->next();
