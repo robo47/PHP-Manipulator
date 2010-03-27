@@ -2,6 +2,7 @@
 
 interface PHP_Formatter_ContainerConstraint_Interface
 {
+
     /**
      * Evaluates a constraint on a container
      *
@@ -10,4 +11,5 @@ interface PHP_Formatter_ContainerConstraint_Interface
      * @return bool
      */
     public function evaluate(PHP_Formatter_TokenContainer $container, $params = null);
+
 }

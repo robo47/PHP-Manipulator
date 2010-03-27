@@ -1,7 +1,7 @@
 <?php
 
-
-abstract class PHP_Formatter_AbstractHelper {
+abstract class PHP_Formatter_AbstractHelper
+{
 
     /**
      * Array with options
@@ -11,7 +11,6 @@ abstract class PHP_Formatter_AbstractHelper {
     protected $_options = array();
 
     /**
-     *
      * @param array $options
      */
     public function __construct(array $options = array())
@@ -21,7 +20,6 @@ abstract class PHP_Formatter_AbstractHelper {
     }
 
     /**
-     *
      * @param array $options
      * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
      */
@@ -34,7 +32,6 @@ abstract class PHP_Formatter_AbstractHelper {
     }
 
     /**
-     *
      * @param string $option
      * @return boolean
      */
@@ -47,7 +44,6 @@ abstract class PHP_Formatter_AbstractHelper {
     }
 
     /**
-     *
      * @param string $option
      * @param mixed $value
      * @return PHP_Formatter_Rule_Abstract *Provides Fluent Interface*
@@ -133,6 +129,7 @@ abstract class PHP_Formatter_AbstractHelper {
      * @param PHP_Formatter_Token $token
      * @param mixed $params
      * @param boolean $autoPrefix
+     * @return boolean
      */
     public function manipulateToken($manipulator, PHP_Formatter_Token $token, $params = null, $autoPrefix = true)
     {
@@ -144,7 +141,7 @@ abstract class PHP_Formatter_AbstractHelper {
             throw new PHP_Formatter_Exception($message);
         }
         /* @var $manipulator PHP_Formatter_TokenManipulator_Interface */
-        $manipulator->manipulate($token, $params);
+        return $manipulator->manipulate($token, $params);
     }
 
     /**
@@ -154,6 +151,7 @@ abstract class PHP_Formatter_AbstractHelper {
      * @param PHP_Formatter_TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
+     * @return boolean
      */
     public function manipulateContainer($manipulator, PHP_Formatter_TokenContainer $container, $params = null, $autoPrefix = true)
     {
@@ -165,7 +163,7 @@ abstract class PHP_Formatter_AbstractHelper {
             throw new PHP_Formatter_Exception($message);
         }
         /* @var $manipulator PHP_Formatter_ContainerManipulator_Interface */
-        $manipulator->manipulate($container, $params);
+        return $manipulator->manipulate($container, $params);
     }
 
     /**
@@ -196,5 +194,8 @@ abstract class PHP_Formatter_AbstractHelper {
      * Called from constructor for checking options, adding default options
      * whatever you want to do.
      */
-    abstract public function init();
+    public function init()
+    {
+        
+    }
 }

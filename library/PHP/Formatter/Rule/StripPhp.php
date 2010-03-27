@@ -5,11 +5,6 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 class PHP_Formatter_Rule_StripPhp extends PHP_Formatter_Rule_Abstract
 {
 
-    public function init()
-    {
-
-    }
-
     /**
      *
      * @param PHP_Formatter_TokenContainer $container

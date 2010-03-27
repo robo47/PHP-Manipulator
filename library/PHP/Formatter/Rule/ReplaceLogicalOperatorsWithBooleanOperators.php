@@ -5,7 +5,7 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperators
 extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('replaceAnd')) {
@@ -28,7 +28,7 @@ extends PHP_Formatter_Rule_Abstract
         $and = '&&';
         $or = '||';
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
             if ($this->_isLogicalAndAndShouldBeReplaced($token)) {

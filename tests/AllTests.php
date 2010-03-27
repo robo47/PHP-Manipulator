@@ -8,8 +8,6 @@ require_once 'PHP/Formatter/TokenContainerTest.php';
 require_once 'PHP/Formatter/TokenTest.php';
 require_once 'PHP/Formatter/UtilTest.php';
 
-
-
 // Rules
 require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AsptagsToLongTagsTest.php';
@@ -34,16 +32,20 @@ require_once 'PHP/Formatter/TokenConstraint/IsSingleNewlineTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsTypeTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsClosingCurlyBraceTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsOpeningCurlyBraceTest.php';
+require_once 'PHP/Formatter/TokenConstraint/MockTest.php';
 
 // ContainerConstraints
 require_once 'PHP/Formatter/ContainerConstraint/InterfaceTest.php';
+require_once 'PHP/Formatter/ContainerConstraint/MockTest.php';
 
 // TokenManipulators
 require_once 'PHP/Formatter/TokenManipulator/InterfaceTest.php';
+require_once 'PHP/Formatter/TokenManipulator/MockTest.php';
 require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewlineTest.php';
 
 // ContainerManipulators
 require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/MockTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToTokenTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/UnifyCastsTest.php';
 
@@ -61,7 +63,7 @@ class AllTests
 
         // Rules
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
-        
+
         $suite->addTestSuite('PHP_Formatter_Rule_AsptagsToLongTagsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest');
         $suite->addTestSuite('PHP_Formatter_Rule_ChangeLineEndingsTest');
@@ -84,16 +86,20 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsTypeTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsClosingCurlyBraceTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_MockTest');
 
         // ContainerConstraints
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerConstraint_MockTest');
 
         // TokenManipulators
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_InterfaceTest');
+        $suite->addTestSuite('PHP_Formatter_TokenManipulator_MockTest');
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest');
 
         // ContainerManipulators
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_MockTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_UnifyCastsTest');
 

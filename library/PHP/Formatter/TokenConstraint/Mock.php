@@ -2,24 +2,26 @@
 
 require_once 'PHP/Formatter/TokenConstraint/Abstract.php';
 
-class PHP_Formatter_TokenConstraint_BeginsWithNewline
+class PHP_Formatter_TokenConstraint_Mock
 extends PHP_Formatter_TokenConstraint_Abstract
 {
 
     /**
-     * Evaluate if the token is a multiline comment
-     *
+     * @var boolean
+     */
+    public static $return = true;
+
+    /**
      * @param PHP_Formatter_Token $token
      * @param mixed $param
      * @return boolean
      */
     public function evaluate(PHP_Formatter_Token $token, $params = null)
     {
-        $beginsWithNewline = false;
-        $pattern = '~^(\n|\r\n|\r)~';
-        if (preg_match($pattern, $token->getValue())) {
-            $beginsWithNewline = true;
+        if ($this->hasOption('return')) {
+            return $this->getOption('return');
+        } else {
+            return self::$return;
         }
-        return $beginsWithNewline;
     }
 }

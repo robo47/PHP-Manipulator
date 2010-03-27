@@ -4,14 +4,14 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('globalScopeOnly')) {
             $this->setOption('globalScopeOnly', true);
         }
     }
-    
+
     /**
      *
      * @param PHP_Formatter_TokenContainer $tokens
@@ -37,13 +37,13 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
         $bracesStatus = 0;
         $openInclude = false;
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
-            if($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+            if ($this->evaluateConstraint('IsType', $token, T_CLASS)) {
                 $inClass = true;
                 $bracesStatus = 0;
             }
-            if($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+            if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
                 $inFunction = true;
                 $bracesStatus = 0;
             }
@@ -53,7 +53,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
                 }
                 if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
                     $bracesStatus--;
-                    if($bracesStatus == 0) {
+                    if ($bracesStatus == 0) {
                         if ($inClass) {
                             $inClass = false;
                         }
@@ -63,9 +63,9 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
                     }
                 }
             }
-            if($this->_shouldCheckAndReplace($inClass , $inFunction)) {
+            if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
                 /* @var $token PHP_Formatter_Token */
-                if($this->evaluateConstraint('IsType', $token, $searchedTokens) && !$openInclude) {
+                if ($this->evaluateConstraint('IsType', $token, $searchedTokens) && !$openInclude) {
                     $searchingColon = true;
                     $foundToken = $token;
                     $openInclude = true;
@@ -84,11 +84,11 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
             $iterator->next();
         }
 
-        foreach($foundPairs as $params) {
+        foreach ($foundPairs as $params) {
             $this->manipulateContainer(
-                'CreateMultilineCommentFromTokenToToken',
-                $container,
-                $params
+                    'CreateMultilineCommentFromTokenToToken',
+                    $container,
+                    $params
             );
         }
     }
@@ -101,7 +101,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
     protected function _isSearchingColon($searchingColon, $token)
     {
         return true === $searchingColon &&
-               $token->getValue() == ';';
+            $token->getValue() == ';';
     }
 
     /**
@@ -113,7 +113,7 @@ class PHP_Formatter_Rule_CommentOutIncludesAndRequires extends PHP_Formatter_Rul
     protected function _shouldCheckAndReplace($inClass, $inFunction)
     {
         $globalScopeOnly = $this->getOption('globalScopeOnly');
-        if(true === $globalScopeOnly && !($inClass || $inFunction)) {
+        if (true === $globalScopeOnly && !($inClass || $inFunction)) {
             return true;
         } elseif (false === $globalScopeOnly) {
             return true;

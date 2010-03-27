@@ -5,7 +5,7 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 class PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperators
 extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('uppercase')) {
@@ -36,7 +36,7 @@ extends PHP_Formatter_Rule_Abstract
             $or = 'or';
         }
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
             if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
@@ -58,7 +58,7 @@ extends PHP_Formatter_Rule_Abstract
     {
         return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
     }
-    
+
     /**
      * @param PHP_Formatter_Token $token
      * @return boolean

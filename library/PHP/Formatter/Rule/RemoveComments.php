@@ -62,7 +62,7 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
     {
         // $token->isType(T_COMMENT) && $removeStandardComments
         return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
-                ||
-               ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
+            ||
+            ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
     }
 }

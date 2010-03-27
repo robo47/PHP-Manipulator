@@ -5,10 +5,6 @@ require_once 'PHP/Formatter/TokenConstraint/Abstract.php';
 class PHP_Formatter_TokenConstraint_IsType
 extends PHP_Formatter_TokenConstraint_Abstract
 {
-    public function init()
-    {
-
-    }
 
     /**
      * Evaluate if the token is of a Type
@@ -21,7 +17,7 @@ extends PHP_Formatter_TokenConstraint_Abstract
     {
         $isType = false;
         if (is_array($param)) {
-            foreach($param as $tokenType) {
+            foreach ($param as $tokenType) {
                 if ($token->getType() === $tokenType) {
                     $isType = true;
                     break;

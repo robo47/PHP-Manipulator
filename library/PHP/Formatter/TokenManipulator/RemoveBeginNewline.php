@@ -5,11 +5,7 @@ require_once 'PHP/Formatter/TokenManipulator/Abstract.php';
 class PHP_Formatter_TokenManipulator_RemoveBeginNewline
 extends PHP_Formatter_TokenManipulator_Abstract
 {
-    public function init()
-    {
 
-    }
-    
     /**
      * Manipulates a Token
      *

@@ -5,10 +5,6 @@ require_once 'PHP/Formatter/ContainerManipulator/Abstract.php';
 class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken
 extends PHP_Formatter_ContainerManipulator_Abstract
 {
-    public function init()
-    {
-        
-    }
 
     /**
      * Manipulate
@@ -19,27 +15,27 @@ extends PHP_Formatter_ContainerManipulator_Abstract
      */
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
     {
-        if(!is_array($params)) {
+        if (!is_array($params)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = 'invalid input $params should be an array';
             throw new PHP_Formatter_Exception($message);
         }
-        if(!isset($params['from'])) {
+        if (!isset($params['from'])) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "key 'from' not found in \$params";
             throw new PHP_Formatter_Exception($message);
         }
-        if(!($params['from'] instanceof PHP_Formatter_Token)) {
+        if (!($params['from'] instanceof PHP_Formatter_Token)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "key 'from' is not instance of PHP_Formatter_Token";
             throw new PHP_Formatter_Exception($message);
         }
-        if(!isset($params['to'])) {
+        if (!isset($params['to'])) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "key 'to' not found in \$params";
             throw new PHP_Formatter_Exception($message);
         }
-        if(!($params['to'] instanceof PHP_Formatter_Token)) {
+        if (!($params['to'] instanceof PHP_Formatter_Token)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "key 'to' is not instance of PHP_Formatter_Token";
             throw new PHP_Formatter_Exception($message);
@@ -50,13 +46,13 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         $to = $params['to'];
         /* @var $from PHP_Formatter_Token */
 
-        if(!$container->contains($from)) {
+        if (!$container->contains($from)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "element 'from' not found in \$container";
             throw new PHP_Formatter_Exception($message);
         }
 
-        if(!$container->contains($to)) {
+        if (!$container->contains($to)) {
             require_once 'PHP/Formatter/Exception.php';
             $message = "element 'to' not found in \$container";
             throw new PHP_Formatter_Exception($message);
@@ -100,9 +96,9 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         $iterator->seek($startPosition);
 
         $tokens = array();
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $tokens[] = $iterator->current();
-            if($iterator->key() == $endOffset) {
+            if ($iterator->key() == $endOffset) {
                 break;
             }
             $iterator->next();
@@ -117,7 +113,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
     protected function _mergeTokenValuesIntoString($tokens)
     {
         $value = '';
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             /* @var $token PHP_Formatter_Token */
             if (!$this->_isMultilineComment($token)) {
                 $value .= $token->getValue();
@@ -125,7 +121,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         }
         return $value;
     }
-
 
     /**
      * @param PHP_Formatter_Token $token

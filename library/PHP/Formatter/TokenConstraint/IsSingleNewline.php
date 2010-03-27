@@ -6,11 +6,6 @@ class PHP_Formatter_TokenConstraint_IsSingleNewline
 extends PHP_Formatter_TokenConstraint_Abstract
 {
 
-    public function init()
-    {
-
-    }
-    
     /**
      * Evaluate if the token is a multiline comment
      *

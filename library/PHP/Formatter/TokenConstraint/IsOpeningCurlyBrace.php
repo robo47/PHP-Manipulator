@@ -5,11 +5,6 @@ require_once 'PHP/Formatter/TokenConstraint/Abstract.php';
 class PHP_Formatter_TokenConstraint_IsOpeningCurlyBrace
 extends PHP_Formatter_TokenConstraint_Abstract
 {
-    public function init()
-    {
-
-    }
-    
 
     /**
      * Evaluate if the token is an opening curly brace {
@@ -20,7 +15,7 @@ extends PHP_Formatter_TokenConstraint_Abstract
      */
     public function evaluate(PHP_Formatter_Token $token, $param = null)
     {
-        if(null === $token->getType() && $token->getValue() === '{') {
+        if (null === $token->getType() && $token->getValue() === '{') {
             return true;
         }
         return false;

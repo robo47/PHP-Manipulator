@@ -14,7 +14,7 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
 
     /**
      * Unindents all Code
-     * 
+     *
      * @param PHP_Formatter_TokenContainer $container
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)

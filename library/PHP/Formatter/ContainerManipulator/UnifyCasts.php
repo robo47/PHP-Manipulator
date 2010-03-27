@@ -5,11 +5,7 @@ require_once 'PHP/Formatter/ContainerManipulator/Abstract.php';
 class PHP_Formatter_ContainerManipulator_UnifyCasts
 extends PHP_Formatter_ContainerManipulator_Abstract
 {
-    public function init()
-    {
 
-    }
-    
     /**
      * Manipulate
      *
@@ -32,12 +28,12 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         );
 
         // array_merge() won't work with integer-keys!
-        foreach($params as $cast => $value) {
+        foreach ($params as $cast => $value) {
             $searchedTokens[$cast] = $value;
         }
         $changed = false;
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
             if ($this->evaluateConstraint('IsType', $token, array_keys($searchedTokens))) {
