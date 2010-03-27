@@ -135,12 +135,12 @@ class PHP_FormatterTest extends PHPFormatterTestCase
     {
         $addRules = array(
             new PHP_Formatter_Rule_RemoveComments(),
-            new PHP_Formatter_Rule_NonAbstract(),
+            new PHP_Formatter_Rule_ChangeLineEndings(),
             new PHP_Formatter_Rule_RemoveTrailingWhitespace(),
 
         );
         $formatter = new PHP_Formatter($addRules);
-        $fluent = $formatter->removeRuleByClassname('PHP_Formatter_Rule_NonAbstract');
+        $fluent = $formatter->removeRuleByClassname('PHP_Formatter_Rule_ChangeLineEndings');
         $this->assertSame($fluent, $formatter, 'No fluent interface');
 
         $rules = $formatter->getRules();

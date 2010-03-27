@@ -1,8 +1,8 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/Abstract.php';
+require_once 'PHP/Formatter/AbstractHelper.php';
 
-class PHP_Formatter_Rule_NonAbstract extends PHP_Formatter_Rule_Abstract
+class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 {
     public $init = false;
 
@@ -10,40 +10,35 @@ class PHP_Formatter_Rule_NonAbstract extends PHP_Formatter_Rule_Abstract
     {
         $this->init = true;
     }
-
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $tokens)
-    {
-    }
 }
 
-class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
+class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
 {
     /**
-     * @covers PHP_Formatter_Rule_Abstract
+     * @covers PHP_Formatter_AbstractHelper
      */
     public function testAbstractClassAndMethods()
     {
-        $reflection = new ReflectionClass('PHP_Formatter_Rule_Abstract');
+        $reflection = new ReflectionClass('PHP_Formatter_AbstractHelper');
         $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
-        $this->assertTrue($reflection->isSubclassOf('PHP_Formatter_Rule_Interface'), 'Class not implements PHP_Formatter_Rule_Interface');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::__construct
+     * @covers PHP_Formatter_AbstractHelper::__construct
      */
     public function testDefaultConstructor()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $rule = new PHP_Formatter_NonAbstractHelper();
         $this->assertEquals(array(), $rule->getOptions(), 'options don\'t match');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::__construct
-     * @covers PHP_Formatter_Rule_Abstract::init
+     * @covers PHP_Formatter_AbstractHelper::__construct
+     * @covers PHP_Formatter_AbstractHelper::init
      */
     public function testConstructorCallsInit()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $rule = new PHP_Formatter_NonAbstractHelper();
         $this->assertTrue($rule->init, 'init is not true');
     }
 
@@ -62,18 +57,18 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::__construct
+     * @covers PHP_Formatter_AbstractHelper::__construct
      * @dataProvider constructorOptionsProvider
      */
     public function testConstructorSetsOptions($options)
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract($options);
+        $rule = new PHP_Formatter_NonAbstractHelper($options);
         $this->assertEquals($options, $rule->getOptions(), 'options don\'t match');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::addOptions
-     * @covers PHP_Formatter_Rule_Abstract::getOptions
+     * @covers PHP_Formatter_AbstractHelper::addOptions
+     * @covers PHP_Formatter_AbstractHelper::getOptions
      */
     public function testAddOptionsAndGetOptions()
     {
@@ -81,7 +76,7 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
             'baa' => 'foo',
             'blub' => 'bla',
         );
-        $rule = new PHP_Formatter_Rule_NonAbstract(array('foo' => 'bla'));
+        $rule = new PHP_Formatter_NonAbstractHelper(array('foo' => 'bla'));
         $fluent = $rule->addOptions($options);
         $this->assertSame($fluent, $rule, 'No fluent interface');
 
@@ -89,24 +84,24 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::setOption
-     * @covers PHP_Formatter_Rule_Abstract::getOption
+     * @covers PHP_Formatter_AbstractHelper::setOption
+     * @covers PHP_Formatter_AbstractHelper::getOption
      */
     public function testSetOptionAndGetOption()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $rule = new PHP_Formatter_NonAbstractHelper();
         $fluent = $rule->setOption('baa', 'foo');
         $this->assertSame($fluent, $rule, 'No fluent interface');
         $this->assertEquals('foo', $rule->getOption('baa'), 'Wrong value');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::getOption
+     * @covers PHP_Formatter_AbstractHelper::getOption
      * @covers PHP_Formatter_Exception
      */
     public function testGetOptionThrowsExceptionOnNonExistingOption()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $rule = new PHP_Formatter_NonAbstractHelper();
         try {
             $rule->getOption('foo');
             $this->fail('Expected exception not thrown');
@@ -116,17 +111,17 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::hasOption
+     * @covers PHP_Formatter_AbstractHelper::hasOption
      */
     public function testHasOption()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract(array('foo' => 'bla'));
+        $rule = new PHP_Formatter_NonAbstractHelper(array('foo' => 'bla'));
         $this->assertTrue($rule->hasOption('foo'));
         $this->assertFalse($rule->hasOption('blub'));
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::evaluateConstraint
+     * @covers PHP_Formatter_AbstractHelper::evaluateConstraint
      */
     public function testEvaluateConstraint()
     {
@@ -134,7 +129,7 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::manipulateToken
+     * @covers PHP_Formatter_AbstractHelper::manipulateToken
      */
     public function testManipulateToken()
     {
@@ -142,34 +137,34 @@ class PHP_Formatter_Rule_AbstractTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     * @covers PHP_Formatter_AbstractHelper::getClassInstance
      */
     public function testGetClassInstanceWithAutoPrefix()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
-        $instance = $rule->getClassInstance('Dummy1', 'PHP_Formatter_Rule_Temp_', true);
-        $this->assertTrue(class_exists('PHP_Formatter_Rule_Temp_Dummy1', false), 'Class not loaded');
-        $this->assertType('PHP_Formatter_Rule_Temp_Dummy1', $instance, 'Wrong type');
+        $rule = new PHP_Formatter_NonAbstractHelper();
+        $instance = $rule->getClassInstance('Dummy1', 'PHP_Formatter_Temp_', true);
+        $this->assertTrue(class_exists('PHP_Formatter_Temp_Dummy1', false), 'Class not loaded');
+        $this->assertType('PHP_Formatter_Temp_Dummy1', $instance, 'Wrong type');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     * @covers PHP_Formatter_AbstractHelper::getClassInstance
      */
     public function testGetClassInstanceWithoutAutoPrefix()
     {
-        $rule = new PHP_Formatter_Rule_NonAbstract();
-        $instance = $rule->getClassInstance('PHP_Formatter_Rule_Temp_Dummy2', '', false);
-        $this->assertTrue(class_exists('PHP_Formatter_Rule_Temp_Dummy2', false), 'Class not loaded');
-        $this->assertType('PHP_Formatter_Rule_Temp_Dummy2', $instance, 'Wrong type');
+        $rule = new PHP_Formatter_NonAbstractHelper();
+        $instance = $rule->getClassInstance('PHP_Formatter_Temp_Dummy2', '', false);
+        $this->assertTrue(class_exists('PHP_Formatter_Temp_Dummy2', false), 'Class not loaded');
+        $this->assertType('PHP_Formatter_Temp_Dummy2', $instance, 'Wrong type');
     }
 
     /**
-     * @covers PHP_Formatter_Rule_Abstract::getClassInstance
+     * @covers PHP_Formatter_AbstractHelper::getClassInstance
      */
     public function testGetClassInstanceWithDirectClass()
     {
-        $class = new PHP_Formatter_Rule_Temp_Dummy2();
-        $rule = new PHP_Formatter_Rule_NonAbstract();
+        $class = new PHP_Formatter_Temp_Dummy2();
+        $rule = new PHP_Formatter_NonAbstractHelper();
         $instance = $rule->getClassInstance($class, '', false);
         $this->assertSame($class, $instance);
     }

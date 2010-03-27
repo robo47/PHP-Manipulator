@@ -18,7 +18,6 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespace extends PHP_Formatter_Rule_Abs
     /**
      *
      * @param PHP_Formatter_TokenContainer $container
-     * @todo always outputs linux-line-endings!
      * @todo possible without tokens2code2tokens ?
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)

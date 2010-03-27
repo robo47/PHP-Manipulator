@@ -1,10 +1,15 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/Interface.php';
+require_once 'PHP/Formatter/ContainerManipulator/Abstract.php';
 
 class PHP_Formatter_ContainerManipulator_UnifyCasts
-implements PHP_Formatter_ContainerManipulator_Interface
+extends PHP_Formatter_ContainerManipulator_Abstract
 {
+    public function init()
+    {
+
+    }
+    
     /**
      * Manipulate
      *
@@ -16,7 +21,7 @@ implements PHP_Formatter_ContainerManipulator_Interface
     {
         $iterator = $container->getIterator();
 
-        $options = array(
+        $searchedTokens = array(
             T_INT_CAST => '(int)',
             T_BOOL_CAST => '(bool)',
             T_DOUBLE_CAST => '(double)',
@@ -28,15 +33,15 @@ implements PHP_Formatter_ContainerManipulator_Interface
 
         // array_merge() won't work with integer-keys!
         foreach($params as $cast => $value) {
-            $options[$cast] = $value;
+            $searchedTokens[$cast] = $value;
         }
         $changed = false;
 
         while($iterator->valid()) {
             $token = $iterator->current();
             /* @var $token PHP_Formatter_Token */
-            if($this->_isSearchedToken($token, array_keys($options))) {
-                $newValue = $options[$token->getType()];
+            if ($this->evaluateConstraint('IsType', $token, array_keys($searchedTokens))) {
+                $newValue = $searchedTokens[$token->getType()];
                 if ($token->getValue() != $newValue) {
                     $token->setValue($newValue);
                     $changed = true;
@@ -44,19 +49,6 @@ implements PHP_Formatter_ContainerManipulator_Interface
             }
             $iterator->next();
         }
-
         return $changed;
-    }
-
-    /**
-     * @param PHP_Formatter_Token $token
-     * @param array $searched
-     * @return boolean
-     * @todo refactor by creating a global abstract class with ->evaluateContainerConstraint, ...
-     */
-    protected function _isSearchedToken($token, $searched)
-    {
-        $constriant = new PHP_Formatter_TokenConstraint_IsType();
-        return $constriant->evaluate($token, $searched);
     }
 }

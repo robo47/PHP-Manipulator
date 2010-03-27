@@ -1,10 +1,15 @@
 <?php
 
-require_once 'PHP/Formatter/TokenConstraint/Interface.php';
+require_once 'PHP/Formatter/TokenConstraint/Abstract.php';
 
 class PHP_Formatter_TokenConstraint_EndsWithNewline
-implements PHP_Formatter_TokenConstraint_Interface
+extends PHP_Formatter_TokenConstraint_Abstract
 {
+    public function init()
+    {
+
+    }
+    
 
     /**
      * Evaluate if the token is a multiline comment
