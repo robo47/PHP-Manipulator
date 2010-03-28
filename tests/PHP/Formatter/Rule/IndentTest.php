@@ -1,0 +1,56 @@
+<?php
+
+require_once 'PHP/Formatter/Rule/Indent.php';
+
+/**
+ * @group Rule_Indention
+ */
+class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
+{
+    /**
+     * @covers PHP_Formatter_Rule_Indent::init
+     */
+    public function testConstructorDefaults()
+    {
+        $rule = new PHP_Formatter_Rule_Indent();
+        $this->assertTrue($rule->getOption('useSpaces'), 'Wrong default Option value for useSpaces');
+        $this->assertEquals(4, $rule->getOption('tabWidth'), 'Wrong default Option value for tabWidth');
+        $this->assertEquals(4, $rule->getOption('indentionWidth'), 'Wrong default Option value for indentionWidth');
+        $this->assertEquals(0, $rule->getOption('initialIndentionWidth'), 'Wrong default Option value for initialIndentionWidth');
+
+    }
+
+    public function ruleProvider()
+    {
+        $data = array();
+        $path = '/Rule/Indent/';
+
+        #0
+        $data[] = array(
+            array(),
+            $this->getTokenArrayFromFixtureFile($path . 'input1'),
+            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+        );
+
+        #0
+        $data[] = array(
+            array(),
+            $this->getTokenArrayFromFixtureFile($path . 'input2'),
+            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+        );
+        
+        return $data;
+    }
+
+    /**
+     * @covers PHP_Formatter_Rule_Indent::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_Indent::<protected>
+     * @dataProvider ruleProvider
+     */
+    public function testRule($options, $input, $expectedTokens)
+    {
+        $rule = new PHP_Formatter_Rule_Indent($options);
+        $rule->applyRuleToTokens($input);
+        $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
+    }
+}

@@ -11,15 +11,18 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
         if (!$this->hasOption('useSpaces')) {
             $this->setOption('useSpaces', true);
         }
+//        if (!$this->hasOption('useAlignment')) {
+//            $this->setOption('useAlignment', true);
+//        }
         if (!$this->hasOption('tabWidth')) {
             $this->setOption('tabWidth', 4);
         }
         if (!$this->hasOption('indentionWidth')) {
             $this->setOption('indentionWidth', 4);
         }
-//        if (!$this->hasOption('initialIndentionWidth')) {
-//            $this->setOption('initialIndentionWidth', 0);
-//        }
+        if (!$this->hasOption('initialIndentionWidth')) {
+            $this->setOption('initialIndentionWidth', 0);
+        }
     }
 
     /**
@@ -33,15 +36,72 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
         // for each token which is not T_WHITESPACE or T_INLINE_HTML [checking to do indention after EACH break!
         // check indention
         // dont indent T_PHP_OPEN!
+        echo PHP_EOL . '###### START #####' . PHP_EOL;
+        $removeIndention = new PHP_Formatter_Rule_RemoveIndention();
+        $removeIndention->applyRuleToTokens($container);
+
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Formatter_Token */
-            // check if token contains break
-
+            if ($this->_isIndentionLevelIncreasment($token)) {
+                $this->increasIndentionLevel();
+            }
+            if ($this->_isIndentionLevelDecreasement($token)) {
+                $this->decreasIndentionLevel();
+            }
+            if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE) && false !== strpos($token->getValue(), "\n")) {
+                $whitespace = $token;
+                $iterator->next();
+                $nextToken = $iterator->current();
+                if ($this->_isIndentionLevelDecreasement($nextToken)) {
+                    $this->decreaseIndentionLevel();
+                }
+                echo 'indent: ' .$iterator->key() .') ' . $this->getIndentionLevel() . PHP_EOL;
+                $newValue = $whitespace->getValue() . $this->getIndention($this->getIndentionLevel());
+                $whitespace->setValue($newValue);
+            }
             $iterator->next();
         }
+        echo PHP_EOL . '###### END #####' . PHP_EOL;
+    }
+    
+    protected $_indentionLevel = 0;
+
+    public function increasIndentionLevel()
+    {
+        $this->_indentionLevel++;
+        echo 'increase: ' ;
+        echo $this->_indentionLevel . PHP_EOL;
+    }
+
+    public function decreaseIndentionLevel()
+    {
+        $this->_indentionLevel--;
+        echo 'decrease: ' ;
+        echo $this->_indentionLevel . PHP_EOL;
+    }
+
+    public function getIndentionLevel()
+    {
+        return $this->_indentionLevel;
+    }
+
+//    protected $_currentAction = array();
+//
+//    protected function _wtfAreWeCurrentlyDoing()
+//    {
+//        return $this->_currentAction;
+//    }
+
+    protected function _isIndentionLevelIncreasment($token)
+    {
+        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token);
+    }
+
+    protected function _isIndentionLevelDecreasement($token)
+    {
+        return $this->evaluateConstraint('IsClosingCurlyBrace', $token);
     }
 
     /**

@@ -26,8 +26,9 @@ class PHP_FormatterTest extends PHPFormatterTestCase
             new PHP_Formatter_Rule_RemoveComments(),
 
         );
+
         $formatter = new PHP_Formatter($addRules);
-        
+
         $rules = $formatter->getRules();
 
         $this->assertEquals(3, count($rules), 'Wrong rules count');

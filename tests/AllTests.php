@@ -13,6 +13,7 @@ require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AsptagsToLongTagsTest.php';
 require_once 'PHP/Formatter/Rule/CommentOutIncludesAndRequiresTest.php';
 require_once 'PHP/Formatter/Rule/ChangeLineEndingsTest.php';
+require_once 'PHP/Formatter/Rule/IndentTest.php';
 require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
 require_once 'PHP/Formatter/Rule/RemoveIndentionTest.php';
 require_once 'PHP/Formatter/Rule/RemoveMultipleEmptyLinesTest.php';
@@ -63,10 +64,10 @@ class AllTests
 
         // Rules
         $suite->addTestSuite('PHP_Formatter_Rule_InterfaceTest');
-
         $suite->addTestSuite('PHP_Formatter_Rule_AsptagsToLongTagsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest');
         $suite->addTestSuite('PHP_Formatter_Rule_ChangeLineEndingsTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_IndentTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveCommentsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveIndentionTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest');
