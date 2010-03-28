@@ -166,6 +166,8 @@ abstract class PHP_Formatter_AbstractHelper
         return $manipulator->manipulate($container, $params);
     }
 
+    // @todo new method names applyRule ? to call Rules in Rules ? or should most rules be refactored to Manipulators ?
+
     /**
      * Get class instance
      *
