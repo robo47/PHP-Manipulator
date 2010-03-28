@@ -5,12 +5,6 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 {
     /**
-     *
-     * @var SplStack
-     */
-//    protected $_actionStack = null;
-
-    /**
      * Current Level of Indention
      * 
      * @var integer
@@ -19,14 +13,10 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 
     public function init()
     {
-        $this->_actionStack = new SplStack();
         // indentions are always given in tabs!
         if (!$this->hasOption('useSpaces')) {
             $this->setOption('useSpaces', true);
         }
-//        if (!$this->hasOption('useAlignment')) {
-//            $this->setOption('useAlignment', true);
-//        }
         if (!$this->hasOption('tabWidth')) {
             $this->setOption('tabWidth', 4);
         }
@@ -39,17 +29,12 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
     }
 
     /**
-     * Unindents all Code
+     * Unindents all Code and then indent it right
      *
      * @param PHP_Formatter_TokenContainer $container
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        // RemoveIndetion first
-        // for each token which is not T_WHITESPACE or T_INLINE_HTML [checking to do indention after EACH break!
-        // check indention
-        // dont indent T_PHP_OPEN!
-        echo PHP_EOL . '###### START #####' . PHP_EOL;
         $removeIndention = new PHP_Formatter_Rule_RemoveIndention();
         $removeIndention->applyRuleToTokens($container);
 
@@ -58,107 +43,99 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            //$this->declareCurrentAction($token);
+            $this->checkAndChangeIndentionLevel($token);
 
-            if ($this->_isIndentionLevelIncreasment($token)) {
-                $this->increasIndentionLevel();
-            }
-            if ($this->_isIndentionLevelDecreasement($token)) {
-                $this->decreaseIndentionLevel();
-            }
-            if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE) && false !== strpos($token->getValue(), "\n")) {
-                $whitespace = $token;
+            if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 $nextToken = $iterator->current();
-                if ($this->_isIndentionLevelDecreasement($nextToken)) {
-                    $this->decreaseIndentionLevel();
-                }
-                echo 'indent: ' .$iterator->key() .') ' . $this->getIndentionLevel() . PHP_EOL;
-                $newValue = $whitespace->getValue() . $this->getIndention($this->getIndentionLevel());
-                $whitespace->setValue($newValue);
+
+                $this->checkAndChangeIndentionLevelDecreasment($nextToken);
+                $this->indentWhitespace($token);
             }
             $iterator->next();
         }
-        echo PHP_EOL . '###### END #####' . PHP_EOL;
     }
-    
+
+    /**
+     * @param PHP_Formatter_Token $whitespaceToken
+     */
+    public function indentWhitespace(PHP_Formatter_Token $whitespaceToken)
+    {
+        $newValue = $whitespaceToken->getValue() .
+                    $this->getIndention($this->getIndentionLevel());
+        $whitespaceToken->setValue($newValue);
+    }
+
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isWhitespaceWithBreak(PHP_Formatter_Token $token)
+    {
+        return $this->evaluateConstraint('IsType', $token, T_WHITESPACE)
+            && (false !== strpos($token->getValue(), "\n")
+             || false !== strpos($token->getValue(), "\r"));
+    }
+
+    public function checkAndChangeIndentionLevel(PHP_Formatter_Token $token)
+    {
+        $this->checkAndChangeIndentionLevelDecreasment($token);
+        $this->checkAndChangeIndentionLevelIncreasment($token);
+    }
+
+    public function checkAndChangeIndentionLevelIncreasment(PHP_Formatter_Token $token)
+    {
+        if ($this->_isIndentionLevelIncreasment($token)) {
+            $this->increasIndentionLevel();
+        }
+    }
+
+    public function checkAndChangeIndentionLevelDecreasment(PHP_Formatter_Token $token)
+    {
+        if ($this->_isIndentionLevelDecreasement($token)) {
+            $this->decreaseIndentionLevel();
+        }
+    }
 
     public function increasIndentionLevel()
     {
         $this->_indentionLevel++;
-        echo 'increase: ' ;
-        echo $this->_indentionLevel . PHP_EOL;
     }
 
     public function decreaseIndentionLevel()
     {
         $this->_indentionLevel--;
-        echo 'decrease: ' ;
-        echo $this->_indentionLevel . PHP_EOL;
     }
 
+    /**
+     * @return integer
+     */
     public function getIndentionLevel()
     {
         return $this->_indentionLevel;
     }
-    
-//    protected $_currentAction = array();
-//    const T_UNKNOWN_ACTION = -1337;
-//    /**
-//     *
-//     * @param PHP_Formatter_Token $token
-//     */
-//    public function declareCurrentAction($token)
-//    {
-//        $type = $token->getType();
-//        switch($type) {
-//            case T_FUNCTION:
-//            case T_CLASS:
-//            case T_ARRAY:
-//                $this->_actionStack->push($type);
-//                break;
-//            default:
-//                if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
-//                    $top = $this->_actionStack->top();
-//                    $this->_actionStack->push($top);
-//                }
-//
-//                if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
-//                    $top = $this->_actionStack->top();
-//                    $this->_actionStack->push($top);
-//                }
-//
-//                if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
-//                    $this->_actionStack->pop();
-//                }
-//
-//                if ($this->evaluateConstraint('IsClosingBrace', $token)) {
-//                    $this->_actionStack->pop();
-//                }
-//
-//                $this->_currentAction[] = self::T_UNKNOWN_ACTION;
-//        }
-//    }
-//
-//    public function previousActionWasDeclaringAnArray()
-//    {
-//        end($this->_currentAction);
-//        return (current($this->_currentAction) === T_ARRAY);
-//    }
 
-
-    protected function _isIndentionLevelIncreasment($token)
+    /**
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isIndentionLevelIncreasment(PHP_Formatter_Token $token)
     {
-        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token) || $this->evaluateConstraint('IsOpeningBrace', $token);
-    }
-
-    protected function _isIndentionLevelDecreasement($token)
-    {
-        return $this->evaluateConstraint('IsClosingCurlyBrace', $token) || $this->evaluateConstraint('IsClosingBrace', $token);
+        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
+            || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     /**
-     *
+     * @param PHP_Formatter_Token $token
+     * @return boolean
+     */
+    protected function _isIndentionLevelDecreasement(PHP_Formatter_Token $token)
+    {
+        return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
+            || $this->evaluateConstraint('IsClosingBrace', $token);
+    }
+
+    /**
      * @param integer $depth
      * @return string
      */
@@ -170,7 +147,6 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
         //$initialIndentionWidth = $this->getOption('initialIndentionWidth');
 
         $indentionLength = ($indentionWidth * $depth); // + $initialIndentionWidth;
-
         if (!$useSpaces) {
             $indention = $this->getAsTabs($indentionLength, $tabWidth);
         } else {
@@ -181,15 +157,14 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
     }
 
     /**
-     * Returns
      * @param integer $spaceLength
      * @param integer $tabWith
      * @return string
      */
-    public function getAsTabs($spaceLength, $tabWith)
+    public function getAsTabs($spaceLength, $tabWidth)
     {
-        $tabCount = floor($spaceLength / "\t");
-        $additionalSpaces = $spaceLength % "\t";
+        $tabCount = floor($spaceLength / $tabWidth);
+        $additionalSpaces = $spaceLength % $tabWidth;
 
         return str_repeat("\t", $tabCount) . str_repeat(' ', $additionalSpaces);
     }

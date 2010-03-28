@@ -54,7 +54,6 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
     }
 
     /**
-     *
      * @param PHP_Formatter_Token $token
      * @return boolean
      */

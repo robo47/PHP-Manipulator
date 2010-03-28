@@ -1,5 +1,6 @@
 <?php
 
+// @todo method which returns possible options of the concrete implementation, if they are needed or not, ...
 abstract class PHP_Formatter_AbstractHelper
 {
 

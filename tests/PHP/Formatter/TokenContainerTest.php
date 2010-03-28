@@ -2,6 +2,10 @@
 
 require_once 'PHP/Formatter/TokenContainer.php';
 
+/**
+ * @group TokenContainer
+ * @todo create methods for setting up a default test container + method for returning the tokens
+ */
 class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
 {
     /**
@@ -597,5 +601,47 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $this->assertTrue($container->contains($token1), 'Container contains Token1');
         $this->assertTrue($container->contains($token3), 'Container contains Token3');
         $this->assertFalse($container->contains($token2), 'Container not contains Token2');
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::getNextToken
+     */
+    public function testGetNextToken()
+    {
+        $token1 = PHP_Formatter_Token::factory('Token1');
+        $token2 = PHP_Formatter_Token::factory('Token2');
+        $token3 = PHP_Formatter_Token::factory('Token3');
+        $token4 = PHP_Formatter_Token::factory('Token4');
+        $container = new PHP_Formatter_TokenContainer();
+
+        $container[] = $token1;
+        $container[] = $token2;
+        $container[] = $token3;
+
+        $this->assertSame($token2, $container->getNextToken($token1), 'Wrong token');
+        $this->assertSame($token3, $container->getNextToken($token2), 'Wrong token');
+        $this->assertNull($container->getNextToken($token3), 'Found Token after last token');
+        $this->assertNull($container->getNextToken($token4), 'Found Token which could not be found');
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::getPreviousToken
+     */
+    public function testGetPreviousToken()
+    {
+        $token1 = PHP_Formatter_Token::factory('Token1');
+        $token2 = PHP_Formatter_Token::factory('Token2');
+        $token3 = PHP_Formatter_Token::factory('Token3');
+        $token4 = PHP_Formatter_Token::factory('Token4');
+        $container = new PHP_Formatter_TokenContainer();
+
+        $container[] = $token1;
+        $container[] = $token2;
+        $container[] = $token3;
+
+        $this->assertSame($token1, $container->getPreviousToken($token2), 'Wrong token');
+        $this->assertSame($token2, $container->getPreviousToken($token3), 'Wrong token');
+        $this->assertNull($container->getPreviousToken($token1), 'Found Token before first token');
+        $this->assertNull($container->getPreviousToken($token4), 'Found Token which could not be found');
     }
 }

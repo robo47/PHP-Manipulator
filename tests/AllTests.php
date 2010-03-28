@@ -13,6 +13,7 @@ require_once 'PHP/Formatter/Rule/InterfaceTest.php';
 require_once 'PHP/Formatter/Rule/AsptagsToLongTagsTest.php';
 require_once 'PHP/Formatter/Rule/CommentOutIncludesAndRequiresTest.php';
 require_once 'PHP/Formatter/Rule/ChangeLineEndingsTest.php';
+require_once 'PHP/Formatter/Rule/FormatOperatorsTest.php';
 require_once 'PHP/Formatter/Rule/IndentTest.php';
 require_once 'PHP/Formatter/Rule/RemoveCommentsTest.php';
 require_once 'PHP/Formatter/Rule/RemoveIndentionTest.php';
@@ -35,6 +36,7 @@ require_once 'PHP/Formatter/TokenConstraint/IsClosingCurlyBraceTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsOpeningCurlyBraceTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsClosingBraceTest.php';
 require_once 'PHP/Formatter/TokenConstraint/IsOpeningBraceTest.php';
+require_once 'PHP/Formatter/TokenConstraint/IsOperatorTest.php';
 require_once 'PHP/Formatter/TokenConstraint/MockTest.php';
 
 // ContainerConstraints
@@ -51,6 +53,9 @@ require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/MockTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToTokenTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/UnifyCastsTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceAfterTokenTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceBeforeTokenTest.php';
+
 
 class AllTests
 {
@@ -69,6 +74,7 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_Rule_AsptagsToLongTagsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest');
         $suite->addTestSuite('PHP_Formatter_Rule_ChangeLineEndingsTest');
+        $suite->addTestSuite('PHP_Formatter_Rule_FormatOperatorsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_IndentTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveCommentsTest');
         $suite->addTestSuite('PHP_Formatter_Rule_RemoveIndentionTest');
@@ -86,6 +92,7 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_EndsWithNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOperatorTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsTypeTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsClosingCurlyBraceTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest');
@@ -103,9 +110,11 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest');
 
         // ContainerManipulators
-        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');
-        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_MockTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_InterfaceTest');        
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_MockTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeTokenTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_UnifyCastsTest');
 
         return $suite;
