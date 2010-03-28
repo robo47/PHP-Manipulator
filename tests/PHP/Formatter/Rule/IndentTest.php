@@ -32,11 +32,18 @@ class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'output1'),
         );
 
-        #0
+        #1
         $data[] = array(
             array(),
             $this->getTokenArrayFromFixtureFile($path . 'input2'),
             $this->getTokenArrayFromFixtureFile($path . 'output2'),
+        );
+        
+        #2
+        $data[] = array(
+            array(),
+            $this->getTokenArrayFromFixtureFile($path . 'input3'),
+            $this->getTokenArrayFromFixtureFile($path . 'output3'),
         );
         
         return $data;

@@ -4,9 +4,22 @@ require_once 'PHP/Formatter/Rule/Abstract.php';
 
 class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 {
-    
+    /**
+     *
+     * @var SplStack
+     */
+//    protected $_actionStack = null;
+
+    /**
+     * Current Level of Indention
+     * 
+     * @var integer
+     */
+    protected $_indentionLevel = 0;
+
     public function init()
     {
+        $this->_actionStack = new SplStack();
         // indentions are always given in tabs!
         if (!$this->hasOption('useSpaces')) {
             $this->setOption('useSpaces', true);
@@ -44,11 +57,14 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 
         while ($iterator->valid()) {
             $token = $iterator->current();
+
+            //$this->declareCurrentAction($token);
+
             if ($this->_isIndentionLevelIncreasment($token)) {
                 $this->increasIndentionLevel();
             }
             if ($this->_isIndentionLevelDecreasement($token)) {
-                $this->decreasIndentionLevel();
+                $this->decreaseIndentionLevel();
             }
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE) && false !== strpos($token->getValue(), "\n")) {
                 $whitespace = $token;
@@ -66,7 +82,6 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
         echo PHP_EOL . '###### END #####' . PHP_EOL;
     }
     
-    protected $_indentionLevel = 0;
 
     public function increasIndentionLevel()
     {
@@ -86,22 +101,60 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
     {
         return $this->_indentionLevel;
     }
-
+    
 //    protected $_currentAction = array();
-//
-//    protected function _wtfAreWeCurrentlyDoing()
+//    const T_UNKNOWN_ACTION = -1337;
+//    /**
+//     *
+//     * @param PHP_Formatter_Token $token
+//     */
+//    public function declareCurrentAction($token)
 //    {
-//        return $this->_currentAction;
+//        $type = $token->getType();
+//        switch($type) {
+//            case T_FUNCTION:
+//            case T_CLASS:
+//            case T_ARRAY:
+//                $this->_actionStack->push($type);
+//                break;
+//            default:
+//                if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+//                    $top = $this->_actionStack->top();
+//                    $this->_actionStack->push($top);
+//                }
+//
+//                if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
+//                    $top = $this->_actionStack->top();
+//                    $this->_actionStack->push($top);
+//                }
+//
+//                if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+//                    $this->_actionStack->pop();
+//                }
+//
+//                if ($this->evaluateConstraint('IsClosingBrace', $token)) {
+//                    $this->_actionStack->pop();
+//                }
+//
+//                $this->_currentAction[] = self::T_UNKNOWN_ACTION;
+//        }
 //    }
+
+    public function previousActionWasDeclaringAnArray()
+    {
+        end($this->_currentAction);
+        return (current($this->_currentAction) === T_ARRAY);
+    }
+
 
     protected function _isIndentionLevelIncreasment($token)
     {
-        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token);
+        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token) || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     protected function _isIndentionLevelDecreasement($token)
     {
-        return $this->evaluateConstraint('IsClosingCurlyBrace', $token);
+        return $this->evaluateConstraint('IsClosingCurlyBrace', $token) || $this->evaluateConstraint('IsClosingBrace', $token);
     }
 
     /**
