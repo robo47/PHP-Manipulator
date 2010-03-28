@@ -139,12 +139,12 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 //                $this->_currentAction[] = self::T_UNKNOWN_ACTION;
 //        }
 //    }
-
-    public function previousActionWasDeclaringAnArray()
-    {
-        end($this->_currentAction);
-        return (current($this->_currentAction) === T_ARRAY);
-    }
+//
+//    public function previousActionWasDeclaringAnArray()
+//    {
+//        end($this->_currentAction);
+//        return (current($this->_currentAction) === T_ARRAY);
+//    }
 
 
     protected function _isIndentionLevelIncreasment($token)
