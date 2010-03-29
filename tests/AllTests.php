@@ -37,6 +37,7 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_BeginsWithNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_EndsWithNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsMultilineCommentTest');
+        $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSinglelineCommentTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsSingleNewlineTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsOperatorTest');
         $suite->addTestSuite('PHP_Formatter_TokenConstraint_IsTypeTest');

@@ -2,13 +2,6 @@
 
 class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
 {
-    
-    public function init()
-    {
-        if (!$this->hasOption('defaultBreak')) {
-            $this->setOption('defaultBreak', "\n");
-        }
-    }
 
     /**
      * Unindents all Code
@@ -17,17 +10,35 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
      */
     public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
     {
-        $code = $container->toString();
-        // @todo ideas on how to remove all indention: all T_WHITESPACE -> check for \t and <space> and remove all expect 1 <space> and keep brakes, no need for \t or <space> between brakes
-        $defaultBreak = $this->getOption('defaultBreak');
-        $code = preg_split('~(\n|\r\n|\r)~', $code, - 1);
-        $code = array_map('ltrim', $code);
-        $code = implode($defaultBreak, $code);
+        $iterator = $container->getIterator();
+        $regexWhitespace = '[\t ]{1,}';
+        $regexNotWhitespace = '[^\t^ ]{1,}';
+        $linebreak = '\n|\r\n|\r';
+        while ($iterator->valid()) {
+          $token = $iterator->current();
+          if($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
+              $value = $token->getValue();
+              
+              // Spaces and Tabs in Lines which are completly empty
+              $previousToken = $container->getPreviousToken($token);
 
-        // @todo seems like a expensive task, with all type-checking and stuff like that ?
-        $tokenArrayContainer = PHP_Formatter_TokenContainer::createFromCode($code)
-            ->getContainer();
+              // Single-line-Comments include a Linebreak at the end, so the whitespace not begins with a linebreak
+              if ($this->evaluateConstraint('IsSinglelineComment', $previousToken, T_COMMENT)) {
+                  $value = preg_replace('~' . $regexWhitespace .'$~', '\1', $value);
+              }
+              $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace .'$~', '\1', $value);
+              $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace . $regexNotWhitespace . '(.*?)(' . $linebreak . ')~m', '\1\2', $value);
+              $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace . $regexNotWhitespace . '(.*?)$~m', '\1\2', $value);
 
-        $container->setContainer($tokenArrayContainer);
+              $token->setValue($value);
+          } else if($this->evaluateConstraint('IsMultilineComment', $token)) {
+              $value = $token->getValue();
+              $value = preg_replace('~(' . $linebreak . ')'. $regexWhitespace .'(\*.*?)(' . $linebreak . ')~m', '\1\2\3', $value);
+              $value = preg_replace('~(' . $linebreak . ')'. $regexWhitespace .'(\*.*?)$~m', '\1\2', $value);
+              $token->setValue($value);
+          }
+          $iterator->next();
+        }
+        $container->retokenize();
     }
 }

@@ -1,17 +1,13 @@
 <?php
 
+/**
+ * @group Rule_RemoveIndention
+ */
 class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
 {
-
     /**
-     * @covers PHP_Formatter_Rule_RemoveIndention::init
+     * @return array
      */
-    public function testConstructorDefaults()
-    {
-        $rule = new PHP_Formatter_Rule_RemoveIndention();
-        $this->assertEquals("\n", $rule->getOption('defaultBreak'), 'Wrong default Option value for defaultBreak');
-    }
-    
     public function ruleProvider()
     {
         $data = array();
@@ -19,9 +15,20 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
 
         #0
         $data[] = array(
-            array(),
-            $this->getTokenArrayFromFixtureFile($path . 'test1'),
-            $this->getTokenArrayFromFixtureFile($path . 'test1Removed'),
+            $this->getTokenArrayFromFixtureFile($path . 'input0'),
+            $this->getTokenArrayFromFixtureFile($path . 'output0'),
+        );
+
+        #1
+        $data[] = array(
+            $this->getTokenArrayFromFixtureFile($path . 'input1'),
+            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+        );
+
+        #2
+        $data[] = array(
+            $this->getTokenArrayFromFixtureFile($path . 'input2'),
+            $this->getTokenArrayFromFixtureFile($path . 'output2'),
         );
 
         return $data;
@@ -32,10 +39,11 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
      * @covers PHP_Formatter_Rule_RemoveIndention::applyRuleToTokens
      * @dataProvider ruleProvider
      */
-    public function testRule($options, $input, $expectedTokens)
+    public function testRule($input, $expectedTokens)
     {
-        $rule = new PHP_Formatter_Rule_RemoveIndention($options);
+        $rule = new PHP_Formatter_Rule_RemoveIndention();
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }
+?>
