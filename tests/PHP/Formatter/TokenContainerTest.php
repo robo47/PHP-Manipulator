@@ -61,7 +61,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
     {
         $tokens = array('blub', 'bla');
         try {
-            $container = new PHP_Formatter_TokenContainer($tokens);
+            new PHP_Formatter_TokenContainer($tokens);
             $this->fail('Expected exception not thrown');
         } catch (PHP_Formatter_Exception $e) {
             $this->assertEquals('TokenContainer only allows adding PHP_Formatter_Token', $e->getMessage(), 'Wrong exception message');
@@ -69,9 +69,9 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_TokenContainer::insertAtPosition
+     * @covers PHP_Formatter_TokenContainer::insertAtOffset
      */
-    public function testInsertAtPosition()
+    public function testInsertAtOffset()
     {
         $array = array(
             PHP_Formatter_Token::factory('Blub'),
@@ -80,7 +80,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         );
         $container = new PHP_Formatter_TokenContainer($array);
         $newToken = PHP_Formatter_Token::factory('BaaFoo');
-        $fluent = $container->insertAtPosition(1, $newToken);
+        $fluent = $container->insertAtOffset(1, $newToken);
 
         $this->assertSame($fluent, $container, 'No fluent interface');
 
@@ -229,43 +229,43 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
      * @covers PHP_Formatter_TokenContainer::getPositionForOffset
      * @covers PHP_Formatter_Exception
      */
-    public function testGetPositionForOffset()
-    {
-        $array = array(
-            PHP_Formatter_Token::factory('Blub'),
-            PHP_Formatter_Token::factory('Bla'),
-            PHP_Formatter_Token::factory('Foo'),
-            PHP_Formatter_Token::factory('BaaFoo'),
-        );
-        $container = new PHP_Formatter_TokenContainer($array);
-
-        $this->assertEquals(0, $container->getPositionForOffset(0));
-        $this->assertEquals(1, $container->getPositionForOffset(1));
-        $this->assertEquals(2, $container->getPositionForOffset(2));
-        $this->assertEquals(3, $container->getPositionForOffset(3));
-
-        unset($container[1]);
-
-        $this->assertEquals(0, $container->getPositionForOffset(0));
-        $this->assertEquals(1, $container->getPositionForOffset(2));
-        $this->assertEquals(2, $container->getPositionForOffset(3));
-    }
+//    public function testGetPositionForOffset()
+//    {
+//        $array = array(
+//            PHP_Formatter_Token::factory('Blub'),
+//            PHP_Formatter_Token::factory('Bla'),
+//            PHP_Formatter_Token::factory('Foo'),
+//            PHP_Formatter_Token::factory('BaaFoo'),
+//        );
+//        $container = new PHP_Formatter_TokenContainer($array);
+//
+//        $this->assertEquals(0, $container->getPositionForOffset(0));
+//        $this->assertEquals(1, $container->getPositionForOffset(1));
+//        $this->assertEquals(2, $container->getPositionForOffset(2));
+//        $this->assertEquals(3, $container->getPositionForOffset(3));
+//
+//        unset($container[1]);
+//
+//        $this->assertEquals(0, $container->getPositionForOffset(0));
+//        $this->assertEquals(1, $container->getPositionForOffset(2));
+//        $this->assertEquals(2, $container->getPositionForOffset(3));
+//    }
 
     /**
      * @covers PHP_Formatter_TokenContainer::<protected>
      * @covers PHP_Formatter_TokenContainer::getPositionForOffset
      * @covers PHP_Formatter_Exception
      */
-    public function testGetPositionForOffsetThrowsExceptionOnNonExistingOffset()
-    {
-        $container = new PHP_Formatter_TokenContainer();
-        try {
-            $container->getPositionForOffset(5);
-            $this->fail('Expected exception not thrown');
-        } catch (PHP_Formatter_Exception $e) {
-            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
-        }
-    }
+//    public function testGetPositionForOffsetThrowsExceptionOnNonExistingOffset()
+//    {
+//        $container = new PHP_Formatter_TokenContainer();
+//        try {
+//            $container->getPositionForOffset(5);
+//            $this->fail('Expected exception not thrown');
+//        } catch (PHP_Formatter_Exception $e) {
+//            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
+//        }
+//    }
 
     /**
      * @covers PHP_Formatter_TokenContainer::<protected>
@@ -494,8 +494,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
 
         $iterator = $container->getIterator();
         /* @var $iterator ArrayIterator */
-        $this->assertType('ArrayIterator', $iterator);
-        $this->assertEquals($container->getContainer(), $iterator->getArrayCopy());
+        $this->assertType('PHP_Formatter_TokenContainer_Iterator', $iterator);
     }
 
     /**
@@ -531,7 +530,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $container = new PHP_Formatter_TokenContainer(array($token0, $token1, $token2, $token3));
         $container->retokenize();
         $this->assertEquals(3, count($container));
-        $string = $container->toString();
+
         $this->assertEquals("<?php\n \n \n \n \t \n ?>", $container->toString());
     }
 

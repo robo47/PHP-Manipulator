@@ -10,7 +10,7 @@ class PHP_Formatter_TokenConstraint_InterfaceTest extends PHPFormatterTestCase
     public function testContainer()
     {
         $reflection = new ReflectionClass('PHP_Formatter_TokenConstraint_Interface');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
+        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ?');
         $methods = $reflection->getMethods();
         $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
         $evaluateMethod = $methods[0];

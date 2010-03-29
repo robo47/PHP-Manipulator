@@ -5,6 +5,8 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHP/FormatterTest.php';
 require_once 'PHP/Formatter/AbstractHelperTest.php';
 require_once 'PHP/Formatter/TokenContainerTest.php';
+require_once 'PHP/Formatter/TokenContainer/IteratorTest.php';
+require_once 'PHP/Formatter/TokenContainer/ReverseIteratorTest.php';
 require_once 'PHP/Formatter/TokenTest.php';
 require_once 'PHP/Formatter/UtilTest.php';
 
@@ -68,6 +70,8 @@ class AllTests
         $suite->addTestSuite('PHP_FormatterTest');
         $suite->addTestSuite('PHP_Formatter_AbstractHelperTest');
         $suite->addTestSuite('PHP_Formatter_TokenContainerTest');
+        $suite->addTestSuite('PHP_Formatter_TokenContainer_IteratorTest');
+        $suite->addTestSuite('PHP_Formatter_TokenContainer_ReverseIteratorTest');
         $suite->addTestSuite('PHP_Formatter_TokenTest');
         $suite->addTestSuite('PHP_Formatter_UtilTest');
 

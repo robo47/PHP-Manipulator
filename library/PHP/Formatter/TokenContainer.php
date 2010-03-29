@@ -1,6 +1,8 @@
 <?php
 
 require_once 'PHP/Formatter/Token.php';
+require_once 'PHP/Formatter/TokenContainer/Iterator.php';
+require_once 'PHP/Formatter/TokenContainer/ReverseIterator.php';
 
 class PHP_Formatter_TokenContainer
 implements ArrayAccess, Countable, IteratorAggregate
@@ -134,13 +136,27 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
+     * Insert at an offset
+     *
+     * @param integer $offset
+     * @param PHP_Formatter_Token $value
+     * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
+     */
+    public function insertAtOffset($offset, $value)
+    {
+        $position = $this->_getPositionForOffset($offset);
+        $this->_insertAtPosition($position, $value);
+        return $this;
+    }
+
+    /**
      * Insert at a position
      *
      * @param integer $position
      * @param PHP_Formatter_Token $value
      * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
-    public function insertAtPosition($position, $value)
+    protected function _insertAtPosition($position, $value)
     {
         $this->_checkValueType($value);
 
@@ -193,7 +209,7 @@ implements ArrayAccess, Countable, IteratorAggregate
      * @param integer $offset
      * @return integer
      */
-    public function getPositionForOffset($offset)
+    protected function _getPositionForOffset($offset)
     {
         $this->_checkOffsetType($offset);
         $position = 0;
@@ -271,8 +287,8 @@ implements ArrayAccess, Countable, IteratorAggregate
             throw new PHP_Formatter_Exception($message);
         }
         $offset = $this->getOffsetByToken($after);
-        $position = $this->getPositionForOffset($offset);
-        $this->insertAtPosition($position + 1, $newToken);
+        $position = $this->_getPositionForOffset($offset);
+        $this->_insertAtPosition($position + 1, $newToken);
         return $this;
     }
 
@@ -361,9 +377,10 @@ implements ArrayAccess, Countable, IteratorAggregate
     {
         return $this->toString();
     }
-
     /**
      * Get Container
+     *
+     * @todo rename to toArray ?
      *
      * @return array
      */
@@ -376,6 +393,7 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Set Container
      *
      * @todo strict checking ?
+     * @todo rename to setArray ?
      * @param array $container
      * @return PHP_Formatter_TokenContainer *Provides Fluent Interface*
      */
@@ -390,12 +408,21 @@ implements ArrayAccess, Countable, IteratorAggregate
      *
      * Implements SPL::IteratorAggregate
      *
-     * @return ArrayIterator
+     * @return PHP_Formatter_TokenContainer_Iterator
      */
     public function getIterator()
     {
-        // @todo extra iterator only having iteration-stuff
-        return new ArrayIterator($this->_container);
+        return new PHP_Formatter_TokenContainer_Iterator($this);
+    }
+
+    /**
+     * Get a reverse Iterator for traversing the Container from End to begin
+     * 
+     * @return PHP_Formatter_TokenContainer_ReverseIterator
+     */
+    public function getReverseIterator()
+    {
+        return new PHP_Formatter_TokenContainer_ReverseIterator($this);
     }
 
     /**

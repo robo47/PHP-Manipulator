@@ -10,8 +10,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
      * Manipulate
      *
      * @param PHP_Formatter_TokenContainer $container
-     * @param array $params
-     * @return boolean
+     * @param mixed $params
      */
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
     {
@@ -59,7 +58,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         }
 
         $startOffset = $container->getOffsetByToken($from);
-        $startPosition = $container->getPositionForOffset($startOffset);
 
         $endOffset = $container->getOffsetByToken($to);
 
@@ -69,7 +67,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
             throw new PHP_Formatter_Exception($message);
         }
 
-        $tokens = $this->_getTokensFromStartToEnd($container, $startPosition, $endOffset);
+        $tokens = $this->_getTokensFromStartToEnd($container, $startOffset, $endOffset);
 
         $value = $this->_mergeTokenValuesIntoString($tokens);
 
@@ -77,21 +75,21 @@ extends PHP_Formatter_ContainerManipulator_Abstract
 
         $commentToken = new PHP_Formatter_Token($value, T_COMMENT);
 
-        $container->insertAtPosition($startPosition, $commentToken);
+        $container->insertAtOffset($startOffset, $commentToken);
 
         $container->removeTokens($tokens);
     }
 
     /**
      * @param PHP_Formatter_TokenContainer $container
-     * @param integer $startPosition
+     * @param integer $startOffset
      * @param integer $endOffset
      * @return array
      */
-    protected function _getTokensFromStartToEnd($container, $startPosition, $endOffset)
+    protected function _getTokensFromStartToEnd($container, $startOffset, $endOffset)
     {
         $iterator = $container->getIterator();
-        $iterator->seek($startPosition);
+        $iterator->seek($startOffset);
 
         $tokens = array();
         while ($iterator->valid()) {
