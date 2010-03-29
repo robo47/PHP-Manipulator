@@ -57,6 +57,7 @@ require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/MockTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToTokenTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/UnifyCastsTest.php';
+require_once 'PHP/Formatter/ContainerManipulator/RemoveWhitespaceFromEndTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceAfterTokenTest.php';
 require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceBeforeTokenTest.php';
 
@@ -124,6 +125,7 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeTokenTest');
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_UnifyCastsTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEndTest');
 
         return $suite;
     }

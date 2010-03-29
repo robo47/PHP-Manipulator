@@ -14,7 +14,6 @@ class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest extends PHP
     {
         $data = array();
 
-        $data = array();
         $path = '/ContainerManipulator/SetWhitespaceAfterToken/';
 
         #0
