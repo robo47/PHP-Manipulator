@@ -15,16 +15,16 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
 
         #0
         $data[] = array(
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
             array(),
             true
         );
 
         #1
         $data[] = array(
-            $this->getTokenArrayFromFixtureFile($path . 'input2'),
-            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
             array(
                 T_INT_CAST => '(iNt)',
                 T_BOOL_CAST => '(bOoL)',

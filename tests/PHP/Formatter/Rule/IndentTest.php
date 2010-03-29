@@ -29,43 +29,43 @@ class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #1
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input2'),
-            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         #2
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input3'),
-            $this->getTokenArrayFromFixtureFile($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'output3'),
         );
 
         #3
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input4'),
-            $this->getTokenArrayFromFixtureFile($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input4'),
+            $this->getContainerFromFixture($path . 'output4'),
         );
 
         #4
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input5'),
-            $this->getTokenArrayFromFixtureFile($path . 'output5'),
+            $this->getContainerFromFixture($path . 'input5'),
+            $this->getContainerFromFixture($path . 'output5'),
         );
 
         #5
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input6'),
-            $this->getTokenArrayFromFixtureFile($path . 'output6'),
+            $this->getContainerFromFixture($path . 'input6'),
+            $this->getContainerFromFixture($path . 'output6'),
         );
 
         #6

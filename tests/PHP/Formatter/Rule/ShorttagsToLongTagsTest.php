@@ -19,22 +19,22 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'input1Removed'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'input1Removed'),
         );
 
         #1
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input2'),
-            $this->getTokenArrayFromFixtureFile($path . 'input2Removed'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'input2Removed'),
         );
 
         #2
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input3'),
-            $this->getTokenArrayFromFixtureFile($path . 'input3Removed'),
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'input3Removed'),
         );
 
         return $data;

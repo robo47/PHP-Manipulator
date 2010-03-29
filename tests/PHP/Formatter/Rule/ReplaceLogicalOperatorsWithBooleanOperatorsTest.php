@@ -24,29 +24,29 @@ class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #1
         $data[] = array(
             array('replaceAnd' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         #2
         $data[] = array(
             array('replaceOr' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output3'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false, 'replaceAnd' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output4'),
         );
 
         return $data;

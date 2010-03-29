@@ -20,15 +20,15 @@ class PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest extends PHPFormatterTestCa
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'multipleEmptyLines1'),
-            $this->getTokenArrayFromFixtureFile($path . 'multipleEmptyLines1Removed'),
+            $this->getContainerFromFixture($path . 'multipleEmptyLines1'),
+            $this->getContainerFromFixture($path . 'multipleEmptyLines1Removed'),
         );
 
         #1
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'multipleEmptyLines2'),
-            $this->getTokenArrayFromFixtureFile($path . 'multipleEmptyLines2Removed'),
+            $this->getContainerFromFixture($path . 'multipleEmptyLines2'),
+            $this->getContainerFromFixture($path . 'multipleEmptyLines2Removed'),
         );
 
         return $data;

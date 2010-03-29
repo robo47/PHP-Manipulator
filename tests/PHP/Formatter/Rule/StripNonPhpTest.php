@@ -13,8 +13,8 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input0'),
-            $this->getTokenArrayFromFixtureFile($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
         );
 
         return $data;
@@ -43,8 +43,8 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         return $data;

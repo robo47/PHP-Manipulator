@@ -16,8 +16,8 @@ class PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEndTest extends PHP
 
         #0
         $data[] = array(
-            $this->getTokenArrayFromFixtureFile($path . 'input0'),
-            $this->getTokenArrayFromFixtureFile($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
             false
         );
 

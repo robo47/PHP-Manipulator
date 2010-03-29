@@ -25,36 +25,36 @@ class PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest extends
         #0
         $data[] = array(
             array('uppercase' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #1
         $data[] = array(
             array('uppercase' => true),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         #2
         $data[] = array(
             array('replaceAnd' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output3'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output4'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false, 'replaceAnd' => false),
-            $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output5'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output5'),
         );
 
         return $data;

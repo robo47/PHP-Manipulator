@@ -18,8 +18,8 @@ class PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeTokenTest extends PH
 
         #0
         $data[] = array(
-            $inputContainer = $this->getTokenArrayFromFixtureFile($path . 'input0'),
-            $this->getTokenArrayFromFixtureFile($path . 'output0'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
             array(
                 'tokens' => array($inputContainer[3]),
                 'whitespace' => array(T_CONCAT_EQUAL => ' '),
@@ -29,8 +29,8 @@ class PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeTokenTest extends PH
 
         #1
         $data[] = array(
-            $inputContainer = $this->getTokenArrayFromFixtureFile($path . 'input1'),
-            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
             array(
                 'tokens' => array($inputContainer[4]),
                 'whitespace' => array(T_CONCAT_EQUAL => '  '),
@@ -40,8 +40,8 @@ class PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeTokenTest extends PH
 
         #2
         $data[] = array(
-            $inputContainer = $this->getTokenArrayFromFixtureFile($path . 'input2'),
-            $this->getTokenArrayFromFixtureFile($path . 'output2'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
             array(
                 'tokens' => array($inputContainer[4]),
                 'whitespace' => array(T_CONCAT_EQUAL => ''),
