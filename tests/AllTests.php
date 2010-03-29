@@ -50,6 +50,7 @@ class AllTests
         // ContainerConstraints
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_ContainerConstraint_MockTest');
+        $suite->addTestSuite('PHP_Formatter_ContainerConstraint_ContainsClassTest');
 
         // TokenManipulators
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_InterfaceTest');
