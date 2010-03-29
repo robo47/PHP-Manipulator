@@ -3,7 +3,7 @@
 class PHP_Formatter_TokenConstraint_IsOperator
 extends PHP_Formatter_TokenConstraint_Abstract
 {
-
+    
     protected $_operatorsWithToken = array(
         // assignment operators
         T_AND_EQUAL, // &=

@@ -173,7 +173,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     public function getPreviousToken(PHP_Formatter_Token $token)
     {
         $iterator = $this->getIterator();
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             if ($iterator->current() === $token) {
                 $iterator->previous();
                 if ($iterator->valid()) {
@@ -194,7 +194,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     public function getNextToken(PHP_Formatter_Token $token)
     {
         $iterator = $this->getIterator();
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             if ($iterator->current() === $token) {
                 $iterator->next();
                 if ($iterator->valid()) {

@@ -16,7 +16,6 @@ class PHP_Formatter_Rule_ShorttagsToLongTags extends PHP_Formatter_Rule_Abstract
             /* @var $token PHP_Formatter_Token */
 
             $value = $token->getValue();
-            // @todo check if it is faster/better to use regular expression
             if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG)) {
                 $value = str_replace('<?php', '<?', $value);
                 $value = str_replace('<?', '<?php', $value);
