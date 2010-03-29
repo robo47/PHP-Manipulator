@@ -70,6 +70,7 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
 
     /**
      * @covers PHP_Formatter_TokenContainer::insertAtOffset
+     * @covers PHP_Formatter_TokenContainer::<protected>
      */
     public function testInsertAtOffset()
     {
@@ -90,6 +91,25 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
         $this->assertSame($array[1], $container[2]);
         $this->assertSame($array[2], $container[3]);
     }
+    
+    /**
+     * @covers PHP_Formatter_TokenContainer::insertAtOffset
+     * @covers PHP_Formatter_TokenContainer::<protected>
+     */
+    public function testInsertAtOffsetThrowsExceptionOnInsertAfterNonExistingOffset()
+    {
+        $token = PHP_Formatter_Token::factory('Blub');
+        $containter = new PHP_Formatter_TokenContainer();
+        
+        try {
+            $containter->insertAtOffset(5, $token);
+            $this->fail('Expected exception not thrown');
+        } catch (PHP_Formatter_Exception $e) {
+            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+
 
     /**
      * @covers PHP_Formatter_TokenContainer::<protected>
@@ -483,18 +503,21 @@ class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
      */
     public function testGetIterator()
     {
-        $token1 = PHP_Formatter_Token::factory('Token1');
-        $token2 = PHP_Formatter_Token::factory('Token2');
-        $token3 = PHP_Formatter_Token::factory('Token3');
         $container = new PHP_Formatter_TokenContainer();
 
-        $container[] = $token1;
-        $container[] = $token2;
-        $container[] = $token3;
-
         $iterator = $container->getIterator();
-        /* @var $iterator ArrayIterator */
         $this->assertType('PHP_Formatter_TokenContainer_Iterator', $iterator);
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer::getReverseIterator
+     */
+    public function testGetReverseIterator()
+    {
+        $container = new PHP_Formatter_TokenContainer();
+
+        $iterator = $container->getReverseIterator();
+        $this->assertType('PHP_Formatter_TokenContainer_ReverseIterator', $iterator);
     }
 
     /**

@@ -122,6 +122,7 @@ class PHP_Formatter_TokenContainer_IteratorTest extends PHPFormatterTestCase
 
     /**
      * @covers PHP_Formatter_TokenContainer_Iterator::seek
+     * @covers PHP_Formatter_TokenContainer_Iterator::<protected>
      */
     public function testSeek()
     {
@@ -163,5 +164,60 @@ class PHP_Formatter_TokenContainer_IteratorTest extends PHPFormatterTestCase
         $container = $this->getTestContainerWithHoles();
         $iterator = new PHP_Formatter_TokenContainer_Iterator($container);
         $this->assertEquals(5, count($iterator));
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer_Iterator::key
+     * @covers PHP_Formatter_TokenContainer_Iterator::<protected>
+     */
+    public function testKeyThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new PHP_Formatter_TokenContainer_Iterator($container);
+        $iterator->seek(6);
+        $iterator->next();
+
+        try {
+            $iterator->key();
+            $this->fail('Expected exception not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertEquals('Position not valid', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer_Iterator::current
+     * @covers PHP_Formatter_TokenContainer_Iterator::<protected>
+     */
+    public function testCurrentThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new PHP_Formatter_TokenContainer_Iterator($container);
+        $iterator->seek(6);
+        $iterator->next();
+
+        try {
+            $iterator->current();
+            $this->fail('Expected exception not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertEquals('Position not valid', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers PHP_Formatter_TokenContainer_Iterator::seek
+     * @covers PHP_Formatter_TokenContainer_Iterator::<protected>
+     */
+    public function testSeekThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new PHP_Formatter_TokenContainer_Iterator($container);
+
+        try {
+            $iterator->seek(8);
+            $this->fail('Expected exception not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertEquals('Position not found', $e->getMessage(), 'Wrong exception message');
+        }
     }
 }

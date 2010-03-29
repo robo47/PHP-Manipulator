@@ -15,13 +15,11 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
     protected $_pos = 0;
 
     /**
-     *
      * @var array
      */
     protected $_keys = array();
 
     /**
-     *
      * @param PHP_Formatter_TokenContainer $container
      */
     public function __construct(PHP_Formatter_TokenContainer $container)
@@ -30,13 +28,21 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
         $this->_keys = array_keys($container->getContainer());
     }
 
+    /**
+     *
+     * @param integer $position
+     * @return integer|false
+     */
     protected function _getContainerKeyForPosition($position)
     {
-        return $this->_keys[$position];
+        if(array_key_exists($position, $this->_keys)) {
+            return $this->_keys[$position];
+        } else {
+            return false;
+        }
     }
 
     /**
-     *
      * Implements SPL::Countable
      *
      * @return integer
@@ -52,12 +58,11 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
      */
     public function current()
     {
-        if ($this->valid()) {
-            return $this->_container[$this->_getContainerKeyForPosition($this->_pos)];
+        $key = $this->_getContainerKeyForPosition($this->_pos);
+        if(false === $key) {
+            throw new OutOfBoundsException('Position not valid');
         }
-        require_once 'PHP/Formatter/Exception.php';
-        $message = 'Can\'t get element if iterator is at invalid position';
-        throw new PHP_Formatter_Exception($message);
+        return $this->_container[$key];
     }
 
     /**
@@ -66,12 +71,11 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
      */
     public function key()
     {
-        if ($this->_isValidPosition($this->_pos)) {
-            return $this->_getContainerKeyForPosition($this->_pos);
+        $key = $this->_getContainerKeyForPosition($this->_pos);
+        if(false === $key) {
+            throw new OutOfBoundsException('Position not valid');
         }
-        require_once 'PHP/Formatter/Exception.php';
-        $message = 'No key available';
-        throw new PHP_Formatter_Exception($message);
+        return $key;
     }
 
     /**
@@ -141,7 +145,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
         if(false !== $position) {
             $this->_pos = $position;
         } else {
-            throw new OutOfBoundsException();
+            throw new OutOfBoundsException('Position not found');
         }
     }
 }
