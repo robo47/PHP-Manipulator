@@ -47,6 +47,8 @@ require_once 'PHP/Formatter/ContainerConstraint/MockTest.php';
 require_once 'PHP/Formatter/TokenManipulator/InterfaceTest.php';
 require_once 'PHP/Formatter/TokenManipulator/MockTest.php';
 require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewlineTest.php';
+require_once 'PHP/Formatter/TokenManipulator/LowercaseTokenValueTest.php';
+require_once 'PHP/Formatter/TokenManipulator/UppercaseTokenValueTest.php';
 
 // ContainerManipulators
 require_once 'PHP/Formatter/ContainerManipulator/InterfaceTest.php';
@@ -108,6 +110,8 @@ class AllTests
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_InterfaceTest');
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_MockTest');
         $suite->addTestSuite('PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest');
+        $suite->addTestSuite('PHP_Formatter_TokenManipulator_LowercaseTokenValueTest');
+        $suite->addTestSuite('PHP_Formatter_TokenManipulator_UppercaseTokenValueTest');
 
         // ContainerManipulators
         $suite->addTestSuite('PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest');

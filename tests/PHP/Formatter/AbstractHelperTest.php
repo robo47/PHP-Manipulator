@@ -125,22 +125,6 @@ class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter_AbstractHelper::evaluateConstraint
-     */
-    public function testEvaluateConstraint()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
-
-    /**
-     * @covers PHP_Formatter_AbstractHelper::manipulateToken
-     */
-    public function testManipulateToken()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
-
-    /**
      * @covers PHP_Formatter_AbstractHelper::getClassInstance
      */
     public function testGetClassInstanceWithAutoPrefix()
