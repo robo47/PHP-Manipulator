@@ -7,38 +7,13 @@ class PHP_Formatter_ContainerManipulator_MockTest extends PHPFormatterTestCase
     /**
      * @covers PHP_Formatter_ContainerManipulator_Mock
      */
-    public function testDefaultConstruct()
+    public function testCallingManipulateSetsCalledToTrue()
     {
-        $mock = new PHP_Formatter_ContainerManipulator_Mock();
-    }
-
-    /**
-     * @covers PHP_Formatter_ContainerManipulator_Mock
-     */
-    public function testOptionViaConstructorWorks()
-    {
-        $mock = new PHP_Formatter_ContainerManipulator_Mock(array('return' => true));
-        $container = new PHP_Formatter_TokenContainer();
-        $this->assertTrue($mock->manipulate($container));
-
-        $mock = new PHP_Formatter_ContainerManipulator_Mock(array('return' => false));
-        $container = new PHP_Formatter_TokenContainer();
-        $this->assertFalse($mock->manipulate($container));
-    }
-
-    /**
-     * @covers PHP_Formatter_ContainerManipulator_Mock
-     */
-    public function testOptionViastaticVariableWorks()
-    {
-        PHP_Formatter_ContainerManipulator_Mock::$return = true;
+        PHP_Formatter_ContainerManipulator_Mock::$called = false;
         $mock = new PHP_Formatter_ContainerManipulator_Mock();
         $container = new PHP_Formatter_TokenContainer();
-        $this->assertTrue($mock->manipulate($container));
-
-        PHP_Formatter_ContainerManipulator_Mock::$return = false;
-        $mock = new PHP_Formatter_ContainerManipulator_Mock();
-        $container = new PHP_Formatter_TokenContainer();
-        $this->assertFalse($mock->manipulate($container));
+        $this->assertFalse(PHP_Formatter_ContainerManipulator_Mock::$called);
+        $mock->manipulate($container);
+        $this->assertTrue(PHP_Formatter_ContainerManipulator_Mock::$called);
     }
 }

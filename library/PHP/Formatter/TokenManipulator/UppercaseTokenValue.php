@@ -15,8 +15,6 @@ extends PHP_Formatter_TokenManipulator_Abstract
      */
     public function manipulate(PHP_Formatter_Token $token, $params = null)
     {
-        $newValue = strtoupper($token->getValue());
-        $token->setValue($newValue);
-        return true;
+        $token->setValue(strtoupper($token->getValue()));
     }
 }

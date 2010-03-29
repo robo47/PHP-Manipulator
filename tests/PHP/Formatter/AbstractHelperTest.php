@@ -186,11 +186,15 @@ class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
      */
     public function testManipulateContainerManipulatesContainer()
     {
-        PHP_Formatter_ContainerManipulator_Mock::$return = false;
+        PHP_Formatter_ContainerManipulator_Mock::$called = false;
         $abstractHelper = new PHP_Formatter_NonAbstractHelper();
-        $container = new PHP_Formatter_TokenContainer();
-        $result = $abstractHelper->manipulateContainer('Mock', $container);
-        $this->assertFalse($result);
+
+        $abstractHelper->manipulateContainer(
+            'Mock',
+            new PHP_Formatter_TokenContainer()
+        );
+
+        $this->assertTrue(PHP_Formatter_ContainerManipulator_Mock::$called);
     }
 
     /**
@@ -198,11 +202,15 @@ class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
      */
     public function testManipulateTokenManipulatesToken()
     {
-        PHP_Formatter_TokenManipulator_Mock::$return = false;
+        PHP_Formatter_TokenManipulator_Mock::$called = false;
         $abstractHelper = new PHP_Formatter_NonAbstractHelper();
-        $token = PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n"));
-        $result = $abstractHelper->manipulateToken('Mock', $token);
-        $this->assertFalse($result);
+        
+        $abstractHelper->manipulateToken(
+            'Mock',
+            PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n"))
+        );
+        
+        $this->assertTrue(PHP_Formatter_TokenManipulator_Mock::$called);
     }
 
     /**

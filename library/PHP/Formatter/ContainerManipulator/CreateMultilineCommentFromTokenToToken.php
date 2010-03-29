@@ -80,8 +80,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         $container->insertAtPosition($startPosition, $commentToken);
 
         $container->removeTokens($tokens);
-
-        return true;
     }
 
     /**

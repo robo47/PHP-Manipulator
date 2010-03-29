@@ -15,7 +15,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n\n")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n")),
-            true,
             true
         );
 
@@ -23,7 +22,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\r")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r")),
-            true,
             true
         );
 
@@ -31,7 +29,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\n\r\n")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\n")),
-            true,
             true
         );
 
@@ -39,7 +36,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "")),
-            true,
             true
         );
 
@@ -47,7 +43,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\n")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "")),
-            true,
             true
         );
 
@@ -55,7 +50,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "")),
-            true,
             true
         );
 
@@ -63,7 +57,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\n\r")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r")),
-            true,
             true
         );
 
@@ -71,7 +64,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n\r\n\r")),
             PHP_Formatter_Token::factory(array(T_WHITESPACE, "\r\n\r")),
-            true,
             true
         );
 
@@ -79,7 +71,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory("\n"),
             PHP_Formatter_Token::factory(""),
-            true,
             true
         );
 
@@ -87,7 +78,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory("\n\n"),
             PHP_Formatter_Token::factory("\n"),
-            true,
             true
         );
 
@@ -95,7 +85,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory("\r\r"),
             PHP_Formatter_Token::factory("\r"),
-            true,
             true
         );
 
@@ -103,7 +92,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory("\r\n\r\n"),
             PHP_Formatter_Token::factory("\r\n"),
-            true,
             true
         );
 
@@ -111,7 +99,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(" "),
             PHP_Formatter_Token::factory(" "),
-            false,
             true
         );
 
@@ -119,7 +106,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(" \n"),
             PHP_Formatter_Token::factory(" \n"),
-            false,
             true
         );
 
@@ -127,7 +113,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(" \r"),
             PHP_Formatter_Token::factory(" \r"),
-            false,
             true
         );
 
@@ -135,7 +120,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(" \r\n"),
             PHP_Formatter_Token::factory(" \r\n"),
-            false,
             true
         );
 
@@ -143,7 +127,6 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
         $data[] = array(
             PHP_Formatter_Token::factory(" \n\r"),
             PHP_Formatter_Token::factory(" \n\r"),
-            false,
             true
         );
 
@@ -154,11 +137,10 @@ class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatter
      * @dataProvider manipluateProvider
      * @covers PHP_Formatter_TokenManipulator_RemoveBeginNewline::manipulate
      */
-    public function testManipulate($token, $newToken, $changed, $strict)
+    public function testManipulate($token, $newToken, $strict)
     {
         $manipulator = new PHP_Formatter_TokenManipulator_RemoveBeginNewline();
-        
-        $this->assertSame($changed, $manipulator->manipulate($token), 'Wrong return value');
+        $manipulator->manipulate($token);
         $this->assertTokenMatch($token, $newToken, $strict);
     }
 }

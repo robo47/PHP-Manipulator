@@ -11,7 +11,6 @@ extends PHP_Formatter_TokenManipulator_Abstract
      *
      * @param PHP_Formatter_Token $token
      * @param mixed $params
-     * @return boolean
      */
     public function manipulate(PHP_Formatter_Token $token, $params = null)
     {
@@ -23,9 +22,6 @@ extends PHP_Formatter_TokenManipulator_Abstract
             $token->setValue(substr($value, 1));
         } elseif (substr($value, 0, 1) == "\r") {
             $token->setValue(substr($value, 1));
-        } else {
-            return false;
         }
-        return true;
     }
 }

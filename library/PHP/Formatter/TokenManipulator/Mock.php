@@ -9,19 +9,14 @@ extends PHP_Formatter_TokenManipulator_Abstract
     /**
      * @var boolean
      */
-    public static $return = true;
+    public static $called = false;
 
     /**
      * @param PHP_Formatter_Token $token
      * @param mixed $params
-     * @return boolean
      */
     public function manipulate(PHP_Formatter_Token $token, $params = null)
     {
-        if ($this->hasOption('return')) {
-            return $this->getOption('return');
-        } else {
-            return self::$return;
-        }
+        self::$called = true;
     }
 }

@@ -11,7 +11,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
      *
      * @param PHP_Formatter_TokenContainer $container
      * @param array $params
-     * @return boolean
      */
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
     {
@@ -31,7 +30,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         foreach ($params as $cast => $value) {
             $searchedTokens[$cast] = $value;
         }
-        $changed = false;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -40,11 +38,9 @@ extends PHP_Formatter_ContainerManipulator_Abstract
                 $newValue = $searchedTokens[$token->getType()];
                 if ($token->getValue() != $newValue) {
                     $token->setValue($newValue);
-                    $changed = true;
                 }
             }
             $iterator->next();
         }
-        return $changed;
     }
 }

@@ -8,7 +8,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
     /**
      * @param PHP_Formatter_TokenContainer $container
      * @param mixed $params
-     * @return boolean
      */
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
     {
@@ -33,7 +32,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         foreach($tokens as $token) {
             $this->setWhitespace($container, $token, $whitespace);
         }
-        return true;
     }
 
     /**

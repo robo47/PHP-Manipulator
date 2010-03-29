@@ -20,7 +20,6 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
             $container,
             array('from' => $from, 'to' => $to),
             PHP_Formatter_TokenContainer::createFromCode("<?php /*\$blub = \$bla;*/ ?>"),
-            true,
             false
         );
         
@@ -33,7 +32,6 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
             $container,
             array('from' => $from, 'to' => $to),
             PHP_Formatter_TokenContainer::createFromCode("<?php /*\$blub = \$bla;*/ ?>"),
-            true,
             false
         );
 
@@ -45,10 +43,10 @@ class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenT
      * @covers PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken::manipulate
      * @covers PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken::<protected>
      */
-    public function testManipulate($container, $params, $expectedContainer, $changed, $strict)
+    public function testManipulate($container, $params, $expectedContainer, $strict)
     {
         $manipulator = new PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToToken();
-        $this->assertSame($changed, $manipulator->manipulate($container, $params), 'Wrong return value');
+        $manipulator->manipulate($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 

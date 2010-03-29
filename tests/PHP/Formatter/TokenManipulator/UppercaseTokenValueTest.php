@@ -15,7 +15,6 @@ class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends PHPFormatte
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_BOOLEAN_AND, "and")),
             PHP_Formatter_Token::factory(array(T_BOOLEAN_AND, "AND")),
-            true,
             true
         );
 
@@ -23,7 +22,6 @@ class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends PHPFormatte
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_BOOLEAN_OR, "or")),
             PHP_Formatter_Token::factory(array(T_BOOLEAN_OR, "OR")),
-            true,
             true
         );
 
@@ -34,11 +32,10 @@ class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends PHPFormatte
      * @dataProvider manipluateProvider
      * @covers PHP_Formatter_TokenManipulator_UppercaseTokenValue::manipulate
      */
-    public function testManipulate($token, $newToken, $changed, $strict)
+    public function testManipulate($token, $newToken, $strict)
     {
         $manipulator = new PHP_Formatter_TokenManipulator_UppercaseTokenValue();
-        
-        $this->assertSame($changed, $manipulator->manipulate($token), 'Wrong return value');
+        $manipulator->manipulate($token);
         $this->assertTokenMatch($token, $newToken, $strict);
     }
 }

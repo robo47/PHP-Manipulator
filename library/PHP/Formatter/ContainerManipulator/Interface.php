@@ -4,10 +4,10 @@ interface PHP_Formatter_ContainerManipulator_Interface
 {
 
     /**
-     * Manipulates a Constraint on a container
+     * Manipulates a container
      *
      * @param PHP_Formatter_TokenContainer $container
-     * @return boolean
+     * @param mixed $params
      */
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null);
 

@@ -19,7 +19,6 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
             $this->getTokenArrayFromFixtureFile($path . 'input1'),
             $this->getTokenArrayFromFixtureFile($path . 'output1'),
             array(),
-            true,
             true
         );
 
@@ -36,7 +35,6 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
                 T_UNSET_CAST => '(uNsEt)',
                 T_ARRAY_CAST => '(aRrAy)',
             ),
-            true,
             true
         );
 
@@ -48,10 +46,10 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
      * @covers PHP_Formatter_ContainerManipulator_UnifyCasts::manipulate
      * @covers PHP_Formatter_ContainerManipulator_UnifyCasts::<protected>
      */
-    public function testManipulate($container, $expectedContainer, $params, $changed, $strict)
+    public function testManipulate($container, $expectedContainer, $params, $strict)
     {
         $manipulator = new PHP_Formatter_ContainerManipulator_UnifyCasts();
-        $this->assertSame($changed, $manipulator->manipulate($container, $params), 'Wrong return value');
+        $manipulator->manipulate($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 }
