@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenConstraint_IsOpeningBraceTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */
@@ -20,7 +21,7 @@ class PHP_Formatter_TokenConstraint_IsOpeningBraceTest extends PHPFormatterTestC
             PHP_Formatter_Token::factory(array(null, ')')),
             false
         );
-        
+
         #2
         $data[] = array(
             PHP_Formatter_Token::factory(array(T_COMMENT, '(')),

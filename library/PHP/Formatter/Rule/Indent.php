@@ -2,13 +2,14 @@
 
 class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
 {
+
     /**
      * Current Level of Indention
-     * 
+     *
      * @var integer
      */
     protected $_indentionLevel = 0;
-
+    
     public function init()
     {
         // indentions are always given in tabs!
@@ -60,7 +61,7 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
     public function indentWhitespace(PHP_Formatter_Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-                    $this->getIndention($this->getIndentionLevel());
+            $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
     }
 
@@ -72,34 +73,34 @@ class PHP_Formatter_Rule_Indent extends PHP_Formatter_Rule_Abstract
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE)
             && (false !== strpos($token->getValue(), "\n")
-             || false !== strpos($token->getValue(), "\r"));
+                || false !== strpos($token->getValue(), "\r"));
     }
-
+    
     public function checkAndChangeIndentionLevel(PHP_Formatter_Token $token)
     {
         $this->checkAndChangeIndentionLevelDecreasment($token);
         $this->checkAndChangeIndentionLevelIncreasment($token);
     }
-
+    
     public function checkAndChangeIndentionLevelIncreasment(PHP_Formatter_Token $token)
     {
         if ($this->_isIndentionLevelIncreasment($token)) {
             $this->increasIndentionLevel();
         }
     }
-
+    
     public function checkAndChangeIndentionLevelDecreasment(PHP_Formatter_Token $token)
     {
         if ($this->_isIndentionLevelDecreasement($token)) {
             $this->decreaseIndentionLevel();
         }
     }
-
+    
     public function increasIndentionLevel()
     {
         $this->_indentionLevel++;
     }
-
+    
     public function decreaseIndentionLevel()
     {
         $this->_indentionLevel--;

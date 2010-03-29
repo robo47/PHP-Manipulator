@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenConstraint_IsTypeTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

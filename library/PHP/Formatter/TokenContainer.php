@@ -175,7 +175,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     {
         foreach ($this->_container as $key => $element) {
             if ($element === $token) {
-                return isset($this[$key-1]) ? $this[$key-1] : null;
+                return isset($this[$key - 1]) ? $this[$key - 1] : null;
             }
         }
         return null;
@@ -190,7 +190,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     {
         foreach ($this->_container as $key => $element) {
             if ($element === $token) {
-                return isset($this[$key+1]) ? $this[$key+1] : null;
+                return isset($this[$key + 1]) ? $this[$key + 1] : null;
             }
         }
         return null;
@@ -366,6 +366,7 @@ implements ArrayAccess, Countable, IteratorAggregate
     {
         return $this->toString();
     }
+
     /**
      * Get Container
      *
@@ -406,7 +407,7 @@ implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Get a reverse Iterator for traversing the Container from End to begin
-     * 
+     *
      * @return PHP_Formatter_TokenContainer_ReverseIterator
      */
     public function getReverseIterator()

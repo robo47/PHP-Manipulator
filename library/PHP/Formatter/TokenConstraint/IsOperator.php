@@ -3,6 +3,7 @@
 class PHP_Formatter_TokenConstraint_IsOperator
 extends PHP_Formatter_TokenConstraint_Abstract
 {
+
     protected $_operatorsWithToken = array(
         // assignment operators
         T_AND_EQUAL, // &=
@@ -43,7 +44,6 @@ extends PHP_Formatter_TokenConstraint_Abstract
         // type-operators
         T_INSTANCEOF, // instanceof
     );
-
     protected $_operatorsWithoutTokens = array(
         '='
     );
@@ -60,7 +60,7 @@ extends PHP_Formatter_TokenConstraint_Abstract
         $operatorWithToken = $this->evaluateConstraint('IsType', $token, $this->_operatorsWithToken);
 
         $operatorWithoutToken = false;
-        foreach($this->_operatorsWithoutTokens as $operator) {
+        foreach ($this->_operatorsWithoutTokens as $operator) {
             if (null === $token->getType() && $operator === $token->getValue()) {
                 $operatorWithoutToken = true;
                 break;

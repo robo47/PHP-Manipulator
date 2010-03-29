@@ -16,7 +16,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
 
         $tokensToDelete = array();
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $tokensToDelete[] = $token;
@@ -26,7 +26,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
             $iterator->next();
         }
 
-        foreach($tokensToDelete as $token) {
+        foreach ($tokensToDelete as $token) {
             $container->removeToken($token);
         }
     }

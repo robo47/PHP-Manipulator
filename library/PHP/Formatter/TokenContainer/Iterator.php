@@ -2,18 +2,17 @@
 
 class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, SeekableIterator
 {
+
     /**
      * @var PHP_Formatter_TokenContainer
      */
     protected $_container = null;
-
     /**
      * Current Position in the $this->_keys-array
      *
      * @var integer
      */
     protected $_pos = 0;
-
     /**
      * @var array
      */
@@ -35,7 +34,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
      */
     protected function _getContainerKeyForPosition($position)
     {
-        if(array_key_exists($position, $this->_keys)) {
+        if (array_key_exists($position, $this->_keys)) {
             return $this->_keys[$position];
         } else {
             return false;
@@ -59,7 +58,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
     public function current()
     {
         $key = $this->_getContainerKeyForPosition($this->_pos);
-        if(false === $key) {
+        if (false === $key) {
             throw new OutOfBoundsException('Position not valid');
         }
         return $this->_container[$key];
@@ -72,7 +71,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
     public function key()
     {
         $key = $this->_getContainerKeyForPosition($this->_pos);
-        if(false === $key) {
+        if (false === $key) {
             throw new OutOfBoundsException('Position not valid');
         }
         return $key;
@@ -108,7 +107,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
      */
     public function valid()
     {
-        return $this->_isValidPosition($this->_pos+1);
+        return $this->_isValidPosition($this->_pos + 1);
     }
 
     /**
@@ -118,7 +117,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
      */
     protected function _isValidPosition($position)
     {
-        if(array_key_exists($this->_pos, $this->_keys)) {
+        if (array_key_exists($this->_pos, $this->_keys)) {
             return true;
         } else {
             return false;
@@ -142,7 +141,7 @@ class PHP_Formatter_TokenContainer_Iterator implements Iterator, Countable, Seek
     public function seek($key)
     {
         $position = $this->_getPositionForKey($key);
-        if(false !== $position) {
+        if (false !== $position) {
             $this->_pos = $position;
         } else {
             throw new OutOfBoundsException('Position not found');

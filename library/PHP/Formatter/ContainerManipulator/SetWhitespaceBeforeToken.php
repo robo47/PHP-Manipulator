@@ -3,6 +3,7 @@
 class PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeToken
 extends PHP_Formatter_ContainerManipulator_SetWhitespaceAfterToken
 {
+
     /**
      * @param PHP_Formatter_TokenContainer $container
      * @param PHP_Formatter_Token $token
@@ -35,14 +36,14 @@ extends PHP_Formatter_ContainerManipulator_SetWhitespaceAfterToken
         $tokenValue = $this->getWhitespaceForToken($token, $whitespace);
 
         if (null !== $targetToken && $this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if(empty($tokenValue)) {
+            if (empty($tokenValue)) {
                 $container->removeToken($targetToken);
             } else {
                 $targetToken->setValue($tokenValue);
             }
         }
-        if(null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if(!empty($tokenValue)) {
+        if (null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
+            if (!empty($tokenValue)) {
                 $newToken = PHP_Formatter_Token::factory(array(T_WHITESPACE, $tokenValue));
                 $this->insertToken($container, $targetToken, $newToken);
             }

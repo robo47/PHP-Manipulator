@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenConstraint_InterfaceTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenConstraint_Interface
      */

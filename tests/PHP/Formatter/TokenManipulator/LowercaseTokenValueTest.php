@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenManipulator_LowercaseTokenValueTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

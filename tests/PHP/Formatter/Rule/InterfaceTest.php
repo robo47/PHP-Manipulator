@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Rule_InterfaceTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_Interface
      */

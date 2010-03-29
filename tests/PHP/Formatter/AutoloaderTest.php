@@ -1,8 +1,8 @@
 <?php
 
-
 class PHP_Formatter_AutoloaderTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Autoloader
      */

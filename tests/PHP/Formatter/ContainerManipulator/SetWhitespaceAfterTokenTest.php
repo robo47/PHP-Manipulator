@@ -5,6 +5,7 @@
  */
 class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

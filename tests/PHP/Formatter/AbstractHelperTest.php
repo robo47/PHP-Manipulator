@@ -2,8 +2,9 @@
 
 class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 {
-    public $init = false;
 
+    public $init = false;
+    
     public function init()
     {
         $this->init = true;
@@ -12,6 +13,7 @@ class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 
 class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_AbstractHelper
      */
@@ -184,8 +186,8 @@ class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
         $abstractHelper = new PHP_Formatter_NonAbstractHelper();
 
         $abstractHelper->manipulateContainer(
-            'Mock',
-            new PHP_Formatter_TokenContainer()
+                'Mock',
+                new PHP_Formatter_TokenContainer()
         );
 
         $this->assertTrue(PHP_Formatter_ContainerManipulator_Mock::$called);
@@ -198,12 +200,12 @@ class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
     {
         PHP_Formatter_TokenManipulator_Mock::$called = false;
         $abstractHelper = new PHP_Formatter_NonAbstractHelper();
-        
+
         $abstractHelper->manipulateToken(
-            'Mock',
-            PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n"))
+                'Mock',
+                PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n"))
         );
-        
+
         $this->assertTrue(PHP_Formatter_TokenManipulator_Mock::$called);
     }
 

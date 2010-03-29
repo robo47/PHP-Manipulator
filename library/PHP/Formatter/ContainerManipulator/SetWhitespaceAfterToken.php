@@ -3,6 +3,7 @@
 class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterToken
 extends PHP_Formatter_ContainerManipulator_Abstract
 {
+
     /**
      * @param PHP_Formatter_TokenContainer $container
      * @param mixed $params
@@ -24,7 +25,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
 
         $tokens = $params['tokens'];
         $whitespace = $params['whitespace'];
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             $this->setWhitespace($container, $token, $whitespace);
         }
     }
@@ -62,14 +63,14 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         $tokenValue = $this->getWhitespaceForToken($token, $whitespace);
 
         if (null !== $targetToken && $this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if(empty($tokenValue)) {
+            if (empty($tokenValue)) {
                 $container->removeToken($targetToken);
             } else {
                 $targetToken->setValue($tokenValue);
             }
         }
-        if(null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if(!empty($tokenValue)) {
+        if (null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
+            if (!empty($tokenValue)) {
                 $newToken = PHP_Formatter_Token::factory(array(T_WHITESPACE, $tokenValue));
                 $this->insertToken($container, $targetToken, $newToken);
             }
@@ -84,7 +85,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
      */
     public function getWhitespaceForToken(PHP_Formatter_Token $token, array $whitespaces)
     {
-        if (null ===$token->getType()) {
+        if (null === $token->getType()) {
             $token = $token->getValue();
         } else {
             $token = $token->getType();
@@ -93,7 +94,7 @@ extends PHP_Formatter_ContainerManipulator_Abstract
             return $whitespaces[$token];
         } else {
             $message = 'No option found for: ' . token_name($token) .
-                        ' (' . $token . ')';
+                ' (' . $token . ')';
             throw new PHP_Formatter_Exception($message);
         }
     }

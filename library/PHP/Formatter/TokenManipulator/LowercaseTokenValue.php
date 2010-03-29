@@ -6,7 +6,7 @@ extends PHP_Formatter_TokenManipulator_Abstract
 
     /**
      * Lowercase for tokens value
-     * 
+     *
      * @param PHP_Formatter_Token $token
      * @param mixed $params
      */

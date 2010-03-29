@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Autoloader
 {
+
     /**
      *
      * @param string $classname

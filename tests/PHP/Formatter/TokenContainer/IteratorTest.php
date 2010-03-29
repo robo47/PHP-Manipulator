@@ -5,6 +5,7 @@
  */
 class PHP_Formatter_TokenContainer_IteratorTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenContainer_Iterator
      */
@@ -127,7 +128,8 @@ class PHP_Formatter_TokenContainer_IteratorTest extends PHPFormatterTestCase
         $container = $this->getTestContainerWithHoles();
         $iterator = new PHP_Formatter_TokenContainer_Iterator($container);
 
-        $iterator->next(); $iterator->next();
+        $iterator->next();
+        $iterator->next();
 
         $iterator->seek(0);
         $this->assertTrue($iterator->valid());

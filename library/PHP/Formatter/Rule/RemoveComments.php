@@ -2,7 +2,7 @@
 
 class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('removeDocComments')) {

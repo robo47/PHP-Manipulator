@@ -5,6 +5,7 @@
  */
 class PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEndTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

@@ -5,6 +5,7 @@
  */
 class PHP_Formatter_TokenContainer_ReverseIteratorTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenContainer_ReverseIterator
      */

@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenManipulator_MockTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_TokenManipulator_Mock
      */

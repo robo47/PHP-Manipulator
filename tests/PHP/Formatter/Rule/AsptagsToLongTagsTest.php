@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_AsptagsToLongTags::init
      */
@@ -9,7 +10,7 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
     {
         $rule = new PHP_Formatter_Rule_AsptagsToLongTags();
     }
-
+    
     public function ruleProvider()
     {
         $data = array();
@@ -35,7 +36,7 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'input3'),
             $this->getTokenArrayFromFixtureFile($path . 'input3Removed'),
         );
-        
+
         return $data;
     }
 
@@ -44,7 +45,7 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
      */
     protected function _aspTagsActivated()
     {
-        return (bool)ini_get('asp_tags');
+        return (bool) ini_get('asp_tags');
     }
 
     /**

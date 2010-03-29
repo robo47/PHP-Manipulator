@@ -2,6 +2,7 @@
 
 class PHP_Formatter_ContainerManipulator_MockTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_ContainerManipulator_Mock
      */

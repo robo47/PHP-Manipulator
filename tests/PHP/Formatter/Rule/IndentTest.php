@@ -5,6 +5,7 @@
  */
 class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_Indent::init
      */

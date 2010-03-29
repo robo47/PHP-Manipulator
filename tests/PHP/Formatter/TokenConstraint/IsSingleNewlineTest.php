@@ -2,6 +2,7 @@
 
 class PHP_Formatter_TokenConstraint_IsSingleNewlineTest extends PHPFormatterTestCase
 {
+
     /**
      * @return array
      */

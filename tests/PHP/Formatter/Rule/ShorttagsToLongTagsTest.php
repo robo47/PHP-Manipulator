@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_ShorttagsToLongTags::init
      */
@@ -9,7 +10,7 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
     {
         $rule = new PHP_Formatter_Rule_ShorttagsToLongTags();
     }
-
+    
     public function ruleProvider()
     {
         $data = array();
@@ -35,7 +36,7 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'input3'),
             $this->getTokenArrayFromFixtureFile($path . 'input3Removed'),
         );
-        
+
         return $data;
     }
 
@@ -44,7 +45,7 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
      */
     protected function _shortTagsActivated()
     {
-        return (bool)ini_get('short_open_tag');
+        return (bool) ini_get('short_open_tag');
     }
 
     /**

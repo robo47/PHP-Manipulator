@@ -2,6 +2,7 @@
 
 class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_Rule_RemoveIndention::init
      */
@@ -10,7 +11,7 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
         $rule = new PHP_Formatter_Rule_RemoveIndention();
         $this->assertEquals("\n", $rule->getOption('defaultBreak'), 'Wrong default Option value for defaultBreak');
     }
-
+    
     public function ruleProvider()
     {
         $data = array();
@@ -22,7 +23,7 @@ class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
             $this->getTokenArrayFromFixtureFile($path . 'test1'),
             $this->getTokenArrayFromFixtureFile($path . 'test1Removed'),
         );
-        
+
         return $data;
     }
 

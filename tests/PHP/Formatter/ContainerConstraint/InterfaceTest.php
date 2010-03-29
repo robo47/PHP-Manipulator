@@ -2,6 +2,7 @@
 
 class PHP_Formatter_ContainerConstraint_InterfaceTest extends PHPFormatterTestCase
 {
+
     /**
      * @covers PHP_Formatter_ContainerConstraint_Interface
      */
