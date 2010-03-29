@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenContainer/ReverseIterator.php';
-
 /**
  * @group TokenContainer_Iterator
  */

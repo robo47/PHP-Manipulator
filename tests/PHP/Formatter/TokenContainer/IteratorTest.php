@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenContainer/Iterator.php';
-
 /**
  * @group TokenContainer_Iterator
  */

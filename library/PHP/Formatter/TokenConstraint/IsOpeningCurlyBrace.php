@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenConstraint/Abstract.php';
-
 class PHP_Formatter_TokenConstraint_IsOpeningCurlyBrace
 extends PHP_Formatter_TokenConstraint_Abstract
 {

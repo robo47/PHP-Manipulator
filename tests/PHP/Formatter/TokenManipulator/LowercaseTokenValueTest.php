@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenManipulator/LowercaseTokenValue.php';
-
 class PHP_Formatter_TokenManipulator_LowercaseTokenValueTest extends PHPFormatterTestCase
 {
     /**

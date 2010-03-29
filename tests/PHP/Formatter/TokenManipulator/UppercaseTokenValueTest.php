@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenManipulator/UppercaseTokenValue.php';
-
 class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends PHPFormatterTestCase
 {
     /**

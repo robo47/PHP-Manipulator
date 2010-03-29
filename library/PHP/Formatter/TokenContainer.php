@@ -1,9 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Token.php';
-require_once 'PHP/Formatter/TokenContainer/Iterator.php';
-require_once 'PHP/Formatter/TokenContainer/ReverseIterator.php';
-
 class PHP_Formatter_TokenContainer
 implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -36,7 +32,6 @@ implements ArrayAccess, Countable, IteratorAggregate
     protected function _checkOffsetType($offset)
     {
         if (null !== $offset && !is_int($offset)) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'TokenContainer only allows integers as offset';
             throw new PHP_Formatter_Exception($message);
         }
@@ -51,7 +46,6 @@ implements ArrayAccess, Countable, IteratorAggregate
     protected function _checkValueType($value)
     {
         if (!$value instanceof PHP_Formatter_Token) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'TokenContainer only allows adding PHP_Formatter_Token';
             throw new PHP_Formatter_Exception($message);
         }
@@ -116,7 +110,6 @@ implements ArrayAccess, Countable, IteratorAggregate
     {
         $this->_checkOffsetType($offset);
         if (!isset($this->_container[$offset])) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Offset '$offset' does not exist";
             throw new PHP_Formatter_Exception($message);
         }
@@ -215,7 +208,6 @@ implements ArrayAccess, Countable, IteratorAggregate
         $position = 0;
 
         if (!isset($this->_container[$offset])) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Offset '$offset' does not exist";
             throw new PHP_Formatter_Exception($message);
         }
@@ -247,7 +239,6 @@ implements ArrayAccess, Countable, IteratorAggregate
             }
         }
         if (null === $tokenOffset) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Token '$token' does not exist in this container";
             throw new PHP_Formatter_Exception($message);
         }
@@ -282,7 +273,6 @@ implements ArrayAccess, Countable, IteratorAggregate
     public function insertTokenAfter(PHP_Formatter_Token $after, PHP_Formatter_Token $newToken)
     {
         if (!$this->contains($after)) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Container does not contain Token: $after";
             throw new PHP_Formatter_Exception($message);
         }
@@ -302,7 +292,6 @@ implements ArrayAccess, Countable, IteratorAggregate
     public function insertTokensAfter(PHP_Formatter_Token $after, array $newTokens)
     {
         if (!$this->contains($after)) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Container does not contain Token: $after";
             throw new PHP_Formatter_Exception($message);
         }

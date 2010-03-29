@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenConstraint/EndsWithNewline.php';
-
 class PHP_Formatter_TokenConstraint_EndsWithNewlineTest extends PHPFormatterTestCase
 {
     /**

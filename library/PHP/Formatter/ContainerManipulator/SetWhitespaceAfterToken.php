@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/Abstract.php';
-
 class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterToken
 extends PHP_Formatter_ContainerManipulator_Abstract
 {
@@ -12,17 +10,14 @@ extends PHP_Formatter_ContainerManipulator_Abstract
     public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
     {
         if (!is_array($params)) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'invalid input $params should be an array';
             throw new PHP_Formatter_Exception($message);
         }
         if (!isset($params['tokens'])) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "key 'tokens' not found in \$params";
             throw new PHP_Formatter_Exception($message);
         }
         if (!isset($params['whitespace'])) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "key 'whitespace' not found in \$params";
             throw new PHP_Formatter_Exception($message);
         }
@@ -97,7 +92,6 @@ extends PHP_Formatter_ContainerManipulator_Abstract
         if (array_key_exists($token, $whitespaces)) {
             return $whitespaces[$token];
         } else {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'No option found for: ' . token_name($token) .
                         ' (' . $token . ')';
             throw new PHP_Formatter_Exception($message);

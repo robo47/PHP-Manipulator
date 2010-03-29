@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/StripNonPhp.php';
-
 class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
 {
     /**

@@ -1,8 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/Interface.php';
-require_once 'PHP/Formatter/Ruleset/Interface.php';
-
 class PHP_Formatter
 {
 
@@ -74,31 +71,6 @@ class PHP_Formatter
 
     /**
      *
-     * @param PHP_Formatter_Ruleset_Interface $ruleset
-     * @return PHP_Formatter *Provides Fluent Interface*
-     */
-    public function addRuleset(PHP_Formatter_Ruleset_Interface $ruleset)
-    {
-        $this->addRules($ruleset->getRules());
-        return $this;
-    }
-
-    /**
-     * Extracts the Rules from the ruleset and adds them to the formatters rules
-     *
-     * @param array $rulesets
-     * @return PHP_Formatter *Provides Fluent Interface*
-     */
-    public function addRulesets(array $rulesets)
-    {
-        foreach ($rulesets as $ruleset) {
-            $this->addRuleset($ruleset);
-        }
-        return $this;
-    }
-
-    /**
-     *
      * @return PHP_Formatter *Provides Fluent Interface*
      */
     public function removeAllRules()
@@ -120,21 +92,5 @@ class PHP_Formatter
             }
         }
         return $this;
-    }
-
-    /**
-     * Formats Code
-     *
-     * @param string $code
-     * @return string
-     */
-    public function formatCode($code)
-    {
-        $tokens = PHP_Formatter_TokenContainer::createFromCode($code);
-        foreach ($this->_rules as $rule) {
-            /* @var $rule PHP_Formatter_Rule_Interface */
-            $rule->applyRuleToTokens($tokens);
-        }
-        return $tokens->toString();
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/RemoveComments.php';
-
 class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
 {
     /**
@@ -79,10 +77,8 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
     }
 
     /**
-     *
-     * @covers PHP_Formatter_Rule_RemoveComments::applyRuleToTokens
-     * @covers PHP_Formatter_Rule_RemoveComments::<protected>
      * @dataProvider ruleProvider
+     * @covers PHP_Formatter_Rule_RemoveComments
      */
     public function testRule($options, $input, $expectedTokens)
     {

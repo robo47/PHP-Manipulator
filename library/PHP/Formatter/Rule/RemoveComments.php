@@ -1,10 +1,8 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/Abstract.php';
-
 class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('removeDocComments')) {
@@ -59,9 +57,7 @@ class PHP_Formatter_Rule_RemoveComments extends PHP_Formatter_Rule_Abstract
      */
     protected function _isCommentAndShouldBeRemoved($token)
     {
-        // $token->isType(T_COMMENT) && $removeStandardComments
         return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
-            ||
-            ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
+            || ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceBeforeToken.php';
-
 /**
  * @group ContainerManipulator_SetWhitespaceBeforeToken
  */

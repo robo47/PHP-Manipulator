@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/SetWhitespaceAfterToken.php';
-
 class PHP_Formatter_ContainerManipulator_SetWhitespaceBeforeToken
 extends PHP_Formatter_ContainerManipulator_SetWhitespaceAfterToken
 {

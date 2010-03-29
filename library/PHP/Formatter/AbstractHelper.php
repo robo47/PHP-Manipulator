@@ -73,7 +73,6 @@ abstract class PHP_Formatter_AbstractHelper
     public function getOption($option)
     {
         if (!$this->hasOption($option)) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = "Option '$option' not found";
             throw new PHP_Formatter_Exception($message);
         }
@@ -93,7 +92,6 @@ abstract class PHP_Formatter_AbstractHelper
     {
         $constraint = $this->getClassInstance($constraint, 'PHP_Formatter_TokenConstraint_', $autoPrefix);
         if (!$constraint instanceof PHP_Formatter_TokenConstraint_Interface) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'constraint is not instance of PHP_Formatter_TokenConstraint_Interface';
             throw new PHP_Formatter_Exception($message);
         }
@@ -114,7 +112,6 @@ abstract class PHP_Formatter_AbstractHelper
     {
         $constraint = $this->getClassInstance($constraint, 'PHP_Formatter_ContainerConstraint_', $autoPrefix);
         if (!$constraint instanceof PHP_Formatter_ContainerConstraint_Interface) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'constraint is not instance of PHP_Formatter_ContainerConstraint_Interface';
             throw new PHP_Formatter_Exception($message);
         }
@@ -136,7 +133,6 @@ abstract class PHP_Formatter_AbstractHelper
         $manipulator = $this->getClassInstance($manipulator, 'PHP_Formatter_TokenManipulator_', $autoPrefix);
 
         if (!$manipulator instanceof PHP_Formatter_TokenManipulator_Interface) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'manipulator is not instance of PHP_Formatter_TokenManipulator_Interface';
             throw new PHP_Formatter_Exception($message);
         }
@@ -158,7 +154,6 @@ abstract class PHP_Formatter_AbstractHelper
         $manipulator = $this->getClassInstance($manipulator, 'PHP_Formatter_ContainerManipulator_', $autoPrefix);
 
         if (!$manipulator instanceof PHP_Formatter_ContainerManipulator_Interface) {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'manipulator is not instance of PHP_Formatter_ContainerManipulator_Interface';
             throw new PHP_Formatter_Exception($message);
         }
@@ -184,10 +179,6 @@ abstract class PHP_Formatter_AbstractHelper
         $classname = $class;
         if ($autoPrefix) {
             $classname = $prefix . $class;
-        }
-        // run potential autoloaders, else fallback for standard-naming + path in include-path [any pear-installable standard-only-autoloader there ?]
-        if (!class_exists($classname)) {
-            require_once str_replace('_', '/', $classname) . '.php';
         }
         return new $classname;
     }

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenManipulator/Interface.php';
-
 class PHP_Formatter_TokenManipulator_InterfaceTest extends PHPFormatterTestCase
 {
     /**

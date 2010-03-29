@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenManipulator/Abstract.php';
-
 class PHP_Formatter_TokenManipulator_Mock
 extends PHP_Formatter_TokenManipulator_Abstract
 {

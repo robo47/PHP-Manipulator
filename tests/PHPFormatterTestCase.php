@@ -1,8 +1,5 @@
 <?php
 
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHP/Formatter/Util.php';
-
 class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
 {
     /**

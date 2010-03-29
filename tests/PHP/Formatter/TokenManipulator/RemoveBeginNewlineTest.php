@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenManipulator/RemoveBeginNewline.php';
-
 class PHP_Formatter_TokenManipulator_RemoveBeginNewlineTest extends PHPFormatterTestCase
 {
     /**

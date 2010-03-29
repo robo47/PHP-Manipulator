@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenContainer.php';
-
 /**
  * @group TokenContainer
  * @todo create methods for setting up a default test container + method for returning the tokens

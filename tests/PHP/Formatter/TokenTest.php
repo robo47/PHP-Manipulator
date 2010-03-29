@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenContainer.php';
-
 class PHP_Formatter_TokenTest extends PHPFormatterTestCase
 {
     /**

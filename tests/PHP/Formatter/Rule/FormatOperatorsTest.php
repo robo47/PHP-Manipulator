@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/FormatOperators.php';
-
 /**
  * @group Rule_FormatOperators
  */

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/RemoveIndention.php';
-
 class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
 {
     /**

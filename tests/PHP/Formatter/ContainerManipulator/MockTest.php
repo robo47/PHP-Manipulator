@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/Mock.php';
-
 class PHP_Formatter_ContainerManipulator_MockTest extends PHPFormatterTestCase
 {
     /**

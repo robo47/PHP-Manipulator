@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/Abstract.php';
-
 class PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEnd
 extends PHP_Formatter_ContainerManipulator_Abstract
 {

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter.php';
-
 class PHP_FormatterTest extends PHPFormatterTestCase
 {
     /**

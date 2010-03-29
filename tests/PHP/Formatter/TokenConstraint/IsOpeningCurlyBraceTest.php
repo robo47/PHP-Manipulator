@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/TokenConstraint/IsOpeningCurlyBrace.php';
-
 class PHP_Formatter_TokenConstraint_IsOpeningCurlyBraceTest extends PHPFormatterTestCase
 {
     /**

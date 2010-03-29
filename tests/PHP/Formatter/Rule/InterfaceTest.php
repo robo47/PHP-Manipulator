@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/Interface.php';
-
 class PHP_Formatter_Rule_InterfaceTest extends PHPFormatterTestCase
 {
     /**

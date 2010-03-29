@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/Rule/ShorttagsToLongTags.php';
-
 class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
 {
     /**

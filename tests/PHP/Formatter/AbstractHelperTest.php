@@ -1,11 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/AbstractHelper.php';
-require_once 'PHP/Formatter/TokenConstraint/Mock.php';
-require_once 'PHP/Formatter/ContainerConstraint/Mock.php';
-require_once 'PHP/Formatter/TokenManipulator/Mock.php';
-require_once 'PHP/Formatter/ContainerManipulator/Mock.php';
-
 class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
 {
     public $init = false;

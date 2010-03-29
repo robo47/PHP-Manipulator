@@ -40,7 +40,6 @@ class PHP_Formatter_Token
     {
         if (is_array($input)) {
             if (!array_key_exists(0, $input) || !array_key_exists(1, $input)) {
-                require_once 'PHP/Formatter/Exception.php';
                 $message = 'Array for creating token misses key 0 and/or 1';
                 throw new PHP_Formatter_Exception($message);
             }
@@ -52,7 +51,6 @@ class PHP_Formatter_Token
         } elseif (is_string($input)) {
             $token = new PHP_Formatter_Token($input);
         } else {
-            require_once 'PHP/Formatter/Exception.php';
             $message = 'invalid datatype for creating a token: ' . gettype($input);
             throw new PHP_Formatter_Exception($message);
         }

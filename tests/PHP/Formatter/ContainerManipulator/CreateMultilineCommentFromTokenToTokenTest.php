@@ -1,7 +1,5 @@
 <?php
 
-require_once 'PHP/Formatter/ContainerManipulator/CreateMultilineCommentFromTokenToToken.php';
-
 class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest extends PHPFormatterTestCase
 {
     /**
