@@ -97,7 +97,7 @@ class PHP_Formatter_Rule_FormatOperators extends PHP_Formatter_Rule_Abstract
                     )
             );
         }
-// @todo if not has -> merge them (not with array_merge)
+        // @todo if not has -> merge them (not with array_merge)
     }
 
     /**
