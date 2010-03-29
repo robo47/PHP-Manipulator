@@ -40,13 +40,6 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
         return $data;
     }
 
-    /**
-     * @return boolean
-     */
-    protected function _shortTagsActivated()
-    {
-        return (bool) ini_get('short_open_tag');
-    }
 
     /**
      * @covers PHP_Formatter_Rule_ShorttagsToLongTags::applyRuleToTokens
@@ -54,9 +47,8 @@ class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        if (!$this->_shortTagsActivated()) {
-            $this->markTestSkipped('Can\'t test ShorttagsToLongTags-Rule with short_open_tag deactivated');
-        }
+        $this->checkShorttags();
+        
         $rule = new PHP_Formatter_Rule_ShorttagsToLongTags($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');

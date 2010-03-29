@@ -1,0 +1,10 @@
+<?
+if ($expression) {
+    ?>
+<?
+} else {
+    ?>
+<?
+}
+?>
+<? echo $foo; ?>

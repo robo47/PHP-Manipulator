@@ -2,15 +2,9 @@
 
 class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
 {
-
     /**
-     * @covers PHP_Formatter_Rule_StripNonPhp::init
+     * @return array
      */
-    public function testConstructorDefaults()
-    {
-        $rule = new PHP_Formatter_Rule_StripNonPhp();
-    }
-    
     public function ruleProvider()
     {
         $data = array();
@@ -19,13 +13,39 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getTokenArrayFromFixtureFile($path . 'stripnonphp1'),
-            $this->getTokenArrayFromFixtureFile($path . 'stripnonphp1Removed'),
+            $this->getTokenArrayFromFixtureFile($path . 'input0'),
+            $this->getTokenArrayFromFixtureFile($path . 'output0'),
         );
 
-        if (ini_get('short_open_tags') == true) {
-            // @todo tests with shorttags
-        }
+        return $data;
+    }
+
+    /**
+     * @covers PHP_Formatter_Rule_StripNonPhp::applyRuleToTokens
+     * @covers PHP_Formatter_Rule_StripNonPhp::<protected>
+     * @dataProvider ruleProvider
+     */
+    public function testRule($options, $input, $expectedTokens)
+    {
+        $rule = new PHP_Formatter_Rule_StripNonPhp($options);
+        $rule->applyRuleToTokens($input);
+        $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
+    }
+
+    /**
+     * @return array
+     */
+    public function shortTagsOnlyRuleProvider()
+    {
+        $data = array();
+        $path = '/Rule/StripNonPhp/';
+
+        #0
+        $data[] = array(
+            array(),
+            $this->getTokenArrayFromFixtureFile($path . 'input1'),
+            $this->getTokenArrayFromFixtureFile($path . 'output1'),
+        );
 
         return $data;
     }
@@ -34,10 +54,12 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
      *
      * @covers PHP_Formatter_Rule_StripNonPhp::applyRuleToTokens
      * @covers PHP_Formatter_Rule_StripNonPhp::<protected>
-     * @dataProvider ruleProvider
+     * @dataProvider shortTagsOnlyRuleProvider
      */
-    public function testRule($options, $input, $expectedTokens)
+    public function testRuleWithShorttags($options, $input, $expectedTokens)
     {
+        $this->checkShorttags();
+
         $rule = new PHP_Formatter_Rule_StripNonPhp($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');

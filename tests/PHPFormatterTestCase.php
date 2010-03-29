@@ -82,6 +82,39 @@ class PHPFormatterTestCase extends PHPUnit_Framework_TestCase
             $message
         );
     }
+
+
+
+
+    /**
+     * @return boolean
+     */
+    protected function _aspTagsActivated()
+    {
+        return (bool) ini_get('asp_tags');
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function _shortTagsActivated()
+    {
+        return (bool) ini_get('short_open_tag');
+    }
+
+    public function checkAsptags()
+    {
+        if (!$this->_aspTagsActivated()) {
+            $this->markTestSkipped('Can\'t ' . __CLASS__ . ' with asp_tags deactivated');
+        }
+    }
+
+    public function checkShorttags()
+    {
+        if (!$this->_shortTagsActivated()) {
+            $this->markTestSkipped('Can\'t run ' . __CLASS__ . ' with short_open_tag deactivated');
+        }
+    }
 }
 
 class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Constraint

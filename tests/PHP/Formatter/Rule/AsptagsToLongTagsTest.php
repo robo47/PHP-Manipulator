@@ -40,13 +40,6 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
         return $data;
     }
 
-    /**
-     * @return boolean
-     */
-    protected function _aspTagsActivated()
-    {
-        return (bool) ini_get('asp_tags');
-    }
 
     /**
      * @covers PHP_Formatter_Rule_AsptagsToLongTags::applyRuleToTokens
@@ -54,9 +47,8 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        if (!$this->_aspTagsActivated()) {
-            $this->markTestSkipped('Can\'t test AsptagsToLongTags-Rule with asp_tags deactivated');
-        }
+        $this->checkAsptags();
+        
         $rule = new PHP_Formatter_Rule_AsptagsToLongTags($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
