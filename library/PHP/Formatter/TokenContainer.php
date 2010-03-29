@@ -169,14 +169,20 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @param PHP_Formatter_Token $token
      * @return PHP_Formatter_Token|null
-     * @todo implementation is ugly and may break because keys are not forced to be without holes!
      */
     public function getPreviousToken(PHP_Formatter_Token $token)
     {
-        foreach ($this->_container as $key => $element) {
-            if ($element === $token) {
-                return isset($this[$key - 1]) ? $this[$key - 1] : null;
+        $iterator = $this->getIterator();
+        while($iterator->valid()) {
+            if ($iterator->current() === $token) {
+                $iterator->previous();
+                if ($iterator->valid()) {
+                    return $iterator->current();
+                } else {
+                    return null;
+                }
             }
+            $iterator->next();
         }
         return null;
     }
@@ -184,14 +190,20 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @param PHP_Formatter_Token $token
      * @return PHP_Formatter_Token|null
-     * @todo implementation is ugly and may break because keys are not forced to be without holes!
      */
     public function getNextToken(PHP_Formatter_Token $token)
     {
-        foreach ($this->_container as $key => $element) {
-            if ($element === $token) {
-                return isset($this[$key + 1]) ? $this[$key + 1] : null;
+        $iterator = $this->getIterator();
+        while($iterator->valid()) {
+            if ($iterator->current() === $token) {
+                $iterator->next();
+                if ($iterator->valid()) {
+                    return $iterator->current();
+                } else {
+                    return null;
+                }
             }
+            $iterator->next();
         }
         return null;
     }
