@@ -136,7 +136,7 @@ class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest extends PHP
             $manipulator->manipulate($container, $params);
             $this->fail('Expected exception not thrown');
         } catch (PHP_Formatter_Exception $e) {
-            $this->assertEquals('No option found for: T_WHITESPACE (371)', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('No option found for: T_WHITESPACE (' . T_WHITESPACE . ')', $e->getMessage(), 'Wrong exception message');
         }
     }
 }
