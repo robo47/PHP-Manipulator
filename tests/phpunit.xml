@@ -23,7 +23,9 @@
              lowUpperBound="35"
              highLowerBound="70" />
     </logging>
-    <testsuite name="PHP Formatter Test Suite">
-        <file>./AllTests.php</file>
-    </testsuite>
+    <testsuites>
+      <testsuite name="PHP_Formatter Test Suite">
+        <directory>./PHP/</directory>
+      </testsuite>
+    </testsuites>
 </phpunit>
