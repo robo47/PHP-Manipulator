@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_RemoveTrailingWhitespace
+ */
 class PHP_Formatter_Rule_RemoveTrailingWhitespaceTest extends PHPFormatterTestCase
 {
 

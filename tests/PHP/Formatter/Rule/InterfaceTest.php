@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_Interface
+ */
 class PHP_Formatter_Rule_InterfaceTest extends PHPFormatterTestCase
 {
 

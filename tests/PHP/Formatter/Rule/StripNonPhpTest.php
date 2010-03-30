@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_StripNonPhp
+ */
 class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
 {
     /**

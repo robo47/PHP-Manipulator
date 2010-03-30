@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerManipulator_Mock
+ */
 class PHP_Formatter_ContainerManipulator_MockTest extends PHPFormatterTestCase
 {
 

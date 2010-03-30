@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_ReplaceLogicalOperatorsWithBooleanOperators
+ */
 class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends PHPFormatterTestCase
 {
 

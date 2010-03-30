@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerConstraint_Mock
+ */
 class PHP_Formatter_ContainerConstraint_MockTest extends PHPFormatterTestCase
 {
 

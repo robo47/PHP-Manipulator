@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenConstraint_IsSingleNewline
+ */
 class PHP_Formatter_TokenConstraint_IsSingleNewlineTest extends PHPFormatterTestCase
 {
 

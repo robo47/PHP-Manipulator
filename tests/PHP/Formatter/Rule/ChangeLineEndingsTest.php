@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_ChangeLineEndings
+ */
 class PHP_Formatter_Rule_ChangeLineEndingsTest extends PHPFormatterTestCase
 {
 

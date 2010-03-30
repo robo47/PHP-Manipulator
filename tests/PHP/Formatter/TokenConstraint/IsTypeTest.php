@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenConstraint_IsType
+ */
 class PHP_Formatter_TokenConstraint_IsTypeTest extends PHPFormatterTestCase
 {
 

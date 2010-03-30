@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenConstraint_IsSinglelineComment
+ */
 class PHP_Formatter_TokenConstraint_IsSinglelineCommentTest extends PHPFormatterTestCase
 {
 

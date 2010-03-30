@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_RemoveMultipleEmptyLines
+ */
 class PHP_Formatter_Rule_RemoveMultipleEmptyLinesTest extends PHPFormatterTestCase
 {
 

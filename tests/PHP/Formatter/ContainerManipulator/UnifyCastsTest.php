@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerManipulator_UnifyCasts
+ */
 class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTestCase
 {
 

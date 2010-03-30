@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerConstraint_Interface
+ */
 class PHP_Formatter_ContainerConstraint_InterfaceTest extends PHPFormatterTestCase
 {
 

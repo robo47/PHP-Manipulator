@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerConstraint_ContainsClass
+ */
 class PHP_Formatter_ContainerConstraint_ContainsClassTest extends PHPFormatterTestCase
 {
     /**

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group ContainerManipulator_Interface
+ */
 class PHP_Formatter_ContainerManipulator_InterfaceTest extends PHPFormatterTestCase
 {
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenConstraint_IsOperator
+ */
 class PHP_Formatter_TokenConstraint_IsOperatorTest extends PHPFormatterTestCase
 {
 

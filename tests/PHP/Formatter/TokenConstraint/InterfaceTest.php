@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenConstraint_Interface
+ */
 class PHP_Formatter_TokenConstraint_InterfaceTest extends PHPFormatterTestCase
 {
 

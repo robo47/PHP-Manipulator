@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group TokenManipulator_Mock
+ */
 class PHP_Formatter_TokenManipulator_MockTest extends PHPFormatterTestCase
 {
 

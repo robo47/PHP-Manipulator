@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_CommentOutIncludesAndRequires
+ */
 class PHP_Formatter_Rule_CommentOutIncludesAndRequiresTest extends PHPFormatterTestCase
 {
 

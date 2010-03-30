@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Rule_AsptagsToLongTags
+ */
 class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
 {
 
