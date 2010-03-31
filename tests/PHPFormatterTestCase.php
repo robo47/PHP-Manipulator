@@ -287,13 +287,13 @@ class PHPFormatter_Constraint_TokensMatch extends PHPUnit_Framework_Constraint
      * @param mixed   $other
      * @param string  $description
      * @param boolean $not
+     * @return string
      */
     protected function failureDescription($other, $description, $not)
     {
-        $message = 'expected: ' . (string) $this->_expectedToken .
-            PHP_EOL . 'actual: ' . (string) $other;
+        $message = PHP_EOL . PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string)$other);
         $difference = $this->_difference;
-        $this->fail($other, 'Tokens are different: [' . $difference . ']' . $message);
+        return 'Tokens are different: [' . $difference . ']' . $message;
     }
 
     /**

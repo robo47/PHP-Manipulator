@@ -18,7 +18,7 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $value = $token->getValue();
-
+                // @todo create RemoveWhitespaceIndention-TokenManipulator
                 // Spaces and Tabs in Lines which are completly empty
                 $previousToken = $container->getPreviousToken($token);
 
@@ -32,10 +32,7 @@ class PHP_Formatter_Rule_RemoveIndention extends PHP_Formatter_Rule_Abstract
 
                 $token->setValue($value);
             } else if ($this->evaluateConstraint('IsMultilineComment', $token)) {
-                $value = $token->getValue();
-                $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace . '(\*.*?)(' . $linebreak . ')~m', '\1\2\3', $value);
-                $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace . '(\*.*?)$~m', '\1\2', $value);
-                $token->setValue($value);
+                $this->manipulateToken('RemoveCommentIndention', $token);
             }
             $iterator->next();
         }

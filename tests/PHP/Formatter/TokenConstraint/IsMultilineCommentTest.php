@@ -45,9 +45,23 @@ class PHP_Formatter_TokenConstraint_IsMultilineCommentTest extends PHPFormatterT
 
         #5
         $data[] = array(
+            PHP_Formatter_Token::factory(array(T_DOC_COMMENT, "/**\n* My class Foo\n*/")),
+            true
+        );
+
+        #6
+        $data[] = array(
+            PHP_Formatter_Token::factory(array(T_COMMENT, "/*\n* My class Foo\n*/")),
+            true
+        );
+
+        #7
+        $data[] = array(
             PHP_Formatter_Token::factory('/*'),
             false
         );
+
+
 
         return $data;
     }
