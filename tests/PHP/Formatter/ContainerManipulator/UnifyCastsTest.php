@@ -12,22 +12,12 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
     public function manipulateProvider()
     {
         $data = array();
-
-        $data = array();
         $path = '/ContainerManipulator/UnifyCasts/';
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
-            array(),
-            true
-        );
-
-        #1
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
             array(
                 T_INT_CAST => '(iNt)',
                 T_BOOL_CAST => '(bOoL)',
@@ -37,6 +27,14 @@ class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTest
                 T_UNSET_CAST => '(uNsEt)',
                 T_ARRAY_CAST => '(aRrAy)',
             ),
+            true
+        );
+
+        #1
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
+            array(),
             true
         );
 
