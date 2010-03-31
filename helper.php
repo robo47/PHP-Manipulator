@@ -44,6 +44,15 @@ switch($type) {
 
 $name = $_SERVER['argv'][2];
 
+$newFile = './library/PHP/Formatter/' . $typeName . '/' . $name . '.php';
+$newTestFile = './tests/PHP/Formatter/' . $typeName . '/' . $name . 'Test.php';
+
+if (file_exists($newTestFile) || file_exists($newFile)){
+    echo 'file already exists!!!';
+    exit();
+}
+
+
 $fileCode = file_get_contents('./helper/' . $typeName . '.php');
 $testCode = file_get_contents('./helper/' . $typeName . 'Test.php');
 
@@ -68,5 +77,5 @@ $fileCode = str_replace('__path__', $typeName . '/' . $name, $fileCode);
 $testCode = str_replace('__path__', $typeName . '/' . $name, $testCode);
 
 echo 'Writing Files' . PHP_EOL;
-file_put_contents('./library/PHP/Formatter/' . $typeName . '/' . $name . '.php', $fileCode);
-file_put_contents('./tests/PHP/Formatter/' . $typeName . '/' . $name . 'Test.php', $testCode);
+file_put_contents($newFile, $fileCode);
+file_put_contents($newTestFile, $testCode);
