@@ -20,6 +20,13 @@ class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
             $this->getContainerFromFixture($path . 'output0'),
         );
 
+        #1
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
+        );
+
         return $data;
     }
 

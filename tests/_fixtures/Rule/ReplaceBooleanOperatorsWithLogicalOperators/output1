@@ -1,5 +1,5 @@
 <?php
-if($a and $b) {
+if($a AND $b) {
 }
-if($a or $b) {
+if($a OR $b) {
 }

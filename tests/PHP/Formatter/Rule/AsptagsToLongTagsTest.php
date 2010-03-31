@@ -22,22 +22,22 @@ class PHP_Formatter_Rule_AsptagsToLongTagsTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'input1Removed'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
         );
 
         #1
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'input2Removed'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #2
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input3'),
-            $this->getContainerFromFixture($path . 'input3Removed'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         return $data;

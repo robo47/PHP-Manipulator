@@ -28,36 +28,36 @@ class PHP_Formatter_Rule_ReplaceBooleanOperatorsWithLogicalOperatorsTest extends
         #0
         $data[] = array(
             array('uppercase' => false),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
         );
 
         #1
         $data[] = array(
             array('uppercase' => true),
             $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #2
         $data[] = array(
             array('replaceAnd' => false),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'output3'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false, 'replaceAnd' => false),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output5'),
+            $this->getContainerFromFixture($path . 'input4'),
+            $this->getContainerFromFixture($path . 'output4'),
         );
 
         return $data;

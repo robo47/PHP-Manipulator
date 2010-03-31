@@ -29,46 +29,60 @@ class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
+        );
+
+        #1
+        $data[] = array(
+            array(),
             $this->getContainerFromFixture($path . 'input1'),
             $this->getContainerFromFixture($path . 'output1'),
         );
 
-        #1
+        #2
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input2'),
             $this->getContainerFromFixture($path . 'output2'),
         );
 
-        #2
+        #3
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input3'),
             $this->getContainerFromFixture($path . 'output3'),
         );
 
-        #3
+        #4
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input4'),
             $this->getContainerFromFixture($path . 'output4'),
         );
 
-        #4
+        #5
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input5'),
             $this->getContainerFromFixture($path . 'output5'),
         );
 
-        #5
+        #6
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input6'),
             $this->getContainerFromFixture($path . 'output6'),
         );
 
-        #6
+//        #7
+//        $data[] = array(
+//            array(),
+//            $this->getContainerFromFixture($path . 'input7'),
+//            $this->getContainerFromFixture($path . 'output7'),
+//        );
+
+        #8
         $data[] = array(
             array('useSpaces' => false),
             PHP_Formatter_TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),

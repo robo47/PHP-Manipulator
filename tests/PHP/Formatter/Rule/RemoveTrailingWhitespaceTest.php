@@ -27,16 +27,16 @@ class PHP_Formatter_Rule_RemoveTrailingWhitespaceTest extends PHPFormatterTestCa
         #0
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'trailingWhitespace1'),
-            $this->getContainerFromFixture($path . 'trailingWhitespace1Removed'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
         );
 
-//        #1
-//        $data[] = array(
-//            array(),
-//            $this->getContainerFromFixture($path . 'trailingWhitespace2'),
-//            $this->getContainerFromFixture($path . 'trailingWhitespace2Removed'),
-//        );
+        #1
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
+        );
 
         return $data;
     }

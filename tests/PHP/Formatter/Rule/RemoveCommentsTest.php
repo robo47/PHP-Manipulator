@@ -24,57 +24,57 @@ class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
         #0
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'singleLineComment1'),
-            $this->getContainerFromFixture($path . 'singleLineComment1Removed'),
+            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'output0'),
         );
 
         #1
         $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'singleLineComment2'),
-            $this->getContainerFromFixture($path . 'singleLineComment2Removed'),
+            array('removeDocComments' => false, 'removeStandardComments' => true),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
         );
 
         #2
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'multiLineComment1'),
-            $this->getContainerFromFixture($path . 'multiLineComment1Removed'),
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
         );
 
         #3
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'multiLineComment2'),
-            $this->getContainerFromFixture($path . 'multiLineComment2Removed'),
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'output3'),
         );
 
         #4
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'multiLineComment3'),
-            $this->getContainerFromFixture($path . 'multiLineComment3Removed'),
+            $this->getContainerFromFixture($path . 'input4'),
+            $this->getContainerFromFixture($path . 'output4'),
         );
 
         #5
         $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'docComment1'),
-            $this->getContainerFromFixture($path . 'docComment1Removed'),
+            array('removeDocComments' => true, 'removeStandardComments' => false),
+            $this->getContainerFromFixture($path . 'input5'),
+            $this->getContainerFromFixture($path . 'output5'),
         );
 
         #6
         $data[] = array(
-            array('removeDocComments' => true, 'removeStandardComments' => false),
-            $this->getContainerFromFixture($path . 'docCommentOnly1'),
-            $this->getContainerFromFixture($path . 'docCommentOnly1Removed'),
+            array(),
+            $this->getContainerFromFixture($path . 'input6'),
+            $this->getContainerFromFixture($path . 'output6'),
         );
 
         #7
         $data[] = array(
-            array('removeDocComments' => false, 'removeStandardComments' => true),
-            $this->getContainerFromFixture($path . 'normalCommentOnly1'),
-            $this->getContainerFromFixture($path . 'normalCommentOnly1Removed'),
+            array(),
+            $this->getContainerFromFixture($path . 'input7'),
+            $this->getContainerFromFixture($path . 'output7'),
         );
 
         return $data;

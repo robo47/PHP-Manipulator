@@ -1,1 +1,4 @@
-<% echo 'foo'; ?>
+<%
+echo 'foo';
+
+?>
