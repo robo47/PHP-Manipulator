@@ -1,26 +1,32 @@
 <?php
 
-class PHP_Manipulator_ContainerManipulator_SetWhitespaceAfterToken
-extends PHP_Manipulator_ContainerManipulator_Abstract
+namespace PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class SetWhitespaceAfterToken
+extends ContainerManipulator
 {
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_TokenContainer $container, $params = null)
+    public function manipulate(TokenContainer $container, $params = null)
     {
         if (!is_array($params)) {
             $message = 'invalid input $params should be an array';
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         if (!isset($params['tokens'])) {
             $message = "key 'tokens' not found in \$params";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         if (!isset($params['whitespace'])) {
             $message = "key 'whitespace' not found in \$params";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
 
         $tokens = $params['tokens'];
@@ -31,32 +37,32 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
-     * @param PHP_Manipulator_Token $token
-     * @return PHP_Manipulator_Token
+     * @param PHP\Manipulator\TokenContainer $container
+     * @param PHP\Manipulator\Token $token
+     * @return PHP\Manipulator\Token
      */
-    public function getTargetToken(PHP_Manipulator_TokenContainer $container, PHP_Manipulator_Token $token)
+    public function getTargetToken(TokenContainer $container, Token $token)
     {
         return $container->getNextToken($token);
     }
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
-     * @param PHP_Manipulator_Token $targetToken
-     * @param PHP_Manipulator_Token $newToken
+     * @param PHP\Manipulator\TokenContainer $container
+     * @param PHP\Manipulator\Token $targetToken
+     * @param PHP\Manipulator\Token $newToken
      */
-    public function insertToken(PHP_Manipulator_TokenContainer $container, PHP_Manipulator_Token $targetToken, PHP_Manipulator_Token $newToken)
+    public function insertToken(TokenContainer $container, Token $targetToken, Token $newToken)
     {
         $newTargetToken = $container->getPreviousToken($targetToken);
         $container->insertTokenAfter($newTargetToken, $newToken);
     }
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\TokenContainer $container
+     * @param PHP\Manipulator\Token $token
      * @param array $whitespace
      */
-    public function setWhitespace(PHP_Manipulator_TokenContainer $container, PHP_Manipulator_Token $token, array $whitespace)
+    public function setWhitespace(TokenContainer $container, Token $token, array $whitespace)
     {
         $targetToken = $this->getTargetToken($container, $token);
 
@@ -71,7 +77,7 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
         }
         if (null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
             if (!empty($tokenValue)) {
-                $newToken = PHP_Manipulator_Token::factory(array(T_WHITESPACE, $tokenValue));
+                $newToken = Token::factory(array(T_WHITESPACE, $tokenValue));
                 $this->insertToken($container, $targetToken, $newToken);
             }
         }
@@ -79,11 +85,11 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
 
     /**
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param array $whitespaces
      * @return mixed
      */
-    public function getWhitespaceForToken(PHP_Manipulator_Token $token, array $whitespaces)
+    public function getWhitespaceForToken(Token $token, array $whitespaces)
     {
         if (null === $token->getType()) {
             $token = $token->getValue();
@@ -95,7 +101,7 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
         } else {
             $message = 'No option found for: ' . token_name($token) .
                 ' (' . $token . ')';
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
     }
 }

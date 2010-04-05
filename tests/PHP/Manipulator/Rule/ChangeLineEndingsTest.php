@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\ChangeLineEndings;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_ChangeLineEndings
  */
-class PHP_Manipulator_Rule_ChangeLineEndingsTest extends TestCase
+class ChangeLineEndingsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_ChangeLineEndings::init
+     * @covers PHP\Manipulator\Rule\ChangeLineEndings::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_ChangeLineEndings();
+        $rule = new ChangeLineEndings();
         $this->assertEquals("\n", $rule->getOption('newline'), 'Wrong default Option value for newline');
     }
     
@@ -26,43 +31,43 @@ class PHP_Manipulator_Rule_ChangeLineEndingsTest extends TestCase
         #0
         $data[] = array(
             array(),
-            PHP_Manipulator_TokenContainer::createFromCode($codeWindows),
-            PHP_Manipulator_TokenContainer::createFromCode($codeLinux),
+            TokenContainer::createFromCode($codeWindows),
+            TokenContainer::createFromCode($codeLinux),
         );
 
         #1
         $data[] = array(
             array('newline' => "\r\n"),
-            PHP_Manipulator_TokenContainer::createFromCode($codeLinux),
-            PHP_Manipulator_TokenContainer::createFromCode($codeWindows),
+            TokenContainer::createFromCode($codeLinux),
+            TokenContainer::createFromCode($codeWindows),
         );
 
         #2
         $data[] = array(
             array('newline' => "\r"),
-            PHP_Manipulator_TokenContainer::createFromCode($codeLinux),
-            PHP_Manipulator_TokenContainer::createFromCode($codeMac),
+            TokenContainer::createFromCode($codeLinux),
+            TokenContainer::createFromCode($codeMac),
         );
 
         #3
         $data[] = array(
             array('newline' => "\n"),
-            PHP_Manipulator_TokenContainer::createFromCode($codeMac),
-            PHP_Manipulator_TokenContainer::createFromCode($codeLinux),
+            TokenContainer::createFromCode($codeMac),
+            TokenContainer::createFromCode($codeLinux),
         );
 
         #4
         $data[] = array(
             array('newline' => "\r\n"),
-            PHP_Manipulator_TokenContainer::createFromCode($codeMac),
-            PHP_Manipulator_TokenContainer::createFromCode($codeWindows),
+            TokenContainer::createFromCode($codeMac),
+            TokenContainer::createFromCode($codeWindows),
         );
 
         #5
         $data[] = array(
             array('newline' => "\r"),
-            PHP_Manipulator_TokenContainer::createFromCode($codeWindows),
-            PHP_Manipulator_TokenContainer::createFromCode($codeMac),
+            TokenContainer::createFromCode($codeWindows),
+            TokenContainer::createFromCode($codeMac),
         );
 
         return $data;
@@ -70,12 +75,12 @@ class PHP_Manipulator_Rule_ChangeLineEndingsTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Rule_ChangeLineEndings::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\ChangeLineEndings::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_ChangeLineEndings($options);
+        $rule = new ChangeLineEndings($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

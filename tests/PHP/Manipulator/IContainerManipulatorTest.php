@@ -1,17 +1,20 @@
 <?php
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\IContainerManipulator;
 
 /**
- * @group TokenManipulator_Interface
+ * @group ContainerManipulator_Interface
  */
-class PHP_Manipulator_TokenManipulator_InterfaceTest extends TestCase
+class IContainerManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_TokenManipulator_Interface
+     * @covers PHP\Manipulator\IContainerManipulator
      */
     public function testContainer()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_TokenManipulator_Interface');
+        $reflection = new \ReflectionClass('PHP\Manipulator\IContainerManipulator');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
         $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
@@ -23,8 +26,8 @@ class PHP_Manipulator_TokenManipulator_InterfaceTest extends TestCase
 
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
-        $this->assertSame('token', $tokenParameter->getName(), 'Parameter has wrong name');
-        $this->assertEquals('PHP_Manipulator_Token', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP_Manipulator_TokenContainer');
+        $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');
+        $this->assertEquals('PHP\Manipulator\TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP\Manipulator\TokenContainer');
         $this->assertFalse($tokenParameter->isOptional(), 'Parameter is optional');
 
         $paramsParameter = $parameters[1];

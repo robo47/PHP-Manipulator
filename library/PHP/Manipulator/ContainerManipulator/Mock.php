@@ -1,7 +1,13 @@
 <?php
 
-class PHP_Manipulator_ContainerManipulator_Mock
-extends PHP_Manipulator_ContainerManipulator_Abstract
+namespace PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class Mock
+extends ContainerManipulator
 {
 
     /**
@@ -10,10 +16,10 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
     public static $called = true;
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_TokenContainer $container, $params = null)
+    public function manipulate(TokenContainer $container, $params = null)
     {
         self::$called = true;
     }

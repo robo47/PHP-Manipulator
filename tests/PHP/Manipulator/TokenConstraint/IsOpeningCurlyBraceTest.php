@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\IsOpeningCurlyBrace;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_IsOpeningCurlyBrace
  */
-class PHP_Manipulator_TokenConstraint_IsOpeningCurlyBraceTest extends TestCase
+class IsOpeningCurlyBraceTest extends \Tests\TestCase
 {
 
     /**
@@ -15,25 +20,25 @@ class PHP_Manipulator_TokenConstraint_IsOpeningCurlyBraceTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '{')),
+            Token::factory(array(null, '{')),
             true
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '}')),
+            Token::factory(array(null, '}')),
             false
         );
 
         #2
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, '{')),
+            Token::factory(array(T_COMMENT, '{')),
             false
         );
 
         #3
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, '}')),
+            Token::factory(array(T_COMMENT, '}')),
             false
         );
 
@@ -43,11 +48,11 @@ class PHP_Manipulator_TokenConstraint_IsOpeningCurlyBraceTest extends TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_IsOpeningCurlyBrace::evaluate
+     * @covers PHP\Manipulator\TokenConstraint\IsOpeningCurlyBrace
      */
     public function testEvaluate($token, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsOpeningCurlyBrace();
+        $constraint = new IsOpeningCurlyBrace();
         $this->assertSame($result, $constraint->evaluate($token), 'Wrong result');
     }
 }

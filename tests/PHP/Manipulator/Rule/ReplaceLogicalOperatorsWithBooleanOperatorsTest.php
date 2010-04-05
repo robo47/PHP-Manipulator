@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_ReplaceLogicalOperatorsWithBooleanOperators
  */
-class PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends TestCase
+class ReplaceLogicalOperatorsWithBooleanOperatorsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperators::init
+     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperators();
+        $rule = new ReplaceLogicalOperatorsWithBooleanOperators();
         $this->assertTrue($rule->getOption('replaceAnd'));
         $this->assertTrue($rule->getOption('replaceOr'));
     }
@@ -56,13 +61,13 @@ class PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest exten
     }
 
     /**
-     * @covers PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
-     * @covers PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperators::<protected>
+     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_ReplaceLogicalOperatorsWithBooleanOperators($options);
+        $rule = new ReplaceLogicalOperatorsWithBooleanOperators($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

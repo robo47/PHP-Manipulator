@@ -1,10 +1,12 @@
 <?php
 
-class PHP_Manipulator_AutoloaderTest extends TestCase
+namespace Tests\PHP\Manipulator;
+
+class AutoloaderTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Autoloader
+     * @covers PHP\Manipulator\Autoloader
      */
     public function testAutoload()
     {
@@ -12,7 +14,7 @@ class PHP_Manipulator_AutoloaderTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Autoloader
+     * @covers PHP\Manipulator\Autoloader
      */
     public function testRegisterAutoloader()
     {

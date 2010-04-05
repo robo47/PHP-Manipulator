@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\ShorttagsToLongTags;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_ShorttagsToLongTags
  */
-class PHP_Manipulator_Rule_ShorttagsToLongTagsTest extends TestCase
+class ShorttagsToLongTagsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_ShorttagsToLongTags::init
+     * @covers PHP\Manipulator\Rule\ShorttagsToLongTags::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_ShorttagsToLongTags();
+        $rule = new ShorttagsToLongTags();
     }
 
     /**
@@ -49,14 +54,14 @@ class PHP_Manipulator_Rule_ShorttagsToLongTagsTest extends TestCase
 
 
     /**
-     * @covers PHP_Manipulator_Rule_ShorttagsToLongTags::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\ShorttagsToLongTags::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $this->checkShorttags();
-        
-        $rule = new PHP_Manipulator_Rule_ShorttagsToLongTags($options);
+
+        $rule = new ShorttagsToLongTags($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

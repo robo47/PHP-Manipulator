@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\IsOpeningBrace;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_IsOpeningBrace
  */
-class PHP_Manipulator_TokenConstraint_IsOpeningBraceTest extends TestCase
+class IsOpeningBraceTest extends \Tests\TestCase
 {
 
     /**
@@ -15,25 +20,25 @@ class PHP_Manipulator_TokenConstraint_IsOpeningBraceTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '(')),
+            Token::factory(array(null, '(')),
             true
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, ')')),
+            Token::factory(array(null, ')')),
             false
         );
 
         #2
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, '(')),
+            Token::factory(array(T_COMMENT, '(')),
             false
         );
 
         #3
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, ')')),
+            Token::factory(array(T_COMMENT, ')')),
             false
         );
 
@@ -43,11 +48,11 @@ class PHP_Manipulator_TokenConstraint_IsOpeningBraceTest extends TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_IsOpeningBrace::evaluate
+     * @covers PHP\Manipulator\TokenConstraint\IsOpeningBrace
      */
     public function testEvaluate($token, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsOpeningBrace();
+        $constraint = new IsOpeningBrace();
         $this->assertSame($result, $constraint->evaluate($token), 'Wrong result');
     }
 }

@@ -1,17 +1,23 @@
 <?php
 
-class PHP_Manipulator_TokenConstraint_BeginsWithNewline
-extends PHP_Manipulator_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+
+class BeginsWithNewline
+extends TokenConstraint
 {
 
     /**
      * Evaluate if the token is a multiline comment
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_Token $token, $params = null)
+    public function evaluate(Token $token, $params = null)
     {
         $beginsWithNewline = false;
         $pattern = '~^(\n|\r\n|\r)~';

@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\IsType;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_IsType
  */
-class PHP_Manipulator_TokenConstraint_IsTypeTest extends TestCase
+class IsTypeTest extends \Tests\TestCase
 {
 
     /**
@@ -15,28 +20,28 @@ class PHP_Manipulator_TokenConstraint_IsTypeTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, "// some comment")),
+            Token::factory(array(T_COMMENT, "// some comment")),
             T_COMMENT,
             true
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, "// some comment")),
+            Token::factory(array(T_COMMENT, "// some comment")),
             T_WHITESPACE,
             false
         );
 
         #2
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, "// some comment")),
+            Token::factory(array(T_COMMENT, "// some comment")),
             array(T_WHITESPACE, T_CLOSE_TAG, T_COMMENT),
             true
         );
 
         #3
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, "// some comment")),
+            Token::factory(array(T_COMMENT, "// some comment")),
             array(T_WHITESPACE, T_CLOSE_TAG, T_DOC_COMMENT),
             false
         );
@@ -47,11 +52,11 @@ class PHP_Manipulator_TokenConstraint_IsTypeTest extends TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_IsType::evaluate
+     * @covers PHP\Manipulator\TokenConstraint\IsType
      */
     public function testEvaluate($token, $param, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsType();
+        $constraint = new IsType();
         $this->assertSame($result, $constraint->evaluate($token, $param), 'Wrong result');
     }
 }

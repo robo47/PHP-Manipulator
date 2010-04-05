@@ -1,19 +1,27 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\AsptagsToLongTags;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_AsptagsToLongTags
  */
-class PHP_Manipulator_Rule_AsptagsToLongTagsTest extends TestCase
+class AsptagsToLongTagsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_AsptagsToLongTags::init
+     * @covers PHP\Manipulator\Rule\AsptagsToLongTags::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_AsptagsToLongTags();
+        $rule = new AsptagsToLongTags();
     }
-    
+
+    /**
+     * @return array
+     */
     public function ruleProvider()
     {
         $data = array();
@@ -45,14 +53,14 @@ class PHP_Manipulator_Rule_AsptagsToLongTagsTest extends TestCase
 
 
     /**
-     * @covers PHP_Manipulator_Rule_AsptagsToLongTags::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\AsptagsToLongTags::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $this->checkAsptags();
         
-        $rule = new PHP_Manipulator_Rule_AsptagsToLongTags($options);
+        $rule = new AsptagsToLongTags($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

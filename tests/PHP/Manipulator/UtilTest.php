@@ -1,6 +1,12 @@
 <?php
 
-class PHP_Manipulator_UtilTest extends TestCase
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\Util;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class UtilTest extends \Tests\TestCase
 {
 
     /**
@@ -12,19 +18,19 @@ class PHP_Manipulator_UtilTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory('('),
+            Token::factory('('),
             '[SIMPLE]                    |    1 | NULL | (' . PHP_EOL,
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, '// foo', 5)),
+            Token::factory(array(T_COMMENT, '// foo', 5)),
             'T_COMMENT                   |    6 |    5 | //.foo' . PHP_EOL,
         );
 
         #2
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, "/*\n\t * föü\n\t */", 10)),
+            Token::factory(array(T_COMMENT, "/*\n\t * föü\n\t */", 10)),
             'T_COMMENT                   |   15 |   10 | /*\n\t.*.föü\n\t.*/' . PHP_EOL,
         );
 
@@ -32,14 +38,14 @@ class PHP_Manipulator_UtilTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Util::dumpToken
+     * @covers PHP\Manipulator\Util::dumpToken
      * @dataProvider tokenProvider
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param string $dumpExpected
      */
     public function testDumpToken($token, $dumpExpected)
     {
-        $dump = PHP_Manipulator_Util::dumpToken($token);
+        $dump = Util::dumpToken($token);
         $this->assertEquals($dumpExpected, $dump, 'dump does not match');
     }
 
@@ -95,14 +101,14 @@ class PHP_Manipulator_UtilTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Util::getLongestLineLength
+     * @covers PHP\Manipulator\Util::getLongestLineLength
      * @dataProvider arrayProvider
      * @param array $array
      * @param integer $longest
      */
     public function testGetLongestLineLength($array, $expectedLongest)
     {
-        $longest = PHP_Manipulator_Util::getLongestLineLength($array);
+        $longest = Util::getLongestLineLength($array);
         $this->assertSame($expectedLongest, $longest, 'Length does not match');
     }
 
@@ -114,7 +120,7 @@ class PHP_Manipulator_UtilTest extends TestCase
         $data = array();
 
         $data[] = array(
-            PHP_Manipulator_TokenContainer::createFromCode('<?php echo $foo; ?>'),
+            \PHP\Manipulator\TokenContainer::createFromCode('<?php echo $foo; ?>'),
             'Token                       |  LEN | LINE | VALUE' . PHP_EOL . PHP_EOL .
                 'T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
                 'T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
@@ -130,14 +136,14 @@ class PHP_Manipulator_UtilTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Util::dumpContainer
+     * @covers PHP\Manipulator\Util::dumpContainer
      * @dataProvider containerProvider
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param string $expectedDump
      */
     public function testDumpContainer($container, $expectedDump)
     {
-        $dump = PHP_Manipulator_Util::dumpContainer($container);
+        $dump = Util::dumpContainer($container);
         $this->assertSame($expectedDump, $dump, 'Dump does not match');
     }
 
@@ -150,8 +156,8 @@ class PHP_Manipulator_UtilTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_TokenContainer::createFromCode("<?php echo \$foo; ?>"),
-            PHP_Manipulator_TokenContainer::createFromCode("<?php echo \$foo;\n?>"),
+            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo; ?>"),
+            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 7                        ' . PHP_EOL .
                 '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
                 '                                                         |  ' . PHP_EOL .
@@ -168,8 +174,8 @@ class PHP_Manipulator_UtilTest extends TestCase
 
         #1
         $data[] = array(
-            PHP_Manipulator_TokenContainer::createFromCode("<?php echo \$foo; ?>"),
-            PHP_Manipulator_TokenContainer::createFromCode("<?php echo \$foo;\n echo \$baa;\n?>"),
+            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo; ?>"),
+            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo;\n echo \$baa;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 12                       ' . PHP_EOL .
                 '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
                 '                                                         |  ' . PHP_EOL .
@@ -199,15 +205,15 @@ class PHP_Manipulator_UtilTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Util::compareContainers
+     * @covers PHP\Manipulator\Util::compareContainers
      * @dataProvider containerCompareProvider
-     * @param PHP_Manipulator_TokenContainer $first
-     * @param PHP_Manipulator_TokenContainer $second
+     * @param PHP\Manipulator\TokenContainer $first
+     * @param PHP\Manipulator\TokenContainer $second
      * @param string $expectedDump
      */
     public function testCompaeContainer($first, $second, $expectedDump)
     {
-        $dump = PHP_Manipulator_Util::compareContainers($first, $second);
+        $dump = Util::compareContainers($first, $second);
         $this->assertSame($expectedDump, $dump, 'Dump does not match');
     }
 }

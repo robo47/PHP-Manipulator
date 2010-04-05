@@ -1,7 +1,12 @@
 <?php
 
-class PHP_Manipulator_Rule_RemoveMultipleEmptyLines
-extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+
+class RemoveMultipleEmptyLines
+extends Rule
 {
     
     public function init()
@@ -16,9 +21,9 @@ extends PHP_Manipulator_Rule_Abstract
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
         $maxEmptyLines = $this->getOption('maxEmptyLines');
@@ -29,7 +34,7 @@ extends PHP_Manipulator_Rule_Abstract
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);

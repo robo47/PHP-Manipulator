@@ -1,17 +1,23 @@
 <?php
 
-class PHP_Manipulator_TokenConstraint_IsErrorControlOperator
-extends PHP_Manipulator_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+
+class IsErrorControlOperator
+extends TokenConstraint
 {
 
     /**
      * Evaluate if the token is
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_Token $token, $params = null)
+    public function evaluate(Token $token, $params = null)
     {
         $result = false;
         if (null === $token->getType() && '@' === $token->getValue()) {

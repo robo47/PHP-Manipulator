@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\IsOperator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_IsOperator
  */
-class PHP_Manipulator_TokenConstraint_IsOperatorTest extends TestCase
+class IsOperatorTest extends \Tests\TestCase
 {
 
     /**
@@ -56,26 +61,26 @@ class PHP_Manipulator_TokenConstraint_IsOperatorTest extends TestCase
 
         foreach ($tokens as $type) {
             $data[] = array(
-                PHP_Manipulator_Token::factory(array($type, '==')),
+                Token::factory(array($type, '==')),
                 null,
                 true
             );
         }
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '=')),
+            Token::factory(array(null, '=')),
             null,
             true
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_COMMENT, '=')),
+            Token::factory(array(T_COMMENT, '=')),
             null,
             false
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '~')),
+            Token::factory(array(null, '~')),
             null,
             false
         );
@@ -86,11 +91,11 @@ class PHP_Manipulator_TokenConstraint_IsOperatorTest extends TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_IsOperator::evaluate
+     * @covers PHP\Manipulator\TokenConstraint\IsOperator
      */
     public function testEvaluate($token, $param, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsOperator();
+        $constraint = new IsOperator();
         $this->assertSame($result, $constraint->evaluate($token, $param), 'Wrong result');
     }
 }

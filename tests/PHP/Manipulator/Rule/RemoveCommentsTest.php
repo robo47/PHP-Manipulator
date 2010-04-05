@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\RemoveComments;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_RemoveComments
  */
-class PHP_Manipulator_Rule_RemoveCommentsTest extends TestCase
+class RemoveCommentsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_RemoveComments::init
+     * @covers PHP\Manipulator\Rule\RemoveComments::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_RemoveComments();
+        $rule = new RemoveComments();
         $this->assertTrue($rule->getOption('removeDocComments'), 'Wrong default Option value for removeDocComments');
         $this->assertTrue($rule->getOption('removeStandardComments'), 'Wrong default Option value for removeStandardComments');
     }
@@ -82,11 +87,11 @@ class PHP_Manipulator_Rule_RemoveCommentsTest extends TestCase
 
     /**
      * @dataProvider ruleProvider
-     * @covers PHP_Manipulator_Rule_RemoveComments
+     * @covers PHP\Manipulator\Rule\RemoveComments
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_RemoveComments($options);
+        $rule = new RemoveComments($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

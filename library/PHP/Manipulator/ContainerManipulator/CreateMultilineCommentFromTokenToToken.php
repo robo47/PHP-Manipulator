@@ -1,51 +1,58 @@
 <?php
 
-class PHP_Manipulator_ContainerManipulator_CreateMultilineCommentFromTokenToToken
-extends PHP_Manipulator_ContainerManipulator_Abstract
+namespace PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenConstraint\IsMultilineComment;
+
+class CreateMultilineCommentFromTokenToToken
+extends ContainerManipulator
 {
 
     /**
      * Manipulate
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_TokenContainer $container, $params = null)
+    public function manipulate(TokenContainer $container, $params = null)
     {
         if (!is_array($params)) {
             $message = 'invalid input $params should be an array';
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         if (!isset($params['from'])) {
             $message = "key 'from' not found in \$params";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
-        if (!($params['from'] instanceof PHP_Manipulator_Token)) {
-            $message = "key 'from' is not instance of PHP_Manipulator_Token";
-            throw new PHP_Manipulator_Exception($message);
+        if (!($params['from'] instanceof Token)) {
+            $message = "key 'from' is not instance of PHP\Manipulator\Token";
+            throw new \Exception($message);
         }
         if (!isset($params['to'])) {
             $message = "key 'to' not found in \$params";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
-        if (!($params['to'] instanceof PHP_Manipulator_Token)) {
-            $message = "key 'to' is not instance of PHP_Manipulator_Token";
-            throw new PHP_Manipulator_Exception($message);
+        if (!($params['to'] instanceof Token)) {
+            $message = "key 'to' is not instance of PHP\Manipulator\Token";
+            throw new \Exception($message);
         }
 
         $from = $params['from'];
-        /* @var $from PHP_Manipulator_Token */
+        /* @var $from PHP\Manipulator\Token */
         $to = $params['to'];
-        /* @var $from PHP_Manipulator_Token */
+        /* @var $from PHP\Manipulator\Token */
 
         if (!$container->contains($from)) {
             $message = "element 'from' not found in \$container";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
 
         if (!$container->contains($to)) {
             $message = "element 'to' not found in \$container";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
 
         $startOffset = $container->getOffsetByToken($from);
@@ -54,7 +61,7 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
 
         if ($startOffset > $endOffset) {
             $message = "startOffset is behind endOffset";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
 
         $tokens = $this->_getTokensFromStartToEnd($container, $startOffset, $endOffset);
@@ -63,7 +70,7 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
 
         $value = '/*' . $value . '*/';
 
-        $commentToken = new PHP_Manipulator_Token($value, T_COMMENT);
+        $commentToken = new Token($value, T_COMMENT);
 
         $container->insertAtOffset($startOffset, $commentToken);
 
@@ -71,12 +78,12 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param integer $startOffset
      * @param integer $endOffset
      * @return array
      */
-    protected function _getTokensFromStartToEnd($container, $startOffset, $endOffset)
+    protected function _getTokensFromStartToEnd(TokenContainer $container, $startOffset, $endOffset)
     {
         $iterator = $container->getIterator();
         $iterator->seek($startOffset);
@@ -96,11 +103,11 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
      * @param array $tokens
      * @return string
      */
-    protected function _mergeTokenValuesIntoString($tokens)
+    protected function _mergeTokenValuesIntoString(array $tokens)
     {
         $value = '';
         foreach ($tokens as $token) {
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             if (!$this->_isMultilineComment($token)) {
                 $value .= $token->getValue();
             }
@@ -109,12 +116,12 @@ extends PHP_Manipulator_ContainerManipulator_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isMultilineComment($token)
+    protected function _isMultilineComment(Token $token)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsMultilineComment();
+        $constraint = new IsMultilineComment();
         return $constraint->evaluate($token);
     }
 }

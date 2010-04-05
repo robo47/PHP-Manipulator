@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\BeginsWithNewline;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_BeginsWithNewline
  */
-class PHP_Manipulator_TokenConstraint_BeginsWithNewlineTest extends TestCase
+class BeginsWithNewlineTest extends \Tests\TestCase
 {
 
     /**
@@ -14,32 +19,32 @@ class PHP_Manipulator_TokenConstraint_BeginsWithNewlineTest extends TestCase
         $data = array();
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "\n")),
+            Token::factory(array(T_WHITESPACE, "\n")),
             true
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "\n\r")),
+            Token::factory(array(T_WHITESPACE, "\n\r")),
             true
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "\r")),
+            Token::factory(array(T_WHITESPACE, "\r")),
             true
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "x\n")),
+            Token::factory(array(T_WHITESPACE, "x\n")),
             false
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "x\n\r")),
+            Token::factory(array(T_WHITESPACE, "x\n\r")),
             false
         );
 
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "x\r")),
+            Token::factory(array(T_WHITESPACE, "x\r")),
             false
         );
 
@@ -48,11 +53,11 @@ class PHP_Manipulator_TokenConstraint_BeginsWithNewlineTest extends TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_BeginsWithNewline::evaluate
+     * @covers PHP\Manipulator\TokenConstraint\BeginsWithNewline::evaluate
      */
     public function testEvaluate($token, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_BeginsWithNewline();
+        $constraint = new BeginsWithNewline();
         $this->assertSame($result, $constraint->evaluate($token), 'Wrong result');
     }
 }

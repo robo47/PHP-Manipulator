@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\RemoveWhitespaceFromEnd;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_RemoveWhitespaceFromEnd
  */
-class PHP_Manipulator_ContainerManipulator_RemoveWhitespaceFromEndTest extends TestCase
+class RemoveWhitespaceFromEndTest extends \Tests\TestCase
 {
 
     /**
@@ -26,11 +31,11 @@ class PHP_Manipulator_ContainerManipulator_RemoveWhitespaceFromEndTest extends T
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP_Manipulator_ContainerManipulator_RemoveWhitespaceFromEnd
+     * @covers PHP\Manipulator\ContainerManipulator\RemoveWhitespaceFromEnd
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
-        $manipulator = new PHP_Manipulator_ContainerManipulator_RemoveWhitespaceFromEnd();
+        $manipulator = new RemoveWhitespaceFromEnd();
         $manipulator->manipulate($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

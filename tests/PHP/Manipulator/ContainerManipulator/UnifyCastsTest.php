@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\UnifyCasts;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_UnifyCasts
  */
-class PHP_Manipulator_ContainerManipulator_UnifyCastsTest extends TestCase
+class UnifyCastsTest extends \Tests\TestCase
 {
 
     /**
@@ -43,12 +48,12 @@ class PHP_Manipulator_ContainerManipulator_UnifyCastsTest extends TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP_Manipulator_ContainerManipulator_UnifyCasts::manipulate
-     * @covers PHP_Manipulator_ContainerManipulator_UnifyCasts::<protected>
+     * @covers PHP\Manipulator\ContainerManipulator\UnifyCasts::manipulate
+     * @covers PHP\Manipulator\ContainerManipulator\UnifyCasts::<protected>
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {
-        $manipulator = new PHP_Manipulator_ContainerManipulator_UnifyCasts();
+        $manipulator = new UnifyCasts();
         $manipulator->manipulate($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

@@ -1,14 +1,18 @@
 <?php
 
-class PHP_Manipulator_Ruleset_InterfaceTest extends TestCase
+namespace Test\PHP\Manipulator;
+
+use PHP\Manipulator\IRuleset;
+
+class IRulesetTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Ruleset_Interface
+     * @covers PHP\Manipulator\IRuleset
      */
     public function testContainer()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_Ruleset_Interface');
+        $reflection = new \ReflectionClass('PHP\Manipulator\IRuleset');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
         $this->assertSame(1, count($methods), 'Interface has wrong number of methods');

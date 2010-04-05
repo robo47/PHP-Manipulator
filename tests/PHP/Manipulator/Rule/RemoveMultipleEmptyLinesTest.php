@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\RemoveMultipleEmptyLines;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_RemoveMultipleEmptyLines
  */
-class PHP_Manipulator_Rule_RemoveMultipleEmptyLinesTest extends TestCase
+class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_RemoveMultipleEmptyLines::init
+     * @covers PHP\Manipulator\Rule\RemoveMultipleEmptyLines::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_RemoveMultipleEmptyLines();
+        $rule = new RemoveMultipleEmptyLines();
         $this->assertEquals(2, $rule->getOption('maxEmptyLines'), 'Wrong default Option value for maxEmptyLines');
     }
     
@@ -39,12 +44,12 @@ class PHP_Manipulator_Rule_RemoveMultipleEmptyLinesTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Rule_RemoveMultipleEmptyLines::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\RemoveMultipleEmptyLines::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_RemoveMultipleEmptyLines($options);
+        $rule = new RemoveMultipleEmptyLines($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

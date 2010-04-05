@@ -1,15 +1,20 @@
 <?php
 
-class PHP_Manipulator_ContainerConstraint_ContainsClass
-extends PHP_Manipulator_ContainerConstraint_Abstract
+namespace PHP\Manipulator\ContainerConstraint;
+
+use PHP\Manipulator\ContainerConstraint;
+use PHP\Manipulator\TokenContainer;
+
+class ContainsClass
+extends ContainerConstraint
 {
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_TokenContainer $container, $params = null)
+    public function evaluate(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 

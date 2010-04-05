@@ -1,6 +1,14 @@
 <?php
 
-class PHP_Manipulator_Rule_Indent extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\Rule\RemoveIndention as RemoveIndentionRule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class Indent
+extends Rule
 {
 
     /**
@@ -30,11 +38,11 @@ class PHP_Manipulator_Rule_Indent extends PHP_Manipulator_Rule_Abstract
     /**
      * Unindents all Code and then indent it right
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
-        $removeIndention = new PHP_Manipulator_Rule_RemoveIndention();
+        $removeIndention = new RemoveIndentionRule();
         $removeIndention->applyRuleToTokens($container);
 
         $iterator = $container->getIterator();
@@ -56,9 +64,9 @@ class PHP_Manipulator_Rule_Indent extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $whitespaceToken
+     * @param PHP\Manipulator\Token $whitespaceToken
      */
-    public function indentWhitespace(PHP_Manipulator_Token $whitespaceToken)
+    public function indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
             $this->getIndention($this->getIndentionLevel());
@@ -66,30 +74,30 @@ class PHP_Manipulator_Rule_Indent extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isWhitespaceWithBreak(PHP_Manipulator_Token $token)
+    protected function _isWhitespaceWithBreak(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE)
             && (false !== strpos($token->getValue(), "\n")
                 || false !== strpos($token->getValue(), "\r"));
     }
 
-    public function checkAndChangeIndentionLevel(PHP_Manipulator_Token $token)
+    public function checkAndChangeIndentionLevel(Token $token)
     {
         $this->checkAndChangeIndentionLevelDecreasment($token);
         $this->checkAndChangeIndentionLevelIncreasment($token);
     }
 
-    public function checkAndChangeIndentionLevelIncreasment(PHP_Manipulator_Token $token)
+    public function checkAndChangeIndentionLevelIncreasment(Token $token)
     {
         if ($this->_isIndentionLevelIncreasment($token)) {
             $this->increasIndentionLevel();
         }
     }
 
-    public function checkAndChangeIndentionLevelDecreasment(PHP_Manipulator_Token $token)
+    public function checkAndChangeIndentionLevelDecreasment(Token $token)
     {
         if ($this->_isIndentionLevelDecreasement($token)) {
             $this->decreaseIndentionLevel();
@@ -115,20 +123,20 @@ class PHP_Manipulator_Rule_Indent extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isIndentionLevelIncreasment(PHP_Manipulator_Token $token)
+    protected function _isIndentionLevelIncreasment(Token $token)
     {
         return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
             || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isIndentionLevelDecreasement(PHP_Manipulator_Token $token)
+    protected function _isIndentionLevelDecreasement(Token $token)
     {
         return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
             || $this->evaluateConstraint('IsClosingBrace', $token);

@@ -1,7 +1,12 @@
 <?php
 
-class PHP_Manipulator_TokenManipulator_Mock
-extends PHP_Manipulator_TokenManipulator_Abstract
+namespace PHP\Manipulator\TokenManipulator;
+
+use PHP\Manipulator\TokenManipulator;
+use PHP\Manipulator\Token;
+
+class Mock
+extends TokenManipulator
 {
 
     /**
@@ -10,10 +15,10 @@ extends PHP_Manipulator_TokenManipulator_Abstract
     public static $called = false;
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_Token $token, $params = null)
+    public function manipulate(Token $token, $params = null)
     {
         self::$called = true;
     }

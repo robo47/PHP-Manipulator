@@ -1,30 +1,33 @@
 <?php
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\ITokenManipulator;
 
 /**
- * @group ContainerConstraint_Interface
+ * @group TokenManipulator_Interface
  */
-class PHP_Manipulator_ContainerConstraint_InterfaceTest extends TestCase
+class ITokenManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_ContainerConstraint_Interface
+     * @covers PHP\Manipulator\ITokenManipulator
      */
     public function testContainer()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_ContainerConstraint_Interface');
+        $reflection = new \ReflectionClass('PHP\Manipulator\ITokenManipulator');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
         $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
         $evaluateMethod = $methods[0];
         /* @var $evaluateMethod ReflectionMethod */
-        $this->assertSame('evaluate', $evaluateMethod->getName(), 'Method has wrong name');
+        $this->assertSame('manipulate', $evaluateMethod->getName(), 'Method has wrong name');
         $this->assertSame(2, $evaluateMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $evaluateMethod->getParameters();
 
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
-        $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');
-        $this->assertEquals('PHP_Manipulator_TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP_Manipulator_TokenContainer');
+        $this->assertSame('token', $tokenParameter->getName(), 'Parameter has wrong name');
+        $this->assertEquals('PHP\Manipulator\Token', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP\Manipulator\TokenContainer');
         $this->assertFalse($tokenParameter->isOptional(), 'Parameter is optional');
 
         $paramsParameter = $parameters[1];

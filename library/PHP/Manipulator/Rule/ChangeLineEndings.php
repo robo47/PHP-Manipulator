@@ -1,6 +1,12 @@
 <?php
 
-class PHP_Manipulator_Rule_ChangeLineEndings extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+
+class ChangeLineEndings
+extends Rule
 {
     
     public function init()
@@ -12,14 +18,14 @@ class PHP_Manipulator_Rule_ChangeLineEndings extends PHP_Manipulator_Rule_Abstra
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $newline = $this->getOption('newline');
 
         $code = $container->__toString();
         $code = preg_replace('~(\r\n|\n|\r)~', $newline, $code);
-        $container->setContainer(PHP_Manipulator_TokenContainer::createTokenArrayFromCode($code));
+        $container->setContainer(TokenContainer::createTokenArrayFromCode($code));
     }
 }

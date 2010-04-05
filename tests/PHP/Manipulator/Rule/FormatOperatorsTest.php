@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\FormatOperators;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_FormatOperators
  */
-class PHP_Manipulator_Rule_FormatOperatorsTest extends TestCase
+class FormatOperatorsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_FormatOperators::init
+     * @covers PHP\Manipulator\Rule\FormatOperators::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_FormatOperators();
+        $rule = new FormatOperators();
         $this->assertType('array', $rule->getOption('beforeOperator'), 'Wrong default Option value for beforeOperator');
         $this->assertType('array', $rule->getOption('afterOperator'), 'Wrong default Option value for afterOperator');
         // @todo check number of elements, check all are operators ...
@@ -40,13 +45,13 @@ class PHP_Manipulator_Rule_FormatOperatorsTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Rule_FormatOperators::applyRuleToTokens
-     * @covers PHP_Manipulator_Rule_FormatOperators::<protected>
+     * @covers PHP\Manipulator\Rule\FormatOperators::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\FormatOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_FormatOperators($options);
+        $rule = new FormatOperators($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

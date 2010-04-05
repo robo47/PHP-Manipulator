@@ -1,6 +1,13 @@
 <?php
 
-class PHP_Manipulator_Rule_RemoveComments extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class RemoveComments
+extends Rule
 {
     
     public function init()
@@ -16,15 +23,15 @@ class PHP_Manipulator_Rule_RemoveComments extends PHP_Manipulator_Rule_Abstract
     /**
      * Removes Comments
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
 
             if ($this->_isCommentAndShouldBeRemoved($token)) {
                 // delete comment
@@ -52,10 +59,10 @@ class PHP_Manipulator_Rule_RemoveComments extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isCommentAndShouldBeRemoved($token)
+    protected function _isCommentAndShouldBeRemoved(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
             || ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));

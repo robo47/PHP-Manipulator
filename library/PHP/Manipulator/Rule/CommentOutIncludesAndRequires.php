@@ -1,7 +1,12 @@
 <?php
 
-class PHP_Manipulator_Rule_CommentOutIncludesAndRequires
-extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+
+class CommentOutIncludesAndRequires
+extends Rule
 {
     
     public function init()
@@ -13,9 +18,9 @@ extends PHP_Manipulator_Rule_Abstract
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $tokens
+     * @param PHP\Manipulator\TokenContainer $tokens
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
         $iterator->rewind();
@@ -63,7 +68,7 @@ extends PHP_Manipulator_Rule_Abstract
                 }
             }
             if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
-                /* @var $token PHP_Manipulator_Token */
+                /* @var $token PHP\Manipulator\Token */
                 if ($this->evaluateConstraint('IsType', $token, $searchedTokens) && !$openInclude) {
                     $searchingColon = true;
                     $foundToken = $token;
@@ -94,7 +99,7 @@ extends PHP_Manipulator_Rule_Abstract
 
     /**
      * @param boolean $searchingColon
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isSearchingColon($searchingColon, $token)

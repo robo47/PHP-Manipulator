@@ -1,16 +1,18 @@
 <?php
 
-class PHP_Manipulator_Autoloader
+namespace PHP\Manipulator;
+
+class Autoloader
 {
 
     /**
-     *
      * @param string $classname
      */
     public function autoload($classname)
     {
-        $filename = str_replace('_', '/', $classname) . '.php';
-        include $filename;
+        $filename = str_replace('\\', DIRECTORY_SEPARATOR, $classname);
+        $filename = str_replace('_', DIRECTORY_SEPARATOR, $filename);
+        include $filename . '.php';
     }
 
     /**
@@ -18,7 +20,7 @@ class PHP_Manipulator_Autoloader
      */
     public static function register()
     {
-        $autoloader = new PHP_Manipulator_Autoloader();
+        $autoloader = new Autoloader();
         spl_autoload_register(array($autoloader, 'autoload'));
     }
 }

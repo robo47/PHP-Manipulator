@@ -1,46 +1,51 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerConstraint;
+
+use PHP\Manipulator\ContainerConstraint\Mock;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerConstraint_Mock
  */
-class PHP_Manipulator_ContainerConstraint_MockTest extends TestCase
+class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_ContainerConstraint_Mock
+     * @covers PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testDefaultConstruct()
     {
-        $mock = new PHP_Manipulator_ContainerConstraint_Mock();
+        $mock = new Mock();
     }
 
     /**
-     * @covers PHP_Manipulator_ContainerConstraint_Mock
+     * @covers PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testOptionViaConstructorWorks()
     {
-        $mock = new PHP_Manipulator_ContainerConstraint_Mock(array('return' => true));
-        $container = new PHP_Manipulator_TokenContainer();
+        $mock = new Mock(array('return' => true));
+        $container = new TokenContainer();
         $this->assertTrue($mock->evaluate($container));
 
-        $mock = new PHP_Manipulator_ContainerConstraint_Mock(array('return' => false));
-        $container = new PHP_Manipulator_TokenContainer();
+        $mock = new Mock(array('return' => false));
+        $container = new TokenContainer();
         $this->assertFalse($mock->evaluate($container));
     }
 
     /**
-     * @covers PHP_Manipulator_ContainerConstraint_Mock
+     * @covers PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testOptionViastaticVariableWorks()
     {
-        PHP_Manipulator_ContainerConstraint_Mock::$return = true;
-        $mock = new PHP_Manipulator_ContainerConstraint_Mock();
-        $container = new PHP_Manipulator_TokenContainer();
+        Mock::$return = true;
+        $mock = new Mock();
+        $container = new TokenContainer();
         $this->assertTrue($mock->evaluate($container));
 
-        PHP_Manipulator_ContainerConstraint_Mock::$return = false;
-        $mock = new PHP_Manipulator_ContainerConstraint_Mock();
-        $container = new PHP_Manipulator_TokenContainer();
+        Mock::$return = false;
+        $mock = new Mock();
+        $container = new TokenContainer();
         $this->assertFalse($mock->evaluate($container));
     }
 }

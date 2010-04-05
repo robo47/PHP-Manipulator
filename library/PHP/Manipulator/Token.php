@@ -1,6 +1,8 @@
 <?php
 
-class PHP_Manipulator_Token
+namespace PHP\Manipulator;
+
+class Token
 {
 
     /**
@@ -32,27 +34,27 @@ class PHP_Manipulator_Token
     /**
      * Factory for token from token_get_all
      *
-     * @throws PHP_Manipulator_Token
+     * @throws PHP\Manipulator\Token
      * @param string|array $input
-     * @return PHP_Manipulator_Token
+     * @return PHP\Manipulator\Token
      */
     public static function factory($input)
     {
         if (is_array($input)) {
             if (!array_key_exists(0, $input) || !array_key_exists(1, $input)) {
                 $message = 'Array for creating token misses key 0 and/or 1';
-                throw new PHP_Manipulator_Exception($message);
+                throw new \Exception($message);
             }
             if (!array_key_exists(2, $input)) {
-                $token = new PHP_Manipulator_Token($input[1], $input[0]);
+                $token = new Token($input[1], $input[0]);
             } else {
-                $token = new PHP_Manipulator_Token($input[1], $input[0], $input[2]);
+                $token = new Token($input[1], $input[0], $input[2]);
             }
         } elseif (is_string($input)) {
-            $token = new PHP_Manipulator_Token($input);
+            $token = new Token($input);
         } else {
             $message = 'invalid datatype for creating a token: ' . gettype($input);
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         return $token;
     }
@@ -71,7 +73,7 @@ class PHP_Manipulator_Token
      * Set Value
      *
      * @param string $_value
-     * @return PHP_Manipulator_Token *Provides Fluent Interface*
+     * @return PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setValue($value)
     {
@@ -93,7 +95,7 @@ class PHP_Manipulator_Token
      * Set Linenumber
      *
      * @param integer $linenumber
-     * @return PHP_Manipulator_Token *Provides Fluent Interface*
+     * @return PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setLinenumber($linenumber)
     {
@@ -115,7 +117,7 @@ class PHP_Manipulator_Token
      * Set Type
      *
      * @param integer $type
-     * @return PHP_Manipulator_Token *Provides Fluent Interface*
+     * @return PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setType($type)
     {
@@ -126,10 +128,10 @@ class PHP_Manipulator_Token
     /**
      * Equals
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    public function equals(PHP_Manipulator_Token $token, $strict = false)
+    public function equals(Token $token, $strict = false)
     {
         $match = false;
         if ($this->getType() === $token->getType()

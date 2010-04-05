@@ -1,7 +1,13 @@
 <?php
 
-class PHP_Manipulator_TokenContainer
-implements ArrayAccess, Countable, IteratorAggregate
+namespace PHP\Manipulator;
+
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainerIterator;
+use PHP\Manipulator\TokenContainerReverseIterator;
+
+class TokenContainer
+implements \ArrayAccess, \Countable, \IteratorAggregate
 {
 
     /**
@@ -26,28 +32,28 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Checks if offset is an integer
      *
-     * @throws PHP_Manipulator_Exception
+     * @throws Exception
      * @param mixed $offset
      */
     protected function _checkOffsetType($offset)
     {
         if (null !== $offset && !is_int($offset)) {
             $message = 'TokenContainer only allows integers as offset';
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
     }
 
     /**
-     * Checks if Value is PHP_Manipulator_Token
+     * Checks if Value is PHP\Manipulator\Token
      *
-     * @throws PHP_Manipulator_Exception
+     * @throws Exception
      * @param mixed $value
      */
     protected function _checkValueType($value)
     {
-        if (!$value instanceof PHP_Manipulator_Token) {
-            $message = 'TokenContainer only allows adding PHP_Manipulator_Token';
-            throw new PHP_Manipulator_Exception($message);
+        if (!$value instanceof Token) {
+            $message = 'TokenContainer only allows adding PHP\Manipulator\Token';
+            throw new \Exception($message);
         }
     }
 
@@ -57,7 +63,7 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Implements SPL::ArrayAccess
      *
      * @param integer $offset
-     * @param PHP_Manipulator_Token $value
+     * @param PHP\Manipulator\Token $value
      */
     public function offsetSet($offset, $value)
     {
@@ -104,14 +110,14 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Implements SPL::ArrayAccess
      *
      * @param integer $offset
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function offsetGet($offset)
     {
         $this->_checkOffsetType($offset);
         if (!isset($this->_container[$offset])) {
             $message = "Offset '$offset' does not exist";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         return $this->_container[$offset];
     }
@@ -132,8 +138,8 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Insert at an offset
      *
      * @param integer $offset
-     * @param PHP_Manipulator_Token $value
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @param PHP\Manipulator\Token $value
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function insertAtOffset($offset, $value)
     {
@@ -146,8 +152,8 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Insert at a position
      *
      * @param integer $position
-     * @param PHP_Manipulator_Token $value
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @param PHP\Manipulator\Token $value
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     protected function _insertAtPosition($position, $value)
     {
@@ -167,10 +173,10 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
-     * @return PHP_Manipulator_Token|null
+     * @param PHP\Manipulator\Token $token
+     * @return PHP\Manipulator\Token|null
      */
-    public function getPreviousToken(PHP_Manipulator_Token $token)
+    public function getPreviousToken(Token $token)
     {
         $iterator = $this->getIterator();
         while ($iterator->valid()) {
@@ -188,10 +194,10 @@ implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
-     * @return PHP_Manipulator_Token|null
+     * @param PHP\Manipulator\Token $token
+     * @return PHP\Manipulator\Token|null
      */
-    public function getNextToken(PHP_Manipulator_Token $token)
+    public function getNextToken(Token $token)
     {
         $iterator = $this->getIterator();
         while ($iterator->valid()) {
@@ -221,7 +227,7 @@ implements ArrayAccess, Countable, IteratorAggregate
 
         if (!isset($this->_container[$offset])) {
             $message = "Offset '$offset' does not exist";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
 
         foreach ($this->_container as $off => $element) {
@@ -238,11 +244,11 @@ implements ArrayAccess, Countable, IteratorAggregate
      *
      * Returns the offset of a token if it exists in the Container
      *
-     * @throws PHP_Manipulator_Exception
-     * @param PHP_Manipulator_Token $token
+     * @throws Exception
+     * @param PHP\Manipulator\Token $token
      * @return integer
      */
-    public function getOffsetByToken(PHP_Manipulator_Token $token)
+    public function getOffsetByToken(Token $token)
     {
         $tokenOffset = null;
         foreach ($this->_container as $offset => $element) {
@@ -252,7 +258,7 @@ implements ArrayAccess, Countable, IteratorAggregate
         }
         if (null === $tokenOffset) {
             $message = "Token '$token' does not exist in this container";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         return $tokenOffset;
     }
@@ -260,10 +266,10 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Contains
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    public function contains(PHP_Manipulator_Token $token)
+    public function contains(Token $token)
     {
         $contains = false;
         foreach ($this->_container as $element) {
@@ -278,15 +284,15 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Insert Token After
      *
-     * @param PHP_Manipulator_Token $after
-     * @param PHP_Manipulator_Token $newToken
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @param PHP\Manipulator\Token $after
+     * @param PHP\Manipulator\Token $newToken
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    public function insertTokenAfter(PHP_Manipulator_Token $after, PHP_Manipulator_Token $newToken)
+    public function insertTokenAfter(Token $after, Token $newToken)
     {
         if (!$this->contains($after)) {
             $message = "Container does not contain Token: $after";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         $offset = $this->getOffsetByToken($after);
         $position = $this->_getPositionForOffset($offset);
@@ -297,15 +303,15 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Insert Tokens After
      *
-     * @param PHP_Manipulator_Token $after
+     * @param PHP\Manipulator\Token $after
      * @param array $newTokens
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    public function insertTokensAfter(PHP_Manipulator_Token $after, array $newTokens)
+    public function insertTokensAfter(Token $after, array $newTokens)
     {
         if (!$this->contains($after)) {
             $message = "Container does not contain Token: $after";
-            throw new PHP_Manipulator_Exception($message);
+            throw new \Exception($message);
         }
         foreach ($newTokens as $newToken) {
             $this->insertTokenAfter($after, $newToken);
@@ -317,12 +323,12 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Creates code from tokens and runs the tokenzier again on them
      *
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function retokenize()
     {
         $code = $this->toString();
-        $this->_container = PHP_Manipulator_TokenContainer::createTokenArrayFromCode($code);
+        $this->_container = TokenContainer::createTokenArrayFromCode($code);
         return $this;
     }
 
@@ -330,7 +336,7 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Remove Tokens
      *
      * @param array $tokens
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function removeTokens(array $tokens)
     {
@@ -343,10 +349,10 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Remove Token
      *
-     * @param PHP_Manipulator_Token $token
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @param PHP\Manipulator\Token $token
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    public function removeToken(PHP_Manipulator_Token $token)
+    public function removeToken(Token $token)
     {
         $offset = $this->getOffsetByToken($token);
         unset($this[$offset]);
@@ -356,14 +362,14 @@ implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Creates Code from a TokenArray
      *
-     * @param PHP_Manipulator_TokenContainer $tokens
+     * @param PHP\Manipulator\TokenContainer $tokens
      * @return string
      */
     public function toString()
     {
         $code = '';
         foreach ($this as $token) {
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             $code .= (string) $token;
         }
         return $code;
@@ -397,7 +403,7 @@ implements ArrayAccess, Countable, IteratorAggregate
      * @todo strict checking ?
      * @todo rename to setArray ?
      * @param array $container
-     * @return PHP_Manipulator_TokenContainer *Provides Fluent Interface*
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function setContainer(array $container)
     {
@@ -410,21 +416,21 @@ implements ArrayAccess, Countable, IteratorAggregate
      *
      * Implements SPL::IteratorAggregate
      *
-     * @return PHP_Manipulator_TokenContainer_Iterator
+     * @return PHP\Manipulator\TokenContainerIterator
      */
     public function getIterator()
     {
-        return new PHP_Manipulator_TokenContainer_Iterator($this);
+        return new TokenContainerIterator($this);
     }
 
     /**
      * Get a reverse Iterator for traversing the Container from End to begin
      *
-     * @return PHP_Manipulator_TokenContainer_ReverseIterator
+     * @return PHP\Manipulator\TokenContainerReverseIterator
      */
     public function getReverseIterator()
     {
-        return new PHP_Manipulator_TokenContainer_ReverseIterator($this);
+        return new TokenContainerReverseIterator($this);
     }
 
     /**
@@ -439,7 +445,7 @@ implements ArrayAccess, Countable, IteratorAggregate
         $tokens = token_get_all($code);
         foreach ($tokens as $token) {
             /* @var $token array|string */
-            $tokenArray[] = PHP_Manipulator_Token::factory($token);
+            $tokenArray[] = Token::factory($token);
         }
         return $tokenArray;
     }
@@ -448,11 +454,11 @@ implements ArrayAccess, Countable, IteratorAggregate
      * Creates a TokenContainer from code
      *
      * @param string $code
-     * @return PHP_Manipulator_TokenContainer
+     * @return PHP\Manipulator\TokenContainer
      */
     public static function createFromCode($code)
     {
-        $tokens = PHP_Manipulator_TokenContainer::createTokenArrayFromCode($code);
-        return new PHP_Manipulator_TokenContainer($tokens);
+        $tokens = TokenContainer::createTokenArrayFromCode($code);
+        return new TokenContainer($tokens);
     }
 }

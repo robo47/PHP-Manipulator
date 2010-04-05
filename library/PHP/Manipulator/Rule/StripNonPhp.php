@@ -1,12 +1,19 @@
 <?php
 
-class PHP_Manipulator_Rule_StripNonPhp extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class StripNonPhp
+extends Rule
 {
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
@@ -14,7 +21,7 @@ class PHP_Manipulator_Rule_StripNonPhp extends PHP_Manipulator_Rule_Abstract
         $deleteTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
 
             if ($this->_isOpenTag($token)) {
                 $open = true;
@@ -32,20 +39,20 @@ class PHP_Manipulator_Rule_StripNonPhp extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isOpenTag($token)
+    protected function _isOpenTag(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG) ||
                 $this->evaluateConstraint('IsType', $token, T_OPEN_TAG_WITH_ECHO));
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isCloseTag($token)
+    protected function _isCloseTag(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG));
     }

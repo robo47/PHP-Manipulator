@@ -1,7 +1,13 @@
 <?php
 
-class PHP_Manipulator_Rule_ReplaceBooleanOperatorsWithLogicalOperators
-extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class ReplaceBooleanOperatorsWithLogicalOperators
+extends Rule
 {
     
     public function init()
@@ -20,9 +26,9 @@ extends PHP_Manipulator_Rule_Abstract
     /**
      * Replace boolean and (AND)/or (OR) with logical and (&&)/or (||)
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
@@ -36,7 +42,7 @@ extends PHP_Manipulator_Rule_Abstract
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_LOGICAL_AND);
@@ -49,19 +55,19 @@ extends PHP_Manipulator_Rule_Abstract
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isBooleanAndAndShouldBeReplaced($token)
+    protected function _isBooleanAndAndShouldBeReplaced(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
     }
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return boolean
      */
-    protected function _isBooleanOrAndShouldBeReplaced($token)
+    protected function _isBooleanOrAndShouldBeReplaced(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_OR) && $this->getOption('replaceOr'));
     }

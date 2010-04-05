@@ -1,6 +1,12 @@
 <?php
 
-class PHP_Manipulator_Rule_RemoveTrailingWhitespace extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class RemoveTrailingWhitespace extends Rule
 {
     
     public function init()
@@ -15,10 +21,10 @@ class PHP_Manipulator_Rule_RemoveTrailingWhitespace extends PHP_Manipulator_Rule
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @todo possible without tokens2code2tokens ?
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $code = $container->toString();
         $defaultBreak = $this->getOption('defaultBreak');
@@ -32,7 +38,7 @@ class PHP_Manipulator_Rule_RemoveTrailingWhitespace extends PHP_Manipulator_Rule
         }
 
         // @todo seems like a expensive task, with all type-checking and stuff like that ?
-        $tokenArrayContainer = PHP_Manipulator_TokenContainer::createFromCode($code)
+        $tokenArrayContainer = TokenContainer::createFromCode($code)
             ->getContainer();
         $container->setContainer($tokenArrayContainer);
     }

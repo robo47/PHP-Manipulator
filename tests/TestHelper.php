@@ -14,4 +14,7 @@ set_include_path(implode($pathes, PATH_SEPARATOR));
 
 // Register autoloader
 require_once 'PHP/Manipulator/Autoloader.php';
-PHP_Manipulator_Autoloader::register();
+\PHP\Manipulator\Autoloader::register();
+
+// namespace autoloading workaround
+require_once 'TestCase.php';

@@ -1,6 +1,13 @@
 <?php
 
-class PHP_Manipulator_Rule_FormatOperators extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class FormatOperators
+extends Rule
 {
     
     public function init()
@@ -102,16 +109,16 @@ class PHP_Manipulator_Rule_FormatOperators extends PHP_Manipulator_Rule_Abstract
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
         $operatorTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
 
             if ($this->evaluateConstraint('IsOperator', $token)) {
                 $operatorTokens[] = $token;

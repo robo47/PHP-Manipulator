@@ -1,32 +1,39 @@
 <?php
 
-class PHP_ManipulatorTest extends TestCase
+namespace Tests\PHP;
+
+use PHP\Manipulator;
+
+/**
+ * @group PHP_Manipulator
+ */
+class ManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator::__construct
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::__construct
+     * @covers PHP\Manipulator::getRules
      */
     public function testDefaultConstruct()
     {
-        $manipulator = new PHP_Manipulator();
+        $manipulator = new Manipulator();
         $this->assertEquals(array(), $manipulator->getRules());
     }
 
     /**
-     * @covers PHP_Manipulator::__construct
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::__construct
+     * @covers PHP\Manipulator::getRules
      */
     public function testConstructAddsRules()
     {
         $addRules = array(
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
 
         );
 
-        $manipulator = new PHP_Manipulator($addRules);
+        $manipulator = new Manipulator($addRules);
 
         $rules = $manipulator->getRules();
 
@@ -37,13 +44,13 @@ class PHP_ManipulatorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator::addRule
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::addRule
+     * @covers PHP\Manipulator::getRules
      */
     public function testAddRule()
     {
-        $rule = new PHP_Manipulator_Rule_RemoveComments();
-        $manipulator = new PHP_Manipulator();
+        $rule = new \PHP\Manipulator\Rule\RemoveComments();
+        $manipulator = new Manipulator();
         $fluent = $manipulator->addRule($rule);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $rules = $manipulator->getRules();
@@ -53,18 +60,18 @@ class PHP_ManipulatorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator::addRules
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::addRules
+     * @covers PHP\Manipulator::getRules
      */
     public function testAddRules()
     {
         $addRules = array(
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
 
         );
-        $manipulator = new PHP_Manipulator();
+        $manipulator = new Manipulator();
         $fluent = $manipulator->addRules($addRules);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $rules = $manipulator->getRules();
@@ -76,18 +83,18 @@ class PHP_ManipulatorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator::removeRule
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::removeRule
+     * @covers PHP\Manipulator::getRules
      */
     public function testRemoveRule()
     {
         $addRules = array(
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
 
         );
-        $manipulator = new PHP_Manipulator($addRules);
+        $manipulator = new Manipulator($addRules);
         $fluent = $manipulator->removeRule($addRules[1]);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
@@ -106,18 +113,18 @@ class PHP_ManipulatorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator::removeAllRules
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::removeAllRules
+     * @covers PHP\Manipulator::getRules
      */
     public function testRemoveAllRules()
     {
         $addRules = array(
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
 
         );
-        $manipulator = new PHP_Manipulator($addRules);
+        $manipulator = new Manipulator($addRules);
         $fluent = $manipulator->removeAllRules();
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
@@ -127,19 +134,19 @@ class PHP_ManipulatorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator::removeRuleByClassname
-     * @covers PHP_Manipulator::getRules
+     * @covers PHP\Manipulator::removeRuleByClassname
+     * @covers PHP\Manipulator::getRules
      */
     public function testRemoveRuleByClassname()
     {
         $addRules = array(
-            new PHP_Manipulator_Rule_RemoveComments(),
-            new PHP_Manipulator_Rule_ChangeLineEndings(),
-            new PHP_Manipulator_Rule_RemoveTrailingWhitespace(),
+            new \PHP\Manipulator\Rule\RemoveComments(),
+            new \PHP\Manipulator\Rule\ChangeLineEndings(),
+            new \PHP\Manipulator\Rule\RemoveTrailingWhitespace(),
 
         );
-        $manipulator = new PHP_Manipulator($addRules);
-        $fluent = $manipulator->removeRuleByClassname('PHP_Manipulator_Rule_ChangeLineEndings');
+        $manipulator = new Manipulator($addRules);
+        $fluent = $manipulator->removeRuleByClassname('PHP\Manipulator\Rule\ChangeLineEndings');
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
         $rules = $manipulator->getRules();
@@ -148,14 +155,14 @@ class PHP_ManipulatorTest extends TestCase
         $this->assertContains($addRules[0], $rules, 'Rule1 not found');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
 
-        $manipulator->removeRuleByClassname('PHP_Manipulator_Rule_RemoveComments');
+        $manipulator->removeRuleByClassname('\PHP\Manipulator\Rule\RemoveComments');
 
         $rules = $manipulator->getRules();
 
         $this->assertEquals(1, count($rules), 'Wrong rules count');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
 
-        $manipulator->removeRuleByClassname('PHP_Manipulator_Rule_RemoveTrailingWhitespace');
+        $manipulator->removeRuleByClassname('PHP\Manipulator\Rule\RemoveTrailingWhitespace');
 
         $rules = $manipulator->getRules();
 

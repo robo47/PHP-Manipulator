@@ -1,7 +1,13 @@
 <?php
 
-class PHP_Manipulator_TokenConstraint_IsOperator
-extends PHP_Manipulator_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+
+class IsOperator
+extends TokenConstraint
 {
     
     protected $_operatorsWithToken = array(
@@ -51,11 +57,11 @@ extends PHP_Manipulator_TokenConstraint_Abstract
     /**
      * Evaluate if the token is an operator
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_Token $token, $param = null)
+    public function evaluate(Token $token, $param = null)
     {
         $operatorWithToken = $this->evaluateConstraint('IsType', $token, $this->_operatorsWithToken);
 

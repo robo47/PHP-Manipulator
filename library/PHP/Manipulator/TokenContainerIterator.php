@@ -1,27 +1,34 @@
 <?php
 
-class PHP_Manipulator_TokenContainer_Iterator implements Iterator, Countable, SeekableIterator
+namespace PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class TokenContainerIterator implements \Iterator, \Countable, \SeekableIterator
 {
 
     /**
-     * @var PHP_Manipulator_TokenContainer
+     * @var PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
+
     /**
      * Current Position in the $this->_keys-array
      *
      * @var integer
      */
     protected $_pos = 0;
+
     /**
      * @var array
      */
     protected $_keys = array();
 
     /**
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function __construct(PHP_Manipulator_TokenContainer $container)
+    public function __construct(TokenContainer $container)
     {
         $this->_container = $container;
         $this->_keys = array_keys($container->getContainer());
@@ -53,13 +60,13 @@ class PHP_Manipulator_TokenContainer_Iterator implements Iterator, Countable, Se
 
     /**
      *
-     * @return PHP_Manipulator_Token
+     * @return PHP\Manipulator\Token
      */
     public function current()
     {
         $key = $this->_getContainerKeyForPosition($this->_pos);
         if (false === $key) {
-            throw new OutOfBoundsException('Position not valid');
+            throw new \OutOfBoundsException('Position not valid');
         }
         return $this->_container[$key];
     }
@@ -72,7 +79,7 @@ class PHP_Manipulator_TokenContainer_Iterator implements Iterator, Countable, Se
     {
         $key = $this->_getContainerKeyForPosition($this->_pos);
         if (false === $key) {
-            throw new OutOfBoundsException('Position not valid');
+            throw new \OutOfBoundsException('Position not valid');
         }
         return $key;
     }
@@ -144,7 +151,7 @@ class PHP_Manipulator_TokenContainer_Iterator implements Iterator, Countable, Se
         if (false !== $position) {
             $this->_pos = $position;
         } else {
-            throw new OutOfBoundsException('Position not found');
+            throw new \OutOfBoundsException('Position not found');
         }
     }
 }

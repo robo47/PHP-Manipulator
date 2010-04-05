@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\Indent;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_Indent
  */
-class PHP_Manipulator_Rule_IndentTest extends TestCase
+class IndentTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_Indent::init
+     * @covers PHP\Manipulator\Rule\Indent::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_Indent();
+        $rule = new Indent();
         $this->assertTrue($rule->getOption('useSpaces'), 'Wrong default Option value for useSpaces');
         $this->assertEquals(4, $rule->getOption('tabWidth'), 'Wrong default Option value for tabWidth');
         $this->assertEquals(4, $rule->getOption('indentionWidth'), 'Wrong default Option value for indentionWidth');
@@ -85,20 +90,20 @@ class PHP_Manipulator_Rule_IndentTest extends TestCase
         #8
         $data[] = array(
             array('useSpaces' => false),
-            PHP_Manipulator_TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
-            PHP_Manipulator_TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\n\techo \$foo;\n}")
+            TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
+            TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\n\techo \$foo;\n}")
         );
 
         return $data;
     }
 
     /**
-     * @covers PHP_Manipulator_Rule_Indent
+     * @covers PHP\Manipulator\Rule\Indent
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_Indent($options);
+        $rule = new Indent($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

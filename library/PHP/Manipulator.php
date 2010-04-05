@@ -1,6 +1,10 @@
 <?php
 
-class PHP_Manipulator
+namespace PHP;
+
+use PHP\Manipulator\IRule;
+
+class Manipulator
 {
 
     /**
@@ -21,10 +25,10 @@ class PHP_Manipulator
 
     /**
      *
-     * @param PHP_Manipulator_Rule_Interface $rule
-     * @return PHP_Manipulator *Provides Fluent Interface*
+     * @param PHP\Manipulator\IRule $rule
+     * @return PHP\Manipulator *Provides Fluent Interface*
      */
-    public function addRule(PHP_Manipulator_Rule_Interface $rule)
+    public function addRule(IRule $rule)
     {
         $this->_rules[] = $rule;
         return $this;
@@ -46,10 +50,10 @@ class PHP_Manipulator
     /**
      * Remove Rule
      *
-     * @param PHP_Manipulator_Rule_Interface $removeRule
-     * @return PHP_Manipulator *Provides Fluent Interface*
+     * @param PHP\Manipulator\IRule $removeRule
+     * @return PHP\Manipulator *Provides Fluent Interface*
      */
-    public function removeRule(PHP_Manipulator_Rule_Interface $removeRule)
+    public function removeRule(IRule $removeRule)
     {
         foreach ($this->_rules as $key => $rule) {
             if ($rule === $removeRule) {

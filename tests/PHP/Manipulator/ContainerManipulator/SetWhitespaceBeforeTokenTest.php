@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\SetWhitespaceBeforeToken;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_SetWhitespaceBeforeToken
  */
-class PHP_Manipulator_ContainerManipulator_SetWhitespaceBeforeTokenTest extends TestCase
+class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
 {
 
     /**
@@ -54,11 +59,11 @@ class PHP_Manipulator_ContainerManipulator_SetWhitespaceBeforeTokenTest extends 
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP_Manipulator_ContainerManipulator_SetWhitespaceBeforeToken
+     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceBeforeToken
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {
-        $manipulator = new PHP_Manipulator_ContainerManipulator_SetWhitespaceBeforeToken();
+        $manipulator = new SetWhitespaceBeforeToken();
         $manipulator->manipulate($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

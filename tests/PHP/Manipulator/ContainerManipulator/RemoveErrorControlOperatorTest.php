@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\RemoveErrorControlOperator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_RemoveErrorControlOperator
  */
-class PHP_Manipulator_ContainerManipulator_RemoveErrorControlOperatorTest extends TestCase
+class RemoveErrorControlOperatorTest extends \Tests\TestCase
 {
 
     /**
@@ -26,11 +31,11 @@ class PHP_Manipulator_ContainerManipulator_RemoveErrorControlOperatorTest extend
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP_Manipulator_ContainerManipulator_RemoveErrorControlOperator
+     * @covers PHP\Manipulator\ContainerManipulator\RemoveErrorControlOperator
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
-        $manipulator = new PHP_Manipulator_ContainerManipulator_RemoveErrorControlOperator();
+        $manipulator = new RemoveErrorControlOperator();
         $manipulator->manipulate($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

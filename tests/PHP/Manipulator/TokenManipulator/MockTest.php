@@ -1,21 +1,25 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenManipulator;
+
+use PHP\Manipulator\TokenManipulator\Mock;
+use PHP\Manipulator\Token;
 
 /**
  * @group TokenManipulator_Mock
  */
-class PHP_Manipulator_TokenManipulator_MockTest extends TestCase
+class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_TokenManipulator_Mock
+     * @covers PHP\Manipulator\TokenManipulator\Mock
      */
     public function testCallingManipulateSetsCalledToTrue()
     {
-        PHP_Manipulator_TokenManipulator_Mock::$called = false;
-        $mock = new PHP_Manipulator_TokenManipulator_Mock();
-        $token = PHP_Manipulator_Token::factory(array(T_WHITESPACE, "\n"));
-        $this->assertFalse(PHP_Manipulator_TokenManipulator_Mock::$called);
+        Mock::$called = false;
+        $mock = new Mock();
+        $token = Token::factory(array(T_WHITESPACE, "\n"));
+        $this->assertFalse(Mock::$called);
         $mock->manipulate($token);
-        $this->assertTrue(PHP_Manipulator_TokenManipulator_Mock::$called);
+        $this->assertTrue(Mock::$called);
     }
 }

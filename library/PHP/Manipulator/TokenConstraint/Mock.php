@@ -1,7 +1,12 @@
 <?php
 
-class PHP_Manipulator_TokenConstraint_Mock
-extends PHP_Manipulator_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+class Mock
+extends TokenConstraint
 {
 
     /**
@@ -10,11 +15,11 @@ extends PHP_Manipulator_TokenConstraint_Abstract
     public static $return = true;
 
     /**
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_Token $token, $params = null)
+    public function evaluate(Token $token, $params = null)
     {
         if ($this->hasOption('return')) {
             return $this->getOption('return');

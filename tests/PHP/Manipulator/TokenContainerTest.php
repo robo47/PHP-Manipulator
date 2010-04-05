@@ -1,46 +1,51 @@
 <?php
 
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
 /**
  * @group TokenContainer
  * @todo create methods for setting up a default test container + method for returning the tokens
  */
-class PHP_Manipulator_TokenContainerTest extends TestCase
+class TokenContainerTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_TokenContainer
+     * @covers PHP\Manipulator\TokenContainer
      */
     public function testContainer()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_TokenContainer');
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainer');
         $this->assertTrue($reflection->implementsInterface('ArrayAccess'), 'Missing interface ArrayAccess');
         $this->assertTrue($reflection->implementsInterface('Countable'), 'Missing interface Countable');
         $this->assertTrue($reflection->implementsInterface('IteratorAggregate'), 'Missing interface IteratorAggregate');
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::__construct
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::__construct
      */
     public function testDefaultConstruct()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         $this->assertEquals(array(), $container->getContainer(), 'Container missmatch');
         $this->assertEquals(0, count($container), 'Count missmatch');
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::__construct
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::__construct
      */
     public function testConstructWithTokens()
     {
         $tokens = array(
-            2 => PHP_Manipulator_Token::factory(';'),
-            15 => PHP_Manipulator_Token::factory('('),
-            'asdf' => PHP_Manipulator_Token::factory(')'),
+            2 => Token::factory(';'),
+            15 => Token::factory('('),
+            'asdf' => Token::factory(')'),
         );
-        $container = new PHP_Manipulator_TokenContainer($tokens);
+        $container = new TokenContainer($tokens);
         $this->assertEquals(3, count($container), 'Count missmatch');
         $array = $container->getContainer();
         $this->assertArrayHasKey(0, $array, 'Array misses key');
@@ -52,34 +57,34 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::__construct
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::__construct
+     * @covers \Exception
      */
     public function testConstructWithInvalidTokens()
     {
         $tokens = array('blub', 'bla');
         try {
-            new PHP_Manipulator_TokenContainer($tokens);
+            new TokenContainer($tokens);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
-            $this->assertEquals('TokenContainer only allows adding PHP_Manipulator_Token', $e->getMessage(), 'Wrong exception message');
+        } catch (\Exception $e) {
+            $this->assertEquals('TokenContainer only allows adding PHP\Manipulator\Token', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertAtOffset
-     * @covers PHP_Manipulator_TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::insertAtOffset
+     * @covers PHP\Manipulator\TokenContainer::<protected>
      */
     public function testInsertAtOffset()
     {
         $array = array(
-            PHP_Manipulator_Token::factory('Blub'),
-            PHP_Manipulator_Token::factory('Bla'),
-            PHP_Manipulator_Token::factory('Foo'),
+            Token::factory('Blub'),
+            Token::factory('Bla'),
+            Token::factory('Foo'),
         );
-        $container = new PHP_Manipulator_TokenContainer($array);
-        $newToken = PHP_Manipulator_Token::factory('BaaFoo');
+        $container = new TokenContainer($array);
+        $newToken = Token::factory('BaaFoo');
         $fluent = $container->insertAtOffset(1, $newToken);
 
         $this->assertSame($fluent, $container, 'No fluent interface');
@@ -92,34 +97,34 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertAtOffset
-     * @covers PHP_Manipulator_TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::insertAtOffset
+     * @covers PHP\Manipulator\TokenContainer::<protected>
      */
     public function testInsertAtOffsetThrowsExceptionOnInsertAfterNonExistingOffset()
     {
-        $token = PHP_Manipulator_Token::factory('Blub');
-        $containter = new PHP_Manipulator_TokenContainer();
+        $token = Token::factory('Blub');
+        $containter = new TokenContainer();
 
         try {
             $containter->insertAtOffset(5, $token);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetSet
-     * @covers PHP_Manipulator_TokenContainer::offsetGet
-     * @covers PHP_Manipulator_TokenContainer::offsetUnset
-     * @covers PHP_Manipulator_TokenContainer::offsetExists
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetSet
+     * @covers PHP\Manipulator\TokenContainer::offsetGet
+     * @covers PHP\Manipulator\TokenContainer::offsetUnset
+     * @covers PHP\Manipulator\TokenContainer::offsetExists
      */
     public function testArrayAccess()
     {
-        $token = PHP_Manipulator_Token::factory('foo');
-        $token2 = PHP_Manipulator_Token::factory('baa');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token = Token::factory('foo');
+        $token2 = Token::factory('baa');
+        $container = new TokenContainer();
 
         // offsetSet
         $container[] = $token;
@@ -144,158 +149,117 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetSet
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetSet
+     * @covers \Exception
      */
     public function testOffsetSetWithNonIntegerOffsetThrowsException()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         try {
-            $container->offsetSet('offset', PHP_Manipulator_Token::factory('foo'));
+            $container->offsetSet('offset', Token::factory('foo'));
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetExists
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetExists
+     * @covers \Exception
      */
     public function testOffsetExistsWithNonIntegerOffsetThrowsException()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         try {
             $container->offsetExists('offset');
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetUnset
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetUnset
+     * @covers \Exception
      */
     public function testOffsetUnsetWithNonIntegerOffsetThrowsException()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         try {
             $container->offsetUnset('offset');
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetGet
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetGet
+     * @covers \Exception
      */
     public function testOffsetGetWithNonIntegerOffsetThrowsException()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         try {
             $container->offsetGet('offset');
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::count
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::count
+     * @covers \Exception
      */
     public function testCount()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         $this->assertEquals(0, count($container), 'Wrong container count');
-        $container[] = PHP_Manipulator_Token::factory('foo');
+        $container[] = Token::factory('foo');
         $this->assertEquals(1, count($container), 'Wrong container count');
-        $container[] = PHP_Manipulator_Token::factory('foo');
-        $container[] = PHP_Manipulator_Token::factory('foo');
+        $container[] = Token::factory('foo');
+        $container[] = Token::factory('foo');
         $this->assertEquals(3, count($container), 'Wrong container count');
         $container->setContainer(array());
         $this->assertEquals(0, count($container), 'Wrong container count');
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::offsetGet
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::offsetGet
+     * @covers \Exception
      */
     public function testOffsetGetOnNotExistingOffsetThrowsException()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
         try {
             $container->offsetGet(5);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::getPositionForOffset
-     * @covers PHP_Manipulator_Exception
-     */
-//    public function testGetPositionForOffset()
-//    {
-//        $array = array(
-//            PHP_Manipulator_Token::factory('Blub'),
-//            PHP_Manipulator_Token::factory('Bla'),
-//            PHP_Manipulator_Token::factory('Foo'),
-//            PHP_Manipulator_Token::factory('BaaFoo'),
-//        );
-//        $container = new PHP_Manipulator_TokenContainer($array);
-//
-//        $this->assertEquals(0, $container->getPositionForOffset(0));
-//        $this->assertEquals(1, $container->getPositionForOffset(1));
-//        $this->assertEquals(2, $container->getPositionForOffset(2));
-//        $this->assertEquals(3, $container->getPositionForOffset(3));
-//
-//        unset($container[1]);
-//
-//        $this->assertEquals(0, $container->getPositionForOffset(0));
-//        $this->assertEquals(1, $container->getPositionForOffset(2));
-//        $this->assertEquals(2, $container->getPositionForOffset(3));
-//    }
-    /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::getPositionForOffset
-     * @covers PHP_Manipulator_Exception
-     */
-//    public function testGetPositionForOffsetThrowsExceptionOnNonExistingOffset()
-//    {
-//        $container = new PHP_Manipulator_TokenContainer();
-//        try {
-//            $container->getPositionForOffset(5);
-//            $this->fail('Expected exception not thrown');
-//        } catch (PHP_Manipulator_Exception $e) {
-//            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
-//        }
-//    }
-    /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::getOffsetByToken
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::getOffsetByToken
+     * @covers \Exception
      */
     public function testGetOffsetByToken()
     {
         $array = array(
-            PHP_Manipulator_Token::factory('Blub'),
-            PHP_Manipulator_Token::factory('Bla'),
-            PHP_Manipulator_Token::factory('Foo'),
-            PHP_Manipulator_Token::factory('BaaFoo'),
+            Token::factory('Blub'),
+            Token::factory('Bla'),
+            Token::factory('Foo'),
+            Token::factory('BaaFoo'),
         );
-        $container = new PHP_Manipulator_TokenContainer($array);
+        $container = new TokenContainer($array);
 
         $this->assertEquals(0, $container->getOffsetByToken($array[0]));
         $this->assertEquals(1, $container->getOffsetByToken($array[1]));
@@ -304,36 +268,36 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::getOffsetByToken
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::getOffsetByToken
+     * @covers \Exception
      */
     public function testGetOffsetByTokenThrowsExceptionOnNonExistingToken()
     {
-        $container = new PHP_Manipulator_TokenContainer();
-        $token = PHP_Manipulator_Token::factory('Blub');
+        $container = new TokenContainer();
+        $token = Token::factory('Blub');
         try {
             $container->getOffsetByToken($token);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals("Token '$token' does not exist in this container", $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::<protected>
-     * @covers PHP_Manipulator_TokenContainer::contains
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::contains
      */
     public function testContains()
     {
-        $anotherToken = PHP_Manipulator_Token::factory('Blub');
+        $anotherToken = Token::factory('Blub');
         $array = array(
-            PHP_Manipulator_Token::factory('Blub'),
-            PHP_Manipulator_Token::factory('Bla'),
-            PHP_Manipulator_Token::factory('Foo'),
-            PHP_Manipulator_Token::factory('BaaFoo'),
+            Token::factory('Blub'),
+            Token::factory('Bla'),
+            Token::factory('Foo'),
+            Token::factory('BaaFoo'),
         );
-        $container = new PHP_Manipulator_TokenContainer($array);
+        $container = new TokenContainer($array);
 
         $this->assertTrue($container->contains($array[0]));
         $this->assertTrue($container->contains($array[1]));
@@ -349,14 +313,14 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertTokenAfter
+     * @covers PHP\Manipulator\TokenContainer::insertTokenAfter
      */
     public function testInsertTokenAfter()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer(array($token1));
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer(array($token1));
         $container->insertTokenAfter($token1, $token2);
         $container->insertTokenAfter($token1, $token3);
 
@@ -366,33 +330,33 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertTokenAfter
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::insertTokenAfter
+     * @covers \Exception
      */
     public function testInsertTokenAfterThrowsExceptionIfAfterTokenNotExists()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer(array($token1));
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer(array($token1));
 
         try {
             $container->insertTokenAfter($token2, $token3);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertTokensAfter
+     * @covers PHP\Manipulator\TokenContainer::insertTokensAfter
      */
     public function testInsertTokensAfter()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer(array($token1));
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer(array($token1));
         $container->insertTokensAfter($token1, array($token3, $token2));
 
         $this->assertEquals(0, $container->getOffsetByToken($token1));
@@ -401,35 +365,35 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::insertTokensAfter
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::insertTokensAfter
+     * @covers \Exception
      */
     public function testInsertTokensAfterThrowsExceptionIfAfterTokenNotExists()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $token4 = PHP_Manipulator_Token::factory('Token4');
-        $container = new PHP_Manipulator_TokenContainer(array($token1));
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer(array($token1));
 
         try {
             $container->insertTokensAfter($token2, array($token3, $token4));
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::toString
-     * @covers PHP_Manipulator_Exception
+     * @covers PHP\Manipulator\TokenContainer::toString
+     * @covers \Exception
      */
     public function testToString()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer();
 
         $this->assertEquals('', $container->toString());
 
@@ -444,14 +408,14 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::__toString
+     * @covers PHP\Manipulator\TokenContainer::__toString
      */
     public function test__ToString()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer();
 
         $this->assertEquals('', (string) $container);
 
@@ -466,15 +430,15 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::setContainer
-     * @covers PHP_Manipulator_TokenContainer::getContainer
+     * @covers PHP\Manipulator\TokenContainer::setContainer
+     * @covers PHP\Manipulator\TokenContainer::getContainer
      */
     public function testGetContainerSetContainer()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -494,34 +458,34 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::getIterator
+     * @covers PHP\Manipulator\TokenContainer::getIterator
      */
     public function testGetIterator()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
 
         $iterator = $container->getIterator();
-        $this->assertType('PHP_Manipulator_TokenContainer_Iterator', $iterator);
+        $this->assertType('PHP\Manipulator\TokenContainerIterator', $iterator);
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::getReverseIterator
+     * @covers PHP\Manipulator\TokenContainer::getReverseIterator
      */
     public function testGetReverseIterator()
     {
-        $container = new PHP_Manipulator_TokenContainer();
+        $container = new TokenContainer();
 
         $iterator = $container->getReverseIterator();
-        $this->assertType('PHP_Manipulator_TokenContainer_ReverseIterator', $iterator);
+        $this->assertType('PHP\Manipulator\TokenContainerReverseIterator', $iterator);
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::createFromCode
+     * @covers PHP\Manipulator\TokenContainer::createFromCode
      */
     public function testCreateFromCode()
     {
         $code = '<?php echo 1; ?>';
-        $container = PHP_Manipulator_TokenContainer::createFromCode($code);
+        $container = TokenContainer::createFromCode($code);
 
         $this->assertEquals(7, count($container));
         $this->assertEquals('<?php echo 1; ?>', $container->toString());
@@ -530,22 +494,22 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
 
         $i = 0;
         foreach ($tokens as $token) {
-            $tokenObject = PHP_Manipulator_Token::factory($token);
+            $tokenObject = Token::factory($token);
             $this->assertTrue($tokenObject->equals($container[$i], true));
             $i++;
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::retokenize
+     * @covers PHP\Manipulator\TokenContainer::retokenize
      */
     public function testRetokenize()
     {
-        $token0 = PHP_Manipulator_Token::factory(array(0 => T_OPEN_TAG, 1 => "<?php\n"));
-        $token1 = PHP_Manipulator_Token::factory(array(0 => T_WHITESPACE, 1 => " \n \n \n"));
-        $token2 = PHP_Manipulator_Token::factory(array(0 => T_WHITESPACE, 1 => " \t \n "));
-        $token3 = PHP_Manipulator_Token::factory(array(0 => T_CLOSE_TAG, 1 => "?>"));
-        $container = new PHP_Manipulator_TokenContainer(array($token0, $token1, $token2, $token3));
+        $token0 = Token::factory(array(0 => T_OPEN_TAG, 1 => "<?php\n"));
+        $token1 = Token::factory(array(0 => T_WHITESPACE, 1 => " \n \n \n"));
+        $token2 = Token::factory(array(0 => T_WHITESPACE, 1 => " \t \n "));
+        $token3 = Token::factory(array(0 => T_CLOSE_TAG, 1 => "?>"));
+        $container = new TokenContainer(array($token0, $token1, $token2, $token3));
         $container->retokenize();
         $this->assertEquals(3, count($container));
 
@@ -553,12 +517,12 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::createTokenArrayFromCode
+     * @covers PHP\Manipulator\TokenContainer::createTokenArrayFromCode
      */
     public function testCreateTokenArrayFromCode()
     {
         $code = '<?php echo 1; ?>';
-        $array = PHP_Manipulator_TokenContainer::createTokenArrayFromCode($code);
+        $array = TokenContainer::createTokenArrayFromCode($code);
 
         $this->assertEquals(7, count($array));
 
@@ -566,21 +530,21 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
 
         $i = 0;
         foreach ($tokens as $token) {
-            $tokenObject = PHP_Manipulator_Token::factory($token);
+            $tokenObject = Token::factory($token);
             $this->assertTrue($tokenObject->equals($array[$i], true));
             $i++;
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::removeTokens
+     * @covers PHP\Manipulator\TokenContainer::removeTokens
      */
     public function testRemoveTokens()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -597,14 +561,14 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::removeToken
+     * @covers PHP\Manipulator\TokenContainer::removeToken
      */
     public function testRemoveToken()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -621,15 +585,15 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::getNextToken
+     * @covers PHP\Manipulator\TokenContainer::getNextToken
      */
     public function testGetNextToken()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $token4 = PHP_Manipulator_Token::factory('Token4');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -642,15 +606,15 @@ class PHP_Manipulator_TokenContainerTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer::getPreviousToken
+     * @covers PHP\Manipulator\TokenContainer::getPreviousToken
      */
     public function testGetPreviousToken()
     {
-        $token1 = PHP_Manipulator_Token::factory('Token1');
-        $token2 = PHP_Manipulator_Token::factory('Token2');
-        $token3 = PHP_Manipulator_Token::factory('Token3');
-        $token4 = PHP_Manipulator_Token::factory('Token4');
-        $container = new PHP_Manipulator_TokenContainer();
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer();
 
         $container[] = $token1;
         $container[] = $token2;

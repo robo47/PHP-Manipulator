@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainerIterator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenContainer_Iterator
+ * @group TokenContainerIterator
  */
-class PHP_Manipulator_TokenContainer_IteratorTest extends TestCase
+class TokenContainerIteratorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator
+     * @covers PHP\Manipulator\TokenContainerIterator
      */
     public function testIteratorClass()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_TokenContainer_Iterator');
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainerIterator');
         $this->assertTrue($reflection->isIterateable());
         $this->assertTrue($reflection->implementsInterface('SeekableIterator'));
         $this->assertTrue($reflection->implementsInterface('Countable'));
@@ -19,32 +24,32 @@ class PHP_Manipulator_TokenContainer_IteratorTest extends TestCase
     }
 
     /**
-     * @return PHP_Manipulator_TokenContainer
+     * @return PHP\Manipulator\TokenContainer
      */
     public function getTestContainerWithHoles()
     {
         $tokens = array(
-            0 => PHP_Manipulator_Token::factory(array(null, "<?php\n")),
-            1 => PHP_Manipulator_Token::factory(array(null, "dummy")),
-            2 => PHP_Manipulator_Token::factory(array(null, 'echo')),
-            3 => PHP_Manipulator_Token::factory(array(null, "dummy")),
-            4 => PHP_Manipulator_Token::factory(array(null, ' ')),
-            5 => PHP_Manipulator_Token::factory(array(null, '\$var')),
-            6 => PHP_Manipulator_Token::factory(array(null, ';')),
+            0 => Token::factory(array(null, "<?php\n")),
+            1 => Token::factory(array(null, "dummy")),
+            2 => Token::factory(array(null, 'echo')),
+            3 => Token::factory(array(null, "dummy")),
+            4 => Token::factory(array(null, ' ')),
+            5 => Token::factory(array(null, '\$var')),
+            6 => Token::factory(array(null, ';')),
         );
-        $container = new PHP_Manipulator_TokenContainer($tokens);
+        $container = new TokenContainer($tokens);
         unset($container[1]);
         unset($container[3]);
         return $container;
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator
+     * @covers PHP\Manipulator\TokenContainerIterator
      */
     public function testIterator()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[0], $iterator->current());
@@ -120,13 +125,13 @@ class PHP_Manipulator_TokenContainer_IteratorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator::seek
-     * @covers PHP_Manipulator_TokenContainer_Iterator::<protected>
+     * @covers PHP\Manipulator\TokenContainerIterator::seek
+     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testSeek()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
 
         $iterator->next();
         $iterator->next();
@@ -153,70 +158,70 @@ class PHP_Manipulator_TokenContainer_IteratorTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator::count
+     * @covers PHP\Manipulator\TokenContainerIterator::count
      */
     public function testCountable()
     {
-        $container = new PHP_Manipulator_TokenContainer();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $container = new TokenContainer();
+        $iterator = new TokenContainerIterator($container);
         $this->assertEquals(0, count($iterator));
 
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
         $this->assertEquals(5, count($iterator));
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator::key
-     * @covers PHP_Manipulator_TokenContainer_Iterator::<protected>
+     * @covers PHP\Manipulator\TokenContainerIterator::key
+     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testKeyThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
         $iterator->seek(6);
         $iterator->next();
 
         try {
             $iterator->key();
             $this->fail('Expected exception not thrown');
-        } catch (OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException $e) {
             $this->assertEquals('Position not valid', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator::current
-     * @covers PHP_Manipulator_TokenContainer_Iterator::<protected>
+     * @covers PHP\Manipulator\TokenContainerIterator::current
+     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testCurrentThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
         $iterator->seek(6);
         $iterator->next();
 
         try {
             $iterator->current();
             $this->fail('Expected exception not thrown');
-        } catch (OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException $e) {
             $this->assertEquals('Position not valid', $e->getMessage(), 'Wrong exception message');
         }
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_Iterator::seek
-     * @covers PHP_Manipulator_TokenContainer_Iterator::<protected>
+     * @covers PHP\Manipulator\TokenContainerIterator::seek
+     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testSeekThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_Iterator($container);
+        $iterator = new TokenContainerIterator($container);
 
         try {
             $iterator->seek(8);
             $this->fail('Expected exception not thrown');
-        } catch (OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException $e) {
             $this->assertEquals('Position not found', $e->getMessage(), 'Wrong exception message');
         }
     }

@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenManipulator;
+
+use PHP\Manipulator\TokenManipulator\UppercaseTokenValue;
+use PHP\Manipulator\Token;
+
 
 /**
  * @group TokenManipulator_UppercaseTokenValue
  */
-class PHP_Manipulator_TokenManipulator_UppercaseTokenValueTest extends TestCase
+class UppercaseTokenValueTest extends \Tests\TestCase
 {
 
     /**
@@ -15,15 +20,15 @@ class PHP_Manipulator_TokenManipulator_UppercaseTokenValueTest extends TestCase
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_BOOLEAN_AND, "and")),
-            PHP_Manipulator_Token::factory(array(T_BOOLEAN_AND, "AND")),
+            Token::factory(array(T_BOOLEAN_AND, "and")),
+            Token::factory(array(T_BOOLEAN_AND, "AND")),
             true
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_BOOLEAN_OR, "or")),
-            PHP_Manipulator_Token::factory(array(T_BOOLEAN_OR, "OR")),
+            Token::factory(array(T_BOOLEAN_OR, "or")),
+            Token::factory(array(T_BOOLEAN_OR, "OR")),
             true
         );
 
@@ -32,11 +37,11 @@ class PHP_Manipulator_TokenManipulator_UppercaseTokenValueTest extends TestCase
 
     /**
      * @dataProvider manipluateProvider
-     * @covers PHP_Manipulator_TokenManipulator_UppercaseTokenValue::manipulate
+     * @covers PHP\Manipulator\TokenManipulator\UppercaseTokenValue::manipulate
      */
     public function testManipulate($token, $newToken, $strict)
     {
-        $manipulator = new PHP_Manipulator_TokenManipulator_UppercaseTokenValue();
+        $manipulator = new UppercaseTokenValue();
         $manipulator->manipulate($token);
         $this->assertTokenMatch($token, $newToken, $strict);
     }

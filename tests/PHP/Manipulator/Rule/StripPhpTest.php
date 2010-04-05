@@ -1,17 +1,23 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\StripPhp;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
 
 /**
  * @group Rule_StripPhp
  */
-class PHP_Manipulator_Rule_StripPhpTest extends TestCase
+class StripPhpTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_StripPhp::init
+     * @covers PHP\Manipulator\Rule\StripPhp::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_StripPhp();
+        $rule = new StripPhp();
     }
     
     public function ruleProvider()
@@ -38,13 +44,13 @@ class PHP_Manipulator_Rule_StripPhpTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Rule_StripPhp::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
 
-        $rule = new PHP_Manipulator_Rule_StripPhp($options);
+        $rule = new StripPhp($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
@@ -69,15 +75,15 @@ class PHP_Manipulator_Rule_StripPhpTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Rule_StripPhp::applyRuleToTokens
-     * @covers PHP_Manipulator_Rule_StripPhp::<protected>
+     * @covers PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\StripPhp::<protected>
      * @dataProvider shortTagsOnlyRuleProvider
      */
     public function testRuleWithShorttags($options, $input, $expectedTokens)
     {
         $this->checkShorttags();
 
-        $rule = new PHP_Manipulator_Rule_StripPhp($options);
+        $rule = new StripPhp($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

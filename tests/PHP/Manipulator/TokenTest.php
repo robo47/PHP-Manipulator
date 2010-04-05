@@ -1,53 +1,60 @@
 <?php
 
-class PHP_Manipulator_TokenTest extends TestCase
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\Token;
+
+/**
+ * @group Token
+ */
+class TokenTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Token::__construct
+     * @covers PHP\Manipulator\Token::__construct
      */
     public function testDefaultConstruct()
     {
-        $token = new PHP_Manipulator_Token('foo');
+        $token = new Token('foo');
         $this->assertEquals('foo', $token->getValue(), 'wrong value');
         $this->assertNull($token->getLinenumber(), 'wrong linenumber');
         $this->assertNull($token->getType(), 'wrong type');
     }
 
     /**
-     * @covers PHP_Manipulator_Token::__construct
+     * @covers PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsValue()
     {
-        $token = new PHP_Manipulator_Token('baa');
+        $token = new Token('baa');
         $this->assertEquals('baa', $token->getValue(), 'wrong value');
     }
 
     /**
-     * @covers PHP_Manipulator_Token::__construct
+     * @covers PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsType()
     {
-        $token = new PHP_Manipulator_Token('baa', T_COMMENT);
+        $token = new Token('baa', T_COMMENT);
         $this->assertEquals(T_COMMENT, $token->getType(), 'wrong type');
     }
 
     /**
-     * @covers PHP_Manipulator_Token::__construct
+     * @covers PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsLinenumber()
     {
-        $token = new PHP_Manipulator_Token('baa', null, 5);
+        $token = new Token('baa', null, 5);
         $this->assertEquals(5, $token->getLinenumber(), 'wrong linenumber');
     }
 
     /**
-     * @covers PHP_Manipulator_Token::setValue
-     * @covers PHP_Manipulator_Token::getValue
+     * @covers PHP\Manipulator\Token::setValue
+     * @covers PHP\Manipulator\Token::getValue
      */
     public function testSetValueAndGetValue()
     {
-        $token = new PHP_Manipulator_Token('foo');
+        $token = new Token('foo');
         $this->assertEquals('foo', $token->getValue(), 'wrong value');
         $fluent = $token->setValue('bla');
         $this->assertSame($fluent, $token, 'No fluent interface');
@@ -55,12 +62,12 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::setType
-     * @covers PHP_Manipulator_Token::getType
+     * @covers PHP\Manipulator\Token::setType
+     * @covers PHP\Manipulator\Token::getType
      */
     public function testSetTypeAndGetType()
     {
-        $token = new PHP_Manipulator_Token('foo');
+        $token = new Token('foo');
         $this->assertNull($token->getType(), 'wrong type');
         $fluent = $token->setType(T_ABSTRACT);
         $this->assertSame($fluent, $token, 'No fluent interface');
@@ -68,12 +75,12 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::setLinenumber
-     * @covers PHP_Manipulator_Token::getLinenumber
+     * @covers PHP\Manipulator\Token::setLinenumber
+     * @covers PHP\Manipulator\Token::getLinenumber
      */
     public function testSetLinenumberAndGetLinenumber()
     {
-        $token = new PHP_Manipulator_Token('foo');
+        $token = new Token('foo');
         $this->assertNull($token->getLinenumber(), 'wrong linenumber');
         $fluent = $token->setLinenumber(10);
         $this->assertSame($fluent, $token, 'No fluent interface');
@@ -97,13 +104,13 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::factory
+     * @covers PHP\Manipulator\Token::factory
      * @dataProvider validInputFactoryProvider
      */
     public function testFactoryWithValidInput($input, $value, $type, $linenumber)
     {
-        $token = PHP_Manipulator_Token::factory($input);
-        $this->assertType('PHP_Manipulator_Token', $token, 'wrong datatype for token');
+        $token = Token::factory($input);
+        $this->assertType('PHP\Manipulator\Token', $token, 'wrong datatype for token');
 
         $this->assertEquals($value, $token->getValue(), 'wrong value');
         $this->assertEquals($type, $token->getType(), 'wrong type');
@@ -128,16 +135,16 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::factory
+     * @covers PHP\Manipulator\Token::factory
      * @dataProvider invalidInputFactoryProvider
-     * @covers PHP_Manipulator_Exception
+     * @covers \Exception
      */
     public function testFactoryWithInvalidInput($input, $exceptionMessage)
     {
         try {
-            PHP_Manipulator_Token::factory($input);
+            Token::factory($input);
             $this->fail('Expected exception not thrown');
-        } catch (PHP_Manipulator_Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals($exceptionMessage, $e->getMessage(), 'Wrong exception message');
         }
     }
@@ -150,25 +157,25 @@ class PHP_Manipulator_TokenTest extends TestCase
         $data = array();
 
         $data[] = array (
-            PHP_Manipulator_Token::factory('test'),
+            Token::factory('test'),
             null,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'value')),
+            Token::factory(array(T_COMMENT, 'value')),
             T_COMMENT,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'value')),
+            Token::factory(array(T_COMMENT, 'value')),
             T_WHITESPACE,
             false
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory('test'),
+            Token::factory('test'),
             T_WHITESPACE,
             false
         );
@@ -184,12 +191,12 @@ class PHP_Manipulator_TokenTest extends TestCase
         $data = array();
 
         $data[] = array (
-            PHP_Manipulator_Token::factory('test'),
+            Token::factory('test'),
             'test'
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
             'comment'
         );
 
@@ -197,7 +204,7 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::__toString
+     * @covers PHP\Manipulator\Token::__toString
      * @dataProvider __toStringProvider
      */
     public function test__toString($token, $string)
@@ -213,50 +220,50 @@ class PHP_Manipulator_TokenTest extends TestCase
         $data = array();
 
         $data[] = array (
-            PHP_Manipulator_Token::factory('test'),
-            PHP_Manipulator_Token::factory('test'),
+            Token::factory('test'),
+            Token::factory('test'),
             false,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory('test'),
-            PHP_Manipulator_Token::factory('test'),
+            Token::factory('test'),
+            Token::factory('test'),
             true,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_WHITESPACE, 'comment', 5)),
             false,
             false
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_WHITESPACE, 'comment', 5)),
             true,
             false
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
             true,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 4)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 4)),
             false,
             true
         );
 
         $data[] = array (
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 5)),
-            PHP_Manipulator_Token::factory(array(T_COMMENT, 'comment', 4)),
+            Token::factory(array(T_COMMENT, 'comment', 5)),
+            Token::factory(array(T_COMMENT, 'comment', 4)),
             true,
             false
         );
@@ -265,7 +272,7 @@ class PHP_Manipulator_TokenTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Token::equals
+     * @covers PHP\Manipulator\Token::equals
      * @dataProvider equalsProvider
      */
     public function testEquals($token, $otherToken, $strict, $equals)

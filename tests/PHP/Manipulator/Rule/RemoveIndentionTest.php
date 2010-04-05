@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\RemoveIndention;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_RemoveIndention
  */
-class PHP_Manipulator_Rule_RemoveIndentionTest extends TestCase
+class RemoveIndentionTest extends \Tests\TestCase
 {
     /**
      * @return array
@@ -36,12 +41,12 @@ class PHP_Manipulator_Rule_RemoveIndentionTest extends TestCase
 
     /**
      *
-     * @covers PHP_Manipulator_Rule_RemoveIndention::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\RemoveIndention::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_RemoveIndention();
+        $rule = new RemoveIndention();
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

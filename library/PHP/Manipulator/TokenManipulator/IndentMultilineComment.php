@@ -1,16 +1,21 @@
 <?php
 
-class PHP_Manipulator_TokenManipulator_IndentMultilineComment
-extends PHP_Manipulator_TokenManipulator_Abstract
+namespace PHP\Manipulator\TokenManipulator;
+
+use PHP\Manipulator\TokenManipulator;
+use PHP\Manipulator\Token;
+
+class IndentMultilineComment
+extends TokenManipulator
 {
 
     /**
      * Manipulate Token
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_Token $token, $params = null)
+    public function manipulate(Token $token, $params = null)
     {
         $regexNewline = '(\n|\r\n|\r)';
         $indention = $params;

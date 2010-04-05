@@ -1,6 +1,12 @@
 <?php
 
-class TestCase extends PHPUnit_Framework_TestCase
+namespace Tests;
+
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\Util;
+
+class TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -13,7 +19,7 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         $file = TESTS_PATH . '/_fixtures/' . $filename;
         if (!file_exists($file) || !is_file($file)) {
-            throw new Exception('Fixture ' . $file . ' not found');
+            throw new \Exception('Fixture ' . $file . ' not found');
         }
         return file_get_contents($file);
     }
@@ -22,19 +28,19 @@ class TestCase extends PHPUnit_Framework_TestCase
      * Returns tokens-array from fixture-file
      *
      * @param string $filename
-     * @return PHP_Manipulator_TokenContainer
+     * @return PHP\Manipulator\TokenContainer
      */
     public function getContainerFromFixture($filename)
     {
         $code = $this->getFixtureFileContent($filename);
-        return PHP_Manipulator_TokenContainer::createFromCode($code);
+        return TokenContainer::createFromCode($code);
     }
 
     /**
      * Compares if two Tokens Match
      *
-     * @param PHP_Manipulator_Token $expectedToken
-     * @param PHP_Manipulator_Token $actualToken
+     * @param PHP\Manipulator\Token $expectedToken
+     * @param PHP\Manipulator\Token $actualToken
      * @param boolean $strict
      */
     public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
@@ -54,8 +60,8 @@ class TestCase extends PHPUnit_Framework_TestCase
     /**
      * Compares if two TokenContainer tokens match
      *
-     * @param PHP_Manipulator_TokenContainer $expectedTokens
-     * @param PHP_Manipulator_TokenContainer $actualTokens
+     * @param PHP\Manipulator\TokenContainer $expectedTokens
+     * @param PHP\Manipulator\TokenContainer $actualTokens
      * @param string $message
      */
     public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')
@@ -109,11 +115,11 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 }
 
-class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Constraint
+class PHPFormatter_Constraint_TokenContainerMatch extends \PHPUnit_Framework_Constraint
 {
 
     /**
-     * @var PHP_Manipulator_TokenContainer
+     * @var PHP\Manipulator\TokenContainer
      */
     protected $_expectedContainer = null;
     /**
@@ -123,19 +129,19 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $expected
+     * @param PHP\Manipulator\TokenContainer $expected
      * @param boolean $strict
      */
-    public function __construct(PHP_Manipulator_TokenContainer $expected, $strict)
+    public function __construct(TokenContainer $expected, $strict)
     {
-        if (!$expected instanceof PHP_Manipulator_TokenContainer) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP_Manipulator_TokenContainer'
+        if (!$expected instanceof TokenContainer) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'PHP\Manipulator\TokenContainer'
             );
         }
 
         if (!is_bool($strict)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
                 2, 'boolean'
             );
         }
@@ -146,14 +152,14 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $other
+     * @param PHP\Manipulator\TokenContainer $other
      * @return boolean
      */
     public function evaluate($other)
     {
-        if (!$other instanceof PHP_Manipulator_TokenContainer) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP_Manipulator_TokenContainer'
+        if (!$other instanceof TokenContainer) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'PHP\Manipulator\TokenContainer'
             );
         }
 
@@ -164,10 +170,10 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
         while ($expectedIterator->valid() && $actualIterator->valid()) {
 
             $expectedToken = $expectedIterator->current();
-            /* @var $expectedToken PHP_Manipulator_Token */
+            /* @var $expectedToken PHP\Manipulator\Token */
 
             $actualToken = $actualIterator->current();
-            /* @var $actualToken PHP_Manipulator_Token */
+            /* @var $actualToken PHP\Manipulator\Token */
 
             if (!$actualToken->equals($expectedToken, $this->_strict)) {
                 return false;
@@ -191,7 +197,7 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
      */
     protected function failureDescription($other, $description, $not)
     {
-        $containerDiff = PHP_Manipulator_Util::compareContainers(
+        $containerDiff = Util::compareContainers(
                 $other,
                 $this->_expectedContainer
         );
@@ -212,11 +218,11 @@ class PHPFormatter_Constraint_TokenContainerMatch extends PHPUnit_Framework_Cons
     }
 }
 
-class PHPFormatter_Constraint_TokensMatch extends PHPUnit_Framework_Constraint
+class PHPFormatter_Constraint_TokensMatch extends \PHPUnit_Framework_Constraint
 {
 
     /**
-     * @var PHP_Manipulator_Token
+     * @var PHP\Manipulator\Token
      */
     protected $_expectedToken = null;
     /**
@@ -226,19 +232,19 @@ class PHPFormatter_Constraint_TokensMatch extends PHPUnit_Framework_Constraint
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $expected
+     * @param PHP\Manipulator\Token $expected
      * @param boolean $strict
      */
-    public function __construct(PHP_Manipulator_Token $expected, $strict)
+    public function __construct($expected, $strict)
     {
-        if (!$expected instanceof PHP_Manipulator_Token) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP_Manipulator_Token'
+        if (!$expected instanceof Token) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'PHP\Manipulator\Token'
             );
         }
 
         if (!is_bool($strict)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
                 2, 'boolean'
             );
         }
@@ -249,32 +255,32 @@ class PHPFormatter_Constraint_TokensMatch extends PHPUnit_Framework_Constraint
 
     /**
      *
-     * @param PHP_Manipulator_Token $other
+     * @param PHP\Manipulator\Token $other
      * @return boolean
      */
     public function evaluate($other)
     {
-        if (!$other instanceof PHP_Manipulator_Token) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP_Manipulator_Token'
+        if (!$other instanceof Token) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'PHP\Manipulator\Token'
             );
         }
         $expectedToken = $this->_expectedToken;
 
-        $equalValueConstraint = new PHPUnit_Framework_Constraint_IsEqual($expectedToken->getValue());
+        $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getValue());
         if (!$equalValueConstraint->evaluate($other->getValue())) {
             $this->_difference = 'values';
             return false;
         }
 
-        $equalValueConstraint = new PHPUnit_Framework_Constraint_IsEqual($expectedToken->getType());
+        $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getType());
         if (!$equalValueConstraint->evaluate($other->getType())) {
             $this->_difference = 'types';
             return false;
         }
 
         if (true === $this->_strict) {
-            $equalValueConstraint = new PHPUnit_Framework_Constraint_IsEqual($expectedToken->getType());
+            $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getType());
             if (!$equalValueConstraint->evaluate($other->getType())) {
                 $this->_difference = 'linenumber';
                 return false;
@@ -291,7 +297,7 @@ class PHPFormatter_Constraint_TokensMatch extends PHPUnit_Framework_Constraint
      */
     protected function failureDescription($other, $description, $not)
     {
-        $message = PHP_EOL . PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string)$other);
+        $message = PHP_EOL . \PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string)$other);
         $difference = $this->_difference;
         return 'Tokens are different: [' . $difference . ']' . $message;
     }

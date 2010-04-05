@@ -1,9 +1,12 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerConstraint;
+
+use PHP\Manipulator\ContainerConstraint\ContainsClass;
 
 /**
  * @group ContainerConstraint_ContainsClass
  */
-class PHP_Manipulator_ContainerConstraint_ContainsClassTest extends TestCase
+class ContainsClassTest extends \Tests\TestCase
 {
     /**
      * @return array
@@ -30,12 +33,12 @@ class PHP_Manipulator_ContainerConstraint_ContainsClassTest extends TestCase
 
 
     /**
-     * @covers PHP_Manipulator_ContainerConstraint_ContainsClass::evaluate
+     * @covers PHP\Manipulator\ContainerConstraint\ContainsClass::evaluate
      * @dataProvider evaluateProvider
      */
     public function testContainerConstraint($input, $expectedResult)
     {
-        $constraint = new PHP_Manipulator_ContainerConstraint_ContainsClass();
+        $constraint = new ContainsClass();
         $this->assertSame($expectedResult, $constraint->evaluate($input));
     }
 }

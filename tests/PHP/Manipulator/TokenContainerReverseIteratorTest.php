@@ -1,47 +1,52 @@
 <?php
+namespace Tests\PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainerReverseIterator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenContainer_Iterator
  */
-class PHP_Manipulator_TokenContainer_ReverseIteratorTest extends TestCase
+class TokenContainerReverseIteratorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_ReverseIterator
+     * @covers PHP\Manipulator\TokenContainerReverseIterator
      */
     public function testIteratorClass()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_TokenContainer_ReverseIterator');
-        $this->assertTrue($reflection->isSubclassOf('PHP_Manipulator_TokenContainer_Iterator'));
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainerReverseIterator');
+        $this->assertTrue($reflection->isSubclassOf('PHP\Manipulator\TokenContainerIterator'));
     }
 
     /**
-     * @return PHP_Manipulator_TokenContainer
+     * @return PHP\Manipulator\TokenContainer
      */
     public function getTestContainerWithHoles()
     {
         $tokens = array(
-            0 => PHP_Manipulator_Token::factory(array(null, "<?php\n")),
-            1 => PHP_Manipulator_Token::factory(array(null, "dummy")),
-            2 => PHP_Manipulator_Token::factory(array(null, 'echo')),
-            3 => PHP_Manipulator_Token::factory(array(null, "dummy")),
-            4 => PHP_Manipulator_Token::factory(array(null, ' ')),
-            5 => PHP_Manipulator_Token::factory(array(null, '\$var')),
-            6 => PHP_Manipulator_Token::factory(array(null, ';')),
+            0 => Token::factory(array(null, "<?php\n")),
+            1 => Token::factory(array(null, "dummy")),
+            2 => Token::factory(array(null, 'echo')),
+            3 => Token::factory(array(null, "dummy")),
+            4 => Token::factory(array(null, ' ')),
+            5 => Token::factory(array(null, '\$var')),
+            6 => Token::factory(array(null, ';')),
         );
-        $container = new PHP_Manipulator_TokenContainer($tokens);
+        $container = new TokenContainer($tokens);
         unset($container[1]);
         unset($container[3]);
         return $container;
     }
 
     /**
-     * @covers PHP_Manipulator_TokenContainer_ReverseIterator
+     * @covers PHP\Manipulator\TokenContainerReverseIterator
      */
     public function testReverseIterator()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new PHP_Manipulator_TokenContainer_ReverseIterator($container);
+        $iterator = new TokenContainerReverseIterator($container);
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[6], $iterator->current());

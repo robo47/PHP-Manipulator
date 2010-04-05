@@ -1,15 +1,20 @@
 <?php
 
-class PHP_Manipulator_Util
+namespace PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class Util
 {
 
     /**
      * Dump Container
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @return string
      */
-    public static function dumpContainer(PHP_Manipulator_TokenContainer $container)
+    public static function dumpContainer(TokenContainer $container)
     {
         $dump = '';
         $iterator = $container->getIterator();
@@ -17,8 +22,8 @@ class PHP_Manipulator_Util
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
-            $dump .= PHP_Manipulator_Util::dumpToken($token);
+            /* @var $token PHP\Manipulator\Token */
+            $dump .= Util::dumpToken($token);
             $iterator->next();
         }
 
@@ -30,22 +35,22 @@ class PHP_Manipulator_Util
      *
      * Returns string-presentation of both containers next to each other
      *
-     * @param PHP_Manipulator_TokenContainer $first
-     * @param PHP_Manipulator_TokenContainer $secod
+     * @param PHP\Manipulator\TokenContainer $first
+     * @param PHP\Manipulator\TokenContainer $secod
      */
-    public static function compareContainers(PHP_Manipulator_TokenContainer $first,
-        PHP_Manipulator_TokenContainer $second)
+    public static function compareContainers(TokenContainer $first,
+        TokenContainer $second)
     {
-        $firstDump = PHP_Manipulator_Util::dumpContainer($first);
-        $secondDump = PHP_Manipulator_Util::dumpContainer($second);
+        $firstDump = Util::dumpContainer($first);
+        $secondDump = Util::dumpContainer($second);
 
         $firstDumpAsArray = preg_split('~(\n|\r\n|\r)~', $firstDump);
         $secondDumpAsArray = preg_split('~(\n|\r\n|\r)~', $secondDump);
 
-        $iter1 = new ArrayIterator($firstDumpAsArray);
-        $iter2 = new ArrayIterator($secondDumpAsArray);
+        $iter1 = new \ArrayIterator($firstDumpAsArray);
+        $iter2 = new \ArrayIterator($secondDumpAsArray);
 
-        $length = PHP_Manipulator_Util::getLongestLineLength($firstDumpAsArray);
+        $length = Util::getLongestLineLength($firstDumpAsArray);
 
         $c1Count = (count($iter1) - 2);
         $c2Count = (count($iter2) - 2);
@@ -115,10 +120,10 @@ class PHP_Manipulator_Util
      * Replaces spaces, linebreaks and tabs with visual representations:
      * \t \r\n \n \r .
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @return string
      */
-    public static function dumpToken(PHP_Manipulator_Token $token)
+    public static function dumpToken(Token $token)
     {
         $type = $token->getType();
         $value = $token->getValue();

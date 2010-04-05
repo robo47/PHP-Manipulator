@@ -1,16 +1,21 @@
 <?php
 
-class PHP_Manipulator_TokenManipulator_RemoveCommentIndention
-extends PHP_Manipulator_TokenManipulator_Abstract
+namespace PHP\Manipulator\TokenManipulator;
+
+use PHP\Manipulator\TokenManipulator;
+use PHP\Manipulator\Token;
+
+class RemoveCommentIndention
+extends TokenManipulator
 {
 
     /**
      * Manipulate Token
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_Token $token, $params = null)
+    public function manipulate(Token $token, $params = null)
     {
         $regexWhitespace = '[\t ]{1,}';
         $linebreak = '\n|\r\n|\r';

@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\RemoveTrailingWhitespace;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_RemoveTrailingWhitespace
  */
-class PHP_Manipulator_Rule_RemoveTrailingWhitespaceTest extends TestCase
+class RemoveTrailingWhitespaceTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_RemoveTrailingWhitespace::init
+     * @covers PHP\Manipulator\Rule\RemoveTrailingWhitespace::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_RemoveTrailingWhitespace();
+        $rule = new RemoveTrailingWhitespace();
         $removeEmptyLinesAtFileEnd = $rule->getOption('removeEmptyLinesAtFileEnd');
         $this->assertTrue($removeEmptyLinesAtFileEnd, 'Default Value for removeEmptyLinesAtFileEnd is wrong');
     }
@@ -42,15 +47,15 @@ class PHP_Manipulator_Rule_RemoveTrailingWhitespaceTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Rule_RemoveTrailingWhitespace::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\RemoveTrailingWhitespace::applyRuleToTokens
      * @dataProvider ruleProvider
      * @param array $options
-     * @param PHP_Manipulator_TokenContainer $input
-     * @param PHP_Manipulator_TokenContainer $expectedTokens
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_RemoveTrailingWhitespace($options);
+        $rule = new RemoveTrailingWhitespace($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

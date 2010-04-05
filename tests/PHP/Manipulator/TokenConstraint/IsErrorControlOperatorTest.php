@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint\IsErrorControlOperator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenConstraint_IsErrorControlOperator
  */
-class PHP_Manipulator_TokenConstraint_IsErrorControlOperatorTest extends TestCase
+class IsErrorControlOperatorTest extends \Tests\TestCase
 {
 
     /**
@@ -15,25 +20,25 @@ class PHP_Manipulator_TokenConstraint_IsErrorControlOperatorTest extends TestCas
 
         #0
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, "\n")),
+            Token::factory(array(T_WHITESPACE, "\n")),
             false
         );
 
         #1
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, '@')),
+            Token::factory(array(null, '@')),
             true
         );
 
         #2
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(T_WHITESPACE, '@')),
+            Token::factory(array(T_WHITESPACE, '@')),
             false
         );
 
         #3
         $data[] = array(
-            PHP_Manipulator_Token::factory(array(null, "\n")),
+            Token::factory(array(null, "\n")),
             false
         );
 
@@ -42,11 +47,11 @@ class PHP_Manipulator_TokenConstraint_IsErrorControlOperatorTest extends TestCas
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP_Manipulator_TokenConstraint_IsErrorControlOperator
+     * @covers PHP\Manipulator\TokenConstraint\IsErrorControlOperator
      */
     public function testEvaluate($token, $result)
     {
-        $constraint = new PHP_Manipulator_TokenConstraint_IsErrorControlOperator();
+        $constraint = new IsErrorControlOperator();
         $this->assertSame($result, $constraint->evaluate($token), 'Wrong result');
     }
 }

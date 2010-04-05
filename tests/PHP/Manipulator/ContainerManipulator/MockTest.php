@@ -1,21 +1,26 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\Mock;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_Mock
  */
-class PHP_Manipulator_ContainerManipulator_MockTest extends TestCase
+class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_ContainerManipulator_Mock
+     * @covers PHP\Manipulator\ContainerManipulator\Mock
      */
     public function testCallingManipulateSetsCalledToTrue()
     {
-        PHP_Manipulator_ContainerManipulator_Mock::$called = false;
-        $mock = new PHP_Manipulator_ContainerManipulator_Mock();
-        $container = new PHP_Manipulator_TokenContainer();
-        $this->assertFalse(PHP_Manipulator_ContainerManipulator_Mock::$called);
+        Mock::$called = false;
+        $mock = new Mock();
+        $container = new TokenContainer();
+        $this->assertFalse(Mock::$called);
         $mock->manipulate($container);
-        $this->assertTrue(PHP_Manipulator_ContainerManipulator_Mock::$called);
+        $this->assertTrue(Mock::$called);
     }
 }

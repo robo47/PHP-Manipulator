@@ -1,17 +1,22 @@
 <?php
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\CommentOutIncludesAndRequires;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Rule_CommentOutIncludesAndRequires
  */
-class PHP_Manipulator_Rule_CommentOutIncludesAndRequiresTest extends TestCase
+class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_CommentOutIncludesAndRequires::init
+     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Manipulator_Rule_CommentOutIncludesAndRequires();
+        $rule = new CommentOutIncludesAndRequires();
         $this->assertTrue($rule->getOption('globalScopeOnly'), 'Wrong default Option value for globalScopeOnly');
     }
 
@@ -48,13 +53,13 @@ class PHP_Manipulator_Rule_CommentOutIncludesAndRequiresTest extends TestCase
     }
 
     /**
-     * @covers PHP_Manipulator_Rule_CommentOutIncludesAndRequires::applyRuleToTokens
-     * @covers PHP_Manipulator_Rule_CommentOutIncludesAndRequires::<protected>
+     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::applyRuleToTokens
+     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $rule = new PHP_Manipulator_Rule_CommentOutIncludesAndRequires($options);
+        $rule = new CommentOutIncludesAndRequires($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

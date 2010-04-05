@@ -1,23 +1,29 @@
 <?php
 
-class PHP_Manipulator_ContainerManipulator_RemoveErrorControlOperator
-extends PHP_Manipulator_ContainerManipulator_Abstract
+namespace PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class RemoveErrorControlOperator
+extends ContainerManipulator
 {
 
     /**
      * Manipulate Container
      * 
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function manipulate(PHP_Manipulator_TokenContainer $container, $params = null)
+    public function manipulate(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 
         $errorControllTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsErrorControlOperator', $token)) {
                 $errorControllTokens[] = $token;
             }

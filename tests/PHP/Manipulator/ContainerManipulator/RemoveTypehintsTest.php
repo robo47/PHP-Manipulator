@@ -1,9 +1,14 @@
 <?php
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\RemoveTypehints;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator_RemoveTypehints
  */
-class PHP_Manipulator_ContainerManipulator_RemoveTypehintsTest extends TestCase
+class RemoveTypehintsTest extends \Tests\TestCase
 {
 
     /**
@@ -33,11 +38,11 @@ class PHP_Manipulator_ContainerManipulator_RemoveTypehintsTest extends TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP_Manipulator_ContainerManipulator_RemoveTypehints
+     * @covers PHP\Manipulator\ContainerManipulator\RemoveTypehints
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
-        $manipulator = new PHP_Manipulator_ContainerManipulator_RemoveTypehints();
+        $manipulator = new RemoveTypehints();
         $manipulator->manipulate($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

@@ -1,6 +1,10 @@
 <?php
 
-interface PHP_Manipulator_Ruleset_Interface
+namespace PHP\Manipulator;
+
+use PHP\Manipulator\TokenContainer;
+
+interface IRuleset
 {
 
     /**

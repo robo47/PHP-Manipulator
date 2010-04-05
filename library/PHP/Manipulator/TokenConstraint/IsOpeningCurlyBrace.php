@@ -1,17 +1,23 @@
 <?php
 
-class PHP_Manipulator_TokenConstraint_IsOpeningCurlyBrace
-extends PHP_Manipulator_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+
+class IsOpeningCurlyBrace
+extends TokenConstraint
 {
 
     /**
      * Evaluate if the token is an opening curly brace {
      *
-     * @param PHP_Manipulator_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Manipulator_Token $token, $param = null)
+    public function evaluate(Token $token, $param = null)
     {
         if (null === $token->getType() && $token->getValue() === '{') {
             return true;

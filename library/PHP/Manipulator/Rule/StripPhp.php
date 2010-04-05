@@ -1,13 +1,20 @@
 <?php
 
-class PHP_Manipulator_Rule_StripPhp extends PHP_Manipulator_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Token;
+
+class StripPhp
+extends Rule
 {
 
     /**
      *
-     * @param PHP_Manipulator_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Manipulator_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
@@ -15,7 +22,7 @@ class PHP_Manipulator_Rule_StripPhp extends PHP_Manipulator_Rule_Abstract
         $deleteTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Manipulator_Token */
+            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
                 $open = true;
             }

@@ -1,17 +1,19 @@
 <?php
 
+namespace Tests\PHP\Manipulator;
+
 /**
  * @group Rule_Interface
  */
-class PHP_Manipulator_Rule_InterfaceTest extends TestCase
+class IRuleTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Manipulator_Rule_Interface
+     * @covers PHP\Manipulator\IRule
      */
     public function testInterfaceMethods()
     {
-        $reflection = new ReflectionClass('PHP_Manipulator_Rule_Interface');
+        $reflection = new \ReflectionClass('PHP\Manipulator\IRule');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
         $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
@@ -23,7 +25,7 @@ class PHP_Manipulator_Rule_InterfaceTest extends TestCase
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
         $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');
-        $this->assertEquals('PHP_Manipulator_TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP_Manipulator_TokenContainer');
+        $this->assertEquals('PHP\Manipulator\TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP\Manipulator\TokenContainer');
         $this->assertFalse($tokenParameter->isPassedByReference(), 'Parameter is passed as reference');
         $this->assertFalse($tokenParameter->isOptional(), 'Parameter is optional');
     }
