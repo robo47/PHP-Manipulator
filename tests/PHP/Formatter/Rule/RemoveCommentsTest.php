@@ -3,7 +3,7 @@
 /**
  * @group Rule_RemoveComments
  */
-class PHP_Formatter_Rule_RemoveCommentsTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_RemoveCommentsTest extends TestCase
 {
 
     /**

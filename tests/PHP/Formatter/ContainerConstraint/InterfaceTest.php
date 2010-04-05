@@ -3,7 +3,7 @@
 /**
  * @group ContainerConstraint_Interface
  */
-class PHP_Formatter_ContainerConstraint_InterfaceTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerConstraint_InterfaceTest extends TestCase
 {
 
     /**

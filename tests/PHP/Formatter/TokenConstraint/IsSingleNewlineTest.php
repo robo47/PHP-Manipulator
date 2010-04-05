@@ -3,7 +3,7 @@
 /**
  * @group TokenConstraint_IsSingleNewline
  */
-class PHP_Formatter_TokenConstraint_IsSingleNewlineTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenConstraint_IsSingleNewlineTest extends TestCase
 {
 
     /**

@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_RemoveTypehints
  */
-class PHP_Formatter_ContainerManipulator_RemoveTypehintsTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_RemoveTypehintsTest extends TestCase
 {
 
     /**

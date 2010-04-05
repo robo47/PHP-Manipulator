@@ -3,7 +3,7 @@
 /**
  * @group Rule_ChangeLineEndings
  */
-class PHP_Formatter_Rule_ChangeLineEndingsTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_ChangeLineEndingsTest extends TestCase
 {
 
     /**

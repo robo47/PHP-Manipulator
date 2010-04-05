@@ -3,7 +3,7 @@
 /**
  * @group Rule_Indent
  */
-class PHP_Formatter_Rule_IndentTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_IndentTest extends TestCase
 {
 
     /**

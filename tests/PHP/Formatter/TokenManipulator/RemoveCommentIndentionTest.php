@@ -3,7 +3,7 @@
 /**
  * @group TokenManipulator_RemoveCommentIndention
  */
-class PHP_Formatter_TokenManipulator_RemoveCommentIndentionTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenManipulator_RemoveCommentIndentionTest extends TestCase
 {
 
     /**

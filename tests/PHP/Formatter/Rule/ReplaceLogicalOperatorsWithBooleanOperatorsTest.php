@@ -3,7 +3,7 @@
 /**
  * @group Rule_ReplaceLogicalOperatorsWithBooleanOperators
  */
-class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_ReplaceLogicalOperatorsWithBooleanOperatorsTest extends TestCase
 {
 
     /**

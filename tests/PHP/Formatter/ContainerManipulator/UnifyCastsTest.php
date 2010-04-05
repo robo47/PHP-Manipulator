@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_UnifyCasts
  */
-class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_UnifyCastsTest extends TestCase
 {
 
     /**

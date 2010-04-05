@@ -3,7 +3,7 @@
 /**
  * @group Rule_ShorttagsToLongTags
  */
-class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_ShorttagsToLongTagsTest extends TestCase
 {
 
     /**

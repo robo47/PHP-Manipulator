@@ -4,7 +4,7 @@
  * @group TokenContainer
  * @todo create methods for setting up a default test container + method for returning the tokens
  */
-class PHP_Formatter_TokenContainerTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenContainerTest extends TestCase
 {
 
     /**

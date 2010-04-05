@@ -3,7 +3,7 @@
 /**
  * @group Rule_FormatOperators
  */
-class PHP_Formatter_Rule_FormatOperatorsTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_FormatOperatorsTest extends TestCase
 {
 
     /**

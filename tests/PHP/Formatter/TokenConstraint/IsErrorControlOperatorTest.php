@@ -3,7 +3,7 @@
 /**
  * @group TokenConstraint_IsErrorControlOperator
  */
-class PHP_Formatter_TokenConstraint_IsErrorControlOperatorTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenConstraint_IsErrorControlOperatorTest extends TestCase
 {
 
     /**

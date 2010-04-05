@@ -3,7 +3,7 @@
 /**
  * @group TokenConstraint_Mock
  */
-class PHP_Formatter_TokenConstraint_MockTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenConstraint_MockTest extends TestCase
 {
 
     /**

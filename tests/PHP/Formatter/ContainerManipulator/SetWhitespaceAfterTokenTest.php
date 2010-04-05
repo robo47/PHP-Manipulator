@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_SetWhitespaceAfterToken
  */
-class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_SetWhitespaceAfterTokenTest extends TestCase
 {
 
     /**

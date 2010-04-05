@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_RemoveWhitespaceFromEnd
  */
-class PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEndTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_RemoveWhitespaceFromEndTest extends TestCase
 {
 
     /**

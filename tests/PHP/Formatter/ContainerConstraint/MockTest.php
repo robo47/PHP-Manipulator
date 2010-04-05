@@ -3,7 +3,7 @@
 /**
  * @group ContainerConstraint_Mock
  */
-class PHP_Formatter_ContainerConstraint_MockTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerConstraint_MockTest extends TestCase
 {
 
     /**

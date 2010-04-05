@@ -3,7 +3,7 @@
 /**
  * @group ContainerConstraint_ContainsClass
  */
-class PHP_Formatter_ContainerConstraint_ContainsClassTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerConstraint_ContainsClassTest extends TestCase
 {
     /**
      * @return array

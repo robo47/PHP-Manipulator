@@ -4,7 +4,7 @@
  * @group TokenManipulator_IndentMultilineComment
  */
 class PHP_Formatter_TokenManipulator_IndentMultilineCommentTest
-extends PHPFormatterTestCase
+extends TestCase
 {
 
     /**

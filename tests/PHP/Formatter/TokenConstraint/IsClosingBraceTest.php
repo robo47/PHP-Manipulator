@@ -3,7 +3,7 @@
 /**
  * @group TokenConstraint_IsClosingBrace
  */
-class PHP_Formatter_TokenConstraint_IsClosingBraceTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenConstraint_IsClosingBraceTest extends TestCase
 {
 
     /**

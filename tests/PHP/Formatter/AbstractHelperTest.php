@@ -11,7 +11,7 @@ class PHP_Formatter_NonAbstractHelper extends PHP_Formatter_AbstractHelper
     }
 }
 
-class PHP_Formatter_AbstractHelperTest extends PHPFormatterTestCase
+class PHP_Formatter_AbstractHelperTest extends TestCase
 {
 
     /**

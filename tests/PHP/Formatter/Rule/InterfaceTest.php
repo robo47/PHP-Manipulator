@@ -3,7 +3,7 @@
 /**
  * @group Rule_Interface
  */
-class PHP_Formatter_Rule_InterfaceTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_InterfaceTest extends TestCase
 {
 
     /**

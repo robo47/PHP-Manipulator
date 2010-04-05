@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_RemoveErrorControlOperator
  */
-class PHP_Formatter_ContainerManipulator_RemoveErrorControlOperatorTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_RemoveErrorControlOperatorTest extends TestCase
 {
 
     /**

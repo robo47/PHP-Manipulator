@@ -3,7 +3,7 @@
 /**
  * @group TokenContainer_Iterator
  */
-class PHP_Formatter_TokenContainer_IteratorTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenContainer_IteratorTest extends TestCase
 {
 
     /**

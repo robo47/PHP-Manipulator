@@ -1,6 +1,6 @@
 <?php
 
-class PHP_Formatter_TokenTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenTest extends TestCase
 {
 
     /**

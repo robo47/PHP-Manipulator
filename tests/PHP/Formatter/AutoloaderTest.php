@@ -1,6 +1,6 @@
 <?php
 
-class PHP_Formatter_AutoloaderTest extends PHPFormatterTestCase
+class PHP_Formatter_AutoloaderTest extends TestCase
 {
 
     /**

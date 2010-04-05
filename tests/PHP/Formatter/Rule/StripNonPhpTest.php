@@ -3,7 +3,7 @@
 /**
  * @group Rule_StripNonPhp
  */
-class PHP_Formatter_Rule_StripNonPhpTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_StripNonPhpTest extends TestCase
 {
     /**
      * @return array

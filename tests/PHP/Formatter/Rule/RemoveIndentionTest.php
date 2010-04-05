@@ -3,7 +3,7 @@
 /**
  * @group Rule_RemoveIndention
  */
-class PHP_Formatter_Rule_RemoveIndentionTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_RemoveIndentionTest extends TestCase
 {
     /**
      * @return array

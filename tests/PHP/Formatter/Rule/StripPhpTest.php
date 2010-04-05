@@ -3,7 +3,7 @@
 /**
  * @group Rule_StripPhp
  */
-class PHP_Formatter_Rule_StripPhpTest extends PHPFormatterTestCase
+class PHP_Formatter_Rule_StripPhpTest extends TestCase
 {
 
     /**

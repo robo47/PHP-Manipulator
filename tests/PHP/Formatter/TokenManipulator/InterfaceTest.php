@@ -3,7 +3,7 @@
 /**
  * @group TokenManipulator_Interface
  */
-class PHP_Formatter_TokenManipulator_InterfaceTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenManipulator_InterfaceTest extends TestCase
 {
 
     /**

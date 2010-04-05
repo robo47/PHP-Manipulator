@@ -1,6 +1,6 @@
 <?php
 
-class PHP_Formatter_UtilTest extends PHPFormatterTestCase
+class PHP_Formatter_UtilTest extends TestCase
 {
 
     /**

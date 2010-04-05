@@ -3,7 +3,7 @@
 /**
  * @group TokenManipulator_UppercaseTokenValue
  */
-class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenManipulator_UppercaseTokenValueTest extends TestCase
 {
 
     /**

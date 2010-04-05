@@ -3,7 +3,7 @@
 /**
  * @group ContainerManipulator_CreateMultilineCommentFromTokenToToken
  */
-class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest extends PHPFormatterTestCase
+class PHP_Formatter_ContainerManipulator_CreateMultilineCommentFromTokenToTokenTest extends TestCase
 {
 
     /**

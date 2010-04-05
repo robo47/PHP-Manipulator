@@ -3,7 +3,7 @@
 /**
  * @group TokenConstraint_IsMultilineComment
  */
-class PHP_Formatter_TokenConstraint_IsMultilineCommentTest extends PHPFormatterTestCase
+class PHP_Formatter_TokenConstraint_IsMultilineCommentTest extends TestCase
 {
 
     /**
