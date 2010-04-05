@@ -23,7 +23,7 @@
              highLowerBound="70" />
     </logging>
     <testsuites>
-      <testsuite name="PHP_Formatter Test Suite">
+      <testsuite name="PHP_Manipulator Test Suite">
         <directory>./PHP/</directory>
       </testsuite>
     </testsuites>

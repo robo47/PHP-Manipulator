@@ -13,5 +13,5 @@ $pathes[] = get_include_path();
 set_include_path(implode($pathes, PATH_SEPARATOR));
 
 // Register autoloader
-require_once 'PHP/Formatter/Autoloader.php';
-PHP_Formatter_Autoloader::register();
+require_once 'PHP/Manipulator/Autoloader.php';
+PHP_Manipulator_Autoloader::register();

@@ -1,0 +1,8 @@
+<?php
+
+abstract class PHP_Manipulator_ContainerManipulator_Abstract
+extends PHP_Manipulator_AbstractHelper
+implements PHP_Manipulator_ContainerManipulator_Interface
+{
+
+}
