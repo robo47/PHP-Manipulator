@@ -16,12 +16,12 @@ extends PHP_Formatter_TokenManipulator_Abstract
         $indention = $params;
         $value = $token->getValue();
         $lines = preg_split('~'.$regexNewline.'~', $value);
-        // @todo preg_match it
+        // @todo preg_match the used newline [if one is used?]
         $newline = "\n";
 
         $first = true;
         $value = '';
-        
+
         foreach($lines as $key => $line) {
             if ($first) {
                 $first = false;
