@@ -1,14 +1,20 @@
 <?php
 
-class PHP_Formatter___classname__
-extends PHP_Formatter_Rule_Abstract
+namespace PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule;
+use PHP\Manipulator\TokenContainer;
+
+class __classname__
+extends Rule
 {
 
     /**
+     * Apply Rule to Tokens
      *
-     * @param PHP_Formatter_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(PHP_Formatter_TokenContainer $container)
+    public function applyRuleToTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 

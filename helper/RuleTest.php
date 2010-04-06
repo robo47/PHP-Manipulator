@@ -1,18 +1,24 @@
 <?php
 
+namespace Tests\PHP\Manipulator\Rule;
+
+use PHP\Manipulator\Rule\__classname__;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
 /**
- * @group __classname__
+ * @group Rule___classname__
  */
-class PHP_Formatter___classname__Test extends PHPFormatterTestCase
+class __classname__Test extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP_Formatter___classname__::init
+     * @covers __classname__::init
      */
     public function testConstructorDefaults()
     {
-        $rule = new PHP_Formatter___classname__();
-
+        $rule = new __classname__();
+// @todo test for options ?
     }
 
     /**
@@ -34,13 +40,13 @@ class PHP_Formatter___classname__Test extends PHPFormatterTestCase
     }
 
     /**
-     * @covers PHP_Formatter___classname__
+     * @covers __completeclassname__
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $this->markTestSkipped('not implemented yet');
-        $rule = new PHP_Formatter___classname__($options);
+        $rule = new __classname__($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

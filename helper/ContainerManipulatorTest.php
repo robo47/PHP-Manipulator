@@ -1,9 +1,15 @@
 <?php
 
+namespace Tests\PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator\__classname__;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
 /**
- * @group __classname__
+ * @group ContainerManipulator___classname__
  */
-class PHP_Formatter___classname__Test extends PHPFormatterTestCase
+class __classname__Test extends \Tests\TestCase
 {
 
     /**
@@ -25,13 +31,13 @@ class PHP_Formatter___classname__Test extends PHPFormatterTestCase
     }
 
     /**
-     * @dataProvider manipulateProvider
-     * @covers PHP_Formatter___classname__
+     * @covers __completeclassname__
+     *      * @dataProvider manipulateProvider
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
         $this->markTestSkipped('not implemented yet');
-        $manipulator = new PHP_Formatter___classname__();
+        $manipulator = new __classname__();
         $manipulator->manipulate($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }

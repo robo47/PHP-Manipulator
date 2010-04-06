@@ -1,20 +1,25 @@
 <?php
 
-class PHP_Formatter___classname__
-extends PHP_Formatter_TokenConstraint_Abstract
+namespace PHP\Manipulator\TokenConstraint;
+
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\Token;
+
+class __classname__
+extends TokenConstraint
 {
 
     /**
-     * Evaluate if the token is
+     * Evaluate if the token
      *
-     * @param PHP_Formatter_Token $token
+     * @param PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */
-    public function evaluate(PHP_Formatter_Token $token, $params = null)
+    public function evaluate(Token $token, $params = null)
     {
-        $result = false;
+        $evaluates = true;
 
-        return $result;
+        return $evaluates;
     }
 }

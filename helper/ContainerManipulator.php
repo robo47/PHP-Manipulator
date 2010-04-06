@@ -1,22 +1,27 @@
 <?php
 
-class PHP_Formatter___classname__
-extends PHP_Formatter_ContainerManipulator_Abstract
+namespace PHP\Manipulator\ContainerManipulator;
+
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+
+class __classname__
+extends ContainerManipulator
 {
 
     /**
-     * Manipulate Container
-     * 
-     * @param PHP_Formatter_TokenContainer $container
+     * Manipulate
+     *
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function manipulate(PHP_Formatter_TokenContainer $container, $params = null)
+    public function manipulate(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Formatter_Token */
 
             $iterator->next();
         }

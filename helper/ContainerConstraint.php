@@ -1,26 +1,29 @@
 <?php
 
-class PHP_Formatter___classname__
-extends PHP_Formatter_ContainerConstraint_Abstract
+namespace PHP\Manipulator\ContainerConstraint;
+
+use PHP\Manipulator\ContainerConstraint;
+use PHP\Manipulator\TokenContainer;
+
+class __classname__
+extends ContainerConstraint
 {
 
     /**
-     * Evaluate if the container 
+     * Evaluate if the container
      *
-     * @param PHP_Formatter_TokenContainer $container
+     * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @return boolean
      */
-    public function evaluate(PHP_Formatter_TokenContainer $container, $params = null)
+    public function evaluate(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
-            $token = $iterator->current();
-            /* @var $token PHP_Formatter_Token */
 
             $iterator->next();
         }
-        $container->retokenize();
+        return false;
     }
 }

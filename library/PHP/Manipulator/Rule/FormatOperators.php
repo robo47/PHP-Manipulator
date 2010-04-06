@@ -9,7 +9,7 @@ use PHP\Manipulator\TokenContainer;
 class FormatOperators
 extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('beforeOperator')) {

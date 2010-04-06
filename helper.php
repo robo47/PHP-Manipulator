@@ -70,11 +70,19 @@ if($createFixturesDummy && $_SERVER['argc'] > 3) {
         }
     }
 }
+
 echo 'replacing variables' . PHP_EOL;
-$fileCode = str_replace('__classname__', $typeName . '_' . $name, $fileCode);
-$testCode = str_replace('__classname__', $typeName . '_' . $name, $testCode);
-$fileCode = str_replace('__path__', $typeName . '/' . $name, $fileCode);
-$testCode = str_replace('__path__', $typeName . '/' . $name, $testCode);
+
+$vars = array(
+    'classname' => $name,
+    'completeclassname' => '\PHP\Manipulator\\' . $typeName . '\\' . $name,
+    'path' => $typeName . '/' . $name,
+);
+
+foreach($vars as $key => $value) {
+    $fileCode = str_replace('__'.$key.'__', $value, $fileCode);
+    $testCode = str_replace('__'.$key.'__', $value, $testCode);
+}
 
 echo 'Writing Files' . PHP_EOL;
 file_put_contents($newFile, $fileCode);
