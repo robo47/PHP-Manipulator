@@ -297,7 +297,7 @@ class PHPFormatter_Constraint_TokensMatch extends \PHPUnit_Framework_Constraint
      */
     protected function failureDescription($other, $description, $not)
     {
-        $message = PHP_EOL . \PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string)$other);
+        $message = PHP_EOL . \PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string) $other);
         $difference = $this->_difference;
         return 'Tokens are different: [' . $difference . ']' . $message;
     }

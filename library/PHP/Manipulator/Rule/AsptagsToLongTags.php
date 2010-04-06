@@ -5,7 +5,6 @@ namespace PHP\Manipulator\Rule;
 use PHP\Manipulator\Rule;
 use PHP\Manipulator\TokenContainer;
 
-
 class AsptagsToLongTags
 extends Rule
 {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\ContainerConstraint;
 
 use PHP\Manipulator\ContainerConstraint\ContainsClass;
@@ -8,6 +9,7 @@ use PHP\Manipulator\ContainerConstraint\ContainsClass;
  */
 class ContainsClassTest extends \Tests\TestCase
 {
+
     /**
      * @return array
      */
@@ -30,7 +32,6 @@ class ContainsClassTest extends \Tests\TestCase
 
         return $data;
     }
-
 
     /**
      * @covers PHP\Manipulator\ContainerConstraint\ContainsClass::evaluate

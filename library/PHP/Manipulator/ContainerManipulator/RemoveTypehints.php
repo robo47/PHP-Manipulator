@@ -29,7 +29,7 @@ extends ContainerManipulator
             }
             $iterator->next();
         }
-        foreach($functionTokens as $token) {
+        foreach ($functionTokens as $token) {
             $this->_parseFunctionArguments($container, $token);
         }
         $container->retokenize();
@@ -76,7 +76,7 @@ extends ContainerManipulator
             }
             $iterator->next();
         }
-        foreach($arguments as $argument) {
+        foreach ($arguments as $argument) {
             $typeHint = $this->_parseSingleArgument($argument);
             if ($typeHint instanceof Token) {
                 $container->removeToken($typeHint);
@@ -92,7 +92,7 @@ extends ContainerManipulator
     protected function _parseSingleArgument(array $argumentTokens)
     {
         $typehintToken = null;
-        foreach($argumentTokens as $token) {
+        foreach ($argumentTokens as $token) {
             /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, T_STRING)) {
                 $typehintToken = $token;

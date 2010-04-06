@@ -12,14 +12,12 @@ class TokenContainerIterator implements \Iterator, \Countable, \SeekableIterator
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
-
     /**
      * Current Position in the $this->_keys-array
      *
      * @var integer
      */
     protected $_pos = 0;
-
     /**
      * @var array
      */

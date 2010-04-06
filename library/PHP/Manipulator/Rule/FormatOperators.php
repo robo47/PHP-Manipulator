@@ -104,7 +104,7 @@ extends Rule
                     )
             );
         }
-        // @todo if not has -> merge them (not with array_merge)
+// @todo if not has -> merge them (not with array_merge)
     }
 
     /**

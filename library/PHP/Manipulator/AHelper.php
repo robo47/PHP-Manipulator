@@ -196,6 +196,6 @@ abstract class AHelper
      */
     public function init()
     {
-
+        
     }
 }

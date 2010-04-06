@@ -20,14 +20,14 @@ extends TokenManipulator
         $regexNewline = '(\n|\r\n|\r)';
         $indention = $params;
         $value = $token->getValue();
-        $lines = preg_split('~'.$regexNewline.'~', $value);
+        $lines = preg_split('~' . $regexNewline . '~', $value);
         // @todo preg_match the used newline [if one is used?]
         $newline = "\n";
 
         $first = true;
         $value = '';
 
-        foreach($lines as $key => $line) {
+        foreach ($lines as $key => $line) {
             if ($first) {
                 $first = false;
             } else {

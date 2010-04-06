@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\ContainerConstraint;
 
 use PHP\Manipulator\ContainerConstraint\Mock;

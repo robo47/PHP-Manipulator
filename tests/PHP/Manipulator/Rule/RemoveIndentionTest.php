@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\RemoveIndention;
@@ -10,6 +11,7 @@ use PHP\Manipulator\TokenContainer;
  */
 class RemoveIndentionTest extends \Tests\TestCase
 {
+
     /**
      * @return array
      */
@@ -51,4 +53,5 @@ class RemoveIndentionTest extends \Tests\TestCase
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }
+
 ?>

@@ -1,10 +1,10 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\StripPhp;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-
 
 /**
  * @group Rule_StripPhp

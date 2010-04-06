@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\AHelper;
@@ -7,7 +8,7 @@ use PHP\Manipulator\TokenContainer;
 
 class NonAbstractHelper extends AHelper
 {
-
+    
     public $init = false;
     
     public function init()

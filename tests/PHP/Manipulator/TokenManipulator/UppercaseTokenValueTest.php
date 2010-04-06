@@ -1,9 +1,9 @@
 <?php
+
 namespace Tests\PHP\Manipulator\TokenManipulator;
 
 use PHP\Manipulator\TokenManipulator\UppercaseTokenValue;
 use PHP\Manipulator\Token;
-
 
 /**
  * @group TokenManipulator_UppercaseTokenValue

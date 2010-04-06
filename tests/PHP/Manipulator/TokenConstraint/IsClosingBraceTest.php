@@ -1,10 +1,10 @@
 <?php
+
 namespace Tests\PHP\Manipulator\TokenConstraint;
 
 use PHP\Manipulator\TokenConstraint\IsClosingBrace;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-
 
 /**
  * @group TokenConstraint_IsClosingBrace

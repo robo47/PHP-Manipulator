@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\IContainerManipulator;

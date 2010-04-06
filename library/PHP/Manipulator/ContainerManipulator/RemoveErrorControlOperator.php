@@ -12,7 +12,7 @@ extends ContainerManipulator
 
     /**
      * Manipulate Container
-     * 
+     *
      * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
@@ -29,7 +29,7 @@ extends ContainerManipulator
             }
             $iterator->next();
         }
-        foreach($errorControllTokens as $errorControllToken) {
+        foreach ($errorControllTokens as $errorControllToken) {
             $container->removeToken($errorControllToken);
         }
         $container->retokenize();

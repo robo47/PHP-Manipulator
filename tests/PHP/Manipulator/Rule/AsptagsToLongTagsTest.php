@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\AsptagsToLongTags;
@@ -51,7 +52,6 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
         return $data;
     }
 
-
     /**
      * @covers PHP\Manipulator\Rule\AsptagsToLongTags::applyRuleToTokens
      * @dataProvider ruleProvider
@@ -59,7 +59,7 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
     public function testRule($options, $input, $expectedTokens)
     {
         $this->checkAsptags();
-        
+
         $rule = new AsptagsToLongTags($options);
         $rule->applyRuleToTokens($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');

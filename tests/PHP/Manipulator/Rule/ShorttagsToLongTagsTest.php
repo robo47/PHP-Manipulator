@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\ShorttagsToLongTags;
@@ -51,7 +52,6 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
 
         return $data;
     }
-
 
     /**
      * @covers PHP\Manipulator\Rule\ShorttagsToLongTags::applyRuleToTokens

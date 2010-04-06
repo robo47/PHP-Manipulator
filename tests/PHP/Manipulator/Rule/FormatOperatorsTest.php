@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\FormatOperators;
@@ -19,7 +20,7 @@ class FormatOperatorsTest extends \Tests\TestCase
         $rule = new FormatOperators();
         $this->assertType('array', $rule->getOption('beforeOperator'), 'Wrong default Option value for beforeOperator');
         $this->assertType('array', $rule->getOption('afterOperator'), 'Wrong default Option value for afterOperator');
-        // @todo check number of elements, check all are operators ...
+// @todo check number of elements, check all are operators ...
     }
     
     public function ruleProvider()

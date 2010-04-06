@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\TokenConstraint;
 
 use PHP\Manipulator\TokenConstraint\IsClosingCurlyBrace;

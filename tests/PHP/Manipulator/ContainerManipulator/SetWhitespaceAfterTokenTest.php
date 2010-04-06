@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\ContainerManipulator;
 
 use PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken;

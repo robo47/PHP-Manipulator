@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\TokenManipulator;
 
 use PHP\Manipulator\TokenManipulator\IndentMultilineComment;

@@ -5,7 +5,6 @@ namespace PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\Token;
 
-
 class IsErrorControlOperator
 extends TokenConstraint
 {

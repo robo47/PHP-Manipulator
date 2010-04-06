@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule\StripNonPhp;
@@ -10,6 +11,7 @@ use PHP\Manipulator\TokenContainer;
  */
 class StripNonPhpTest extends \Tests\TestCase
 {
+
     /**
      * @return array
      */
