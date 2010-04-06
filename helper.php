@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 'On');
+ini_set('display_errors', 1);
 
 
 if ($_SERVER['argc'] < 3) {
@@ -58,6 +58,7 @@ $testCode = file_get_contents('./helper/' . $typeName . 'Test.php');
 
 $newFilePath = '';
 $newTestPath = '';
+
 if($createFixturesDummy && $_SERVER['argc'] > 3) {
     echo 'creating fixtures: ' . $_SERVER['argv'][3] . PHP_EOL;
     $path = './tests/_fixtures/' . $typeName . '/' . $name;
