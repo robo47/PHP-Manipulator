@@ -19,7 +19,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     {
         $data = array();
 
-        $container = TokenContainer::createFromCode("<?php \$blub = \$bla; ?>");
+        $container = new TokenContainer("<?php \$blub = \$bla; ?>");
         $from = $container[1]; // $blub
         $to = $container[6];   // ;
 
@@ -27,11 +27,11 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         $data[] = array(
             $container,
             array('from' => $from, 'to' => $to),
-            TokenContainer::createFromCode("<?php /*\$blub = \$bla;*/ ?>"),
+            new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
 
-        $container = TokenContainer::createFromCode("<?php \$blub =/* foo */ \$bla; ?>");
+        $container = new TokenContainer("<?php \$blub =/* foo */ \$bla; ?>");
         $from = $container[1]; // $blub
         $to = $container[7];   // ;
 
@@ -39,7 +39,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         $data[] = array(
             $container,
             array('from' => $from, 'to' => $to),
-            TokenContainer::createFromCode("<?php /*\$blub = \$bla;*/ ?>"),
+            new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
 
@@ -64,7 +64,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testNonArrayAsParamsThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = null;
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -81,7 +81,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testMissingFromThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('to' => $container[5]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -98,7 +98,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testMissingToThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('from' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -115,7 +115,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testWrongDatatypeForFromThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('to' => $container[5], 'from' => 'foo');
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -132,7 +132,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testWrongDatatypeForToThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('to' => 'foo', 'from' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -149,7 +149,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testFromTokenisBehindToTokenThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('to' => $container[1], 'from' => $container[5]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -166,7 +166,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testToIsNotContainedInTheContainerThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('to' => new Token('('), 'from' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
@@ -183,7 +183,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
      */
     public function testFromIsNotContainedInTheContainerThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('from' => new Token('('), 'to' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {

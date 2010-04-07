@@ -20,7 +20,11 @@ class ChangeLineEndingsTest extends \Tests\TestCase
         $rule = new ChangeLineEndings();
         $this->assertEquals("\n", $rule->getOption('newline'), 'Wrong default Option value for newline');
     }
-    
+
+    /**
+     *
+     * @return array
+     */
     public function ruleProvider()
     {
         $data = array();
@@ -32,43 +36,43 @@ class ChangeLineEndingsTest extends \Tests\TestCase
         #0
         $data[] = array(
             array(),
-            TokenContainer::createFromCode($codeWindows),
-            TokenContainer::createFromCode($codeLinux),
+            new TokenContainer($codeWindows),
+            new TokenContainer($codeLinux),
         );
 
         #1
         $data[] = array(
             array('newline' => "\r\n"),
-            TokenContainer::createFromCode($codeLinux),
-            TokenContainer::createFromCode($codeWindows),
+            new TokenContainer($codeLinux),
+            new TokenContainer($codeWindows),
         );
 
         #2
         $data[] = array(
             array('newline' => "\r"),
-            TokenContainer::createFromCode($codeLinux),
-            TokenContainer::createFromCode($codeMac),
+            new TokenContainer($codeLinux),
+            new TokenContainer($codeMac),
         );
 
         #3
         $data[] = array(
             array('newline' => "\n"),
-            TokenContainer::createFromCode($codeMac),
-            TokenContainer::createFromCode($codeLinux),
+            new TokenContainer($codeMac),
+            new TokenContainer($codeLinux),
         );
 
         #4
         $data[] = array(
             array('newline' => "\r\n"),
-            TokenContainer::createFromCode($codeMac),
-            TokenContainer::createFromCode($codeWindows),
+            new TokenContainer($codeMac),
+            new TokenContainer($codeWindows),
         );
 
         #5
         $data[] = array(
             array('newline' => "\r"),
-            TokenContainer::createFromCode($codeWindows),
-            TokenContainer::createFromCode($codeMac),
+            new TokenContainer($codeWindows),
+            new TokenContainer($codeMac),
         );
 
         return $data;

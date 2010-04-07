@@ -8,7 +8,7 @@ use PHP\Manipulator\TokenContainer;
 class ChangeLineEndings
 extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('newline')) {
@@ -24,8 +24,20 @@ extends Rule
     {
         $newline = $this->getOption('newline');
 
-        $code = $container->__toString();
-        $code = preg_replace('~(\r\n|\n|\r)~', $newline, $code);
-        $container->setContainer(TokenContainer::createTokenArrayFromCode($code));
+        $iterator = $container->getIterator();
+
+        while ($iterator->valid()) {
+            $token = $iterator->current();
+
+            $value = preg_replace(
+                '~(\r\n|\n|\r)~',
+                $newline,
+                $token->getValue()
+            );
+
+            $token->setValue($value);
+
+            $iterator->next();
+        }
     }
 }

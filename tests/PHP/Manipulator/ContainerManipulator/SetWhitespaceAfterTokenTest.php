@@ -85,7 +85,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
      */
     public function testMissingWhitespaceThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('tokens' => array($container[5], $container[6]));
         $manipulator = new SetWhitespaceAfterToken();
         try {
@@ -102,7 +102,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
      */
     public function testMissingTokensThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('whitespace' => array(T_ECHO => 'blub'));
         $manipulator = new SetWhitespaceAfterToken();
         try {
@@ -119,7 +119,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
      */
     public function testParamIsNotArrayThrowsException()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $manipulator = new SetWhitespaceAfterToken();
         try {
             $manipulator->manipulate($container);
@@ -135,7 +135,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
      */
     public function testNonExistingTokenInWhitespaceListThrowsExceptionInGetWhitespaceForToken()
     {
-        $container = TokenContainer::createFromCode("<?php echo 'hellow world'; ?>");
+        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
         $params = array('tokens' => array($container[2], $container[3]), 'whitespace' => array(T_ECHO => 'blub'));
         $manipulator = new SetWhitespaceAfterToken();
         try {

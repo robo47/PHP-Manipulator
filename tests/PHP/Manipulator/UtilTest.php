@@ -120,7 +120,7 @@ class UtilTest extends \Tests\TestCase
         $data = array();
 
         $data[] = array(
-            \PHP\Manipulator\TokenContainer::createFromCode('<?php echo $foo; ?>'),
+            new TokenContainer('<?php echo $foo; ?>'),
             'Token                       |  LEN | LINE | VALUE' . PHP_EOL . PHP_EOL .
                 'T_OPEN_TAG                  |    6 |    1 | <?php.' . PHP_EOL .
                 'T_ECHO                      |    4 |    1 | echo' . PHP_EOL .
@@ -156,8 +156,8 @@ class UtilTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo; ?>"),
-            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo;\n?>"),
+            new TokenContainer("<?php echo \$foo; ?>"),
+            new TokenContainer("<?php echo \$foo;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 7                        ' . PHP_EOL .
                 '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
                 '                                                         |  ' . PHP_EOL .
@@ -174,8 +174,8 @@ class UtilTest extends \Tests\TestCase
 
         #1
         $data[] = array(
-            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo; ?>"),
-            \PHP\Manipulator\TokenContainer::createFromCode("<?php echo \$foo;\n echo \$baa;\n?>"),
+            new TokenContainer("<?php echo \$foo; ?>"),
+            new TokenContainer("<?php echo \$foo;\n echo \$baa;\n?>"),
             '                       Tokens: 7                         |                       Tokens: 12                       ' . PHP_EOL .
                 '     Token                       |  LEN | LINE | VALUE   |  Token                       |  LEN | LINE | VALUE' . PHP_EOL .
                 '                                                         |  ' . PHP_EOL .

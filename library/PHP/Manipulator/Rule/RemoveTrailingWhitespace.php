@@ -37,9 +37,7 @@ class RemoveTrailingWhitespace extends Rule
             $code = rtrim($code);
         }
 
-        // @todo seems like a expensive task, with all type-checking and stuff like that ?
-        $tokenArrayContainer = TokenContainer::createFromCode($code)
-            ->getContainer();
-        $container->setContainer($tokenArrayContainer);
+        $newContainer = new TokenContainer($code);
+        $container->setContainer($newContainer->getContainer());
     }
 }

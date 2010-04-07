@@ -33,7 +33,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function getContainerFromFixture($filename)
     {
         $code = $this->getFixtureFileContent($filename);
-        return TokenContainer::createFromCode($code);
+        return new TokenContainer($code);
     }
 
     /**

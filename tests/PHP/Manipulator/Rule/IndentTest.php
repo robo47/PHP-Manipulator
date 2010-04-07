@@ -91,8 +91,8 @@ class IndentTest extends \Tests\TestCase
         #8
         $data[] = array(
             array('useSpaces' => false),
-            TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
-            TokenContainer::createFromCode("<?php\nfunction foo(\$baa) {\n\techo \$foo;\n}")
+            new TokenContainer("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
+            new TokenContainer("<?php\nfunction foo(\$baa) {\n\techo \$foo;\n}")
         );
 
         return $data;

@@ -56,6 +56,19 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertEquals($tokens['asdf'], $array[2], 'Element missmatch');
     }
 
+
+
+    /**
+     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers PHP\Manipulator\TokenContainer::__construct
+     */
+    public function testConstructWithCode()
+    {
+        $code = '<?php echo $foo; ?>';
+        $container = new TokenContainer($code);
+        $this->assertEquals(7, count($container), 'Count missmatch');
+    }
+
     /**
      * @covers PHP\Manipulator\TokenContainer::<protected>
      * @covers PHP\Manipulator\TokenContainer::__construct
@@ -480,27 +493,6 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::createFromCode
-     */
-    public function testCreateFromCode()
-    {
-        $code = '<?php echo 1; ?>';
-        $container = TokenContainer::createFromCode($code);
-
-        $this->assertEquals(7, count($container));
-        $this->assertEquals('<?php echo 1; ?>', $container->toString());
-
-        $tokens = token_get_all($code);
-
-        $i = 0;
-        foreach ($tokens as $token) {
-            $tokenObject = Token::factory($token);
-            $this->assertTrue($tokenObject->equals($container[$i], true));
-            $i++;
-        }
-    }
-
-    /**
      * @covers PHP\Manipulator\TokenContainer::retokenize
      */
     public function testRetokenize()
@@ -514,26 +506,6 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertEquals(3, count($container));
 
         $this->assertEquals("<?php\n \n \n \n \t \n ?>", $container->toString());
-    }
-
-    /**
-     * @covers PHP\Manipulator\TokenContainer::createTokenArrayFromCode
-     */
-    public function testCreateTokenArrayFromCode()
-    {
-        $code = '<?php echo 1; ?>';
-        $array = TokenContainer::createTokenArrayFromCode($code);
-
-        $this->assertEquals(7, count($array));
-
-        $tokens = token_get_all($code);
-
-        $i = 0;
-        foreach ($tokens as $token) {
-            $tokenObject = Token::factory($token);
-            $this->assertTrue($tokenObject->equals($array[$i], true));
-            $i++;
-        }
     }
 
     /**

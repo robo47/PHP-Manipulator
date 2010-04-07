@@ -22,9 +22,24 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param array $tokens
      */
-    public function __construct(array $tokens = array())
+    public function __construct($input = null)
     {
-        foreach ($tokens as $token) {
+        if (null !== $input) {
+            $this->_init($input);
+        }
+    }
+
+    /**
+     * Init Container from String or array
+     * 
+     * @param array|string $input
+     */
+    protected function _init($input)
+    {
+        if (is_string($input)) {
+            $input = $this->createTokensFromCode($input);
+        }
+        foreach ($input as $token) {
             $this[] = $token;
         }
     }
@@ -328,7 +343,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function retokenize()
     {
         $code = $this->toString();
-        $this->_container = TokenContainer::createTokenArrayFromCode($code);
+        $this->_container = $this->createTokensFromCode($code);
         return $this;
     }
 
@@ -433,32 +448,45 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         return new TokenContainerReverseIterator($this);
     }
 
-    /**
-     * Creates an array of tokens from code
-     *
-     * @param string $code
-     * @return array
-     */
-    public static function createTokenArrayFromCode($code)
+    public static function createTokensFromCode($code)
     {
-        $tokenArray = array();
+        $array = array();
         $tokens = token_get_all($code);
         foreach ($tokens as $token) {
             /* @var $token array|string */
-            $tokenArray[] = Token::factory($token);
+            $array[] = Token::factory($token);
         }
-        return $tokenArray;
+        return $array;
     }
 
     /**
-     * Creates a TokenContainer from code
+     * Create Container from File
      *
-     * @param string $code
+     * @param string $file
      * @return PHP\Manipulator\TokenContainer
      */
-    public static function createFromCode($code)
+    public static function createFromFile($file)
     {
-        $tokens = TokenContainer::createTokenArrayFromCode($code);
-        return new TokenContainer($tokens);
+        if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
+            throw new Exception('Unable to open file for reading: ' . $file);
+        }
+        return new TokenContainer(
+            \file_get_contents($file)
+        );
+    }
+
+    /**
+     * Save to File
+     *
+     * @param string $file
+     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     */
+    public function saveToFile($file)
+    {
+        if (!is_writeable($file)) {
+            throw new Exception('Unable to open file for writing: ' . $file);
+        }
+        \file_put_contents($file, $this->toString());
+        return $this;
     }
 }
