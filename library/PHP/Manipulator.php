@@ -3,9 +3,15 @@
 namespace PHP;
 
 use PHP\Manipulator\IRule;
+use PHP\Manipulator\TokenContainer;
 
 class Manipulator
 {
+
+    /**
+     * Version number
+     */
+    const VERSION = '@version@';
 
     /**
      * Array with used rules
@@ -15,12 +21,20 @@ class Manipulator
     protected $_rules = array();
 
     /**
+     * Array with files
+     *
+     * @var array
+     */
+    protected $_files = array();
+
+    /**
      *
      * @param array $rules
      */
-    public function __construct(array $rules = array())
+    public function __construct(array $rules = array(), $files = null)
     {
         $this->addRules($rules);
+        $this->addFiles($files);
     }
 
     /**
@@ -95,6 +109,52 @@ class Manipulator
                 unset($this->_rules[$key]);
             }
         }
+        return $this;
+    }
+
+    /**
+     * Add a file or files (array, iterator [as long as it items are strings or implement __toString())]
+     *
+     * @param array|Iterator|string $files
+     */
+    public function addFiles($files)
+    {
+        if ($files instanceof \Iterator || is_array($files)) {
+            foreach($files as $file) {
+                // string-cast if it is something else (SplFileInfo)
+                $this->addFile((string)$file);
+            }
+        } elseif(is_string($files)) {
+            $this->addFile($files);
+        }
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $file
+     */
+    public function addFile($file)
+    {
+        $this->_files[] = $file;
+        return $this;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $this->_files;
+    }
+
+    /**
+     *
+     */
+    public function removeAllFiles()
+    {
+        $this->_files = array();
         return $this;
     }
 }

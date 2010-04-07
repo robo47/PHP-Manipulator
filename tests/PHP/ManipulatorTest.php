@@ -44,6 +44,24 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
+     * @covers PHP\Manipulator::__construct
+     * @covers PHP\Manipulator::getFiles
+     */
+    public function testConstructAddsFiles()
+    {
+        $files = array(
+            'some File',
+            'another File',
+        );
+
+        $manipulator = new Manipulator(array(), $files);
+
+        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertContains($files[0], $manipulator->getFiles());
+        $this->assertContains($files[1], $manipulator->getFiles());
+    }
+
+    /**
      * @covers PHP\Manipulator::addRule
      * @covers PHP\Manipulator::getRules
      */
@@ -167,5 +185,81 @@ class ManipulatorTest extends \Tests\TestCase
         $rules = $manipulator->getRules();
 
         $this->assertEquals(0, count($rules), 'Wrong rules count');
+    }
+
+    /**
+     * @covers PHP\Manipulator::addFiles
+     * @covers PHP\Manipulator::getFiles
+     */
+    public function testAddFilesWithIteratorAndGetFiles()
+    {
+        $iterator = \File_Iterator_Factory::getFileIterator(BASE_PATH . '/library/');
+
+        $manipulator = new Manipulator();
+        $manipulator->addFiles($iterator);
+
+        $this->assertEquals(\iterator_count($iterator), count($manipulator->getFiles()));
+
+        $iteratorArray = \iterator_to_array($iterator);
+
+        foreach($iterator as $file) {
+            $this->assertContains($file->__toString(), $manipulator->getFiles());
+        }
+
+    }
+
+    /**
+     * @covers PHP\Manipulator::addFiles
+     * @covers PHP\Manipulator::getFiles
+     */
+    public function testAddFilesWithArrayAndGetFiles()
+    {
+        $files = array(
+            'some File',
+            'another File',
+        );
+
+        $manipulator = new Manipulator();
+        $manipulator->addFiles($files);
+
+        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertContains($files[0], $manipulator->getFiles());
+        $this->assertContains($files[1], $manipulator->getFiles());
+    }
+
+    /**
+     * @covers PHP\Manipulator::removeAllFiles
+     */
+    public function testRemoveAllFiles()
+    {
+        $files = array(
+            'some File',
+            'another File',
+        );
+
+        $manipulator = new Manipulator();
+        $manipulator->addFiles($files);
+
+        $this->assertEquals(2, count($manipulator->getFiles()));
+
+        $manipulator->removeAllFiles();
+
+        $this->assertEquals(0, count($manipulator->getFiles()));
+    }
+
+
+    /**
+     * @covers PHP\Manipulator::addFile
+     */
+    public function testAddFile()
+    {
+        $manipulator = new Manipulator();
+        $manipulator->addFile('foo');
+        $manipulator->addFile('baa');
+
+        $this->assertEquals(2, count($manipulator->getFiles()));
+
+        $this->assertContains('foo', $manipulator->getFiles());
+        $this->assertContains('baa', $manipulator->getFiles());
     }
 }
