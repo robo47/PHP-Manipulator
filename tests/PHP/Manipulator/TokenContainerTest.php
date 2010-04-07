@@ -56,8 +56,6 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertEquals($tokens['asdf'], $array[2], 'Element missmatch');
     }
 
-
-
     /**
      * @covers PHP\Manipulator\TokenContainer::<protected>
      * @covers PHP\Manipulator\TokenContainer::__construct

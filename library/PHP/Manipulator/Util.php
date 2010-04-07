@@ -18,7 +18,10 @@ class Util
     {
         $dump = '';
         $iterator = $container->getIterator();
-        $dump .= str_pad('Token', 28, ' ', STR_PAD_RIGHT) . '| ' . str_pad('LEN', 4, ' ', STR_PAD_LEFT) . ' | ' . str_pad('LINE', 4, ' ', STR_PAD_LEFT) . ' | VALUE' . PHP_EOL . PHP_EOL;
+        $dump .= str_pad('Token', 28, ' ', STR_PAD_RIGHT) . '| ' .
+            str_pad('LEN', 4, ' ', STR_PAD_LEFT) . ' | ' .
+            str_pad('LINE', 4, ' ', STR_PAD_LEFT) . ' | VALUE' .
+            PHP_EOL . PHP_EOL;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -47,33 +50,33 @@ class Util
         $firstDumpAsArray = preg_split('~(\n|\r\n|\r)~', $firstDump);
         $secondDumpAsArray = preg_split('~(\n|\r\n|\r)~', $secondDump);
 
-        $iter1 = new \ArrayIterator($firstDumpAsArray);
-        $iter2 = new \ArrayIterator($secondDumpAsArray);
+        $cOneIterator = new \ArrayIterator($firstDumpAsArray);
+        $cTwoIterator = new \ArrayIterator($secondDumpAsArray);
 
         $length = Util::getLongestLineLength($firstDumpAsArray);
 
-        $c1Count = (count($iter1) - 2);
-        $c2Count = (count($iter2) - 2);
+        $cOneCount = (count($cOneIterator) - 2);
+        $cTwoCount = (count($cTwoIterator) - 2);
 
         $code = '';
-        $code .= str_pad('Tokens: ' . $c1Count, ($length + 6), ' ', STR_PAD_BOTH) . ' |';
-        $code .= str_pad('Tokens: ' . $c2Count, ($length + 6), ' ', STR_PAD_BOTH);
+        $code .= str_pad('Tokens: ' . $cOneCount, ($length + 6), ' ', STR_PAD_BOTH) . ' |';
+        $code .= str_pad('Tokens: ' . $cTwoCount, ($length + 6), ' ', STR_PAD_BOTH);
         $code .= PHP_EOL;
 
         $i = 1;
-        while ($iter1->valid() || $iter2->valid()) {
+        while ($cOneIterator->valid() || $cTwoIterator->valid()) {
 
             $line1 = '';
             $line2 = '';
 
-            if ($iter1->valid()) {
-                $line1 = (string) $iter1->current();
-                $iter1->next();
+            if ($cOneIterator->valid()) {
+                $line1 = (string) $cOneIterator->current();
+                $cOneIterator->next();
             }
 
-            if ($iter2->valid()) {
-                $line2 = (string) $iter2->current();
-                $iter2->next();
+            if ($cTwoIterator->valid()) {
+                $line2 = (string) $cTwoIterator->current();
+                $cTwoIterator->next();
             }
 
             // is STRICT! ignores not set linenumber
@@ -142,6 +145,8 @@ class Util
         if (null === $line) {
             $line = 'NULL';
         }
-        return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' . str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' . str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value . PHP_EOL;
+        return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
+            str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
+            str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value . PHP_EOL;
     }
 }

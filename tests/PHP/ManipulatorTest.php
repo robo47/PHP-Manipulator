@@ -202,10 +202,9 @@ class ManipulatorTest extends \Tests\TestCase
 
         $iteratorArray = \iterator_to_array($iterator);
 
-        foreach($iterator as $file) {
+        foreach ($iterator as $file) {
             $this->assertContains($file->__toString(), $manipulator->getFiles());
         }
-
     }
 
     /**
@@ -246,7 +245,6 @@ class ManipulatorTest extends \Tests\TestCase
 
         $this->assertEquals(0, count($manipulator->getFiles()));
     }
-
 
     /**
      * @covers PHP\Manipulator::addFile

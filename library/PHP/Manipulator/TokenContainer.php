@@ -31,7 +31,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Init Container from String or array
-     * 
+     *
      * @param array|string $input
      */
     protected function _init($input)
@@ -447,7 +447,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         return new TokenContainerReverseIterator($this);
     }
-
+    
     public static function createTokensFromCode($code)
     {
         $array = array();
