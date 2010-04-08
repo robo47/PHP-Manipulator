@@ -86,7 +86,7 @@ class AHelperTest extends \Tests\TestCase
         $fluent = $abstractHelper->addOptions($options);
         $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
 
-        $this->assertEquals(3, count($abstractHelper->getOptions()), 'Wrong options count');
+        $this->assertCount(3, $abstractHelper->getOptions(), 'Wrong options count');
     }
 
     /**

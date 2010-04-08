@@ -18,7 +18,7 @@ class IContainerManipulatorTest extends \Tests\TestCase
         $reflection = new \ReflectionClass('PHP\Manipulator\IContainerManipulator');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
-        $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
+        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
         $evaluateMethod = $methods[0];
         /* @var $evaluateMethod ReflectionMethod */
         $this->assertSame('manipulate', $evaluateMethod->getName(), 'Method has wrong name');

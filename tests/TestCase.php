@@ -39,13 +39,33 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two Tokens Match
      *
+     * @param integer $expectedToken
+     * @param PHP\Manipulator\Token $actualToken
+     * @param boolean $strict
+     */
+    public function assertCount($expectedCount, $element, $message = '')
+    {
+        $constraint = new PHPManipulator_Constraint_Count(
+            $expectedCount
+        );
+
+        self::assertThat(
+                $element,
+                $constraint,
+                $message
+        );
+    }
+
+    /**
+     * Compares if two Tokens Match
+     *
      * @param PHP\Manipulator\Token $expectedToken
      * @param PHP\Manipulator\Token $actualToken
      * @param boolean $strict
      */
     public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
     {
-        $constraint = new PHPFormatter_Constraint_TokensMatch(
+        $constraint = new PHPManipulator_Constraint_TokensMatch(
             $expectedToken,
             $strict
         );
@@ -66,7 +86,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')
     {
-        $constraint = new PHPFormatter_Constraint_TokenContainerMatch(
+        $constraint = new PHPManipulator_Constraint_TokenContainerMatch(
             $expectedTokens,
             $strict
         );
@@ -115,7 +135,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 }
 
-class PHPFormatter_Constraint_TokenContainerMatch extends \PHPUnit_Framework_Constraint
+class PHPManipulator_Constraint_TokenContainerMatch extends \PHPUnit_Framework_Constraint
 {
 
     /**
@@ -218,7 +238,7 @@ class PHPFormatter_Constraint_TokenContainerMatch extends \PHPUnit_Framework_Con
     }
 }
 
-class PHPFormatter_Constraint_TokensMatch extends \PHPUnit_Framework_Constraint
+class PHPManipulator_Constraint_TokensMatch extends \PHPUnit_Framework_Constraint
 {
 
     /**
@@ -308,5 +328,110 @@ class PHPFormatter_Constraint_TokensMatch extends \PHPUnit_Framework_Constraint
     public function toString()
     {
         return 'Token matches another Token';
+    }
+}
+
+class PHPManipulator_Constraint_Count extends \PHPUnit_Framework_Constraint
+{
+
+    /**
+     * @var PHP\Manipulator\Token
+     */
+    protected $_expectedCount = null;
+
+    /**
+     *
+     * @param integer $expected
+     * @param boolean $strict
+     */
+    public function __construct($expected)
+    {
+        if (!is_int($expected)) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'integer'
+            );
+        }
+
+        $this->_expectedCount = $expected;
+    }
+
+    /**
+     *
+     * @param PHP\Manipulator\Token $other
+     * @return boolean
+     */
+    public function evaluate($other)
+    {
+        if (!$this->_isCountable($other)) {
+            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
+                1, 'not countable'
+            );
+        }
+        $expectedCount = $this->_expectedCount;
+
+        if ($expectedCount === $this->_getCount($other)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param mixed $other
+     * @return boolean
+     */
+    public function _isCountable($other)
+    {
+        if ($other instanceof \Countable) {
+            return true;
+        }
+        if ($other instanceof \Iterator) {
+            return true;
+        }
+        if (is_array($other)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     *
+     * @param mixed $other
+     * @return boolean
+     */
+    protected function _getCount($other)
+    {
+        if ($other instanceof \Countable) {
+            return count($other);
+        }
+        if ($other instanceof \Iterator) {
+            return \iterator_count($other);
+        }
+        if (is_array($other)) {
+            return count($other);
+        }
+        throw new \Exception('unexpected event: hell froze over!');
+    }
+
+    /**
+     * @param mixed   $other
+     * @param string  $description
+     * @param boolean $not
+     * @return string
+     */
+    protected function failureDescription($other, $description, $not)
+    {
+        return 'Count of ' . $this->_getCount($other) .
+            'does not match exptected count of ' . $this->_expectedCount;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return 'Count matches ';
     }
 }

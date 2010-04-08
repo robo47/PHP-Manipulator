@@ -15,7 +15,7 @@ class IRulesetTest extends \Tests\TestCase
         $reflection = new \ReflectionClass('PHP\Manipulator\IRuleset');
         $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
         $methods = $reflection->getMethods();
-        $this->assertSame(1, count($methods), 'Interface has wrong number of methods');
+        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
         $getRulesMethod = $methods[0];
         /* @var $getRulesMethod ReflectionMethod */
         $this->assertSame('getRules', $getRulesMethod->getName(), 'Method has wrong name');

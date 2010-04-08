@@ -165,11 +165,11 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     {
         $container = new TokenContainer();
         $iterator = new TokenContainerIterator($container);
-        $this->assertEquals(0, count($iterator));
+        $this->assertCount(0, $iterator);
 
         $container = $this->getTestContainerWithHoles();
         $iterator = new TokenContainerIterator($container);
-        $this->assertEquals(5, count($iterator));
+        $this->assertCount(5, $iterator);
     }
 
     /**

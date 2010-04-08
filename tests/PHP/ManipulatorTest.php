@@ -37,7 +37,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(3, count($rules), 'Wrong rules count');
+        $this->assertCount(3, $rules, 'Wrong rules count');
         $this->assertContains($addRules[0], $rules, 'Rule1 not found');
         $this->assertContains($addRules[1], $rules, 'Rule2 not found');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
@@ -56,7 +56,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $manipulator = new Manipulator(array(), $files);
 
-        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertCount(2, $manipulator->getFiles());
         $this->assertContains($files[0], $manipulator->getFiles());
         $this->assertContains($files[1], $manipulator->getFiles());
     }
@@ -73,7 +73,7 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(1, count($rules), 'Wrong rules count');
+        $this->assertCount(1, $rules, 'Wrong rules count');
         $this->assertContains($rule, $rules, 'Rule not found');
     }
 
@@ -94,7 +94,7 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(3, count($rules), 'Wrong rules count');
+        $this->assertCount(3, $rules, 'Wrong rules count');
         $this->assertContains($addRules[0], $rules, 'Rule1 not found');
         $this->assertContains($addRules[1], $rules, 'Rule2 not found');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
@@ -118,7 +118,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(2, count($rules), 'Wrong rules count');
+        $this->assertCount(2, $rules, 'Wrong rules count');
         $this->assertContains($addRules[0], $rules, 'Rule1 not found');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
 
@@ -127,7 +127,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(0, count($rules), 'Wrong rules count');
+        $this->assertCount(0, $rules, 'Wrong rules count');
     }
 
     /**
@@ -148,7 +148,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(0, count($rules), 'Wrong rules count');
+        $this->assertCount(0, $rules, 'Wrong rules count');
     }
 
     /**
@@ -169,7 +169,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(2, count($rules), 'Wrong rules count');
+        $this->assertCount(2, $rules, 'Wrong rules count');
         $this->assertContains($addRules[0], $rules, 'Rule1 not found');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
 
@@ -177,14 +177,14 @@ class ManipulatorTest extends \Tests\TestCase
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(1, count($rules), 'Wrong rules count');
+        $this->assertCount(1, $rules, 'Wrong rules count');
         $this->assertContains($addRules[2], $rules, 'Rule3 not found');
 
         $manipulator->removeRuleByClassname('PHP\Manipulator\Rule\RemoveTrailingWhitespace');
 
         $rules = $manipulator->getRules();
 
-        $this->assertEquals(0, count($rules), 'Wrong rules count');
+        $this->assertCount(0, $rules, 'Wrong rules count');
     }
 
     /**
@@ -198,7 +198,7 @@ class ManipulatorTest extends \Tests\TestCase
         $manipulator = new Manipulator();
         $manipulator->addFiles($iterator);
 
-        $this->assertEquals(\iterator_count($iterator), count($manipulator->getFiles()));
+        $this->assertCount(\iterator_count($iterator), $manipulator->getFiles());
 
         $iteratorArray = \iterator_to_array($iterator);
 
@@ -218,7 +218,7 @@ class ManipulatorTest extends \Tests\TestCase
         $manipulator = new Manipulator();
         $manipulator->addFiles($file);
 
-        $this->assertEquals(1, count($manipulator->getFiles()));
+        $this->assertCount(1, $manipulator->getFiles());
         $this->assertContains($file, $manipulator->getFiles());
 
     }
@@ -237,7 +237,7 @@ class ManipulatorTest extends \Tests\TestCase
         $manipulator = new Manipulator();
         $manipulator->addFiles($files);
 
-        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertCount(2, $manipulator->getFiles());
         $this->assertContains($files[0], $manipulator->getFiles());
         $this->assertContains($files[1], $manipulator->getFiles());
     }
@@ -255,11 +255,11 @@ class ManipulatorTest extends \Tests\TestCase
         $manipulator = new Manipulator();
         $manipulator->addFiles($files);
 
-        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertCount(2, $manipulator->getFiles());
 
         $manipulator->removeAllFiles();
 
-        $this->assertEquals(0, count($manipulator->getFiles()));
+        $this->assertCount(0, $manipulator->getFiles());
     }
 
     /**
@@ -271,7 +271,7 @@ class ManipulatorTest extends \Tests\TestCase
         $manipulator->addFile('foo');
         $manipulator->addFile('baa');
 
-        $this->assertEquals(2, count($manipulator->getFiles()));
+        $this->assertCount(2, $manipulator->getFiles());
 
         $this->assertContains('foo', $manipulator->getFiles());
         $this->assertContains('baa', $manipulator->getFiles());

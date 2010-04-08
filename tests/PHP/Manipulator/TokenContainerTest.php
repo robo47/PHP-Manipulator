@@ -31,7 +31,7 @@ class TokenContainerTest extends \Tests\TestCase
     {
         $container = new TokenContainer();
         $this->assertEquals(array(), $container->getContainer(), 'Container missmatch');
-        $this->assertEquals(0, count($container), 'Count missmatch');
+        $this->assertCount(0, $container, 'Count missmatch');
     }
 
     /**
@@ -46,7 +46,7 @@ class TokenContainerTest extends \Tests\TestCase
             'asdf' => Token::factory(')'),
         );
         $container = new TokenContainer($tokens);
-        $this->assertEquals(3, count($container), 'Count missmatch');
+        $this->assertCount(3, $container, 'Count missmatch');
         $array = $container->getContainer();
         $this->assertArrayHasKey(0, $array, 'Array misses key');
         $this->assertArrayHasKey(1, $array, 'Array misses key');
@@ -64,7 +64,7 @@ class TokenContainerTest extends \Tests\TestCase
     {
         $code = '<?php echo $foo; ?>';
         $container = new TokenContainer($code);
-        $this->assertEquals(7, count($container), 'Count missmatch');
+        $this->assertCount(7, $container, 'Count missmatch');
     }
 
     /**
@@ -100,7 +100,7 @@ class TokenContainerTest extends \Tests\TestCase
 
         $this->assertSame($fluent, $container, 'No fluent interface');
 
-        $this->assertEquals(4, count($container));
+        $this->assertCount(4, $container);
         $this->assertSame($array[0], $container[0]);
         $this->assertSame($newToken, $container[1]);
         $this->assertSame($array[1], $container[2]);
@@ -231,14 +231,14 @@ class TokenContainerTest extends \Tests\TestCase
     public function testCount()
     {
         $container = new TokenContainer();
-        $this->assertEquals(0, count($container), 'Wrong container count');
+        $this->assertCount(0, $container, 'Wrong container count');
         $container[] = Token::factory('foo');
-        $this->assertEquals(1, count($container), 'Wrong container count');
+        $this->assertCount(1, $container, 'Wrong container count');
         $container[] = Token::factory('foo');
         $container[] = Token::factory('foo');
-        $this->assertEquals(3, count($container), 'Wrong container count');
+        $this->assertCount(3, $container, 'Wrong container count');
         $container->setContainer(array());
-        $this->assertEquals(0, count($container), 'Wrong container count');
+        $this->assertCount(0, $container, 'Wrong container count');
     }
 
     /**
@@ -457,7 +457,7 @@ class TokenContainerTest extends \Tests\TestCase
 
         $array = $container->getContainer();
         $this->assertType('array', $array);
-        $this->assertEquals(3, count($array));
+        $this->assertCount(3, $array);
         $this->assertContains($token1, $array);
         $this->assertContains($token2, $array);
         $this->assertContains($token3, $array);
@@ -465,7 +465,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container->setContainer(array());
         $array = $container->getContainer();
         $this->assertType('array', $array);
-        $this->assertEquals(0, count($array));
+        $this->assertCount(0, $array);
     }
 
     /**
@@ -501,7 +501,7 @@ class TokenContainerTest extends \Tests\TestCase
         $token3 = Token::factory(array(0 => T_CLOSE_TAG, 1 => "?>"));
         $container = new TokenContainer(array($token0, $token1, $token2, $token3));
         $container->retokenize();
-        $this->assertEquals(3, count($container));
+        $this->assertCount(3, $container);
 
         $this->assertEquals("<?php\n \n \n \n \t \n ?>", $container->toString());
     }
@@ -523,7 +523,7 @@ class TokenContainerTest extends \Tests\TestCase
         $fluent = $container->removeTokens(array($token3, $token1));
         $this->assertSame($fluent, $container, 'No fluent interface');
 
-        $this->assertEquals(1, count($container), 'Wrong count of Tokens in Container');
+        $this->assertCount(1, $container, 'Wrong count of Tokens in Container');
 
         $this->assertFalse($container->contains($token1), 'Container contains Token1');
         $this->assertFalse($container->contains($token3), 'Container contains Token3');
@@ -547,7 +547,7 @@ class TokenContainerTest extends \Tests\TestCase
         $fluent = $container->removeToken($token2);
         $this->assertSame($fluent, $container, 'No fluent interface');
 
-        $this->assertEquals(2, count($container), 'Wrong count of Tokens in Container');
+        $this->assertCount(2, $container, 'Wrong count of Tokens in Container');
 
         $this->assertTrue($container->contains($token1), 'Container contains Token1');
         $this->assertTrue($container->contains($token3), 'Container contains Token3');
