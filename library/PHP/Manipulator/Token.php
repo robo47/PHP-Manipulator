@@ -36,7 +36,7 @@ class Token
      *
      * @throws PHP\Manipulator\Token
      * @param string|array $input
-     * @return PHP\Manipulator\Token
+     * @return \PHP\Manipulator\Token
      */
     public static function factory($input)
     {
@@ -73,7 +73,7 @@ class Token
      * Set Value
      *
      * @param string $_value
-     * @return PHP\Manipulator\Token *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setValue($value)
     {
@@ -95,7 +95,7 @@ class Token
      * Set Linenumber
      *
      * @param integer $linenumber
-     * @return PHP\Manipulator\Token *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setLinenumber($linenumber)
     {
@@ -117,7 +117,7 @@ class Token
      * Set Type
      *
      * @param integer $type
-     * @return PHP\Manipulator\Token *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Token *Provides Fluent Interface*
      */
     public function setType($type)
     {
@@ -128,7 +128,7 @@ class Token
     /**
      * Equals
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function equals(Token $token, $strict = false)

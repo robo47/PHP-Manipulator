@@ -48,7 +48,7 @@ class IsErrorControlOperatorTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsErrorControlOperator
+     * @covers \PHP\Manipulator\TokenConstraint\IsErrorControlOperator
      */
     public function testEvaluate($token, $result)
     {

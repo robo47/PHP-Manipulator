@@ -13,7 +13,7 @@ class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\ContainerManipulator\Mock
+     * @covers \PHP\Manipulator\ContainerManipulator\Mock
      */
     public function testCallingManipulateSetsCalledToTrue()
     {

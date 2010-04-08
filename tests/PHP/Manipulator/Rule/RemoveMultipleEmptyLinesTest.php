@@ -13,7 +13,7 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\RemoveMultipleEmptyLines::init
+     * @covers \PHP\Manipulator\Rule\RemoveMultipleEmptyLines::init
      */
     public function testConstructorDefaults()
     {
@@ -45,7 +45,7 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Rule\RemoveMultipleEmptyLines::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\RemoveMultipleEmptyLines::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

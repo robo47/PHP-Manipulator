@@ -92,7 +92,7 @@ class IsOperatorTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsOperator
+     * @covers \PHP\Manipulator\TokenConstraint\IsOperator
      */
     public function testEvaluate($token, $param, $result)
     {

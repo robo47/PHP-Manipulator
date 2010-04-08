@@ -13,7 +13,7 @@ class IndentTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\Indent::init
+     * @covers \PHP\Manipulator\Rule\Indent::init
      */
     public function testConstructorDefaults()
     {
@@ -99,7 +99,7 @@ class IndentTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\Indent
+     * @covers \PHP\Manipulator\Rule\Indent
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

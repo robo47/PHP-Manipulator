@@ -56,7 +56,7 @@ extends TokenConstraint
     /**
      * Evaluate if the token is an operator
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */

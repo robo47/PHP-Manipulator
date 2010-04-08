@@ -54,7 +54,7 @@ class BeginsWithNewlineTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\BeginsWithNewline::evaluate
+     * @covers \PHP\Manipulator\TokenConstraint\BeginsWithNewline::evaluate
      */
     public function testEvaluate($token, $result)
     {

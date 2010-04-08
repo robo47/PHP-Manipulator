@@ -32,7 +32,7 @@ class RemoveErrorControlOperatorTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\RemoveErrorControlOperator
+     * @covers \PHP\Manipulator\ContainerManipulator\RemoveErrorControlOperator
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {

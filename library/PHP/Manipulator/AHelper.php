@@ -31,7 +31,7 @@ abstract class AHelper
 
     /**
      * @param array $options
-     * @return PHP\Manipulator\AHelper *Provides Fluent Interface*
+     * @return \PHP\Manipulator\AHelper *Provides Fluent Interface*
      */
     public function addOptions(array $options)
     {
@@ -56,7 +56,7 @@ abstract class AHelper
     /**
      * @param string $option
      * @param mixed $value
-     * @return PHP\Manipulator\AHelper *Provides Fluent Interface*
+     * @return \PHP\Manipulator\AHelper *Provides Fluent Interface*
      */
     public function setOption($option, $value)
     {
@@ -92,8 +92,8 @@ abstract class AHelper
     /**
      * Load/Instantiate/Evaluate Token Constraint on a Token
      *
-     * @param PHP\Manipulator\ITokenConstraint|string $constraint
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\ITokenConstraint|string $constraint
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @param boolean $autoPrefix
      * @return boolean
@@ -112,8 +112,8 @@ abstract class AHelper
     /**
      * Load/Instantiate/Evaluate Container Constraint on a Container
      *
-     * @param PHP\Manipulator\IContainerConstraint|string $constraint
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\IContainerConstraint|string $constraint
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
      * @return boolean
@@ -132,8 +132,8 @@ abstract class AHelper
     /**
      * Load/Instantiate/Run a TokenManipulator on a Token
      *
-     * @param PHP\Manipulator\ITokenManipulator $manipulator
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\ITokenManipulator $manipulator
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @param boolean $autoPrefix
      */
@@ -152,8 +152,8 @@ abstract class AHelper
     /**
      * Load/Instantiate/Run a ContainManipulator on a Container
      *
-     * @param PHP\Manipulator\IRContainerManipulator|string $manipulator
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\IRContainerManipulator|string $manipulator
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
      */

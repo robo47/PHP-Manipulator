@@ -11,8 +11,8 @@ class ManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator::__construct
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::__construct
+     * @covers \PHP\Manipulator::getRules
      */
     public function testDefaultConstruct()
     {
@@ -21,8 +21,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::__construct
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::__construct
+     * @covers \PHP\Manipulator::getRules
      */
     public function testConstructAddsRules()
     {
@@ -44,8 +44,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::__construct
-     * @covers PHP\Manipulator::getFiles
+     * @covers \PHP\Manipulator::__construct
+     * @covers \PHP\Manipulator::getFiles
      */
     public function testConstructAddsFiles()
     {
@@ -62,8 +62,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::addRule
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::addRule
+     * @covers \PHP\Manipulator::getRules
      */
     public function testAddRule()
     {
@@ -78,8 +78,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::addRules
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::addRules
+     * @covers \PHP\Manipulator::getRules
      */
     public function testAddRules()
     {
@@ -101,8 +101,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::removeRule
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeRule
+     * @covers \PHP\Manipulator::getRules
      */
     public function testRemoveRule()
     {
@@ -131,8 +131,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::removeAllRules
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeAllRules
+     * @covers \PHP\Manipulator::getRules
      */
     public function testRemoveAllRules()
     {
@@ -152,8 +152,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::removeRuleByClassname
-     * @covers PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeRuleByClassname
+     * @covers \PHP\Manipulator::getRules
      */
     public function testRemoveRuleByClassname()
     {
@@ -188,8 +188,8 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::addFiles
-     * @covers PHP\Manipulator::getFiles
+     * @covers \PHP\Manipulator::addFiles
+     * @covers \PHP\Manipulator::getFiles
      */
     public function testAddFilesWithIteratorAndGetFiles()
     {
@@ -208,8 +208,24 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::addFiles
-     * @covers PHP\Manipulator::getFiles
+     * @covers \PHP\Manipulator::addFiles
+     * @covers \PHP\Manipulator::getFiles
+     */
+    public function testAddFilesWithStringAndGetFiles()
+    {
+        $file = 'baa';
+
+        $manipulator = new Manipulator();
+        $manipulator->addFiles($file);
+
+        $this->assertEquals(1, count($manipulator->getFiles()));
+        $this->assertContains($file, $manipulator->getFiles());
+
+    }
+
+    /**
+     * @covers \PHP\Manipulator::addFiles
+     * @covers \PHP\Manipulator::getFiles
      */
     public function testAddFilesWithArrayAndGetFiles()
     {
@@ -227,7 +243,7 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::removeAllFiles
+     * @covers \PHP\Manipulator::removeAllFiles
      */
     public function testRemoveAllFiles()
     {
@@ -247,7 +263,7 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator::addFile
+     * @covers \PHP\Manipulator::addFile
      */
     public function testAddFile()
     {

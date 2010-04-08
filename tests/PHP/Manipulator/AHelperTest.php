@@ -21,7 +21,7 @@ class AHelperTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\AHelper
+     * @covers \PHP\Manipulator\AHelper
      */
     public function testAbstractClassAndMethods()
     {
@@ -30,7 +30,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::__construct
+     * @covers \PHP\Manipulator\AHelper::__construct
      */
     public function testDefaultConstructor()
     {
@@ -39,8 +39,8 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::__construct
-     * @covers PHP\Manipulator\AHelper::init
+     * @covers \PHP\Manipulator\AHelper::__construct
+     * @covers \PHP\Manipulator\AHelper::init
      */
     public function testConstructorCallsInit()
     {
@@ -63,7 +63,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::__construct
+     * @covers \PHP\Manipulator\AHelper::__construct
      * @dataProvider constructorOptionsProvider
      */
     public function testConstructorSetsOptions($options)
@@ -73,8 +73,8 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::addOptions
-     * @covers PHP\Manipulator\AHelper::getOptions
+     * @covers \PHP\Manipulator\AHelper::addOptions
+     * @covers \PHP\Manipulator\AHelper::getOptions
      */
     public function testAddOptionsAndGetOptions()
     {
@@ -90,8 +90,8 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::setOption
-     * @covers PHP\Manipulator\AHelper::getOption
+     * @covers \PHP\Manipulator\AHelper::setOption
+     * @covers \PHP\Manipulator\AHelper::getOption
      */
     public function testSetOptionAndGetOption()
     {
@@ -102,7 +102,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::getOption
+     * @covers \PHP\Manipulator\AHelper::getOption
      * @covers \Exception
      */
     public function testGetOptionThrowsExceptionOnNonExistingOption()
@@ -117,7 +117,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::hasOption
+     * @covers \PHP\Manipulator\AHelper::hasOption
      */
     public function testHasOption()
     {
@@ -127,7 +127,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::getClassInstance
+     * @covers \PHP\Manipulator\AHelper::getClassInstance
      */
     public function testGetClassInstanceWithAutoPrefix()
     {
@@ -138,7 +138,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::getClassInstance
+     * @covers \PHP\Manipulator\AHelper::getClassInstance
      */
     public function testGetClassInstanceWithoutAutoPrefix()
     {
@@ -149,7 +149,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::getClassInstance
+     * @covers \PHP\Manipulator\AHelper::getClassInstance
      */
     public function testGetClassInstanceWithDirectClass()
     {
@@ -160,7 +160,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::evaluateConstraint
+     * @covers \PHP\Manipulator\AHelper::evaluateConstraint
      */
     public function testEvaluateTokenConstraintEvaluatesTokenConstraint()
     {
@@ -172,7 +172,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::evaluateContainerConstraint
+     * @covers \PHP\Manipulator\AHelper::evaluateContainerConstraint
      */
     public function testEvaluateContainerConstraintEvaluatesContainerConstraint()
     {
@@ -184,7 +184,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::manipulateContainer
+     * @covers \PHP\Manipulator\AHelper::manipulateContainer
      */
     public function testManipulateContainerManipulatesContainer()
     {
@@ -200,7 +200,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::manipulateToken
+     * @covers \PHP\Manipulator\AHelper::manipulateToken
      */
     public function testManipulateTokenManipulatesToken()
     {
@@ -216,7 +216,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::evaluateConstraint
+     * @covers \PHP\Manipulator\AHelper::evaluateConstraint
      */
     public function testEvaluateConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
@@ -233,7 +233,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::evaluateContainerConstraint
+     * @covers \PHP\Manipulator\AHelper::evaluateContainerConstraint
      */
     public function testEvaluateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
@@ -250,7 +250,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::manipulateContainer
+     * @covers \PHP\Manipulator\AHelper::manipulateContainer
      */
     public function testManipulateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
@@ -267,7 +267,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\AHelper::manipulateToken
+     * @covers \PHP\Manipulator\AHelper::manipulateToken
      */
     public function testManipulateTokenThrowsExceptionIfConstraintIstNotValidConstraint()
     {

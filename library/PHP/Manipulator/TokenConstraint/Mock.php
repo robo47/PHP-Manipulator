@@ -15,7 +15,7 @@ extends TokenConstraint
     public static $return = true;
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */

@@ -11,7 +11,7 @@ class RemoveIndention extends Rule
     /**
      * Unindents all Code
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function applyRuleToTokens(TokenContainer $container)
     {

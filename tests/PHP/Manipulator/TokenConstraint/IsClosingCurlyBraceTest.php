@@ -49,7 +49,7 @@ class IsClosingCurlyBraceTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsClosingCurlyBrace
+     * @covers \PHP\Manipulator\TokenConstraint\IsClosingCurlyBrace
      */
     public function testEvaluate($token, $result)
     {

@@ -78,7 +78,7 @@ class IsSinglelineCommentTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsSinglelineComment
+     * @covers \PHP\Manipulator\TokenConstraint\IsSinglelineComment
      */
     public function testEvaluate($token, $result)
     {

@@ -34,7 +34,7 @@ class ContainsClassTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerConstraint\ContainsClass::evaluate
+     * @covers \PHP\Manipulator\ContainerConstraint\ContainsClass::evaluate
      * @dataProvider evaluateProvider
      */
     public function testContainerConstraint($input, $expectedResult)

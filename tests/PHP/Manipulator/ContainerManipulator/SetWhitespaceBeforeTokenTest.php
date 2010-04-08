@@ -60,7 +60,7 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceBeforeToken
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceBeforeToken
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {

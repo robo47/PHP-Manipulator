@@ -70,7 +70,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {
@@ -80,7 +80,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
      * @covers \Exception
      */
     public function testMissingWhitespaceThrowsException()
@@ -97,7 +97,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
      * @covers \Exception
      */
     public function testMissingTokensThrowsException()
@@ -114,7 +114,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::manipulate
      * @covers \Exception
      */
     public function testParamIsNotArrayThrowsException()
@@ -130,7 +130,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::getWhitespaceForToken
+     * @covers \PHP\Manipulator\ContainerManipulator\SetWhitespaceAfterToken::getWhitespaceForToken
      * @covers \Exception
      */
     public function testNonExistingTokenInWhitespaceListThrowsExceptionInGetWhitespaceForToken()

@@ -21,7 +21,7 @@ class RemoveTrailingWhitespace extends Rule
 
     /**
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @todo possible without tokens2code2tokens ?
      */
     public function applyRuleToTokens(TokenContainer $container)

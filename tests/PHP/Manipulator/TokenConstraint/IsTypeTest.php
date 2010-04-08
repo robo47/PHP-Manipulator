@@ -53,7 +53,7 @@ class IsTypeTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsType
+     * @covers \PHP\Manipulator\TokenConstraint\IsType
      */
     public function testEvaluate($token, $param, $result)
     {

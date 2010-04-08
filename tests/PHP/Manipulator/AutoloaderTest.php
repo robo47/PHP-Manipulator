@@ -6,7 +6,7 @@ class AutoloaderTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Autoloader
+     * @covers \PHP\Manipulator\Autoloader
      */
     public function testAutoload()
     {
@@ -14,7 +14,7 @@ class AutoloaderTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Autoloader
+     * @covers \PHP\Manipulator\Autoloader
      */
     public function testRegisterAutoloader()
     {

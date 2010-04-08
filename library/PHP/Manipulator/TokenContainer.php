@@ -78,7 +78,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Implements SPL::ArrayAccess
      *
      * @param integer $offset
-     * @param PHP\Manipulator\Token $value
+     * @param \PHP\Manipulator\Token $value
      */
     public function offsetSet($offset, $value)
     {
@@ -125,7 +125,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Implements SPL::ArrayAccess
      *
      * @param integer $offset
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function offsetGet($offset)
     {
@@ -153,8 +153,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Insert at an offset
      *
      * @param integer $offset
-     * @param PHP\Manipulator\Token $value
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @param \PHP\Manipulator\Token $value
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function insertAtOffset($offset, $value)
     {
@@ -167,8 +167,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Insert at a position
      *
      * @param integer $position
-     * @param PHP\Manipulator\Token $value
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @param \PHP\Manipulator\Token $value
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     protected function _insertAtPosition($position, $value)
     {
@@ -188,8 +188,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
-     * @return PHP\Manipulator\Token|null
+     * @param \PHP\Manipulator\Token $token
+     * @return \PHP\Manipulator\Token|null
      */
     public function getPreviousToken(Token $token)
     {
@@ -209,8 +209,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
-     * @return PHP\Manipulator\Token|null
+     * @param \PHP\Manipulator\Token $token
+     * @return \PHP\Manipulator\Token|null
      */
     public function getNextToken(Token $token)
     {
@@ -260,7 +260,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the offset of a token if it exists in the Container
      *
      * @throws Exception
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return integer
      */
     public function getOffsetByToken(Token $token)
@@ -281,7 +281,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Contains
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function contains(Token $token)
@@ -299,9 +299,9 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Insert Token After
      *
-     * @param PHP\Manipulator\Token $after
-     * @param PHP\Manipulator\Token $newToken
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @param \PHP\Manipulator\Token $after
+     * @param \PHP\Manipulator\Token $newToken
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function insertTokenAfter(Token $after, Token $newToken)
     {
@@ -318,9 +318,9 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Insert Tokens After
      *
-     * @param PHP\Manipulator\Token $after
+     * @param \PHP\Manipulator\Token $after
      * @param array $newTokens
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function insertTokensAfter(Token $after, array $newTokens)
     {
@@ -338,7 +338,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Creates code from tokens and runs the tokenzier again on them
      *
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function retokenize()
     {
@@ -351,7 +351,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Remove Tokens
      *
      * @param array $tokens
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function removeTokens(array $tokens)
     {
@@ -364,8 +364,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Remove Token
      *
-     * @param PHP\Manipulator\Token $token
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @param \PHP\Manipulator\Token $token
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function removeToken(Token $token)
     {
@@ -377,7 +377,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Creates Code from a TokenArray
      *
-     * @param PHP\Manipulator\TokenContainer $tokens
+     * @param \PHP\Manipulator\TokenContainer $tokens
      * @return string
      */
     public function toString()
@@ -418,7 +418,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * @todo strict checking ?
      * @todo rename to setArray ?
      * @param array $container
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function setContainer(array $container)
     {
@@ -431,7 +431,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Implements SPL::IteratorAggregate
      *
-     * @return PHP\Manipulator\TokenContainerIterator
+     * @return \PHP\Manipulator\TokenContainerIterator
      */
     public function getIterator()
     {
@@ -441,7 +441,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Get a reverse Iterator for traversing the Container from End to begin
      *
-     * @return PHP\Manipulator\TokenContainerReverseIterator
+     * @return \PHP\Manipulator\TokenContainerReverseIterator
      */
     public function getReverseIterator()
     {
@@ -463,7 +463,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Create Container from File
      *
      * @param string $file
-     * @return PHP\Manipulator\TokenContainer
+     * @return \PHP\Manipulator\TokenContainer
      */
     public static function createFromFile($file)
     {
@@ -479,7 +479,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * Save to File
      *
      * @param string $file
-     * @return PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function saveToFile($file)
     {

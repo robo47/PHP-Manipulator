@@ -38,7 +38,7 @@ class UtilTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Util::dumpToken
+     * @covers \PHP\Manipulator\Util::dumpToken
      * @dataProvider tokenProvider
      * @param PHP\Manipulator\Token $token
      * @param string $dumpExpected
@@ -101,7 +101,7 @@ class UtilTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Util::getLongestLineLength
+     * @covers \PHP\Manipulator\Util::getLongestLineLength
      * @dataProvider arrayProvider
      * @param array $array
      * @param integer $longest
@@ -136,7 +136,7 @@ class UtilTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Util::dumpContainer
+     * @covers \PHP\Manipulator\Util::dumpContainer
      * @dataProvider containerProvider
      * @param PHP\Manipulator\TokenContainer $container
      * @param string $expectedDump
@@ -205,7 +205,7 @@ class UtilTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Util::compareContainers
+     * @covers \PHP\Manipulator\Util::compareContainers
      * @dataProvider containerCompareProvider
      * @param PHP\Manipulator\TokenContainer $first
      * @param PHP\Manipulator\TokenContainer $second

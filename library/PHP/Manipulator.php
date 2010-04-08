@@ -40,7 +40,7 @@ class Manipulator
     /**
      *
      * @param PHP\Manipulator\IRule $rule
-     * @return PHP\Manipulator *Provides Fluent Interface*
+     * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function addRule(IRule $rule)
     {
@@ -51,7 +51,7 @@ class Manipulator
     /**
      *
      * @param array $rules
-     * @return PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP_Manipulator *Provides Fluent Interface*
      */
     public function addRules(array $rules)
     {
@@ -65,7 +65,7 @@ class Manipulator
      * Remove Rule
      *
      * @param PHP\Manipulator\IRule $removeRule
-     * @return PHP\Manipulator *Provides Fluent Interface*
+     * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function removeRule(IRule $removeRule)
     {
@@ -89,7 +89,7 @@ class Manipulator
 
     /**
      *
-     * @return PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP_Manipulator *Provides Fluent Interface*
      */
     public function removeAllRules()
     {
@@ -100,7 +100,7 @@ class Manipulator
     /**
      *
      * @param string $classname
-     * @return PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP_Manipulator *Provides Fluent Interface*
      */
     public function removeRuleByClassname($classname)
     {

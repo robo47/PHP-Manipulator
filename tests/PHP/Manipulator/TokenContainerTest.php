@@ -13,7 +13,7 @@ class TokenContainerTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\TokenContainer
+     * @covers \PHP\Manipulator\TokenContainer
      */
     public function testContainer()
     {
@@ -24,8 +24,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::__construct
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::__construct
      */
     public function testDefaultConstruct()
     {
@@ -35,8 +35,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::__construct
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::__construct
      */
     public function testConstructWithTokens()
     {
@@ -57,8 +57,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::__construct
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::__construct
      */
     public function testConstructWithCode()
     {
@@ -68,8 +68,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::__construct
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::__construct
      * @covers \Exception
      */
     public function testConstructWithInvalidTokens()
@@ -84,8 +84,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertAtOffset
-     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::insertAtOffset
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
      */
     public function testInsertAtOffset()
     {
@@ -108,8 +108,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertAtOffset
-     * @covers PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::insertAtOffset
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
      */
     public function testInsertAtOffsetThrowsExceptionOnInsertAfterNonExistingOffset()
     {
@@ -125,11 +125,11 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetSet
-     * @covers PHP\Manipulator\TokenContainer::offsetGet
-     * @covers PHP\Manipulator\TokenContainer::offsetUnset
-     * @covers PHP\Manipulator\TokenContainer::offsetExists
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetSet
+     * @covers \PHP\Manipulator\TokenContainer::offsetGet
+     * @covers \PHP\Manipulator\TokenContainer::offsetUnset
+     * @covers \PHP\Manipulator\TokenContainer::offsetExists
      */
     public function testArrayAccess()
     {
@@ -160,8 +160,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetSet
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetSet
      * @covers \Exception
      */
     public function testOffsetSetWithNonIntegerOffsetThrowsException()
@@ -176,8 +176,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetExists
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetExists
      * @covers \Exception
      */
     public function testOffsetExistsWithNonIntegerOffsetThrowsException()
@@ -192,8 +192,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetUnset
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetUnset
      * @covers \Exception
      */
     public function testOffsetUnsetWithNonIntegerOffsetThrowsException()
@@ -208,8 +208,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetGet
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetGet
      * @covers \Exception
      */
     public function testOffsetGetWithNonIntegerOffsetThrowsException()
@@ -224,8 +224,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::count
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::count
      * @covers \Exception
      */
     public function testCount()
@@ -242,8 +242,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::offsetGet
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::offsetGet
      * @covers \Exception
      */
     public function testOffsetGetOnNotExistingOffsetThrowsException()
@@ -258,8 +258,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::getOffsetByToken
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::getOffsetByToken
      * @covers \Exception
      */
     public function testGetOffsetByToken()
@@ -279,8 +279,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::getOffsetByToken
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::getOffsetByToken
      * @covers \Exception
      */
     public function testGetOffsetByTokenThrowsExceptionOnNonExistingToken()
@@ -296,8 +296,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::<protected>
-     * @covers PHP\Manipulator\TokenContainer::contains
+     * @covers \PHP\Manipulator\TokenContainer::<protected>
+     * @covers \PHP\Manipulator\TokenContainer::contains
      */
     public function testContains()
     {
@@ -324,7 +324,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertTokenAfter
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenAfter
      */
     public function testInsertTokenAfter()
     {
@@ -341,7 +341,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertTokenAfter
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenAfter
      * @covers \Exception
      */
     public function testInsertTokenAfterThrowsExceptionIfAfterTokenNotExists()
@@ -360,7 +360,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertTokensAfter
+     * @covers \PHP\Manipulator\TokenContainer::insertTokensAfter
      */
     public function testInsertTokensAfter()
     {
@@ -376,7 +376,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::insertTokensAfter
+     * @covers \PHP\Manipulator\TokenContainer::insertTokensAfter
      * @covers \Exception
      */
     public function testInsertTokensAfterThrowsExceptionIfAfterTokenNotExists()
@@ -396,7 +396,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::toString
+     * @covers \PHP\Manipulator\TokenContainer::toString
      * @covers \Exception
      */
     public function testToString()
@@ -419,7 +419,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::__toString
+     * @covers \PHP\Manipulator\TokenContainer::__toString
      */
     public function test__ToString()
     {
@@ -441,8 +441,8 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::setContainer
-     * @covers PHP\Manipulator\TokenContainer::getContainer
+     * @covers \PHP\Manipulator\TokenContainer::setContainer
+     * @covers \PHP\Manipulator\TokenContainer::getContainer
      */
     public function testGetContainerSetContainer()
     {
@@ -469,7 +469,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::getIterator
+     * @covers \PHP\Manipulator\TokenContainer::getIterator
      */
     public function testGetIterator()
     {
@@ -480,7 +480,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::getReverseIterator
+     * @covers \PHP\Manipulator\TokenContainer::getReverseIterator
      */
     public function testGetReverseIterator()
     {
@@ -491,7 +491,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::retokenize
+     * @covers \PHP\Manipulator\TokenContainer::retokenize
      */
     public function testRetokenize()
     {
@@ -507,7 +507,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::removeTokens
+     * @covers \PHP\Manipulator\TokenContainer::removeTokens
      */
     public function testRemoveTokens()
     {
@@ -531,7 +531,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::removeToken
+     * @covers \PHP\Manipulator\TokenContainer::removeToken
      */
     public function testRemoveToken()
     {
@@ -555,7 +555,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::getNextToken
+     * @covers \PHP\Manipulator\TokenContainer::getNextToken
      */
     public function testGetNextToken()
     {
@@ -576,7 +576,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainer::getPreviousToken
+     * @covers \PHP\Manipulator\TokenContainer::getPreviousToken
      */
     public function testGetPreviousToken()
     {

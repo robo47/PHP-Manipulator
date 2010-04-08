@@ -37,7 +37,7 @@ class LowercaseTokenValueTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipluateProvider
-     * @covers PHP\Manipulator\TokenManipulator\LowercaseTokenValue::manipulate
+     * @covers \PHP\Manipulator\TokenManipulator\LowercaseTokenValue::manipulate
      */
     public function testManipulate($token, $newToken, $strict)
     {

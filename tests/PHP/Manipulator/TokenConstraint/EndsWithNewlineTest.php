@@ -78,7 +78,7 @@ class EndsWithNewlineTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\EndsWithNewline::evaluate
+     * @covers \PHP\Manipulator\TokenConstraint\EndsWithNewline::evaluate
      */
     public function testEvaluate($token, $result)
     {

@@ -13,7 +13,7 @@ class TokenContainerReverseIteratorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\TokenContainerReverseIterator
+     * @covers \PHP\Manipulator\TokenContainerReverseIterator
      */
     public function testIteratorClass()
     {
@@ -22,7 +22,7 @@ class TokenContainerReverseIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @return PHP\Manipulator\TokenContainer
+     * @return \PHP\Manipulator\TokenContainer
      */
     public function getTestContainerWithHoles()
     {
@@ -42,7 +42,7 @@ class TokenContainerReverseIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerReverseIterator
+     * @covers \PHP\Manipulator\TokenContainerReverseIterator
      */
     public function testReverseIterator()
     {

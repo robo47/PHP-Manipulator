@@ -12,7 +12,7 @@ extends TokenConstraint
     /**
      * Evaluate if the token is a multiline comment
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $param
      * @return boolean
      */

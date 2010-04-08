@@ -13,7 +13,7 @@ class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::init
+     * @covers \PHP\Manipulator\Rule\CommentOutIncludesAndRequires::init
      */
     public function testConstructorDefaults()
     {
@@ -54,8 +54,8 @@ class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\CommentOutIncludesAndRequires::<protected>
+     * @covers \PHP\Manipulator\Rule\CommentOutIncludesAndRequires::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\CommentOutIncludesAndRequires::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

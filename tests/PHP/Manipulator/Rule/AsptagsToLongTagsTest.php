@@ -13,7 +13,7 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\AsptagsToLongTags::init
+     * @covers \PHP\Manipulator\Rule\AsptagsToLongTags::init
      */
     public function testConstructorDefaults()
     {
@@ -53,7 +53,7 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\AsptagsToLongTags::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\AsptagsToLongTags::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

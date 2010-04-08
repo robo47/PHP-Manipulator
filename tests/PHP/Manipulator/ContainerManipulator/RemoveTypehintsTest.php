@@ -39,7 +39,7 @@ class RemoveTypehintsTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\RemoveTypehints
+     * @covers \PHP\Manipulator\ContainerManipulator\RemoveTypehints
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {

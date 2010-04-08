@@ -11,7 +11,7 @@ extends ContainerManipulator
 {
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
     public function manipulate(TokenContainer $container, $params = null)
@@ -37,9 +37,9 @@ extends ContainerManipulator
     }
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
-     * @param PHP\Manipulator\Token $token
-     * @return PHP\Manipulator\Token
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\Token $token
+     * @return \PHP\Manipulator\Token
      */
     public function getTargetToken(TokenContainer $container, Token $token)
     {
@@ -47,9 +47,9 @@ extends ContainerManipulator
     }
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
-     * @param PHP\Manipulator\Token $targetToken
-     * @param PHP\Manipulator\Token $newToken
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\Token $targetToken
+     * @param \PHP\Manipulator\Token $newToken
      */
     public function insertToken(TokenContainer $container, Token $targetToken, Token $newToken)
     {
@@ -58,8 +58,8 @@ extends ContainerManipulator
     }
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\Token $token
      * @param array $whitespace
      */
     public function setWhitespace(TokenContainer $container, Token $token, array $whitespace)
@@ -85,7 +85,7 @@ extends ContainerManipulator
 
     /**
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param array $whitespaces
      * @return mixed
      */

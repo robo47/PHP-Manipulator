@@ -37,7 +37,7 @@ class RemoveCommentIndentionTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipluateProvider
-     * @covers PHP\Manipulator\TokenManipulator\RemoveCommentIndention::manipulate
+     * @covers \PHP\Manipulator\TokenManipulator\RemoveCommentIndention::manipulate
      */
     public function testManipulate($token, $expectedToken, $strict)
     {

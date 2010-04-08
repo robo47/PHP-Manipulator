@@ -40,7 +40,7 @@ extends \Tests\TestCase
 
     /**
      * @dataProvider manipluateProvider
-     * @covers PHP\Manipulator\TokenManipulator\IndentMultilineComment::manipulate
+     * @covers \PHP\Manipulator\TokenManipulator\IndentMultilineComment::manipulate
      */
     public function testManipulate($token, $expectedToken, $indention, $strict)
     {

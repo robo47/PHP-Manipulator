@@ -26,7 +26,7 @@ extends Rule
     /**
      * Replace boolean and (AND)/or (OR) with logical and (&&)/or (||)
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function applyRuleToTokens(TokenContainer $container)
     {
@@ -55,7 +55,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isBooleanAndAndShouldBeReplaced(Token $token)
@@ -64,7 +64,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isBooleanOrAndShouldBeReplaced(Token $token)

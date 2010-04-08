@@ -13,7 +13,7 @@ class RemoveCommentsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\RemoveComments::init
+     * @covers \PHP\Manipulator\Rule\RemoveComments::init
      */
     public function testConstructorDefaults()
     {
@@ -88,7 +88,7 @@ class RemoveCommentsTest extends \Tests\TestCase
 
     /**
      * @dataProvider ruleProvider
-     * @covers PHP\Manipulator\Rule\RemoveComments
+     * @covers \PHP\Manipulator\Rule\RemoveComments
      */
     public function testRule($options, $input, $expectedTokens)
     {

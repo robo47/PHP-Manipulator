@@ -13,7 +13,7 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\ShorttagsToLongTags::init
+     * @covers \PHP\Manipulator\Rule\ShorttagsToLongTags::init
      */
     public function testConstructorDefaults()
     {
@@ -54,7 +54,7 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\ShorttagsToLongTags::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ShorttagsToLongTags::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

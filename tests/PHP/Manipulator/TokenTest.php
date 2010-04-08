@@ -11,7 +11,7 @@ class TokenTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Token::__construct
+     * @covers \PHP\Manipulator\Token::__construct
      */
     public function testDefaultConstruct()
     {
@@ -22,7 +22,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::__construct
+     * @covers \PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsValue()
     {
@@ -31,7 +31,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::__construct
+     * @covers \PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsType()
     {
@@ -40,7 +40,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::__construct
+     * @covers \PHP\Manipulator\Token::__construct
      */
     public function testConstructorSetsLinenumber()
     {
@@ -49,8 +49,8 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::setValue
-     * @covers PHP\Manipulator\Token::getValue
+     * @covers \PHP\Manipulator\Token::setValue
+     * @covers \PHP\Manipulator\Token::getValue
      */
     public function testSetValueAndGetValue()
     {
@@ -62,8 +62,8 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::setType
-     * @covers PHP\Manipulator\Token::getType
+     * @covers \PHP\Manipulator\Token::setType
+     * @covers \PHP\Manipulator\Token::getType
      */
     public function testSetTypeAndGetType()
     {
@@ -75,8 +75,8 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::setLinenumber
-     * @covers PHP\Manipulator\Token::getLinenumber
+     * @covers \PHP\Manipulator\Token::setLinenumber
+     * @covers \PHP\Manipulator\Token::getLinenumber
      */
     public function testSetLinenumberAndGetLinenumber()
     {
@@ -104,7 +104,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::factory
+     * @covers \PHP\Manipulator\Token::factory
      * @dataProvider validInputFactoryProvider
      */
     public function testFactoryWithValidInput($input, $value, $type, $linenumber)
@@ -135,7 +135,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::factory
+     * @covers \PHP\Manipulator\Token::factory
      * @dataProvider invalidInputFactoryProvider
      * @covers \Exception
      */
@@ -204,7 +204,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::__toString
+     * @covers \PHP\Manipulator\Token::__toString
      * @dataProvider __toStringProvider
      */
     public function test__toString($token, $string)
@@ -272,7 +272,7 @@ class TokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Token::equals
+     * @covers \PHP\Manipulator\Token::equals
      * @dataProvider equalsProvider
      */
     public function testEquals($token, $otherToken, $strict, $equals)

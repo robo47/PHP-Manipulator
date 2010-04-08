@@ -74,7 +74,7 @@ class IsMultilineCommentTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsMultilineComment
+     * @covers \PHP\Manipulator\TokenConstraint\IsMultilineComment
      */
     public function testEvaluate($token, $result)
     {

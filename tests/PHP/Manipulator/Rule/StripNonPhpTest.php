@@ -38,8 +38,8 @@ class StripNonPhpTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\StripNonPhp::<protected>
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
@@ -69,8 +69,8 @@ class StripNonPhpTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\StripNonPhp::<protected>
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::<protected>
      * @dataProvider shortTagsOnlyRuleProvider
      */
     public function testRuleWithShorttags($options, $input, $expectedTokens)

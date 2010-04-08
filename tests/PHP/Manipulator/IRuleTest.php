@@ -9,7 +9,7 @@ class IRuleTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\IRule
+     * @covers \PHP\Manipulator\IRule
      */
     public function testInterfaceMethods()
     {

@@ -18,7 +18,7 @@ extends Rule
 
     /**
      *
-     * @param PHP\Manipulator\TokenContainer $tokens
+     * @param \PHP\Manipulator\TokenContainer $tokens
      */
     public function applyRuleToTokens(TokenContainer $container)
     {
@@ -99,7 +99,7 @@ extends Rule
 
     /**
      * @param boolean $searchingColon
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isSearchingColon($searchingColon, $token)

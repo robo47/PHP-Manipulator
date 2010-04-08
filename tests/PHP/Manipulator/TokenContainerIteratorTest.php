@@ -13,7 +13,7 @@ class TokenContainerIteratorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator
+     * @covers \PHP\Manipulator\TokenContainerIterator
      */
     public function testIteratorClass()
     {
@@ -25,7 +25,7 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @return PHP\Manipulator\TokenContainer
+     * @return \PHP\Manipulator\TokenContainer
      */
     public function getTestContainerWithHoles()
     {
@@ -45,7 +45,7 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator
+     * @covers \PHP\Manipulator\TokenContainerIterator
      */
     public function testIterator()
     {
@@ -126,8 +126,8 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator::seek
-     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
+     * @covers \PHP\Manipulator\TokenContainerIterator::seek
+     * @covers \PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testSeek()
     {
@@ -159,7 +159,7 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator::count
+     * @covers \PHP\Manipulator\TokenContainerIterator::count
      */
     public function testCountable()
     {
@@ -173,8 +173,8 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator::key
-     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
+     * @covers \PHP\Manipulator\TokenContainerIterator::key
+     * @covers \PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testKeyThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
@@ -192,8 +192,8 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator::current
-     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
+     * @covers \PHP\Manipulator\TokenContainerIterator::current
+     * @covers \PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testCurrentThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
@@ -211,8 +211,8 @@ class TokenContainerIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenContainerIterator::seek
-     * @covers PHP\Manipulator\TokenContainerIterator::<protected>
+     * @covers \PHP\Manipulator\TokenContainerIterator::seek
+     * @covers \PHP\Manipulator\TokenContainerIterator::<protected>
      */
     public function testSeekThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {

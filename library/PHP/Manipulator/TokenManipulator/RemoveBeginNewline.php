@@ -12,7 +12,7 @@ extends TokenManipulator
     /**
      * Manipulates a Token
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      */
     public function manipulate(Token $token, $params = null)

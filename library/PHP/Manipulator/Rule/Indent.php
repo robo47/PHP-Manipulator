@@ -38,7 +38,7 @@ extends Rule
     /**
      * Unindents all Code and then indent it right
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function applyRuleToTokens(TokenContainer $container)
     {
@@ -64,7 +64,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $whitespaceToken
+     * @param \PHP\Manipulator\Token $whitespaceToken
      */
     public function indentWhitespace(Token $whitespaceToken)
     {
@@ -74,7 +74,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isWhitespaceWithBreak(Token $token)
@@ -123,7 +123,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isIndentionLevelIncreasment(Token $token)
@@ -133,7 +133,7 @@ extends Rule
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isIndentionLevelDecreasement(Token $token)

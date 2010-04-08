@@ -11,7 +11,7 @@ class ITokenConstraintTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\ITokenConstraint
+     * @covers \PHP\Manipulator\ITokenConstraint
      */
     public function testContainer()
     {

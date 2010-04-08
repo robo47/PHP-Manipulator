@@ -37,7 +37,7 @@ class UppercaseTokenValueTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipluateProvider
-     * @covers PHP\Manipulator\TokenManipulator\UppercaseTokenValue::manipulate
+     * @covers \PHP\Manipulator\TokenManipulator\UppercaseTokenValue::manipulate
      */
     public function testManipulate($token, $newToken, $strict)
     {

@@ -13,7 +13,7 @@ class ChangeLineEndingsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\ChangeLineEndings::init
+     * @covers \PHP\Manipulator\Rule\ChangeLineEndings::init
      */
     public function testConstructorDefaults()
     {
@@ -80,7 +80,7 @@ class ChangeLineEndingsTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Rule\ChangeLineEndings::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ChangeLineEndings::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

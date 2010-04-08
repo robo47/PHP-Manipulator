@@ -15,7 +15,7 @@ extends ContainerConstraint
     public static $return = true;
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @return boolean
      */

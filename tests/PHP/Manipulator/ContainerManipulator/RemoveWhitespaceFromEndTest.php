@@ -32,7 +32,7 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\RemoveWhitespaceFromEnd
+     * @covers \PHP\Manipulator\ContainerManipulator\RemoveWhitespaceFromEnd
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {

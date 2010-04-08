@@ -13,7 +13,7 @@ class StripPhpTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\StripPhp::init
+     * @covers \PHP\Manipulator\Rule\StripPhp::init
      */
     public function testConstructorDefaults()
     {
@@ -44,7 +44,7 @@ class StripPhpTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
@@ -75,8 +75,8 @@ class StripPhpTest extends \Tests\TestCase
 
     /**
      *
-     * @covers PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\StripPhp::<protected>
+     * @covers \PHP\Manipulator\Rule\StripPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripPhp::<protected>
      * @dataProvider shortTagsOnlyRuleProvider
      */
     public function testRuleWithShorttags($options, $input, $expectedTokens)

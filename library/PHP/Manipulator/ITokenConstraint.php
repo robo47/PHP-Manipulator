@@ -10,7 +10,7 @@ interface ITokenConstraint
     /**
      * Evaluates a constraint for a token $token.
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @return bool
      */

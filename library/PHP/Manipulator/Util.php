@@ -11,7 +11,7 @@ class Util
     /**
      * Dump Container
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @return string
      */
     public static function dumpContainer(TokenContainer $container)
@@ -38,8 +38,8 @@ class Util
      *
      * Returns string-presentation of both containers next to each other
      *
-     * @param PHP\Manipulator\TokenContainer $first
-     * @param PHP\Manipulator\TokenContainer $secod
+     * @param \PHP\Manipulator\TokenContainer $first
+     * @param \PHP\Manipulator\TokenContainer $secod
      */
     public static function compareContainers(TokenContainer $first,
         TokenContainer $second)
@@ -123,7 +123,7 @@ class Util
      * Replaces spaces, linebreaks and tabs with visual representations:
      * \t \r\n \n \r .
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return string
      */
     public static function dumpToken(Token $token)

@@ -84,7 +84,7 @@ class IsSingleNewlineTest extends \Tests\TestCase
 
     /**
      * @dataProvider evaluateProvider
-     * @covers PHP\Manipulator\TokenConstraint\IsSingleNewline::evaluate
+     * @covers \PHP\Manipulator\TokenConstraint\IsSingleNewline::evaluate
      */
     public function testEvaluate($token, $result)
     {

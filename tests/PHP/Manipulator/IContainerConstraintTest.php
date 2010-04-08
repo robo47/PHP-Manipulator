@@ -11,7 +11,7 @@ class IContainerConstraintTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\IContainerConstraint
+     * @covers \PHP\Manipulator\IContainerConstraint
      */
     public function testContainer()
     {

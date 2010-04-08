@@ -24,7 +24,7 @@ class TokenContainerIterator implements \Iterator, \Countable, \SeekableIterator
     protected $_keys = array();
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function __construct(TokenContainer $container)
     {
@@ -58,7 +58,7 @@ class TokenContainerIterator implements \Iterator, \Countable, \SeekableIterator
 
     /**
      *
-     * @return PHP\Manipulator\Token
+     * @return \PHP\Manipulator\Token
      */
     public function current()
     {

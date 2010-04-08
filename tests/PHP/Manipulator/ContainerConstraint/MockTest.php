@@ -13,7 +13,7 @@ class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\ContainerConstraint\Mock
+     * @covers \PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testDefaultConstruct()
     {
@@ -21,7 +21,7 @@ class MockTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerConstraint\Mock
+     * @covers \PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testOptionViaConstructorWorks()
     {
@@ -35,7 +35,7 @@ class MockTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\ContainerConstraint\Mock
+     * @covers \PHP\Manipulator\ContainerConstraint\Mock
      */
     public function testOptionViastaticVariableWorks()
     {

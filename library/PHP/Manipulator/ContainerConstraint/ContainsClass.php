@@ -10,7 +10,7 @@ extends ContainerConstraint
 {
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @return boolean
      */

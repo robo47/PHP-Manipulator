@@ -109,7 +109,7 @@ extends Rule
 
     /**
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function applyRuleToTokens(TokenContainer $container)
     {

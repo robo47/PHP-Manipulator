@@ -12,7 +12,7 @@ extends TokenManipulator
     /**
      * Uppercase for tokens value
      *
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @return boolean
      */

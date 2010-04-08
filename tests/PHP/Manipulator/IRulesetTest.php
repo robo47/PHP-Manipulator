@@ -8,7 +8,7 @@ class IRulesetTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\IRuleset
+     * @covers \PHP\Manipulator\IRuleset
      */
     public function testContainer()
     {

@@ -13,7 +13,7 @@ class ReplaceLogicalOperatorsWithBooleanOperatorsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::init
+     * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::init
      */
     public function testConstructorDefaults()
     {
@@ -62,8 +62,8 @@ class ReplaceLogicalOperatorsWithBooleanOperatorsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::<protected>
+     * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

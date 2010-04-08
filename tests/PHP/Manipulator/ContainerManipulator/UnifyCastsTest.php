@@ -49,8 +49,8 @@ class UnifyCastsTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers PHP\Manipulator\ContainerManipulator\UnifyCasts::manipulate
-     * @covers PHP\Manipulator\ContainerManipulator\UnifyCasts::<protected>
+     * @covers \PHP\Manipulator\ContainerManipulator\UnifyCasts::manipulate
+     * @covers \PHP\Manipulator\ContainerManipulator\UnifyCasts::<protected>
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {

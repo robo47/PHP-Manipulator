@@ -13,7 +13,7 @@ class FormatOperatorsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\FormatOperators::init
+     * @covers \PHP\Manipulator\Rule\FormatOperators::init
      */
     public function testConstructorDefaults()
     {
@@ -46,8 +46,8 @@ class FormatOperatorsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\FormatOperators::applyRuleToTokens
-     * @covers PHP\Manipulator\Rule\FormatOperators::<protected>
+     * @covers \PHP\Manipulator\Rule\FormatOperators::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\FormatOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)

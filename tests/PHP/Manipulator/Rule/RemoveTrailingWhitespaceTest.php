@@ -13,7 +13,7 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Rule\RemoveTrailingWhitespace::init
+     * @covers \PHP\Manipulator\Rule\RemoveTrailingWhitespace::init
      */
     public function testConstructorDefaults()
     {
@@ -48,7 +48,7 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\Rule\RemoveTrailingWhitespace::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\RemoveTrailingWhitespace::applyRuleToTokens
      * @dataProvider ruleProvider
      * @param array $options
      * @param TokenContainer $input

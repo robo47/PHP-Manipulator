@@ -13,7 +13,7 @@ class MockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\TokenConstraint\Mock
+     * @covers \PHP\Manipulator\TokenConstraint\Mock
      */
     public function testDefaultConstruct()
     {
@@ -21,7 +21,7 @@ class MockTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenConstraint\Mock
+     * @covers \PHP\Manipulator\TokenConstraint\Mock
      */
     public function testOptionViaConstructorWorks()
     {
@@ -35,7 +35,7 @@ class MockTest extends \Tests\TestCase
     }
 
     /**
-     * @covers PHP\Manipulator\TokenConstraint\Mock
+     * @covers \PHP\Manipulator\TokenConstraint\Mock
      */
     public function testOptionViastaticVariableWorks()
     {

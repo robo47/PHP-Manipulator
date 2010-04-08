@@ -14,7 +14,7 @@ extends ContainerManipulator
     /**
      * Manipulate
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
     public function manipulate(TokenContainer $container, $params = null)
@@ -78,7 +78,7 @@ extends ContainerManipulator
     }
 
     /**
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param integer $startOffset
      * @param integer $endOffset
      * @return array
@@ -116,7 +116,7 @@ extends ContainerManipulator
     }
 
     /**
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isMultilineComment(Token $token)
