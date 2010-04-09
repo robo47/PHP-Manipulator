@@ -35,13 +35,23 @@ class XmlTest extends \Tests\TestCase
         $this->assertCount(6, $rules);
 
         $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
+
+        $this->assertEquals('foo', $rules[0]->getOption('baa'));
+
         $this->assertType('\Foo\Baa\Rule\SecondRule', $rules[1]);
+        $this->assertEquals('baa', $rules[1]->getOption('foo'));
 
         $this->assertType('\Baa\Foo\Rule\ThirdRule', $rules[2]);
+        $this->assertEquals('bla', $rules[2]->getOption('blub'));
+
         $this->assertType('\Baa\Foo\Rule\FourthRule', $rules[3]);
+        $this->assertEquals('blub', $rules[3]->getOption('bla'));
 
         $this->assertType('\Foo\Baa\Rule\FifthRule', $rules[4]);
+        $this->assertEquals('foo', $rules[4]->getOption('baa'));
+
         $this->assertType('\Foo\Baa\Rule\SixthsRule', $rules[5]);
+        $this->assertEquals('baa', $rules[5]->getOption('foo'));
 
 
         $files = $config->getFiles();

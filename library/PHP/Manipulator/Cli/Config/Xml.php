@@ -37,6 +37,21 @@ class Xml extends Config
         }
     }
 
+    protected function _parseRuleOptions(\DOMNode $options)
+    {
+        $ruleOptions = array();
+        foreach($options->childNodes as $option) {
+            if (strtolower($option->nodeName) == 'option') {
+                $name = $option->attributes->getNamedItem('name');
+                $value = $option->attributes->getNamedItem('value');
+                if (null !== $name && null !== $value) {
+                    $ruleOptions[$name->value] = $value->value;
+                }
+            }
+        }
+        return $ruleOptions;
+    }
+
     /**
      * Parses Rules out of the DOMDocument
      *
@@ -64,13 +79,14 @@ class Xml extends Config
                             }
                             break;
                         case 'rule':
+                            $options = $this->_parseRuleOptions($option);
                             $prefix = $option->attributes->getNamedItem('prefix');
                             if ($prefix instanceof \DOMAttr) {
                                 $prefix = $prefix->value;
                             }
                             $name = $option->attributes->getNamedItem('name');
                             if ($name instanceof \DOMAttr) {
-                                $this->addRule($name->value, $prefix);
+                                $this->addRule($name->value, $prefix, $options);
                             }
                             break;
                         default:
