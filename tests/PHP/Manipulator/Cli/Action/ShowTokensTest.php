@@ -13,20 +13,24 @@ class ShowTokensTest extends \Tests\TestCase
 
     public function setUp()
     {
-        $this->setUseOutputBuffering(true);
+        ob_start();
     }
 
     public function tearDown()
     {
-        $this->setUseOutputBuffering(false);
+        \ob_clean();
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Action\ShowTokens
+     * @covers \PHP\Manipulator\Cli\Action\ShowTokens::run
      */
-    public function testConstructor()
+    public function testRun()
     {
+        $this->markTestSkipped('not implemented yet');
         $cli = new Cli();
         $action = new ShowTokens($cli);
+        $action->run();
+        $output = \ob_get_contents();
+        $this->assertEquals('', $output);
     }
 }

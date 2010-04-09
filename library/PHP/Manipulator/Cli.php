@@ -59,7 +59,13 @@ class Cli
         $options = $this->getConsoleOptions();
         $this->_options = $options;
         foreach($options as $option) {
-            $input->registerOption($option);
+            if(is_array($option)) {
+                foreach($option as $subOption) {
+                    $input->registerOption($subOption);
+                }
+            } else {
+                $input->registerOption($option);
+            }
         }
 
         $this->setConsoleInput($input);
@@ -91,8 +97,9 @@ class Cli
             $actionClassname = substr($file->getFilename(), 0, -4);
             $action = $this->getAction($actionClassname);
 
+            $options[$actionClassname] = array();
             foreach($action->getConsoleOption() as $option) {
-                $options[$actionClassname] = $option;
+                $options[$actionClassname][] = $option;
             }
         }
 
@@ -166,7 +173,7 @@ class Cli
      */
     public function getHeader()
     {
-        return 'PHP Manipulator ' . Manipulator::VERSION . ' by Benjamin Steininger' . PHP_EOL;
+        return 'PHP Manipulator ' . Manipulator::VERSION . PHP_EOL;
     }
 
     /**
@@ -190,32 +197,45 @@ class Cli
         $output = $this->getConsoleOutput();
         $input = $this->getConsoleInput();
 
-        $input->process($this->_params);
+        try {
+            $input->process($this->_params);
 
-        $output->outputText($this->getHeader());
+            $output->outputText($this->getHeader());
 
-        $options = $this->getOptions();
+            $options = $this->getOptions();
 
-        $actionName = false;
-        foreach($options as $key => $option) {
-            /* @var $option ezcConsoleOption */
-            if (isset($option->value) && false != $option->value) {
-                $actionName = $key;
-                break;
+            $actionName = false;
+            foreach($options as $key => $option) {
+                if (is_array($option)) {
+                    foreach($option as $suboption) {
+                        if (false != $suboption->value) {
+                            $actionName = $key;
+                            break;
+                        }
+                    }
+                } else {
+                    /* @var $option ezcConsoleOption */
+                    if (false != $option->value) {
+                        $actionName = $key;
+                        break;
+                    }
+                }
             }
+
+            if (false === $actionName) {
+                $actionName = 'help';
+            }
+
+            $action = $this->getAction(
+                $actionName,
+                $this->_params
+            );
+            $action->run();
+        } catch(\ezcConsoleException $e) {
+            $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage());
+        } catch(\Exception $e) {
+            $output->outputText('something else fucked up: ' . $e->getMessage());
         }
-
-        if (false === $actionName) {
-            $actionName = 'help';
-        }
-
-        $action = $this->getAction(
-            $actionName,
-            $this->_params
-        );
-        $action->run();
-
-        $output->outputText($this->getFooter());
     }
 
     /**

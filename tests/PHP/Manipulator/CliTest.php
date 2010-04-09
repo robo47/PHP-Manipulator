@@ -65,7 +65,7 @@ class CliTest extends \Tests\TestCase
     {
         $cli = new Cli();
         $this->assertEquals(
-            'PHP Manipulator ' . Manipulator::VERSION . ' by Benjamin Steininger' . PHP_EOL,
+            'PHP Manipulator ' . Manipulator::VERSION . PHP_EOL,
             $cli->getHeader()
         );
     }

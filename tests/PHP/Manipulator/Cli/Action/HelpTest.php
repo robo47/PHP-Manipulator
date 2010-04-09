@@ -3,14 +3,14 @@
 namespace Tests\PHP\Manipulator\Cli\Action;
 
 use PHP\Manipulator\Cli;
-use PHP\Manipulator\Cli\Action\ApplyRules;
+use PHP\Manipulator\Cli\Action\Help;
 
 /**
  * @group TokenContainerIterator
  */
-class ApplyrulesTest extends \Tests\TestCase
+class HelpTest extends \Tests\TestCase
 {
-    
+
     public function setUp()
     {
         ob_start();
@@ -22,14 +22,14 @@ class ApplyrulesTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Action\ApplyRules::run
+     * @covers \PHP\Manipulator\Cli\Action\Help::run
      */
     public function testRun()
     {
         $this->markTestSkipped('not implemented yet');
         ob_start();
         $cli = new Cli();
-        $action = new ApplyRules($cli);
+        $action = new Help($cli);
         $action->run();
         $output = \ob_get_contents();
         $this->assertEquals('', $output);

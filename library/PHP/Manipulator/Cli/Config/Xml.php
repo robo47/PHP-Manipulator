@@ -11,7 +11,10 @@ class Xml extends Config
     protected function _initConfig($data)
     {
         $dom = new \DOMDocument();
-        $dom->loadXML($data);
+        $loaded = @$dom->loadXML($data);
+        if(!$loaded) {
+            throw new \Exception('Unable to parse data');
+        }
         $this->_parseOptions($dom);
         $this->_parseRules($dom);
         $this->_parseFiles($dom);

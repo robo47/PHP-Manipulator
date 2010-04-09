@@ -3,7 +3,7 @@
 namespace PHP\Manipulator\Cli\Action;
 
 use PHP\Manipulator\Cli\Action;
-use PHP\Manipulator\Cli\Config\Xml as XmlConfig;
+use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
@@ -13,53 +13,29 @@ class ApplyRules extends Action
 
     public function run()
     {
-        $output = $this->getCli()->getConsoleOutput();;
-        $options = $this->getCli()->getOptions();
-        var_dump($options['ApplyRules']->value);
-        if ($options['ApplyRules']->value === true) {
-            if (file_exists('./manipulator.xml')) {
-                echo 'manip';
-                $configFile = 'manipulator.xml';
-            }
-        } else {
-            $configFile = $options['ApplyRules']->value;
-        }
+        $input = $this->getCli()->getConsoleInput();
+        $output = $this->getCli()->getConsoleOutput();
+
+        $configFile = $input->getOption('config')->value;
+
         try {
-            $config = new XmlConfig($configFile);
+            $config = Config::factory('xml', $configFile, true);
         } catch(\Exception $e) {
-            $output->outputLine('Unable to load config');
+            $output->outputLine('Unable to load config: ' . $configFile);
             return;
         }
         /* @var $config PHP\Manipulator\Cli\Config\Xml */
 
         $files = $config->getFiles();
-
-        $rules = array();
-        foreach($config->getRules() as $rule) {
-            $rules[] = new $rule;
-        }
-
-        $rulesets = array();
-        foreach($config->getRulesets() as $ruleset) {
-            /* @var $ruleset \PHP\Manipulator\IRuleset */
-            $rulesetRules = $ruleset->getRules();
-            foreach($rulesetRules as $rule) {
-                $rules[] = $rule;
-            }
-        }
-
-        $manipulator = new Manipulator($rules, $files);
-        //$manipulator->addRuleset($config->getRulesets());
+        $rules = $config->getRules();
 
         $filesCount = count($files);
         $rulesCount = count($rules);
 
-
-
         $steps = $filesCount * $rulesCount;
 
         // Create progress bar itself
-        $progress = new ezcConsoleProgressbar($out, $steps, array('step' => 1));
+        $progress = new \ezcConsoleProgressbar($output, $steps, array('step' => 1));
 
         $progress->options->emptyChar = '-';
         $progress->options->progressChar = '#';
@@ -80,7 +56,7 @@ class ApplyRules extends Action
         // Finish progress bar and jump to next line.
         $progress->finish();
 
-        $out->outputText("Applied all rules \n", 'success');
+        $output->outputText("Applied all rules \n", 'success');
     }
 
     /**
@@ -95,7 +71,7 @@ class ApplyRules extends Action
             \ezcConsoleInput::TYPE_NONE,
             null,
             false,
-            'Apply Rule to Files',
+            'Apply rules to Files',
             '__LONG__',
             array(),
             array(),
@@ -104,8 +80,26 @@ class ApplyRules extends Action
             true
         );
 
+        $config = new \ezcConsoleOption(
+            'c',
+            'config',
+            \ezcConsoleInput::TYPE_STRING,
+            null,
+            false,
+            'Path to the config-file',
+            '__LONG__',
+            array(),
+            array(),
+            true,
+            false,
+            true
+        );
+
+        $ar->addDependency(new \ezcConsoleOptionRule($config));
+
         return array(
             $ar,
+            $config
          );
     }
 }

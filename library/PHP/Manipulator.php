@@ -14,6 +14,11 @@ class Manipulator
     const VERSION = '@version@';
 
     /**
+     * Git commit-hash
+     */
+    const GITHASH = '@githash@';
+
+    /**
      * Array with used rules
      *
      * @var array
