@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <options>
+        <rulePrefix>\Baa\Foo\Rule\</rulePrefix>
+        <rulesetPrefix>\Baa\Foo\Ruleset\</rulesetPrefix>
+        <fileSuffix>.phtml</fileSuffix>
+    </options>
+    <rules>
+        <rule name="FirstRule" />
+        <rule prefix="\Foo\Baa\Rule\" name="SecondRule" />
+        <ruleset name="FirstRuleset" />
+        <ruleset prefix="\Foo\Baa\Ruleset\" name="SecondRuleset" />
+    </rules>
+    <files>
+        <directory>./_fixtures/Cli/Config/testDir0</directory>
+        <file>./_fixtures/Cli/Config/testDir1/Baafoo.php</file>
+    </files>
+</config>

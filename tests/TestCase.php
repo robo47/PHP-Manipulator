@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator\Util;
 
 class TestCase extends \PHPUnit_Framework_TestCase
@@ -132,6 +133,28 @@ class TestCase extends \PHPUnit_Framework_TestCase
         if (!$this->_shortTagsActivated()) {
             $this->markTestSkipped('Can\'t run ' . __CLASS__ . ' with short_open_tag deactivated');
         }
+    }
+
+    /**
+     *
+     * @param integer$number
+     * @return \PHP\Manipulator\Cli\Config
+     */
+    public function getConfig($number)
+    {
+        $path = '_fixtures/Cli/Config/config' . $number . '.xml';
+        return Config::factory('\Tests\PHP\Manipulator\Cli\NonAbstract', $path, true);
+    }
+
+    /**
+     *
+     * @param integer $number
+     * @return \PHP\Manipulator\Cli\Config\Xml
+     */
+    public function getXmlConfig($number)
+    {
+        $path = '_fixtures/Cli/Config/config' . $number . '.xml';
+        return Config::factory('xml', $path, true);
     }
 }
 

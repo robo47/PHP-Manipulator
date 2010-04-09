@@ -1,9 +1,23 @@
 #!/usr/bin/env php
 <?php
-if (strpos('@php_bin@', '@php_bin') === 0) {
-    set_include_path(__DIR__ . PATH_SEPARATOR . get_include_path());
-}
 
+use PHP\Manipulator\Cli;
+use PHP\Manipulator\Autoloader;
+
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));
+
+// Include path
+$pathes = array();
+$pathes[] = BASE_PATH . '/library/';
+$pathes[] = get_include_path();
+
+set_include_path(implode($pathes, PATH_SEPARATOR));
+
+// Autoloader
+require 'PHP/Manipulator/Autoloader.php';
+Autoloader::register();
+
+// Cli
 require 'PHP/Manipulator/Cli.php';
-
-PHP\Manipulator\Cli::run();
+$cli = new Cli($_SERVER['argv']);
+$cli->run();
