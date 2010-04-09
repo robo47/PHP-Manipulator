@@ -424,7 +424,7 @@ class PHPManipulator_Constraint_Count extends \PHPUnit_Framework_Constraint
     protected function failureDescription($other, $description, $not)
     {
         return 'Count of ' . $this->_getCount($other) .
-            'does not match exptected count of ' . $this->_expectedCount;
+            ' does not match exptected count of ' . $this->_expectedCount;
     }
 
     /**

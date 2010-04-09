@@ -547,6 +547,7 @@ class TokenContainerTest extends \Tests\TestCase
         $fluent = $container->removeToken($token2);
         $this->assertSame($fluent, $container, 'No fluent interface');
 
+
         $this->assertCount(2, $container, 'Wrong count of Tokens in Container');
 
         $this->assertTrue($container->contains($token1), 'Container contains Token1');
