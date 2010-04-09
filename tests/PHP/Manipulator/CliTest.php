@@ -71,18 +71,6 @@ class CliTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli::getFooter
-     */
-    public function testGetFooter()
-    {
-        $cli = new Cli();
-        $footer = '~Time: (\d+)s' . PHP_EOL;
-        $footer .= 'Memory: (\d+).(\d+)kb' . PHP_EOL . '~';
-        $match = preg_match($footer, $cli->getFooter());
-        $this->assertTrue(false !== $match);
-    }
-
-    /**
      * @covers \PHP\Manipulator\Cli::getStartTime
      */
     public function testGetStartTime()

@@ -180,19 +180,6 @@ class Cli
     }
 
     /**
-     * Get Footer
-     *
-     * @return string
-     */
-    public function getFooter()
-    {
-        $time = round(microtime(true) - $this->_start, 2);
-        $footer = 'Time: ' . $time . 's' . PHP_EOL;
-        $footer .= 'Memory: ' . round((memory_get_peak_usage() / (1024 * 1024)), 2) . 'mb' . PHP_EOL;
-        return $footer;
-    }
-
-    /**
      * Run
      */
     public function run()
@@ -202,7 +189,6 @@ class Cli
 
         try {
             $input->process($this->_params);
-
             $output->outputText($this->getHeader());
 
             $options = $this->getOptions();
@@ -233,7 +219,18 @@ class Cli
                 $actionName,
                 $this->_params
             );
+
+            $output->outputLine();
             $action->run();
+            $output->outputLine();
+
+            if ($actionName !== 'Stats' && false !== $input->getOption('stats')->value) {
+                $action = $this->getAction(
+                    'Stats',
+                    $this->_params
+                );
+                $action->run();
+            }
         } catch(\ezcConsoleException $e) {
             $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage(), 'failure');
         } catch(\Exception $e) {
