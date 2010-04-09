@@ -40,6 +40,8 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertType('\Foo\Baa\Rule\SecondRule', $rules[1]);
         $this->assertEquals('baa', $rules[1]->getOption('foo'));
+        $this->assertTrue($rules[1]->getOption('someTrueBoolean'));
+        $this->assertFalse($rules[1]->getOption('someFalseBoolean'));
 
         $this->assertType('\Baa\Foo\Rule\ThirdRule', $rules[2]);
         $this->assertEquals('bla', $rules[2]->getOption('blub'));
@@ -60,5 +62,50 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Blub.phtml', $files);
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir1/Baafoo.php', $files);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Cli\Config\Xml::_castValue
+     */
+    public function testRuleOptionsCastWorks()
+    {
+        $config = $this->getXmlConfig(2);
+
+        $rules = $config->getRules();
+        $this->assertType('array', $rules);
+        $this->assertCount(1, $rules);
+
+        $rule = $rules[0];
+
+        $this->assertType('\Baa\Foo\Rule\FirstRule', $rule);
+        /* @var $rule \PHP\Manipulator\Rule */
+        $this->assertCount(9, $rule->getOptions());
+
+        $this->assertType('integer', $rule->getOption('integerOne'));
+        $this->assertSame(1, $rule->getOption('integerOne'));
+
+        $this->assertType('integer', $rule->getOption('integerTwenty'));
+        $this->assertSame(20, $rule->getOption('integerTwenty'));
+
+        $this->assertType('bool', $rule->getOption('booleanTrue'));
+        $this->assertSame(true, $rule->getOption('booleanTrue'));
+
+        $this->assertType('bool', $rule->getOption('booleanFalse'));
+        $this->assertSame(false, $rule->getOption('booleanFalse'));
+
+        $this->assertType('array', $rule->getOption('array'));
+        $this->assertEquals(array("foo"), $rule->getOption('array'));
+
+        $this->assertType('object', $rule->getOption('object'));
+        $this->assertEquals((object)"foo", $rule->getOption('object'));
+
+        $this->assertType('float', $rule->getOption('real'));
+        $this->assertEquals(1.23, $rule->getOption('real'));
+
+        $this->assertType('float', $rule->getOption('float'));
+        $this->assertEquals(1.23, $rule->getOption('float'));
+
+        $this->assertType('float', $rule->getOption('double'));
+        $this->assertEquals(1.23, $rule->getOption('double'));
     }
 }

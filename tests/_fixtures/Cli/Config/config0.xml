@@ -11,6 +11,8 @@
         </rule>
         <rule prefix="\Foo\Baa\Rule\" name="SecondRule">
             <option name="foo" value="baa" />
+            <option name="someTrueBoolean" value="1" cast="bool" />
+            <option name="someFalseBoolean" value="0" cast="bool" />
         </rule>
         <ruleset name="FirstRuleset" />
         <ruleset prefix="\Foo\Baa\Ruleset\" name="SecondRuleset" />

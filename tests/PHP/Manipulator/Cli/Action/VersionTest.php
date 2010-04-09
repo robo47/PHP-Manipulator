@@ -27,7 +27,6 @@ class VersionTest extends \Tests\TestCase
      */
     public function testRun()
     {
-        ob_start();
         $cli = new Cli();
         $action = new Version($cli);
         $action->run();

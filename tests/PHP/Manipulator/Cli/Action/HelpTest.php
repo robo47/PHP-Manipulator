@@ -27,7 +27,6 @@ class HelpTest extends \Tests\TestCase
     public function testRun()
     {
         $this->markTestSkipped('not implemented yet');
-        ob_start();
         $cli = new Cli();
         $action = new Help($cli);
         $action->run();

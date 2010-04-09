@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <options>
+        <rulePrefix>\Baa\Foo\Rule\</rulePrefix>
+    </options>
+    <rules>
+        <rule name="FirstRule">
+            <option name="integerOne" value="1" cast="integer" />
+            <option name="integerTwenty" value="20" cast="int" />
+            <option name="booleanTrue" value="1" cast="bool" />
+            <option name="booleanFalse" value="0" cast="boolean" />
+            <option name="array" value="foo" cast="array" />
+            <option name="object" value="foo" cast="object" />
+            <option name="float" value="1.23" cast="float" />
+            <option name="real" value="1.23" cast="real" />
+            <option name="double" value="1.23" cast="double" />
+        </rule>
+    </rules>
+</config>

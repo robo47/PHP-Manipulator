@@ -21,7 +21,7 @@ class ApplyRules extends Action
         try {
             $config = Config::factory('xml', $configFile, true);
         } catch(\Exception $e) {
-            $output->outputLine('Unable to load config: ' . $configFile);
+            $output->outputLine('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
             return;
         }
         /* @var $config PHP\Manipulator\Cli\Config\Xml */
@@ -34,12 +34,16 @@ class ApplyRules extends Action
 
         $steps = $filesCount * $rulesCount;
 
+        $options = array(
+            'step' => 1,
+        );
+
         // Create progress bar itself
-        $progress = new \ezcConsoleProgressbar($output, $steps, array('step' => 1));
+        $progress = new \ezcConsoleProgressbar($output, $steps, $options);
 
         $progress->options->emptyChar = '-';
         $progress->options->progressChar = '#';
-        $progress->options->formatString = "Processing files %act%/%max% kb [%bar%]";
+        $progress->options->formatString = "Processing files %act% / %max%  [%bar%]";
 
         // Perform actions
         $i = 0;
@@ -50,13 +54,14 @@ class ApplyRules extends Action
                 $rule->applyRuleToTokens($container);
                 $progress->advance();
             }
+            
             $container->saveToFile($file);
         }
 
         // Finish progress bar and jump to next line.
         $progress->finish();
 
-        $output->outputText("Applied all rules \n", 'success');
+        $output->outputText(PHP_EOL . "Applied all rules \n", 'success');
     }
 
     /**

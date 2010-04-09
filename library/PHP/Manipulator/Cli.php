@@ -55,6 +55,9 @@ class Cli
         $input = new \ezcConsoleInput();
         $output = new \ezcConsoleOutput();
 
+        $output->formats->success->color = 'green';
+        $output->formats->failure->color = 'red';
+
 
         $options = $this->getConsoleOptions();
         $this->_options = $options;
@@ -232,9 +235,9 @@ class Cli
             );
             $action->run();
         } catch(\ezcConsoleException $e) {
-            $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage());
+            $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage(), 'failure');
         } catch(\Exception $e) {
-            $output->outputText('something else fucked up: ' . $e->getMessage());
+            $output->outputText('something else fucked up: ' . $e->getMessage(), 'failure');
         }
     }
 

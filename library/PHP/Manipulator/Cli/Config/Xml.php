@@ -40,6 +40,11 @@ class Xml extends Config
         }
     }
 
+    /**
+     *
+     * @param DOMNode $options
+     * @return array
+     */
     protected function _parseRuleOptions(\DOMNode $options)
     {
         $ruleOptions = array();
@@ -48,11 +53,56 @@ class Xml extends Config
                 $name = $option->attributes->getNamedItem('name');
                 $value = $option->attributes->getNamedItem('value');
                 if (null !== $name && null !== $value) {
-                    $ruleOptions[$name->value] = $value->value;
+                    $cast = $option->attributes->getNamedItem('cast');
+                    if (null !== $cast) {
+                        $ruleOptions[$name->value] = $this->_castValue($cast->value, $value->value);
+                    } else {
+                        $ruleOptions[$name->value] = $value->value;
+                    }
+                    
                 }
             }
         }
         return $ruleOptions;
+    }
+
+    /**
+     *
+     * @param string $type
+     * @param string $value
+     * @return mixed
+     */
+    protected function _castValue($type, $value)
+    {
+        $type = strtolower($type);
+        switch($type) {
+            case 'boolean':
+            case 'bool':
+                $value = (bool)$value;
+                break;
+            case 'int':
+            case 'integer':
+                $value = (int)$value;
+                break;
+            case 'array':
+                $value = (array)$value;
+                break;
+            case 'object':
+                $value = (object)$value;
+                break;
+            case 'string':
+                $value = (string)$value;
+                break;
+            case 'float':
+            case 'double':
+            case 'real':
+                $value = (float)$value;
+                break;
+            default:
+                throw \Exception('unknown type: ' . $type);
+                break;
+        }
+        return $value;
     }
 
     /**
