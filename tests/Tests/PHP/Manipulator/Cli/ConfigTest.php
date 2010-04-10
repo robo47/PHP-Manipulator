@@ -57,11 +57,11 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(0, $config->getFiles());
 
-        $fluent = $config->addFile('TestCase.php');
+        $fluent = $config->addFile('TestHelper.php');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $config->getFiles());
-        $this->assertContains(\getcwd() . '/TestCase.php', $config->getFiles());
+        $this->assertContains(\getcwd() . '/TestHelper.php', $config->getFiles());
     }
 
     /**

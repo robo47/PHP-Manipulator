@@ -24,7 +24,7 @@
     </logging>
     <testsuites>
       <testsuite name="PHP_Manipulator Test Suite">
-        <directory>./PHP/</directory>
+        <directory>./Tests/PHP/</directory>
       </testsuite>
     </testsuites>
 </phpunit>
