@@ -107,7 +107,7 @@ class Xml extends Config
                 $value = (float) $value;
                 break;
             default:
-                throw \Exception('unknown cast-type: ' . $type);
+                throw new \Exception('unknown cast-type: ' . $type);
                 break;
         }
         return $value;
