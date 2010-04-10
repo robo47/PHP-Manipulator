@@ -22,21 +22,10 @@ extends TokenManipulator
         $value = $token->getValue();
         $value = preg_split('~(\r\n|\n|\r)~', $value);
 
-        $newValue = "";
-        foreach($value as $key => $line) {
-            if (strlen($line) >= 2 && $line[0] == '*' && $line[1] == '/') {
-                $line = substr($line, 2);
-            }
-            if (strlen($line) >= 1 && $line[0] == '*') {
-                $line = substr($line, 1);
-            }
-            if (strlen($line) >= 3 && $line[0] == '/' && $line[1] == '*' && $line[2] == '*') {
-                $line = substr($line, 3);
-            }
-            if (strlen($line) >= 2 && $line[0] == '/' && $line[1] == '*') {
-                $line = substr($line, 2);
-            }
-
+        $newValue = '';
+        foreach($value as $line) {
+            // removes */ and * and /** and /**
+            $line = preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line);
             // @todo detected linebreak, fallback to \n
             $newValue .= '//' . $line . "\n";
         }
