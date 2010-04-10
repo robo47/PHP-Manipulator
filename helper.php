@@ -12,7 +12,14 @@ $typeName = '';
 $createFixturesDummy = false;
 $inputOnly = false;
 $type = strtolower($_SERVER['argv'][1]);
+
 switch($type) {
+    case 'tokenfinder':
+    case 'tf':
+        $typeName = 'TokenFinder';
+        $createFixturesDummy = true;
+        $inputOnly = true;
+        break;
     case 'containerconstraint':
     case 'cc':
         $typeName = 'ContainerConstraint';
@@ -44,14 +51,13 @@ switch($type) {
 
 $name = $_SERVER['argv'][2];
 
-$newFile = './library/PHP/Formatter/' . $typeName . '/' . $name . '.php';
-$newTestFile = './tests/PHP/Formatter/' . $typeName . '/' . $name . 'Test.php';
+$newFile = './library/PHP/Manipulator/' . $typeName . '/' . $name . '.php';
+$newTestFile = './tests/Tests/PHP/Manipulator/' . $typeName . '/' . $name . 'Test.php';
 
 if (file_exists($newTestFile) || file_exists($newFile)){
     echo 'file already exists!!!';
     exit();
 }
-
 
 $fileCode = file_get_contents('./helper/' . $typeName . '.php');
 $testCode = file_get_contents('./helper/' . $typeName . 'Test.php');
