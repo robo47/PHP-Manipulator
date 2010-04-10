@@ -4,8 +4,14 @@ namespace Tests;
 
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator\Util;
+
+use Tests\Constraint\Count;
+use Tests\Constraint\ResultsMatch;
+use Tests\Constraint\TokenContainerMatch;
+use Tests\Constraint\TokensMatch;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -23,6 +29,23 @@ class TestCase extends \PHPUnit_Framework_TestCase
             throw new \Exception('Fixture ' . $file . ' not found');
         }
         return file_get_contents($file);
+    }
+
+    /**
+     * Get Result From Container
+     * 
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param integer $start
+     * @param integer $end
+     * @return Result
+     */
+    public function getResultFromContainer($container, $start, $end)
+    {
+        $result = new Result();
+        for ($index = $start; $index <= $end; $index++) {
+            $result->addToken($container[$index]);
+        }
+        return $result;
     }
 
     /**
@@ -46,7 +69,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertCount($expectedCount, $element, $message = '')
     {
-        $constraint = new \Tests\Constraint\Count(
+        $constraint = new Count(
             $expectedCount
         );
 
@@ -66,7 +89,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
     {
-        $constraint = new \Tests\Constraint\TokensMatch(
+        $constraint = new TokensMatch(
             $expectedToken,
             $strict
         );
@@ -87,7 +110,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')
     {
-        $constraint = new \Tests\Constraint\TokenContainerMatch(
+        $constraint = new TokenContainerMatch(
             $expectedTokens,
             $strict
         );
@@ -101,7 +124,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     public function assertFinderResultsMatch($expectedResult, $actualResult, $message = '')
     {
-        $constraint = new \Tests\Constraint\ResultsMatch(
+        $constraint = new ResultsMatch(
             $expectedResult
         );
 
