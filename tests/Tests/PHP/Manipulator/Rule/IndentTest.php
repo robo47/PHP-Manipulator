@@ -112,7 +112,7 @@ class IndentTest extends \Tests\TestCase
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new Indent($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

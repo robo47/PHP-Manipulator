@@ -13,5 +13,5 @@ extends AHelper
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
-    abstract public function applyRuleToTokens(TokenContainer $container);
+    abstract public function apply(TokenContainer $container);
 }

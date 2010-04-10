@@ -46,14 +46,14 @@ class FormatOperatorsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\FormatOperators::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\FormatOperators::apply
      * @covers \PHP\Manipulator\Rule\FormatOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new FormatOperators($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

@@ -45,13 +45,13 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
 
     /**
      *
-     * @covers \PHP\Manipulator\Rule\RemoveMultipleEmptyLines::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\RemoveMultipleEmptyLines::apply
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new RemoveMultipleEmptyLines($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

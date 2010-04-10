@@ -54,7 +54,7 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\ShorttagsToLongTags::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ShorttagsToLongTags::apply
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
@@ -62,7 +62,7 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
         $this->checkShorttags();
 
         $rule = new ShorttagsToLongTags($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

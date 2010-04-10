@@ -62,14 +62,14 @@ class ReplaceLogicalOperatorsWithBooleanOperatorsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::apply
      * @covers \PHP\Manipulator\Rule\ReplaceLogicalOperatorsWithBooleanOperators::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new ReplaceLogicalOperatorsWithBooleanOperators($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

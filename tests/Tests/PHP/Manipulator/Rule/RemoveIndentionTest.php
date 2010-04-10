@@ -43,13 +43,13 @@ class RemoveIndentionTest extends \Tests\TestCase
 
     /**
      *
-     * @covers \PHP\Manipulator\Rule\RemoveIndention::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\RemoveIndention::apply
      * @dataProvider ruleProvider
      */
     public function testRule($input, $expectedTokens)
     {
         $rule = new RemoveIndention();
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

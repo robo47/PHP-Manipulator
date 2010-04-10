@@ -60,7 +60,7 @@ class ApplyRules extends Action
             $container = TokenContainer::createFromFile($file);
             foreach ($rules as $rule) {
                 /* @var $rule \PHP\Manipulator\Rule */
-                $rule->applyRuleToTokens($container);
+                $rule->apply($container);
                 $progress->advance();
             }
 

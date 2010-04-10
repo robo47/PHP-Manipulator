@@ -93,7 +93,7 @@ class RemoveCommentsTest extends \Tests\TestCase
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new RemoveComments($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

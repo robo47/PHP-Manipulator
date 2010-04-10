@@ -20,7 +20,7 @@ extends Rule
      *
      * @param \PHP\Manipulator\TokenContainer $tokens
      */
-    public function applyRuleToTokens(TokenContainer $container)
+    public function apply(TokenContainer $container)
     {
         $iterator = $container->getIterator();
         $iterator->rewind();

@@ -48,7 +48,7 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\RemoveTrailingWhitespace::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\RemoveTrailingWhitespace::apply
      * @dataProvider ruleProvider
      * @param array $options
      * @param TokenContainer $input
@@ -57,7 +57,7 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new RemoveTrailingWhitespace($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

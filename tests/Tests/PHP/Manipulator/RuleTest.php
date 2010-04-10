@@ -16,12 +16,12 @@ class RuleTest extends \Tests\TestCase
         $reflection = new \ReflectionClass('PHP\Manipulator\Rule');
         $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
         $methods = $reflection->getMethods();
-        $applyRuleToTokensMethod = $reflection->getMethod('applyRuleToTokens');
-        /* @var $applyRuleToTokensMethod ReflectionMethod */
-        $this->assertTrue($applyRuleToTokensMethod->isAbstract());
-        $this->assertSame('applyRuleToTokens', $applyRuleToTokensMethod->getName(), 'Method has wrong name');
-        $this->assertSame(1, $applyRuleToTokensMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
-        $parameters = $applyRuleToTokensMethod->getParameters();
+        $applyMethod = $reflection->getMethod('apply');
+        /* @var $applyMethod ReflectionMethod */
+        $this->assertTrue($applyMethod->isAbstract());
+        $this->assertSame('apply', $applyMethod->getName(), 'Method has wrong name');
+        $this->assertSame(1, $applyMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
+        $parameters = $applyMethod->getParameters();
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
         $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');

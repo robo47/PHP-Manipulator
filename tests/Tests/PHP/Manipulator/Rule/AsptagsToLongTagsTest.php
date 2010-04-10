@@ -53,7 +53,7 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\AsptagsToLongTags::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\AsptagsToLongTags::apply
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
@@ -61,7 +61,7 @@ class AsptagsToLongTagsTest extends \Tests\TestCase
         $this->checkAsptags();
 
         $rule = new AsptagsToLongTags($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

@@ -24,7 +24,7 @@ class RemoveTrailingWhitespace extends Rule
      * @param \PHP\Manipulator\TokenContainer $container
      * @todo possible without tokens2code2tokens ?
      */
-    public function applyRuleToTokens(TokenContainer $container)
+    public function apply(TokenContainer $container)
     {
         $code = $container->toString();
         $defaultBreak = $this->getOption('defaultBreak');

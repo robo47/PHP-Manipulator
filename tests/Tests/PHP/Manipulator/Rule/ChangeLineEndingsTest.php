@@ -80,13 +80,13 @@ class ChangeLineEndingsTest extends \Tests\TestCase
 
     /**
      *
-     * @covers \PHP\Manipulator\Rule\ChangeLineEndings::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\ChangeLineEndings::apply
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new ChangeLineEndings($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

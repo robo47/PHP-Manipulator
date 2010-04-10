@@ -14,7 +14,7 @@ extends Rule
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
-    public function applyRuleToTokens(TokenContainer $container)
+    public function apply(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 

@@ -38,14 +38,14 @@ class StripNonPhpTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::apply
      * @covers \PHP\Manipulator\Rule\StripNonPhp::<protected>
      * @dataProvider ruleProvider
      */
     public function testRule($options, $input, $expectedTokens)
     {
         $rule = new StripNonPhp($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 
@@ -69,7 +69,7 @@ class StripNonPhpTest extends \Tests\TestCase
 
     /**
      *
-     * @covers \PHP\Manipulator\Rule\StripNonPhp::applyRuleToTokens
+     * @covers \PHP\Manipulator\Rule\StripNonPhp::apply
      * @covers \PHP\Manipulator\Rule\StripNonPhp::<protected>
      * @dataProvider shortTagsOnlyRuleProvider
      */
@@ -78,7 +78,7 @@ class StripNonPhpTest extends \Tests\TestCase
         $this->checkShorttags();
 
         $rule = new StripNonPhp($options);
-        $rule->applyRuleToTokens($input);
+        $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }
