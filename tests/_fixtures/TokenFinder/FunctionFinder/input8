@@ -1,0 +1,22 @@
+<?php
+/**
+ *
+ */
+class Foo
+{
+    /**
+     *
+     * @param Iterator $param
+     */
+    // foo
+    protected /* foo */ static /* baa */ function foo(Iterator $param)
+    {
+        if($param->valid()) {
+            echo 'valid';
+        } else {
+            echo 'invalid';
+        }
+    }
+}
+// Foo
+echo Foo::foo();

@@ -1,0 +1,10 @@
+<?php
+/**
+ *
+ */
+class Foo
+{
+    abstract public static function foo(Iterator $param);
+}
+// Foo
+echo Foo::foo();
