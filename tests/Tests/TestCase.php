@@ -99,14 +99,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function assertFinderResultsMatch($expectedResult, $actucalResult, $message = '')
+    public function assertFinderResultsMatch($expectedResult, $actualResult, $message = '')
     {
         $constraint = new \Tests\Constraint\ResultsMatch(
             $expectedResult
         );
 
         self::assertThat(
-                $actucalResult,
+                $actualResult,
                 $constraint,
                 $message
         );
