@@ -447,8 +447,13 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         return new TokenContainerReverseIterator($this);
     }
-    
-    public static function createTokensFromCode($code)
+
+    /**
+     *
+     * @param string $code
+     * @return array
+     */
+    public function createTokensFromCode($code)
     {
         $array = array();
         $tokens = token_get_all($code);
