@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\IContainerConstraint;
 use PHP\Manipulator\IContainerManipulator;
 use PHP\Manipulator\ITokenConstraint;
+use PHP\Manipulator\ITokenFinder;
 use PHP\Manipulator\ITokenManipulator;
 
 // @todo better name ?
@@ -152,7 +153,7 @@ abstract class AHelper
     /**
      * Load/Instantiate/Run a ContainManipulator on a Container
      *
-     * @param \PHP\Manipulator\IRContainerManipulator|string $manipulator
+     * @param \PHP\Manipulator\IContainerManipulator|string $manipulator
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
@@ -168,6 +169,28 @@ abstract class AHelper
 
         /* @var $manipulator IContainerManipulator */
         $manipulator->manipulate($container, $params);
+    }
+
+    /**
+     *
+     * @param \PHP\Manipulator\ITokenFinder|string $finder
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
+     * @param boolean $autoPrefix
+     * @return \PHP\Manipulator\TokenFinder\Result
+     */
+    public function findTokens($finder, Token $token, TokenContainer $container, $params = null, $autoPrefix = true)
+    {
+        $finder = $this->getClassInstance($finder, 'PHP\Manipulator\TokenFinder\\', $autoPrefix);
+
+        if (!$finder instanceof ITokenFinder) {
+            $message = 'finder is not instance of ITokenFinder';
+            throw new \Exception($message);
+        }
+
+        /* @var $finder \PHP\Manipulator\TokenFinder */
+        return $finder->find($token, $container, $params);
     }
 
     /**

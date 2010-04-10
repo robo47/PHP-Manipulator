@@ -216,6 +216,26 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\AHelper::findTokens
+     */
+    public function testFindTokensFindsTokens()
+    {
+        $expectedResult = new \PHP\Manipulator\TokenFinder\Result();
+        $finder = new \PHP\Manipulator\TokenFinder\Mock($expectedResult);
+        $token = new Token('Foo');
+        $container = new TokenContainer();
+        $abstractHelper = new NonAbstractHelper();
+
+        $actualResult = $abstractHelper->findTokens(
+            $finder,
+            $token,
+            $container
+        );
+
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
      * @covers \PHP\Manipulator\AHelper::evaluateConstraint
      */
     public function testEvaluateConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
@@ -229,6 +249,24 @@ class AHelperTest extends \Tests\TestCase
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals('constraint is not instance of ITokenConstraint', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\AHelper::findTokens
+     */
+    public function testFindTokensThrowsExceptionIfFinderIstNotValidFinder()
+    {
+        $abstractHelper = new NonAbstractHelper();
+        $token = Token::factory(array(T_WHITESPACE, "\n"));
+        $container = new TokenContainer();
+        $constraint = new \stdClass();
+
+        try {
+            $abstractHelper->findTokens($constraint, $token, $container);
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('finder is not instance of ITokenFinder', $e->getMessage(), 'Wrong exception message');
         }
     }
 
