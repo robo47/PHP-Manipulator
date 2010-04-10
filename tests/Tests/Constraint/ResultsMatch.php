@@ -72,15 +72,15 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @param \PHP\Manipulator\Tokenfinder\Result $expectedResult
      * @param \PHP\Manipulator\Tokenfinder\Result $actualResult
      */
-    public static function compareResults(Result $expectedResult,Result $actualResult)
+    public static function compareResults(Result $expectedResult, Result $actualResult)
     {
         $expectedIterator = new \ArrayIterator($expectedResult->getTokens());
-        $actualIterator = new \ArrayIterator($expectedResult->getTokens());
+        $actualIterator = new \ArrayIterator($actualResult->getTokens());
 
         $values = array();
         $longest = 0;
 
-        while($actualIterator->valid() && $expectedIterator->valid()) {
+        while($actualIterator->valid() || $expectedIterator->valid()) {
 
             $expected = '';
             $actual = '';
