@@ -9,7 +9,7 @@ use PHP\Manipulator\TokenContainer;
 class FormatOperators
 extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('beforeOperator')) {
@@ -104,7 +104,7 @@ extends Rule
                     )
             );
         }
-// @todo if not has -> merge them (not with array_merge)
+// @todo if not has -> merge them (not with array_merge) + write test which checks it works
     }
 
     /**
@@ -132,6 +132,7 @@ extends Rule
             'whitespace' => $this->getOption('afterOperator'),
         );
         $this->manipulateContainer('SetWhitespaceAfterToken', $container, $params);
+
         $params = array(
             'tokens' => $operatorTokens,
             'whitespace' => $this->getOption('beforeOperator'),

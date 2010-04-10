@@ -2,26 +2,25 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\ITokenConstraint;
+use PHP\Manipulator\TokenManipulator;
 
 /**
- * @group TokenConstraint_Interface
+ * @group TokenManipulator_Interface
  */
-class ITokenConstraintTest extends \Tests\TestCase
+class TokenManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\ITokenConstraint
+     * @covers \PHP\Manipulator\TokenManipulator
      */
     public function testContainer()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\ITokenConstraint');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ?');
-        $methods = $reflection->getMethods();
-        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
-        $evaluateMethod = $methods[0];
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenManipulator');
+        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
+        $this->assertTrue($reflection->isSubclassOf('\PHP\Manipulator\AHelper'));
+
+        $evaluateMethod = $reflection->getMethod('manipulate');
         /* @var $evaluateMethod ReflectionMethod */
-        $this->assertSame('evaluate', $evaluateMethod->getName(), 'Method has wrong name');
         $this->assertSame(2, $evaluateMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $evaluateMethod->getParameters();
 

@@ -2,28 +2,28 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\ITokenFinder;
+use PHP\Manipulator\TokenFinder;
 
 /**
- * @group TokenFinder_Interface
+ * @group TokenFinder
  */
-class ITokenFinderTest extends \Tests\TestCase
+class TokenFinderTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\ITokenFinder
+     * @covers \PHP\Manipulator\TokenFinder
      */
     public function testFinder()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\ITokenFinder');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
-        $methods = $reflection->getMethods();
-        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
-        $evaluateMethod = $methods[0];
-        /* @var $evaluateMethod ReflectionMethod */
-        $this->assertSame('find', $evaluateMethod->getName(), 'Method has wrong name');
-        $this->assertSame(3, $evaluateMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
-        $parameters = $evaluateMethod->getParameters();
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenFinder');
+        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
+        $this->assertTrue($reflection->isSubclassOf('\PHP\Manipulator\AHelper'));
+
+        $findMethod = $reflection->getMethod('find');
+        /* @var $findMethod ReflectionMethod */
+        $this->assertSame('find', $findMethod->getName(), 'Method has wrong name');
+        $this->assertSame(3, $findMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
+        $parameters = $findMethod->getParameters();
 
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */

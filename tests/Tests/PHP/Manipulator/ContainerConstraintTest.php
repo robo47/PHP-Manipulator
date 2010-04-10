@@ -2,26 +2,25 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\IContainerConstraint;
+use PHP\Manipulator\ContainerConstraint;
 
 /**
  * @group ContainerConstraint_Interface
  */
-class IContainerConstraintTest extends \Tests\TestCase
+class ContainerConstraintTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\IContainerConstraint
+     * @covers \PHP\Manipulator\ContainerConstraint
      */
     public function testContainer()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\IContainerConstraint');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
-        $methods = $reflection->getMethods();
-        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
-        $evaluateMethod = $methods[0];
+        $reflection = new \ReflectionClass('PHP\Manipulator\ContainerConstraint');
+        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
+        $this->assertTrue($reflection->isSubclassOf('\PHP\Manipulator\AHelper'));
+
+        $evaluateMethod = $reflection->getMethod('evaluate');
         /* @var $evaluateMethod ReflectionMethod */
-        $this->assertSame('evaluate', $evaluateMethod->getName(), 'Method has wrong name');
         $this->assertSame(2, $evaluateMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $evaluateMethod->getParameters();
 

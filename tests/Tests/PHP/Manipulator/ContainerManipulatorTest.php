@@ -2,26 +2,26 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\IContainerManipulator;
+use PHP\Manipulator\ContainerManipulator;
 
 /**
- * @group ContainerManipulator_Interface
+ * @group ContainerManipulator
  */
-class IContainerManipulatorTest extends \Tests\TestCase
+class ContainerManipulatorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\IContainerManipulator
+     * @covers \PHP\Manipulator\ContainerManipulator
      */
     public function testContainer()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\IContainerManipulator');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
-        $methods = $reflection->getMethods();
-        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
-        $evaluateMethod = $methods[0];
+        $reflection = new \ReflectionClass('PHP\Manipulator\ContainerManipulator');
+        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
+        $this->assertTrue($reflection->isSubclassOf('\PHP\Manipulator\AHelper'));
+
+        $evaluateMethod = $reflection->getMethod('manipulate');
         /* @var $evaluateMethod ReflectionMethod */
-        $this->assertSame('manipulate', $evaluateMethod->getName(), 'Method has wrong name');
+        $this->assertTrue($evaluateMethod->isAbstract(), 'Method is not abstract');
         $this->assertSame(2, $evaluateMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $evaluateMethod->getParameters();
 

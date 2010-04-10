@@ -3,22 +3,22 @@
 namespace Tests\PHP\Manipulator;
 
 /**
- * @group Rule_Interface
+ * @group Rule
  */
-class IRuleTest extends \Tests\TestCase
+class RuleTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\IRule
+     * @covers \PHP\Manipulator\Rule
      */
-    public function testInterfaceMethods()
+    public function testClassMethods()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\IRule');
-        $this->assertTrue($reflection->isInterface(), 'Interface seems to not be an interface ? WTF!');
+        $reflection = new \ReflectionClass('PHP\Manipulator\Rule');
+        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
         $methods = $reflection->getMethods();
-        $this->assertCount(1, $methods, 'Interface has wrong number of methods');
-        $applyRuleToTokensMethod = $methods[0];
+        $applyRuleToTokensMethod = $reflection->getMethod('applyRuleToTokens');
         /* @var $applyRuleToTokensMethod ReflectionMethod */
+        $this->assertTrue($applyRuleToTokensMethod->isAbstract());
         $this->assertSame('applyRuleToTokens', $applyRuleToTokensMethod->getName(), 'Method has wrong name');
         $this->assertSame(1, $applyRuleToTokensMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $applyRuleToTokensMethod->getParameters();

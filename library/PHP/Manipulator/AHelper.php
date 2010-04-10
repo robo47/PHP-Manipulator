@@ -4,11 +4,11 @@ namespace PHP\Manipulator;
 
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
-use PHP\Manipulator\IContainerConstraint;
-use PHP\Manipulator\IContainerManipulator;
-use PHP\Manipulator\ITokenConstraint;
-use PHP\Manipulator\ITokenFinder;
-use PHP\Manipulator\ITokenManipulator;
+use PHP\Manipulator\ContainerConstraint;
+use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\TokenConstraint;
+use PHP\Manipulator\TokenFinder;
+use PHP\Manipulator\TokenManipulator;
 
 // @todo better name ?
 abstract class AHelper
@@ -93,7 +93,7 @@ abstract class AHelper
     /**
      * Load/Instantiate/Evaluate Token Constraint on a Token
      *
-     * @param \PHP\Manipulator\ITokenConstraint|string $constraint
+     * @param \PHP\Manipulator\TokenConstraint|string $constraint
      * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @param boolean $autoPrefix
@@ -102,18 +102,18 @@ abstract class AHelper
     public function evaluateConstraint($constraint, Token $token, $params = null, $autoPrefix = true)
     {
         $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\TokenConstraint\\', $autoPrefix);
-        if (!$constraint instanceof ITokenConstraint) {
-            $message = 'constraint is not instance of ITokenConstraint';
+        if (!$constraint instanceof \PHP\Manipulator\TokenConstraint) {
+            $message = 'constraint is not instance of \PHP\Manipulator\TokenConstraint';
             throw new \Exception($message);
         }
-        /* @var $constraint ITokenConstraint */
+        /* @var $constraint \PHP\Manipulator\TokenConstraint */
         return $constraint->evaluate($token, $params);
     }
 
     /**
      * Load/Instantiate/Evaluate Container Constraint on a Container
      *
-     * @param \PHP\Manipulator\IContainerConstraint|string $constraint
+     * @param \PHP\Manipulator\ContainerConstraint|string $constraint
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
@@ -122,18 +122,18 @@ abstract class AHelper
     public function evaluateContainerConstraint($constraint, TokenContainer $container, $params = null, $autoPrefix = true)
     {
         $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\ContainerConstraint\\', $autoPrefix);
-        if (!$constraint instanceof IContainerConstraint) {
-            $message = 'constraint is not instance of IContainerConstraint';
+        if (!$constraint instanceof \PHP\Manipulator\ContainerConstraint) {
+            $message = 'constraint is not instance of \PHP\Manipulator\ContainerConstraint';
             throw new \Exception($message);
         }
-        /* @var $constraint IContainerConstraint */
+        /* @var $constraint \PHP\Manipulator\ContainerConstraint */
         return $constraint->evaluate($container, $params);
     }
 
     /**
      * Load/Instantiate/Run a TokenManipulator on a Token
      *
-     * @param \PHP\Manipulator\ITokenManipulator $manipulator
+     * @param \PHP\Manipulator\TokenManipulator $manipulator
      * @param \PHP\Manipulator\Token $token
      * @param mixed $params
      * @param boolean $autoPrefix
@@ -142,18 +142,18 @@ abstract class AHelper
     {
         $manipulator = $this->getClassInstance($manipulator, 'PHP\Manipulator\TokenManipulator\\', $autoPrefix);
 
-        if (!$manipulator instanceof ITokenManipulator) {
-            $message = 'manipulator is not instance of ITokenManipulator';
+        if (!$manipulator instanceof \PHP\Manipulator\TokenManipulator) {
+            $message = 'manipulator is not instance of \PHP\Manipulator\TokenManipulator';
             throw new \Exception($message);
         }
-        /* @var $manipulator ITokenManipulator */
+        /* @var $manipulator \PHP\Manipulator\TokenManipulator */
         $manipulator->manipulate($token, $params);
     }
 
     /**
      * Load/Instantiate/Run a ContainManipulator on a Container
      *
-     * @param \PHP\Manipulator\IContainerManipulator|string $manipulator
+     * @param \PHP\Manipulator\ContainerManipulator|string $manipulator
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
@@ -162,18 +162,18 @@ abstract class AHelper
     {
         $manipulator = $this->getClassInstance($manipulator, 'PHP\Manipulator\ContainerManipulator\\', $autoPrefix);
 
-        if (!$manipulator instanceof IContainerManipulator) {
-            $message = 'manipulator is not instance of IContainerManipulator';
+        if (!$manipulator instanceof ContainerManipulator) {
+            $message = 'manipulator is not instance of \PHP\Manipulator\ContainerManipulator';
             throw new \Exception($message);
         }
 
-        /* @var $manipulator IContainerManipulator */
+        /* @var $manipulator  \PHP\Manipulator\ContainerManipulator */
         $manipulator->manipulate($container, $params);
     }
 
     /**
      *
-     * @param \PHP\Manipulator\ITokenFinder|string $finder
+     * @param \PHP\Manipulator\TokenFinder|string $finder
      * @param \PHP\Manipulator\Token $token
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
@@ -184,8 +184,8 @@ abstract class AHelper
     {
         $finder = $this->getClassInstance($finder, 'PHP\Manipulator\TokenFinder\\', $autoPrefix);
 
-        if (!$finder instanceof ITokenFinder) {
-            $message = 'finder is not instance of ITokenFinder';
+        if (!$finder instanceof \PHP\Manipulator\TokenFinder) {
+            $message = 'finder is not instance of \PHP\Manipulator\TokenFinder';
             throw new \Exception($message);
         }
 

@@ -3,11 +3,15 @@
 namespace PHP\Manipulator;
 
 use PHP\Manipulator\AHelper;
-use PHP\Manipulator\IRule;
 
 abstract class Rule
 extends AHelper
-implements IRule
 {
 
+    /**
+     * Performs the rule on the container
+     *
+     * @param \PHP\Manipulator\TokenContainer $container
+     */
+    abstract public function applyRuleToTokens(TokenContainer $container);
 }

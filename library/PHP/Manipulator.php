@@ -2,8 +2,8 @@
 
 namespace PHP;
 
-use PHP\Manipulator\IRule;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Rule;
 
 // @todo check if this class is really needed for anything elsethan version and githash ... seems like it does not really offer anything
 class Manipulator
@@ -43,10 +43,10 @@ class Manipulator
 
     /**
      *
-     * @param \PHP\Manipulator\IRule $rule
+     * @param \PHP\Manipulator\Rule $rule
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
-    public function addRule(IRule $rule)
+    public function addRule(Rule $rule)
     {
         $this->_rules[] = $rule;
         return $this;
@@ -68,10 +68,10 @@ class Manipulator
     /**
      * Remove Rule
      *
-     * @param \PHP\Manipulator\IRule $removeRule
+     * @param \PHP\Manipulator\Rule $removeRule
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
-    public function removeRule(IRule $removeRule)
+    public function removeRule(Rule $removeRule)
     {
         foreach ($this->_rules as $key => $rule) {
             if ($rule === $removeRule) {

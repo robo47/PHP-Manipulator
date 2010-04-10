@@ -248,7 +248,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->evaluateConstraint($constraint, $token);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of ITokenConstraint', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('constraint is not instance of \PHP\Manipulator\TokenConstraint', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -266,7 +266,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->findTokens($constraint, $token, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('finder is not instance of ITokenFinder', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('finder is not instance of \PHP\Manipulator\TokenFinder', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -283,7 +283,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->evaluateContainerConstraint($constraint, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of IContainerConstraint', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('constraint is not instance of \PHP\Manipulator\ContainerConstraint', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -300,7 +300,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->manipulateContainer($manipulator, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of IContainerManipulator', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\ContainerManipulator', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -317,7 +317,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->manipulateToken($manipulator, $token);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of ITokenManipulator', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\TokenManipulator', $e->getMessage(), 'Wrong exception message');
         }
     }
 }
