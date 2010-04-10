@@ -4,6 +4,7 @@ namespace Tests\PHP\Manipulator\TokenFinder;
 
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\TokenFinder\Mock;
+use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
@@ -34,7 +35,7 @@ extends \Tests\TestCase
         $data[] = array(
             new Token('Foo'),
             null,
-            $this->getContainerFromFixture($path . 'input0'),
+            new TokenContainer(),
             new Result()
         );
 
