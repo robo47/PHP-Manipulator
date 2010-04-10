@@ -34,12 +34,9 @@ extends Rule
 
         $foundPairs = array();
 
-        $searchingColon = false;
-        $foundToken = null;
         $inClass = false;
         $inFunction = false;
         $bracesStatus = 0;
-        $openInclude = false;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -69,43 +66,32 @@ extends Rule
             }
             if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
                 /* @var $token PHP\Manipulator\Token */
-                if ($this->evaluateConstraint('IsType', $token, $searchedTokens) && !$openInclude) {
-                    $searchingColon = true;
-                    $foundToken = $token;
-                    $openInclude = true;
-                }
-
-                if ($this->_isSearchingColon($searchingColon, $token) && $openInclude) {
-                    $foundPairs[] = array(
-                        'from' => $foundToken,
-                        'to' => $token,
-                    );
-                    $searchingColon = false;
-                    $foundToken = null;
-                    $openInclude = false;
+                if ($this->evaluateConstraint('IsType', $token, $searchedTokens)) {
+                    $foundPairs[] = $token;
                 }
             }
             $iterator->next();
         }
 
-        foreach ($foundPairs as $params) {
-            $this->manipulateContainer(
-                    'CreateMultilineCommentFromTokenToToken',
-                    $container,
-                    $params
-            );
+        foreach ($foundPairs as $start) {
+            try {
+                $result = $this->findTokens('IncludeAndRequire', $start, $container);
+                $this->manipulateContainer(
+                        'CreateMultilineCommentFromTokenToToken',
+                        $container,
+                        array(
+                            'from' => $result->getFirstToken(),
+                            'to' => $result->getLastToken(),
+                        )
+                );
+            } catch (\Exception $e) {
+                // @todo better way to Catch this Exception, named exceptions or exceptions with error-codes
+                // ignore exceptions which occur on nested include/require-stuff
+                if (false === strpos($e->getMessage(), 'does not exist in this container')) {
+                    throw $e;
+                }
+            }
         }
-    }
-
-    /**
-     * @param boolean $searchingColon
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    protected function _isSearchingColon($searchingColon, $token)
-    {
-        return true === $searchingColon &&
-            $token->getValue() == ';';
     }
 
     /**
