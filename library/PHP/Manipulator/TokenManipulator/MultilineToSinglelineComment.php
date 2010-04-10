@@ -19,15 +19,13 @@ extends TokenManipulator
             throw new \Exception('Token is no Multiline-comment');
         }
         $this->manipulateToken('RemoveCommentIndention', $token);
-        $value = $token->getValue();
-        $value = preg_split('~(\r\n|\n|\r)~', $value);
+        $value = preg_split('~(\r\n|\n|\r)~', $token->getValue());
 
         $newValue = '';
         foreach($value as $line) {
             // removes */ and * and /** and /**
-            $line = preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line);
             // @todo detected linebreak, fallback to \n
-            $newValue .= '//' . $line . "\n";
+            $newValue .= '//' . preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line) . "\n";
         }
 
         $token->setType(T_COMMENT);
