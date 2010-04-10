@@ -4,6 +4,7 @@ namespace Tests\Constraint;
 
 use \PHP\Manipulator\TokenContainer;
 use \PHP\Manipulator\Token;
+use \PHP\Manipulator\Util;
 
 class TokenContainerMatch extends \PHPUnit_Framework_Constraint
 {
