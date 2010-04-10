@@ -81,14 +81,21 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output6'),
         );
 
-//        #7
+        #7
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input7'),
+            $this->getContainerFromFixture($path . 'output7'),
+        );
+
+//        #8 switch
 //        $data[] = array(
 //            array(),
-//            $this->getContainerFromFixture($path . 'input7'),
-//            $this->getContainerFromFixture($path . 'output7'),
+//            $this->getContainerFromFixture($path . 'input8'),
+//            $this->getContainerFromFixture($path . 'output8'),
 //        );
 
-        #8
+        #9
         $data[] = array(
             array('useSpaces' => false),
             new TokenContainer("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),

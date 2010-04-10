@@ -7,7 +7,11 @@ use PHP\Manipulator\Cli\Config\Xml;
 
 class Xml extends Config
 {
-    
+
+    /**
+     *
+     * @param string $data
+     */
     protected function _initConfig($data)
     {
         $dom = new \DOMDocument();

@@ -52,15 +52,33 @@ extends Rule
 
             $this->checkAndChangeIndentionLevel($token);
 
+            if ($this->_isMultilineComment($token)) {
+                $this->indentMultilineComment($token);
+            }
+
             if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 $nextToken = $iterator->current();
 
                 $this->checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->indentWhitespace($token);
+                if ($this->_isMultilineComment($nextToken)) {
+                    $this->indentMultilineComment($nextToken);
+                }
             }
+
             $iterator->next();
         }
+    }
+
+    protected function _isMultilineComment(Token $token)
+    {
+        return $this->evaluateConstraint('IsMultilineComment', $token);
+    }
+
+    public function indentMultilineComment(Token $token)
+    {
+        $this->manipulateToken('IndentMultilineComment', $token, $this->getIndention($this->getIndentionLevel()));
     }
 
     /**
@@ -69,7 +87,7 @@ extends Rule
     public function indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-            $this->getIndention($this->getIndentionLevel());
+        $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
     }
 

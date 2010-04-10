@@ -5,6 +5,7 @@ namespace PHP;
 use PHP\Manipulator\IRule;
 use PHP\Manipulator\TokenContainer;
 
+// @todo check if this class is really needed for anything elsethan version and githash ... seems like it does not really offer anything
 class Manipulator
 {
     /**
