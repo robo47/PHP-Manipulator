@@ -37,4 +37,20 @@ class StatsTest extends \Tests\TestCase
         $match = preg_match($footer, $output);
         $this->assertTrue(false !== $match);
     }
+
+    /**
+     * @covers \PHP\Manipulator\Cli\Action\Stats::getConsoleOption
+     */
+    public function testGetConsoleOption()
+    {
+        $cli = new Cli();
+        $action = new Stats($cli);
+        $consoleOptions = $action->getConsoleOption();
+
+        $this->assertType('array', $consoleOptions);
+        $this->assertCount(1, $consoleOptions);
+
+        $this->assertType('\ezcConsoleOption', $consoleOptions[0]);
+        $this->markTestIncomplete('Test Values and stuff');
+    }
 }

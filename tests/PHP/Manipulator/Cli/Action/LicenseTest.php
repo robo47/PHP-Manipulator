@@ -59,4 +59,20 @@ class LicenseTest extends \Tests\TestCase
                 'ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF' . PHP_EOL .
                 'THE POSSIBILITY OF SUCH DAMAGE.' . PHP_EOL, $output);
     }
+
+    /**
+     * @covers \PHP\Manipulator\Cli\Action\License::getConsoleOption
+     */
+    public function testGetConsoleOption()
+    {
+        $cli = new Cli();
+        $action = new License($cli);
+        $consoleOptions = $action->getConsoleOption();
+
+        $this->assertType('array', $consoleOptions);
+        $this->assertCount(1, $consoleOptions);
+
+        $this->assertType('\ezcConsoleOption', $consoleOptions[0]);
+        $this->markTestIncomplete('Test Values and stuff');
+    }
 }

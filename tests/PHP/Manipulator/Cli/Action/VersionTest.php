@@ -37,4 +37,25 @@ class VersionTest extends \Tests\TestCase
                 'Homepage: TBD' . PHP_EOL .
                 'License: New BSD License' . PHP_EOL . PHP_EOL, $output);
     }
+
+    /**
+     * @covers \PHP\Manipulator\Cli\Action\Version::getConsoleOption
+     */
+    public function testGetConsoleOption()
+    {
+        $cli = new Cli();
+        $action = new Version($cli);
+        $consoleOptions = $action->getConsoleOption();
+
+        $this->assertType('array', $consoleOptions);
+        $this->assertCount(1, $consoleOptions);
+
+        $this->assertType('\ezcConsoleOption', $consoleOptions[0]);
+
+        $consoleOption = $consoleOptions[0];
+        /* @var $consoleOption ezcConsoleOption */
+
+//        $this->assertEquals('', $consoleOption->)
+        $this->markTestIncomplete('Test Values and stuff');
+    }
 }
