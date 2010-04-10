@@ -8,6 +8,11 @@ class Result
 implements \Countable
 {
 
+    /**
+     * Array with the found tokens
+     *
+     * @var array
+     */
     protected $_tokens = array();
 
     /**
