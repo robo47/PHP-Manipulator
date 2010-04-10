@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
+ * @todo refactoring with new TokenManipulator: MultilineToSinglelineComment
  * @group ContainerManipulator_CreateMultilineCommentFromTokenToToken
  */
 class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
@@ -19,26 +20,18 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     {
         $data = array();
 
-        $container = new TokenContainer("<?php \$blub = \$bla; ?>");
-        $from = $container[1]; // $blub
-        $to = $container[6];   // ;
-
         # 0
         $data[] = array(
-            $container,
-            array('from' => $from, 'to' => $to),
+            $c = new TokenContainer("<?php \$blub = \$bla; ?>"),
+            array('from' => $c[1], 'to' => $c[6]),
             new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
 
-        $container = new TokenContainer("<?php \$blub =/* foo */ \$bla; ?>");
-        $from = $container[1]; // $blub
-        $to = $container[7];   // ;
-
         # 1
         $data[] = array(
-            $container,
-            array('from' => $from, 'to' => $to),
+            $c = new TokenContainer("<?php \$blub =/* foo */ \$bla; ?>"),
+            array('from' => $c[1], 'to' => $c[7]),
             new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
