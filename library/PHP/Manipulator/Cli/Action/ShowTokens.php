@@ -8,13 +8,14 @@ use PHP\Manipulator\TokenContainer;
 
 class ShowTokens extends Action
 {
-    
+
     public function run()
     {
+
         $output = $this->getCli()->getConsoleOutput();
-        $file = $this->_param[1];
+        $file = $this->getCli()->getConsoleInput()->getOption('showtokens')->value;
         $file = realpath($file);
-        if (!\file_exists($file) || !\is_readable($file)) {
+        if (!\file_exists($file) || !\is_readable($file)|| !\is_file($file)) {
             throw new \Exception('Unable to open file: ' . $file);
         }
 
@@ -25,10 +26,11 @@ class ShowTokens extends Action
 
         $output->outputLine('Filesize: ' . $size . 'bytes');
         $output->outputLine('Filesize: ' . $size . 'bytes');
+
         echo 'Tokens: ' . count($container) . PHP_EOL . PHP_EOL;
 
         foreach ($container as $number => $token) {
-            echo $number . ') ' . $this->printToken($token) . PHP_EOL;
+            echo str_pad($number . ') ', 4, ' ') . $this->printToken($token) . PHP_EOL;
         }
     }
 
@@ -38,12 +40,12 @@ class ShowTokens extends Action
      */
     public function transformTokenValue($value)
     {
-        $value = str_replace(' ', '.', $value);
-        $value = str_replace("\t", '\t', $value);
-        $value = str_replace("\r", '\r' . "\r", $value);
-        $value = str_replace("\n", '\n' . "\n", $value);
+        $value = \str_replace(' ', '.', $value);
+        $value = \str_replace("\t", '\t', $value);
+        $value = \str_replace("\r", '\r' . "\r", $value);
+        $value = \str_replace("\n", '\n' . "\n", $value);
 
-        return str_replace('', '', $value);
+        return \str_replace('', '', $value);
     }
 
     /**
@@ -51,9 +53,9 @@ class ShowTokens extends Action
      */
     public function printToken(Token $token)
     {
-        $name = \token_name($token->getType());
+        $name = \str_pad(\token_name($token->getType()), 28, ' ');
         $value = $this->transformTokenValue($token->getValue());
-        return $name . ':' . $value;
+        return $name . ' | ' . $value;
     }
 
     /**
@@ -66,7 +68,7 @@ class ShowTokens extends Action
             new \ezcConsoleOption(
             'sh',
             'showtokens',
-            \ezcConsoleInput::TYPE_NONE,
+            \ezcConsoleInput::TYPE_STRING,
             null,
             false,
             'Prints out the Tokens of a file',
