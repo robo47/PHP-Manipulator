@@ -80,4 +80,13 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         $count = new ResultsMatch($expected);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
     }
+
+    /**
+     * @covers \Tests\Constraint\ResultsMatch::toString
+     */
+    public function testToString()
+    {
+        $count = new ResultsMatch(new Result());
+        $this->assertEquals('Result matches ', $count->toString());
+    }
 }

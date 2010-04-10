@@ -151,4 +151,13 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $count = new Count($expected);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
     }
+
+    /**
+     * @covers \Tests\Constraint\Count::toString
+     */
+    public function testToString()
+    {
+        $count = new Count(0);
+        $this->assertEquals('Count matches ', $count->toString());
+    }
 }

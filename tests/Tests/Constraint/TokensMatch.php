@@ -12,10 +12,18 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
      * @var PHP\Manipulator\Token
      */
     protected $_expectedToken = null;
+
     /**
      * @var boolean
      */
     protected $_strict = false;
+
+    /**
+     * Difference found on evaluation
+     *
+     * @var string
+     */
+    protected $_difference = '';
 
     /**
      *

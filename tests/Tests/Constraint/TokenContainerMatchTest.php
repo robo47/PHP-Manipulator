@@ -64,4 +64,13 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
         $count = new TokenContainerMatch($expected, $strict);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
     }
+
+    /**
+     * @covers \Tests\Constraint\TokenContainerMatch::toString
+     */
+    public function testToString()
+    {
+        $count = new TokenContainerMatch(new TokenContainer(), true);
+        $this->assertEquals('TokenContainer matches another Container', $count->toString());
+    }
 }

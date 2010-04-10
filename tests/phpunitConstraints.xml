@@ -11,7 +11,10 @@
     bootstrap="TestHelper.php">
     <filter>
         <whitelist>
-            <directory suffix=".php">./Tests/Constraint/</directory>
+            <file>./Tests/Constraint/Count.php</file>
+            <file>./Tests/Constraint/ResultsMatch.php</file>
+            <file>./Tests/Constraint/TokensMatch.php</file>
+            <file>./Tests/Constraint/TokenContainerMatch.php</file>
         </whitelist>
     </filter>
     <logging>

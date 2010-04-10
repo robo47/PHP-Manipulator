@@ -69,4 +69,13 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
         $count = new TokensMatch($expected, $strict);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
     }
+
+    /**
+     * @covers \Tests\Constraint\TokensMatch::toString
+     */
+    public function testToString()
+    {
+        $count = new TokensMatch(new Token('Foo'), true);
+        $this->assertEquals('Token matches another Token', $count->toString());
+    }
 }
