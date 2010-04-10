@@ -28,11 +28,19 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
             false
         );
 
-        # 1
+        # 1 Multiline-comment in code
         $data[] = array(
             $c = new TokenContainer("<?php \$blub =/* foo */ \$bla; ?>"),
             array('from' => $c[1], 'to' => $c[7]),
             new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
+            false
+        );
+
+        # 2 Multilinecomment nested in normal comment
+        $data[] = array(
+            $c = new TokenContainer("<?php \$blub =///* */\n \$bla; ?>"),
+            array('from' => $c[1], 'to' => $c[7]),
+            new TokenContainer("<?php /*\$blub =///* \n \$bla;*/ ?>"),
             false
         );
 
@@ -187,3 +195,4 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         }
     }
 }
+?>

@@ -112,6 +112,7 @@ extends ContainerManipulator
                 $value .= $token->getValue();
             }
         }
+        $value = str_replace('*/', '', $value);
         return $value;
     }
 
