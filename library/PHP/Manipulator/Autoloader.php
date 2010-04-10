@@ -12,6 +12,7 @@ class Autoloader
     {
         require_once 'ezc/Base/base.php';
     }
+
     /**
      * @param string $classname
      */

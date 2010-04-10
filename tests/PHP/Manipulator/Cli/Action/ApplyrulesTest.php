@@ -15,7 +15,7 @@ class ApplyrulesTest extends \Tests\TestCase
     {
         ob_start();
     }
-
+    
     public function tearDown()
     {
         \ob_clean();

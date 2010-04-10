@@ -9,11 +9,11 @@ use PHP\Manipulator\TokenContainer;
 
 class License extends Action
 {
-
+    
     public function run()
     {
         echo 'New BSD License' . PHP_EOL .
-             PHP_EOL .
+            PHP_EOL .
             'Copyright (c) 2010, Benjamin Steininger (Robo47)' . PHP_EOL .
             'All rights reserved.' . PHP_EOL .
             PHP_EOL .
@@ -50,18 +50,18 @@ class License extends Action
     {
         return array (
             new \ezcConsoleOption(
-                'l',
-                'license',
-                \ezcConsoleInput::TYPE_NONE,
-                null,
-                false,
-                'Shows the licese',
-                '',
-                array(),
-                array(),
-                true,
-                false,
-                true
+            'l',
+            'license',
+            \ezcConsoleInput::TYPE_NONE,
+            null,
+            false,
+            'Shows the licese',
+            '',
+            array(),
+            array(),
+            true,
+            false,
+            true
             )
         );
     }

@@ -8,16 +8,17 @@ use PHP\Manipulator\Cli\Action;
 
 class NonAbstractAction extends Action
 {
-
+    
     public function getInfo()
     {
         return 'getInfo()';
     }
-
+    
     public function run()
     {
-    }
 
+    }
+    
     public function getConsoleOption()
     {
         return array();
@@ -29,12 +30,12 @@ class NonAbstractAction extends Action
  */
 class ApplyrulesTest extends \Tests\TestCase
 {
-
+    
     public function setUp()
     {
         $this->setUseOutputBuffering(true);
     }
-
+    
     public function tearDown()
     {
         $this->setUseOutputBuffering(false);

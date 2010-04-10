@@ -20,7 +20,7 @@ abstract class Action
     public function __construct(Cli $cli)
     {
         $this->_cli = $cli;
-        // @todo init options from input
+// @todo init options from input
     }
 
     /**
@@ -42,4 +42,5 @@ abstract class Action
      * @return array Array of ezcConsoleOption
      */
     abstract public function getConsoleOption();
+
 }

@@ -8,30 +8,22 @@ class Cli
 {
 
     /**
-     *
      * @var float
      */
     protected $_start = - 1;
-
     /**
      * @var array
      */
     protected $_params = array();
-
     /**
-     *
      * @var \ezcConsoleInput
      */
     protected $_input = null;
-
     /**
-     *
      * @var \ezcConsoleOutput
      */
     protected $_output = null;
-
     /**
-     *
      * @var array
      */
     protected $_options = null;
@@ -58,12 +50,11 @@ class Cli
         $output->formats->success->color = 'green';
         $output->formats->failure->color = 'red';
 
-
         $options = $this->getConsoleOptions();
         $this->_options = $options;
-        foreach($options as $option) {
-            if(is_array($option)) {
-                foreach($option as $subOption) {
+        foreach ($options as $option) {
+            if (is_array($option)) {
+                foreach ($option as $subOption) {
                     $input->registerOption($subOption);
                 }
             } else {
@@ -90,18 +81,18 @@ class Cli
     {
         $options = array();
         $path = __DIR__ .
-                DIRECTORY_SEPARATOR . 'Cli' .
-                DIRECTORY_SEPARATOR . 'Action' .
-                DIRECTORY_SEPARATOR;
+            DIRECTORY_SEPARATOR . 'Cli' .
+            DIRECTORY_SEPARATOR . 'Action' .
+            DIRECTORY_SEPARATOR;
         $fileIterator = \File_Iterator_Factory::getFileIterator($path, '.php');
 
-        foreach($fileIterator as $file) {
+        foreach ($fileIterator as $file) {
             /* @var $actionClass SplFileInfo */
-            $actionClassname = substr($file->getFilename(), 0, -4);
+            $actionClassname = substr($file->getFilename(), 0, - 4);
             $action = $this->getAction($actionClassname);
 
             $options[$actionClassname] = array();
-            foreach($action->getConsoleOption() as $option) {
+            foreach ($action->getConsoleOption() as $option) {
                 $options[$actionClassname][] = $option;
             }
         }
@@ -120,7 +111,6 @@ class Cli
         $this->_input = $input;
         return $this;
     }
-
 
     /**
      * Set console output
@@ -194,9 +184,9 @@ class Cli
             $options = $this->getOptions();
 
             $actionName = false;
-            foreach($options as $key => $option) {
+            foreach ($options as $key => $option) {
                 if (is_array($option)) {
-                    foreach($option as $suboption) {
+                    foreach ($option as $suboption) {
                         if (false != $suboption->value) {
                             $actionName = $key;
                             break;
@@ -216,8 +206,8 @@ class Cli
             }
 
             $action = $this->getAction(
-                $actionName,
-                $this->_params
+                    $actionName,
+                    $this->_params
             );
 
             $output->outputLine();
@@ -226,14 +216,14 @@ class Cli
 
             if ($actionName !== 'Stats' && false !== $input->getOption('stats')->value) {
                 $action = $this->getAction(
-                    'Stats',
-                    $this->_params
+                        'Stats',
+                        $this->_params
                 );
                 $action->run();
             }
-        } catch(\ezcConsoleException $e) {
+        } catch (\ezcConsoleException $e) {
             $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage(), 'failure');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $output->outputText('something else fucked up: ' . $e->getMessage(), 'failure');
         }
     }

@@ -11,12 +11,12 @@ use PHP\Manipulator\Cli\Action\Stats;
  */
 class StatsTest extends \Tests\TestCase
 {
-
+    
     public function setUp()
     {
         ob_start();
     }
-
+    
     public function tearDown()
     {
         \ob_clean();

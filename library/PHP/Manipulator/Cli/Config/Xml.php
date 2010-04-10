@@ -7,12 +7,12 @@ use PHP\Manipulator\Cli\Config\Xml;
 
 class Xml extends Config
 {
-
+    
     protected function _initConfig($data)
     {
         $dom = new \DOMDocument();
         $loaded = @$dom->loadXML($data);
-        if(!$loaded) {
+        if (!$loaded) {
             throw new \Exception('Unable to parse data');
         }
         $this->_parseOptions($dom);
@@ -48,7 +48,7 @@ class Xml extends Config
     protected function _parseRuleOptions(\DOMNode $options)
     {
         $ruleOptions = array();
-        foreach($options->childNodes as $option) {
+        foreach ($options->childNodes as $option) {
             if (strtolower($option->nodeName) == 'option') {
                 $name = $option->attributes->getNamedItem('name');
                 $value = $option->attributes->getNamedItem('value');
@@ -59,7 +59,7 @@ class Xml extends Config
                     } else {
                         $ruleOptions[$name->value] = $value->value;
                     }
-                    
+
                 }
             }
         }
@@ -75,28 +75,28 @@ class Xml extends Config
     protected function _castValue($type, $value)
     {
         $type = strtolower($type);
-        switch($type) {
+        switch ($type) {
             case 'boolean':
             case 'bool':
-                $value = (bool)$value;
+                $value = (bool) $value;
                 break;
             case 'int':
             case 'integer':
-                $value = (int)$value;
+                $value = (int) $value;
                 break;
             case 'array':
-                $value = (array)$value;
+                $value = (array) $value;
                 break;
             case 'object':
-                $value = (object)$value;
+                $value = (object) $value;
                 break;
             case 'string':
-                $value = (string)$value;
+                $value = (string) $value;
                 break;
             case 'float':
             case 'double':
             case 'real':
-                $value = (float)$value;
+                $value = (float) $value;
                 break;
             default:
                 throw \Exception('unknown type: ' . $type);
@@ -114,13 +114,13 @@ class Xml extends Config
     {
         $xpath = new \DOMXpath($dom);
         $list = $xpath->query('//config/rules');
-        foreach($list as $node) {
+        foreach ($list as $node) {
             /* @var $node DOMNode*/
-            foreach($node->childNodes as $option) {
+            foreach ($node->childNodes as $option) {
                 /* @var $option DOMNode*/
                 if ($option->nodeType === XML_ELEMENT_NODE) {
                     $nodeName = strtolower($option->nodeName);
-                    switch($nodeName) {
+                    switch ($nodeName) {
                         case 'ruleset':
                             $prefix = $option->attributes->getNamedItem('prefix');
                             if ($prefix instanceof \DOMAttr) {
@@ -180,6 +180,4 @@ class Xml extends Config
             }
         }
     }
-
-
 }

@@ -7,7 +7,6 @@ use PHP\Manipulator\TokenContainer;
 
 class Manipulator
 {
-
     /**
      * Version number
      */
@@ -24,7 +23,6 @@ class Manipulator
      * @var array
      */
     protected $_rules = array();
-
     /**
      * Array with files
      *
@@ -125,9 +123,9 @@ class Manipulator
     public function addFiles($files)
     {
         if ($files instanceof \Iterator || is_array($files)) {
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 // string-cast if it is something else (SplFileInfo)
-                $this->addFile((string)$file);
+                $this->addFile((string) $file);
             }
         } elseif(is_string($files)) {
             $this->addFile($files);
