@@ -144,10 +144,10 @@ class RemoveBeginNewlineTest extends \Tests\TestCase
      * @dataProvider manipluateProvider
      * @covers \PHP\Manipulator\TokenManipulator\RemoveBeginNewline::manipulate
      */
-    public function testManipulate($token, $newToken, $strict)
+    public function testManipulate($actualToken, $expectedToken, $strict)
     {
         $manipulator = new RemoveBeginNewline();
-        $manipulator->manipulate($token);
-        $this->assertTokenMatch($token, $newToken, $strict);
+        $manipulator->manipulate($actualToken);
+        $this->assertTokenMatch($expectedToken, $actualToken, $strict);
     }
 }

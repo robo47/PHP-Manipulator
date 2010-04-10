@@ -42,10 +42,10 @@ extends \Tests\TestCase
      * @dataProvider manipluateProvider
      * @covers \PHP\Manipulator\TokenManipulator\IndentMultilineComment::manipulate
      */
-    public function testManipulate($token, $expectedToken, $indention, $strict)
+    public function testManipulate($actualToken, $expectedToken, $indention, $strict)
     {
         $manipulator = new IndentMultilineComment();
-        $manipulator->manipulate($token, $indention);
-        $this->assertTokenMatch($expectedToken, $token, $strict);
+        $manipulator->manipulate($actualToken, $indention);
+        $this->assertTokenMatch($expectedToken, $actualToken, $strict);
     }
 }
