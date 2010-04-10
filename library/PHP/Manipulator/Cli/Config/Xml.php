@@ -93,13 +93,17 @@ class Xml extends Config
             case 'string':
                 $value = (string) $value;
                 break;
+            case 'linebreaks':
+                $value = str_replace('\n', "\n", $value);
+                $value = str_replace('\r', "\r", $value);
+                break;
             case 'float':
             case 'double':
             case 'real':
                 $value = (float) $value;
                 break;
             default:
-                throw \Exception('unknown type: ' . $type);
+                throw \Exception('unknown cast-type: ' . $type);
                 break;
         }
         return $value;

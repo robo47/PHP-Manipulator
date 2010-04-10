@@ -79,7 +79,7 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertType('\Baa\Foo\Rule\FirstRule', $rule);
         /* @var $rule \PHP\Manipulator\Rule */
-        $this->assertCount(9, $rule->getOptions());
+        $this->assertCount(10, $rule->getOptions());
 
         $this->assertType('integer', $rule->getOption('integerOne'));
         $this->assertSame(1, $rule->getOption('integerOne'));
@@ -107,5 +107,8 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertType('float', $rule->getOption('double'));
         $this->assertEquals(1.23, $rule->getOption('double'));
+
+        $this->assertType('string', $rule->getOption('linebreaks'));
+        $this->assertEquals("\n\r\n\r", $rule->getOption('linebreaks'));
     }
 }

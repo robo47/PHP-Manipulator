@@ -14,6 +14,7 @@
             <option name="float" value="1.23" cast="float" />
             <option name="real" value="1.23" cast="real" />
             <option name="double" value="1.23" cast="double" />
+            <option name="linebreaks" value="\n\r\n\r" cast="linebreaks" />
         </rule>
     </rules>
 </config>
