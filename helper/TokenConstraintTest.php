@@ -22,7 +22,7 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            PHP_Formatter_Token::factory(array(T_WHITESPACE, "\n")),
+            Token::factory(array(T_WHITESPACE, "\n")),
             true
         );
 

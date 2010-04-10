@@ -21,8 +21,8 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            PHP_Formatter_Token::factory(array(T_BOOLEAN_AND, "AND")),
-            PHP_Formatter_Token::factory(array(T_BOOLEAN_AND, "and")),
+            Token::factory(array(T_BOOLEAN_AND, "AND")),
+            Token::factory(array(T_BOOLEAN_AND, "and")),
             true
         );
 
@@ -33,7 +33,7 @@ extends \Tests\TestCase
      * @dataProvider manipluateProvider
      * @covers __completeclassname__
      */
-    public function testManipulate($token, $newToken, $strict)
+    public function testManipulate($actualToken, $expectedToken, $strict)
     {
         $this->markTestSkipped('not implemented yet');
         $manipulator = new __classname__();
