@@ -7,6 +7,7 @@ use Tests\Constraint\Count;
 // @todo test faile-message and stuff
 class CountTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return array
      */
@@ -30,14 +31,14 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         # 2
         $data[] = array(
-            array(1,2,3,4,5),
+            array(1, 2, 3, 4, 5),
             5,
             true
         );
 
         # 3
         $data[] = array(
-            array(1,2,3,4,5),
+            array(1, 2, 3, 4, 5),
             6,
             false
         );
@@ -77,14 +78,14 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         # 2
         $data[] = array(
-            new \ArrayObject(array(1,2,3,4,5)),
+            new \ArrayObject(array(1, 2, 3, 4, 5)),
             5,
             true
         );
 
         # 2
         $data[] = array(
-            new \ArrayObject(array(1,2,3,4,5)),
+            new \ArrayObject(array(1, 2, 3, 4, 5)),
             6,
             false
         );
@@ -126,14 +127,14 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         # 2
         $data[] = array(
-            new \ArrayIterator(array(1,2,3,4,5)),
+            new \ArrayIterator(array(1, 2, 3, 4, 5)),
             5,
             true
         );
 
         # 3
         $data[] = array(
-            new \ArrayIterator(array(1,2,3,4,5)),
+            new \ArrayIterator(array(1, 2, 3, 4, 5)),
             6,
             false
         );

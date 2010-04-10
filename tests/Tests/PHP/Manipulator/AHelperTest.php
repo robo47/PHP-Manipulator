@@ -227,9 +227,9 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new NonAbstractHelper();
 
         $actualResult = $abstractHelper->findTokens(
-            $finder,
-            $token,
-            $container
+                $finder,
+                $token,
+                $container
         );
 
         $this->assertSame($expectedResult, $actualResult);

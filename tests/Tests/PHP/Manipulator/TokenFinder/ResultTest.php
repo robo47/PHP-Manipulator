@@ -23,7 +23,6 @@ extends \Tests\TestCase
         $this->assertCount(0, $result);
     }
 
-
     /**
      * @covers \PHP\Manipulator\TokenFinder\Result::addToken
      */
@@ -181,5 +180,4 @@ extends \Tests\TestCase
 
         $this->assertSame(array($t1, $t2, $t3), $result->getTokens());
     }
-
 }

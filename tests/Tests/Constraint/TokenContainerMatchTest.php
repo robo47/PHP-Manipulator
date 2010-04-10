@@ -10,6 +10,7 @@ use Tests\Constraint\TokenContainerMatch;
 // @todo more tests and check diffs!
 class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return array
      */

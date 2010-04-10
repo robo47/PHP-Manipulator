@@ -45,12 +45,12 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
         $expectedResultTokens = $this->_expectedResult->getTokens();
         $actualResultTokens = $other->getTokens();
 
-        if(count($expectedResultTokens) != count($actualResultTokens)) {
+        if (count($expectedResultTokens) != count($actualResultTokens)) {
             return false;
         }
 
-        foreach($expectedResultTokens as $key => $token) {
-            if($token !== $actualResultTokens[$key]) {
+        foreach ($expectedResultTokens as $key => $token) {
+            if ($token !== $actualResultTokens[$key]) {
                 return false;
             }
         }

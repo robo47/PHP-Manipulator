@@ -16,4 +16,5 @@ extends AHelper
      * @param mixed $params
      */
     abstract public function evaluate(TokenContainer $container, $params = null);
+
 }

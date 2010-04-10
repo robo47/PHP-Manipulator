@@ -8,6 +8,7 @@ use PHP\Manipulator\TokenContainer;
 abstract class ContainerManipulator
 extends AHelper
 {
+
     /**
      * Manipulates a container
      *
@@ -15,4 +16,5 @@ extends AHelper
      * @param mixed $params
      */
     abstract public function manipulate(TokenContainer $container, $params = null);
+
 }

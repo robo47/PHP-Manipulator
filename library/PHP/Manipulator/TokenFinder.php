@@ -19,4 +19,5 @@ extends AHelper
      * @return \PHP\Manipulator\TokenFinder\Result
      */
     abstract public function find(Token $token, TokenContainer $container, $params = null);
+
 }

@@ -8,6 +8,7 @@ use PHP\Manipulator\Token;
 abstract class TokenConstraint
 extends AHelper
 {
+
     /**
      * Evaluates a constraint for a token $token.
      *
@@ -16,4 +17,5 @@ extends AHelper
      * @return bool
      */
     abstract public function evaluate(Token $token, $params = null);
+
 }

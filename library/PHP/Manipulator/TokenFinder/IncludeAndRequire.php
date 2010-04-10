@@ -11,6 +11,7 @@ use PHP\Manipulator\Token;
 class IncludeAndRequire
 extends TokenFinder
 {
+
     /**
      * Finds tokens
      *
@@ -29,10 +30,10 @@ extends TokenFinder
         $pos = $container->getOffsetByToken($token);
         $iterator->seek($pos);
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $token = $iterator->current();
             $result->addToken($token);
-            if($token->getValue() == ';') {
+            if ($token->getValue() == ';') {
                 break;
             }
             $iterator->next();

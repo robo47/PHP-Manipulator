@@ -9,6 +9,7 @@ use Tests\Constraint\ResultsMatch;
 // @todo test faile-message and stuff
 class ResultsMatchTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @return array
      */

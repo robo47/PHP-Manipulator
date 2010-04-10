@@ -16,4 +16,5 @@ extends AHelper
      * @param mixed $params
      */
     abstract public function manipulate(Token $token, $params = null);
+
 }

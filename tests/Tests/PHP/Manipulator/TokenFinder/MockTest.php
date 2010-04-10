@@ -13,6 +13,7 @@ use PHP\Manipulator\Token;
 class MockTest
 extends \Tests\TestCase
 {
+
     /**
      * @covers \PHP\Manipulator\TokenFinder\Mock::__construct
      */

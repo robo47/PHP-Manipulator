@@ -10,6 +10,7 @@ use PHP\Manipulator\Token;
 class Mock
 extends TokenFinder
 {
+
     /**
      * @var \PHP\Manipulator\TokenFinder\Result
      */

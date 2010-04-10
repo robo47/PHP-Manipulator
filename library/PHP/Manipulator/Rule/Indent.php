@@ -70,12 +70,12 @@ extends Rule
             $iterator->next();
         }
     }
-
+    
     protected function _isMultilineComment(Token $token)
     {
         return $this->evaluateConstraint('IsMultilineComment', $token);
     }
-
+    
     public function indentMultilineComment(Token $token)
     {
         $this->manipulateToken('IndentMultilineComment', $token, $this->getIndention($this->getIndentionLevel()));
@@ -87,7 +87,7 @@ extends Rule
     public function indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-        $this->getIndention($this->getIndentionLevel());
+            $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
     }
 

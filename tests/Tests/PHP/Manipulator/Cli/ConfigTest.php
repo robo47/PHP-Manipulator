@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli\Config;
 
 class NonAbstract extends Config
 {
-
+    
     public $data;
     
     protected function _initConfig($data)

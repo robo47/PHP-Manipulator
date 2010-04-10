@@ -10,12 +10,12 @@ use PHP\Manipulator\Cli\Action\ApplyRules;
  */
 class ApplyrulesTest extends \Tests\TestCase
 {
-
+    
     public function setUp()
     {
         ob_start();
     }
-
+    
     public function tearDown()
     {
         \ob_clean();

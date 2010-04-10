@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 class Result
 implements \Countable
 {
+
     protected $_tokens = array();
 
     /**
@@ -85,7 +86,7 @@ implements \Countable
     {
         $result = new Result();
 
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             $result->addToken($token);
         }
         return $result;
