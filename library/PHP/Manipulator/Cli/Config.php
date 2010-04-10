@@ -13,14 +13,12 @@ abstract class Config
      * @var array
      */
     protected $_options = array();
-
     /**
      * Array with all Rules
      *
      * @var array
      */
     protected $_rules = array();
-
     /**
      * Array with all Files
      *
@@ -103,7 +101,7 @@ abstract class Config
      */
     protected function _getOption($name)
     {
-        if(isset($this->_options[$name])) {
+        if (isset($this->_options[$name])) {
             return $this->_options[$name];
         }
         throw new \Exception('something which should not happen, just happened ... world is shutting down');
@@ -126,7 +124,6 @@ abstract class Config
         return $this;
     }
 
-
     /**
      * Add Ruleset
      *
@@ -142,7 +139,7 @@ abstract class Config
         $classname = $prefix . $ruleset;
         $ruleset = new $classname();
         /* @var $ruleset \PHP\Manipulator\IRuleset */
-        foreach($ruleset->getRules() as $rule) {
+        foreach ($ruleset->getRules() as $rule) {
             $this->_rules[] = $rule;
         }
         return $this;
@@ -166,8 +163,8 @@ abstract class Config
         // @todo fix for bug!! when not doing it, first file is added two times
         \iterator_count($files);
 
-        foreach($files as $file) {
-            $this->addFile((string)$file);
+        foreach ($files as $file) {
+            $this->addFile((string) $file);
         }
 
         return $this;
@@ -184,7 +181,7 @@ abstract class Config
         if (true === $isFile) {
             $data = self::getFileContent($data);
         }
-        switch(strtolower($type)) {
+        switch (strtolower($type)) {
             case 'xml':
                 $type = '\PHP\Manipulator\Cli\Config\Xml';
                 break;
@@ -193,7 +190,7 @@ abstract class Config
         }
         return new $type($data);
     }
-
+    
     public static function getFileContent($file)
     {
         $oldFile = $file;

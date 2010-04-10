@@ -97,7 +97,7 @@ class XmlTest extends \Tests\TestCase
         $this->assertEquals(array("foo"), $rule->getOption('array'));
 
         $this->assertType('object', $rule->getOption('object'));
-        $this->assertEquals((object)"foo", $rule->getOption('object'));
+        $this->assertEquals((object) "foo", $rule->getOption('object'));
 
         $this->assertType('float', $rule->getOption('real'));
         $this->assertEquals(1.23, $rule->getOption('real'));

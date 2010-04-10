@@ -220,7 +220,6 @@ class ManipulatorTest extends \Tests\TestCase
 
         $this->assertCount(1, $manipulator->getFiles());
         $this->assertContains($file, $manipulator->getFiles());
-
     }
 
     /**

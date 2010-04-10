@@ -10,7 +10,7 @@ use PHP\Manipulator\TokenContainer;
 
 class Stats extends Action
 {
-
+    
     public function run()
     {
         $time = round(microtime(true) - $this->getCli()->getStartTime(), 2);
@@ -40,6 +40,6 @@ class Stats extends Action
         );
         return array(
             $stats
-         );
+        );
     }
 }

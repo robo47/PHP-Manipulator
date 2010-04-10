@@ -8,7 +8,7 @@ use PHP\Manipulator\TokenContainer;
 
 class ShowTokens extends Action
 {
-
+    
     public function run()
     {
         $output = $this->getCli()->getConsoleOutput();
@@ -64,19 +64,19 @@ class ShowTokens extends Action
     {
         return array (
             new \ezcConsoleOption(
-                'sh',
-                'showtokens',
-                \ezcConsoleInput::TYPE_NONE,
-                null,
-                false,
-                'Prints out the Tokens of a file',
-                '-- LONG --',
-                array(),
-                array(),
-                true,
-                false,
-                true
+            'sh',
+            'showtokens',
+            \ezcConsoleInput::TYPE_NONE,
+            null,
+            false,
+            'Prints out the Tokens of a file',
+            '-- LONG --',
+            array(),
+            array(),
+            true,
+            false,
+            true
             )
-         );
+        );
     }
 }

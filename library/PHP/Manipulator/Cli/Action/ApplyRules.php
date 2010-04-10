@@ -10,7 +10,7 @@ use PHP\Manipulator\TokenContainer;
 
 class ApplyRules extends Action
 {
-
+    
     public function run()
     {
         $input = $this->getCli()->getConsoleInput();
@@ -20,7 +20,7 @@ class ApplyRules extends Action
 
         try {
             $config = Config::factory('xml', $configFile, true);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $output->outputLine('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
             return;
         }
@@ -63,7 +63,7 @@ class ApplyRules extends Action
                 $rule->applyRuleToTokens($container);
                 $progress->advance();
             }
-            
+
             $container->saveToFile($file);
         }
 
@@ -114,6 +114,6 @@ class ApplyRules extends Action
         return array(
             $ar,
             $config
-         );
+        );
     }
 }

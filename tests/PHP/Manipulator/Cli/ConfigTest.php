@@ -6,13 +6,14 @@ use PHP\Manipulator\Cli\Config;
 
 class NonAbstract extends Config
 {
-    public $data;
 
+    public $data;
+    
     protected function _initConfig($data)
     {
         $this->data = $data;
     }
-
+    
     public function setOption($option, $value)
     {
         $this->_options[$option] = $value;
@@ -152,7 +153,6 @@ class ConfigTest extends \Tests\TestCase
         $this->assertEquals('blub', $rules[1]->getOption('bla'));
     }
 
-
     /**
      * @covers \PHP\Manipulator\Cli\Config::addRule
      * @covers \PHP\Manipulator\Cli\Config::getRules
@@ -173,7 +173,6 @@ class ConfigTest extends \Tests\TestCase
         $this->assertCount(1, $rules);
         $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
     }
-
 
     /**
      * @covers \PHP\Manipulator\Cli\Config::addRule
