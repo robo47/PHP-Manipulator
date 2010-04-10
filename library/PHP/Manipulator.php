@@ -43,7 +43,7 @@ class Manipulator
 
     /**
      *
-     * @param PHP\Manipulator\IRule $rule
+     * @param \PHP\Manipulator\IRule $rule
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function addRule(IRule $rule)
@@ -68,7 +68,7 @@ class Manipulator
     /**
      * Remove Rule
      *
-     * @param PHP\Manipulator\IRule $removeRule
+     * @param \PHP\Manipulator\IRule $removeRule
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function removeRule(IRule $removeRule)

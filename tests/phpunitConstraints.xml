@@ -11,7 +11,7 @@
     bootstrap="TestHelper.php">
     <filter>
         <whitelist>
-            <directory suffix=".php">../library/PHP/</directory>
+            <directory suffix=".php">./Tests/Constraint/</directory>
         </whitelist>
     </filter>
     <logging>
@@ -24,8 +24,8 @@
              highLowerBound="70" />
     </logging>
     <testsuites>
-        <testsuite name="PHP_Manipulator Test Suite">
-            <directory>./Tests/PHP/</directory>
+        <testsuite name="PHP_Manipulator Tests-Test Suite">
+            <directory>./Tests/Constraint/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
