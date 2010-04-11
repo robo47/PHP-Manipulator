@@ -14,12 +14,14 @@ abstract class Config
      * @var array
      */
     protected $_options = array();
+
     /**
      * Array with all Rules
      *
      * @var array
      */
     protected $_rules = array();
+
     /**
      * Array with all Files
      *
@@ -172,6 +174,28 @@ abstract class Config
     }
 
     /**
+     * Add directory
+     *
+     * @param string $path
+     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     */
+    public function addIterator(\Iterator $iterator)
+    {
+        // @todo fix for bug!! when not doing it, first file is added two times
+        \iterator_count($iterator);
+
+        foreach ($iterator as $file) {
+            if ($file instanceof \SplFileInfo) {
+                $file = (string)$file;
+            }
+            $this->addFile((string) $file);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Factory
      *
      * @param string $type
      * @param string $data Path or Code
@@ -191,7 +215,13 @@ abstract class Config
         }
         return new $type($data);
     }
-    
+
+    /**
+     * Get file content
+     *
+     * @param string $file
+     * @return string
+     */
     public static function getFileContent($file)
     {
         $oldFile = $file;

@@ -9,19 +9,45 @@ class Xml extends Config
 {
 
     /**
+     * Init the config
      *
      * @param string $data
      */
     protected function _initConfig($data)
     {
         $dom = new \DOMDocument();
+        $old = \libxml_use_internal_errors(true);
         $loaded = @$dom->loadXML($data);
         if (!$loaded) {
-            throw new \Exception('Unable to parse data');
+            $error = $this->_errorMessage(\libxml_get_last_error());
+            var_dump($error);
+            throw new \Exception('Unable to parse data: ' . PHP_EOL . $error);
         }
+        \libxml_use_internal_errors($old);
         $this->_parseOptions($dom);
         $this->_parseRules($dom);
         $this->_parseFiles($dom);
+    }
+
+    /**
+     * Get error message
+     *
+     * @param libXMLError $error
+     * @return string
+     */
+    protected function _errorMessage($error)
+    {
+        $message = '';
+        if($error instanceof \LibXMLError) {
+            /* @var $error libXMLError */
+            $message .= 'Level: ' . $error->level . PHP_EOL;
+            $message .= 'Code: ' . $error->code . PHP_EOL;
+            $message .= 'Column: ' . $error->column . PHP_EOL;
+            $message .= 'Message: ' . $error->message . PHP_EOL;
+            $message .= 'File: ' . $error->file . PHP_EOL;
+            $message .= 'Line: ' . $error->line . PHP_EOL;
+        }
+        return $message;
     }
 
     /**
@@ -45,6 +71,7 @@ class Xml extends Config
     }
 
     /**
+     * Parse Rules-Options out of the DOMNode
      *
      * @param DOMNode $options
      * @return array
@@ -63,7 +90,6 @@ class Xml extends Config
                     } else {
                         $ruleOptions[$name->value] = $value->value;
                     }
-
                 }
             }
         }
@@ -180,6 +206,12 @@ class Xml extends Config
                         case 'directory':
                             $this->addDirectory($option->nodeValue);
                             break;
+                        case 'iterator':
+                            $iterator = $this->_parseIterator($option);
+                            if ($iterator instanceof \Iterator) {
+                                $this->addIterator($iterator);
+                            }
+                            break;
                         default:
                         // ignore
                             break;
@@ -187,5 +219,47 @@ class Xml extends Config
                 }
             }
         }
+    }
+
+    /**
+     * Parse iterator
+     *
+     * @param DOMNode $node
+     * @return Iterator|null
+     */
+    protected function _parseIterator(\DOMNode $node)
+    {
+        $paths = array();
+        $prefixes = array();
+        $suffixes = array();
+        $exclude = array();
+        foreach ($node->childNodes as $option) {
+            if ($option->nodeType === XML_ELEMENT_NODE) {
+                $nodeName = strtolower($option->nodeName);
+                $value = $option->nodeValue;
+                switch ($nodeName) {
+                    case 'prefix':
+                        $prefixes[] = $value;
+                        break;
+                    case 'suffix':
+                        $suffixes[] = $value;
+                        break;
+                    case 'path':
+                        $paths[] = $value;
+                        break;
+                    case 'exclude':
+                        $exclude[] = $value;
+                        break;
+                    default:
+                        // ignore
+                        break;
+                }
+            }
+        }
+        $iterator = null;
+        if (!empty($paths)) {
+            $iterator = \File_Iterator_Factory::getFileIterator($paths, $suffixes, $prefixes, $exclude);
+        }
+        return $iterator;
     }
 }

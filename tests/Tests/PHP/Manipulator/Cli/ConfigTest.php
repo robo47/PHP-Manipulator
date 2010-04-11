@@ -6,14 +6,14 @@ use PHP\Manipulator\Cli\Config;
 
 class NonAbstract extends Config
 {
-    
+
     public $data;
-    
+
     protected function _initConfig($data)
     {
         $this->data = $data;
     }
-    
+
     public function setOption($option, $value)
     {
         $this->_options[$option] = $value;
@@ -81,6 +81,30 @@ class ConfigTest extends \Tests\TestCase
         $this->assertCount(2, $config->getFiles());
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Baa.php', $config->getFiles());
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Foo.php', $config->getFiles());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Cli\Config::addIterator
+     * @covers \PHP\Manipulator\Cli\Config::getFiles
+     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     */
+    public function testAddIterator()
+    {
+        $config = $this->getConfig(0);
+
+        $this->assertCount(0, $config->getFiles());
+
+        $iterator = \File_Iterator_Factory::getFileIterator(\getcwd() .'/_fixtures/Cli/Config/testDir0', '.php');
+
+        $fluent = $config->addIterator($iterator);
+
+
+        $this->assertSame($config, $fluent, 'Does not provide fluent interface');
+
+        $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Baa.php', $config->getFiles());
+        $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Foo.php', $config->getFiles());
+
+        $this->assertCount(2, $config->getFiles());
     }
 
     /**

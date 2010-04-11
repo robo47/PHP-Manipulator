@@ -6,7 +6,6 @@ use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator\Cli\Config\Xml as XmlConfig;
 
 /**
- * @group Cli_Config
  * @group Cli_Config_Xml
  */
 class XmlTest extends \Tests\TestCase
@@ -21,7 +20,6 @@ class XmlTest extends \Tests\TestCase
 
         $options = $config->getOptions();
         $this->assertType('array', $options);
-        $this->assertCount(3, $options);
 
         $this->assertArrayHasKey('rulePrefix', $options);
         $this->assertEquals('\Baa\Foo\Rule\\', $options['rulePrefix']);
@@ -30,9 +28,10 @@ class XmlTest extends \Tests\TestCase
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.phtml', $options['fileSuffix']);
 
+        $this->assertCount(3, $options);
+
         $rules = $config->getRules();
         $this->assertType('array', $rules);
-        $this->assertCount(6, $rules);
 
         $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
 
@@ -55,13 +54,20 @@ class XmlTest extends \Tests\TestCase
         $this->assertType('\Foo\Baa\Rule\SixthsRule', $rules[5]);
         $this->assertEquals('baa', $rules[5]->getOption('foo'));
 
+        $this->assertCount(6, $rules);
 
         $files = $config->getFiles();
         $this->assertType('array', $files);
-        $this->assertCount(2, $files);
 
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir0/Blub.phtml', $files);
         $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir1/Baafoo.php', $files);
+
+        $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir2/Baafoo.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir2/Baa.php', $files);
+
+        $this->assertContains(\getcwd() . '/_fixtures/Cli/Config/testDir3/Baa.php', $files);
+
+        $this->assertCount(5, $files);
     }
 
     /**
@@ -79,7 +85,6 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertType('\Baa\Foo\Rule\FirstRule', $rule);
         /* @var $rule \PHP\Manipulator\Rule */
-        $this->assertCount(10, $rule->getOptions());
 
         $this->assertType('integer', $rule->getOption('integerOne'));
         $this->assertSame(1, $rule->getOption('integerOne'));
@@ -110,5 +115,7 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertType('string', $rule->getOption('linebreaks'));
         $this->assertEquals("\n\r\n\r", $rule->getOption('linebreaks'));
+
+        $this->assertCount(10, $rule->getOptions());
     }
 }
