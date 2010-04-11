@@ -26,7 +26,7 @@ class NonAbstractAction extends Action
 }
 
 /**
- * @group TokenContainerIterator
+ * @group TokenContainer\Iterator
  */
 class ApplyrulesTest extends \Tests\TestCase
 {

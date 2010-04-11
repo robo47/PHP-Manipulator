@@ -1,23 +1,25 @@
 <?php
 
-namespace PHP\Manipulator;
+namespace PHP\Manipulator\TokenContainer;
 
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-class TokenContainerIterator implements \Iterator, \Countable, \SeekableIterator
+class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
 
     /**
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
+
     /**
      * Current Position in the $this->_keys-array
      *
      * @var integer
      */
     protected $_pos = 0;
+
     /**
      * @var array
      */

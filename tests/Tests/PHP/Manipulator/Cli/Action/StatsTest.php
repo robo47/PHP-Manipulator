@@ -7,7 +7,7 @@ use PHP\Manipulator;
 use PHP\Manipulator\Cli\Action\Stats;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\Stats
  */
 class StatsTest extends \Tests\TestCase
 {

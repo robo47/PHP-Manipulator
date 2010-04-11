@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\ApplyRules;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\ApplyRules
  */
 class ApplyrulesTest extends \Tests\TestCase
 {

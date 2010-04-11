@@ -1,13 +1,17 @@
 <?php
 
-namespace PHP\Manipulator;
+namespace PHP\Manipulator\TokenContainer;
 
+use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-class TokenContainerReverseIterator extends TokenContainerIterator
+class ReverseIterator extends Iterator
 {
-    
+    /**
+     *
+     * @param TokenContainer $container 
+     */
     public function __construct(TokenContainer $container)
     {
         parent::__construct($container);

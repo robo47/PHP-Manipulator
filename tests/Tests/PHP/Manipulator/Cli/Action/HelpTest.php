@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\Help;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\Help
  */
 class HelpTest extends \Tests\TestCase
 {

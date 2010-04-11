@@ -476,7 +476,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container = new TokenContainer();
 
         $iterator = $container->getIterator();
-        $this->assertType('PHP\Manipulator\TokenContainerIterator', $iterator);
+        $this->assertType('PHP\Manipulator\TokenContainer\Iterator', $iterator);
     }
 
     /**
@@ -487,7 +487,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container = new TokenContainer();
 
         $iterator = $container->getReverseIterator();
-        $this->assertType('PHP\Manipulator\TokenContainerReverseIterator', $iterator);
+        $this->assertType('PHP\Manipulator\TokenContainer\ReverseIterator', $iterator);
     }
 
     /**

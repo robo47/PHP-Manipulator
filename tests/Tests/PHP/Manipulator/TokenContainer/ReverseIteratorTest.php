@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\PHP\Manipulator;
+namespace Tests\PHP\Manipulator\TokenContainer;
 
-use PHP\Manipulator\TokenContainerReverseIterator;
+use PHP\Manipulator\TokenContainer\ReverseIterator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
  * @group TokenContainer_Iterator
  */
-class TokenContainerReverseIteratorTest extends \Tests\TestCase
+class ReverseIteratorTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\TokenContainerReverseIterator
+     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator
      */
     public function testIteratorClass()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainerReverseIterator');
-        $this->assertTrue($reflection->isSubclassOf('PHP\Manipulator\TokenContainerIterator'));
+        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainer\ReverseIterator');
+        $this->assertTrue($reflection->isSubclassOf('PHP\Manipulator\TokenContainer\Iterator'));
     }
 
     /**
@@ -42,12 +42,12 @@ class TokenContainerReverseIteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainerReverseIterator
+     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator
      */
     public function testReverseIterator()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainerReverseIterator($container);
+        $iterator = new TokenContainer\ReverseIterator($container);
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[6], $iterator->current());

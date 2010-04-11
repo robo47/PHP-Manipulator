@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\License;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\License
  */
 class LicenseTest extends \Tests\TestCase
 {

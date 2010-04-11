@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\ShowTokens;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\ShowTokens
  */
 class ShowTokensTest extends \Tests\TestCase
 {

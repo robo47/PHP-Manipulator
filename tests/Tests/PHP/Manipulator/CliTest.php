@@ -8,7 +8,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenContainerIterator
+ * @group TokenContainer\Iterator
  */
 class CliTest extends \Tests\TestCase
 {

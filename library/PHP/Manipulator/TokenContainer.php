@@ -3,13 +3,11 @@
 namespace PHP\Manipulator;
 
 use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenContainerIterator;
-use PHP\Manipulator\TokenContainerReverseIterator;
+use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenContainer\ReverseIterator;
 
 class TokenContainer
-implements \ArrayAccess,
-\Countable,
-\IteratorAggregate
+implements \ArrayAccess, \Countable, \IteratorAggregate
 {
 
     /**
@@ -433,21 +431,21 @@ implements \ArrayAccess,
      *
      * Implements SPL::IteratorAggregate
      *
-     * @return \PHP\Manipulator\TokenContainerIterator
+     * @return \PHP\Manipulator\TokenContainer\Iterator
      */
     public function getIterator()
     {
-        return new TokenContainerIterator($this);
+        return new Iterator($this);
     }
 
     /**
      * Get a reverse Iterator for traversing the Container from End to begin
      *
-     * @return \PHP\Manipulator\TokenContainerReverseIterator
+     * @return \PHP\Manipulator\TokenContainer\ReverseIterator
      */
     public function getReverseIterator()
     {
-        return new TokenContainerReverseIterator($this);
+        return new ReverseIterator($this);
     }
 
     /**

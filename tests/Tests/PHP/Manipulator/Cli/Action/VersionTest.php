@@ -7,16 +7,16 @@ use PHP\Manipulator;
 use PHP\Manipulator\Cli\Action\Version;
 
 /**
- * @group TokenContainerIterator
+ * @group Action\Version
  */
 class VersionTest extends \Tests\TestCase
 {
-    
+
     public function setUp()
     {
         ob_start();
     }
-    
+
     public function tearDown()
     {
         \ob_clean();
