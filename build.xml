@@ -17,7 +17,6 @@
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
-
     <!-- Run php lint check on lib and tests -->
     <target name="phplint">
         <apply executable   = "php"
@@ -77,7 +76,7 @@
     <target name="phpcb">
         <mkdir dir="${basedir}/build/reports/phpcb" />
         <exec executable="phpcb" dir="${basedir}/build/reports/phpcb/">
-        <arg line="--log &quot;${basedir}/build/logs/&quot;
+            <arg line="--log &quot;${basedir}/build/logs/&quot;
         --source &quot;${basedir}/library/PHP/&quot;
         --output &quot;${basedir}/build/reports/phpcb/&quot;" />
         </exec>

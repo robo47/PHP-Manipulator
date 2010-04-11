@@ -10,7 +10,7 @@ use Baa\Foo\Rule\FourthRule;
 class FirstRuleset
 implements IRuleset
 {
-
+    
     public function getRules()
     {
         return array(

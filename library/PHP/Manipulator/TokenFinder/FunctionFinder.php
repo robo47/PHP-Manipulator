@@ -10,6 +10,7 @@ use PHP\Manipulator\Token;
 class FunctionFinder
 extends TokenFinder
 {
+
     /**
      * Finds tokens
      *
@@ -28,14 +29,14 @@ extends TokenFinder
         $iterator = $container->getIterator();
         $iterator->seek($pos);
 
-        if($this->_includeMethodProperties($params) && !$this->_includePhpDoc($params)) {
+        if ($this->_includeMethodProperties($params) && !$this->_includePhpDoc($params)) {
             // travel reverse as long as there is only whitespace and stuff
             $iterator->previous();
-            while($iterator->valid()) {
+            while ($iterator->valid()) {
                 if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                     $iterator->next();
-                    while($iterator->valid()) {
-                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_PUBLIC,T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                    while ($iterator->valid()) {
+                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                             $iterator->next();
                         } else {
                             break;
@@ -47,14 +48,14 @@ extends TokenFinder
             }
         }
 
-        if($this->_includePhpDoc($params)) {
+        if ($this->_includePhpDoc($params)) {
             // travel reverse as long as there is only whitespace and stuff
             $iterator->previous();
-            while($iterator->valid()) {
+            while ($iterator->valid()) {
                 if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                     $iterator->next();
-                    while($iterator->valid()) {
-                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_DOC_COMMENT, T_PUBLIC,T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                    while ($iterator->valid()) {
+                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                             $iterator->next();
                         } else {
                             break;
@@ -98,21 +99,21 @@ extends TokenFinder
         }
         return $result;
     }
-
+    
     protected function _includePhpDoc($params)
     {
-        if(is_array($params) && isset($params['includePhpdoc'])) {
-            return (bool)$params['includePhpdoc'];
+        if (is_array($params) && isset($params['includePhpdoc'])) {
+            return (bool) $params['includePhpdoc'];
         } else {
             return false;
         }
     }
 
-    // wheter to check for public/protected/private
+// wheter to check for public/protected/private
     protected function _includeMethodProperties($params)
     {
-        if(is_array($params) && isset($params['includeMethodProperties'])) {
-            return (bool)$params['includeMethodProperties'];
+        if (is_array($params) && isset($params['includeMethodProperties'])) {
+            return (bool) $params['includeMethodProperties'];
         } else {
             return false;
         }

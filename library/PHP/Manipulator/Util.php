@@ -5,7 +5,6 @@ namespace PHP\Manipulator;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-
 //@todo move methods to Constraint and drop
 class Util
 {
@@ -40,7 +39,7 @@ class Util
      *
      * Returns string-presentation of both containers next to each other
      *
-     * 
+     *
      *
      * @param \PHP\Manipulator\TokenContainer $first
      * @param \PHP\Manipulator\TokenContainer $secod

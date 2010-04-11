@@ -14,7 +14,6 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @var \PHP\Manipulator\Tokenfinder\Result
      */
     protected $_expectedResult = null;
-
     /**
      * Cause of missmatch
      *
@@ -80,22 +79,22 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
         $values = array();
         $longest = 0;
 
-        while($actualIterator->valid() || $expectedIterator->valid()) {
+        while ($actualIterator->valid() || $expectedIterator->valid()) {
 
             $expected = '';
             $actual = '';
 
-            if($expectedIterator->valid()) {
-                $expected = (string)self::dumpToken($expectedIterator->current());
+            if ($expectedIterator->valid()) {
+                $expected = (string) self::dumpToken($expectedIterator->current());
             }
-            if($actualIterator->valid()) {
-                $actual = (string)self::dumpToken($actualIterator->current());
+            if ($actualIterator->valid()) {
+                $actual = (string) self::dumpToken($actualIterator->current());
             }
 
             $values[] = array(
                 'actual' => $actual,
                 'expected' => $expected,
-                'missmatch' => (bool)($actualIterator->current() === $expectedIterator)
+                'missmatch' => (bool) ($actualIterator->current() === $expectedIterator)
             );
 
             if (strlen($actual) > $longest) {
@@ -109,7 +108,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
             $expectedIterator->next();
             $actualIterator->next();
         }
-        
+
         $comparision = '    ';
         $comparision .= str_pad('expected (' . count($expectedResult) . ')', $longest + 2, ' ', STR_PAD_BOTH);
         $comparision .= ' | ';
@@ -117,7 +116,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
         $comparision .= PHP_EOL;
         $comparision .= PHP_EOL;
         $i = 0;
-        foreach($values as $val) {
+        foreach ($values as $val) {
             if (true === $val['missmatch']) {
                 $comparision .= '####### NEXT IS DIFFERENT ## ' . PHP_EOL;
             }

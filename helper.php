@@ -13,7 +13,7 @@ $createFixturesDummy = false;
 $inputOnly = false;
 $type = strtolower($_SERVER['argv'][1]);
 
-switch($type) {
+switch ($type) {
     case 'tokenfinder':
     case 'tf':
         $typeName = 'TokenFinder';
@@ -54,7 +54,7 @@ $name = $_SERVER['argv'][2];
 $newFile = './library/PHP/Manipulator/' . $typeName . '/' . $name . '.php';
 $newTestFile = './tests/Tests/PHP/Manipulator/' . $typeName . '/' . $name . 'Test.php';
 
-if (file_exists($newTestFile) || file_exists($newFile)){
+if (file_exists($newTestFile) || file_exists($newFile)) {
     echo 'file already exists!!!';
     exit();
 }
@@ -65,7 +65,7 @@ $testCode = file_get_contents('./helper/' . $typeName . 'Test.php');
 $newFilePath = '';
 $newTestPath = '';
 
-if($createFixturesDummy && $_SERVER['argc'] > 3) {
+if ($createFixturesDummy && $_SERVER['argc'] > 3) {
     echo 'creating fixtures: ' . $_SERVER['argv'][3] . PHP_EOL;
     $path = './tests/_fixtures/' . $typeName . '/' . $name;
     @mkdir($path, 0755, true);
@@ -86,9 +86,9 @@ $vars = array(
     'path' => $typeName . '/' . $name,
 );
 
-foreach($vars as $key => $value) {
-    $fileCode = str_replace('__'.$key.'__', $value, $fileCode);
-    $testCode = str_replace('__'.$key.'__', $value, $testCode);
+foreach ($vars as $key => $value) {
+    $fileCode = str_replace('__' . $key . '__', $value, $fileCode);
+    $testCode = str_replace('__' . $key . '__', $value, $testCode);
 }
 
 echo 'Writing Files' . PHP_EOL;

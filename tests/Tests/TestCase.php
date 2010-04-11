@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator\Util;
-
 use Tests\Constraint\Count;
 use Tests\Constraint\ResultsMatch;
 use Tests\Constraint\TokenContainerMatch;
@@ -33,7 +32,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Result From Container
-     * 
+     *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param integer $start
      * @param integer $end
@@ -121,7 +120,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 $message
         );
     }
-
+    
     public function assertFinderResultsMatch($expectedResult, $actualResult, $message = '')
     {
         $constraint = new ResultsMatch(

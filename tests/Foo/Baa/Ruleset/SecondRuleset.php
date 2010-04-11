@@ -10,6 +10,7 @@ use Foo\Baa\Rule\SixthsRule;
 class SecondRuleset
 implements IRuleset
 {
+
     public function getRules()
     {
         return array(

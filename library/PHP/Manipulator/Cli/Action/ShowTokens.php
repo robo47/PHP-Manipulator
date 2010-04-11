@@ -8,14 +8,14 @@ use PHP\Manipulator\TokenContainer;
 
 class ShowTokens extends Action
 {
-
+    
     public function run()
     {
 
         $output = $this->getCli()->getConsoleOutput();
         $file = $this->getCli()->getConsoleInput()->getOption('showtokens')->value;
         $file = realpath($file);
-        if (!\file_exists($file) || !\is_readable($file)|| !\is_file($file)) {
+        if (!\file_exists($file) || !\is_readable($file) || !\is_file($file)) {
             throw new \Exception('Unable to open file: ' . $file);
         }
 

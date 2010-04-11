@@ -7,7 +7,9 @@ use PHP\Manipulator\TokenContainerIterator;
 use PHP\Manipulator\TokenContainerReverseIterator;
 
 class TokenContainer
-implements \ArrayAccess, \Countable, \IteratorAggregate
+implements \ArrayAccess,
+\Countable,
+\IteratorAggregate
 {
 
     /**

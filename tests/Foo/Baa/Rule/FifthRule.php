@@ -15,6 +15,6 @@ extends Rule
      */
     public function apply(TokenContainer $container)
     {
-
+        
     }
 }

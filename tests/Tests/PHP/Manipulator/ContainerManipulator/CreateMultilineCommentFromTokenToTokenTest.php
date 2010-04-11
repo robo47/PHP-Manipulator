@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @todo refactoring with new TokenManipulator: MultilineToSinglelineComment
  * @group ContainerManipulator_CreateMultilineCommentFromTokenToToken
  */
 class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
@@ -195,4 +194,5 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         }
     }
 }
+
 ?>
