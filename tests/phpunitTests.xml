@@ -15,6 +15,8 @@
             <file>./Tests/Constraint/ResultsMatch.php</file>
             <file>./Tests/Constraint/TokensMatch.php</file>
             <file>./Tests/Constraint/TokenContainerMatch.php</file>
+            <file>./Tests/Util.php</file>
+            <file>./Tests/TestCase.php</file>
         </whitelist>
     </filter>
     <logging>
@@ -29,6 +31,7 @@
     <testsuites>
         <testsuite name="PHP_Manipulator Tests-Test Suite">
             <directory>./Tests/Constraint/</directory>
+            <file>./Tests/UtilTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -6,6 +6,7 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\Tokenfinder;
 use PHP\Manipulator\Tokenfinder\Result;
+use Tests\Util;
 
 class ResultsMatch extends \PHPUnit_Framework_Constraint
 {
@@ -14,6 +15,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @var \PHP\Manipulator\Tokenfinder\Result
      */
     protected $_expectedResult = null;
+
     /**
      * Cause of missmatch
      *
@@ -67,99 +69,6 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     *
-     * @param \PHP\Manipulator\Tokenfinder\Result $expectedResult
-     * @param \PHP\Manipulator\Tokenfinder\Result $actualResult
-     */
-    public static function compareResults(Result $expectedResult, Result $actualResult)
-    {
-        $expectedIterator = new \ArrayIterator($expectedResult->getTokens());
-        $actualIterator = new \ArrayIterator($actualResult->getTokens());
-
-        $values = array();
-        $longest = 0;
-
-        while ($actualIterator->valid() || $expectedIterator->valid()) {
-
-            $expected = '';
-            $actual = '';
-
-            if ($expectedIterator->valid()) {
-                $expected = (string) self::dumpToken($expectedIterator->current());
-            }
-            if ($actualIterator->valid()) {
-                $actual = (string) self::dumpToken($actualIterator->current());
-            }
-
-            $values[] = array(
-                'actual' => $actual,
-                'expected' => $expected,
-                'missmatch' => (bool) ($actualIterator->current() === $expectedIterator)
-            );
-
-            if (strlen($actual) > $longest) {
-                $longest = strlen($actual);
-            }
-
-            if (strlen($expected) > $longest) {
-                $longest = strlen($expected);
-            }
-
-            $expectedIterator->next();
-            $actualIterator->next();
-        }
-
-        $comparision = '    ';
-        $comparision .= str_pad('expected (' . count($expectedResult) . ')', $longest + 2, ' ', STR_PAD_BOTH);
-        $comparision .= ' | ';
-        $comparision .= str_pad('actual(' . count($actualResult) . ')', $longest + 2, ' ', STR_PAD_BOTH);
-        $comparision .= PHP_EOL;
-        $comparision .= PHP_EOL;
-        $i = 0;
-        foreach ($values as $val) {
-            if (true === $val['missmatch']) {
-                $comparision .= '####### NEXT IS DIFFERENT ## ' . PHP_EOL;
-            }
-            $comparision .= str_pad($i . ') ', 4, ' ');
-            $comparision .= str_pad($val['expected'], $longest + 2, ' ');
-            $comparision .= ' | ';
-            $comparision .= str_pad($val['actual'], $longest + 2, ' ');
-            $comparision .= PHP_EOL;
-            $i++;
-        }
-        return $comparision;
-    }
-
-    /**
-     * @todo duplicates with \PHP\Manip\Util::dumpToken
-     * @param Token $token
-     * @return <type>
-     */
-    public static function dumpToken(Token $token)
-    {
-        $type = $token->getType();
-        $value = $token->getValue();
-        $typeName = '[SIMPLE]';
-        if (null !== $type) {
-            $typeName = token_name($token->getType());
-        }
-        $length = (string) mb_strlen($value, 'utf-8');
-        $search = array("\n\r", "\n", "\r", "\t", " ");
-        $replace = array("\\n\\r", "\\n", "\\r", "\\t", ".");
-
-        $value = str_replace($search, $replace, $value);
-
-        $line = $token->getLinenumber();
-
-        if (null === $line) {
-            $line = 'NULL';
-        }
-        return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
-            str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
-            str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
-    }
-
-    /**
      * @param mixed   $other
      * @param string  $description
      * @param boolean $not
@@ -169,7 +78,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     {
         return 'Results do not match: ' . PHP_EOL .
             'Cause: ' . $this->_cause . PHP_EOL .
-            self::compareResults($this->_expectedResult, $other);
+            Util::compareResults($this->_expectedResult, $other);
     }
 
     /**

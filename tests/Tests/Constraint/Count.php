@@ -27,6 +27,7 @@ class Count extends \PHPUnit_Framework_Constraint
     }
 
     /**
+     * Evaluate
      *
      * @param PHP\Manipulator\Token $other
      * @return boolean
@@ -48,19 +49,16 @@ class Count extends \PHPUnit_Framework_Constraint
     }
 
     /**
+     * Checks if the object is countable
      *
      * @param mixed $other
      * @return boolean
      */
     public function _isCountable($other)
     {
-        if ($other instanceof \Countable) {
-            return true;
-        }
-        if ($other instanceof \Iterator) {
-            return true;
-        }
-        if (is_array($other)) {
+        if ($other instanceof \Countable ||
+            $other instanceof \Iterator ||
+            is_array($other)) {
             return true;
         }
 
@@ -74,16 +72,14 @@ class Count extends \PHPUnit_Framework_Constraint
      */
     protected function _getCount($other)
     {
-        if ($other instanceof \Countable) {
+        if ($other instanceof \Countable ||
+            is_array($other)) {
             return count($other);
         }
         if ($other instanceof \Iterator) {
             return \iterator_count($other);
         }
-        if (is_array($other)) {
-            return count($other);
-        }
-        throw new \Exception('unexpected event: hell froze over!');
+        throw new \Exception('This should not happen! :)');
     }
 
     /**

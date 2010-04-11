@@ -4,7 +4,7 @@ namespace Tests\Constraint;
 
 use \PHP\Manipulator\TokenContainer;
 use \PHP\Manipulator\Token;
-use \PHP\Manipulator\Util;
+use \Tests\Util;
 
 class TokenContainerMatch extends \PHPUnit_Framework_Constraint
 {
@@ -13,6 +13,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_expectedContainer = null;
+
     /**
      * @var boolean
      */
@@ -97,6 +98,70 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
             PHP_EOL . $containerDiff;
 
         return $message;
+    }
+
+    /**
+     * Compare Containers
+     *
+     * Returns string-presentation of both containers next to each other
+     *
+     * @param \PHP\Manipulator\TokenContainer $first
+     * @param \PHP\Manipulator\TokenContainer $secod
+     */
+    public function compareContainers(TokenContainer $first,
+        TokenContainer $second)
+    {
+        $firstDump = Util::dumpContainer($first);
+        $secondDump = Util::dumpContainer($second);
+
+        $firstDumpAsArray = preg_split('~(\n|\r\n|\r)~', $firstDump);
+        $secondDumpAsArray = preg_split('~(\n|\r\n|\r)~', $secondDump);
+
+        $cOneIterator = new \ArrayIterator($firstDumpAsArray);
+        $cTwoIterator = new \ArrayIterator($secondDumpAsArray);
+
+        $length = Util::getLongestLineLength($firstDumpAsArray);
+
+        $cOneCount = (count($cOneIterator) - 2);
+        $cTwoCount = (count($cTwoIterator) - 2);
+
+        $code = '';
+        $code .= str_pad('Tokens: ' . $cOneCount, ($length + 6), ' ', STR_PAD_BOTH) . ' |';
+        $code .= str_pad('Tokens: ' . $cTwoCount, ($length + 6), ' ', STR_PAD_BOTH);
+        $code .= PHP_EOL;
+
+        $i = 1;
+        while ($cOneIterator->valid() || $cTwoIterator->valid()) {
+
+            $line1 = '';
+            $line2 = '';
+
+            if ($cOneIterator->valid()) {
+                $line1 = (string) $cOneIterator->current();
+                $cOneIterator->next();
+            }
+
+            if ($cTwoIterator->valid()) {
+                $line2 = (string) $cTwoIterator->current();
+                $cTwoIterator->next();
+            }
+
+            // is STRICT! ignores not set linenumber
+            if ($line1 != $line2) {
+                $code .= '####### NEXT IS DIFFERENT ## ' . PHP_EOL;
+            }
+            $currLine = '';
+            $currLine .= str_pad($line1, ($length + 1), ' ', STR_PAD_RIGHT) . ' |  ';
+            $currLine .= $line2 . PHP_EOL;
+
+            $j = '';
+            if ($i > 2) {
+                $j = ($i - 2) . ')';
+            }
+            $code .= str_pad($j, 4, ' ', STR_PAD_LEFT) . ' ' . $currLine;
+            $i++;
+        }
+        return $code;
     }
 
     /**
