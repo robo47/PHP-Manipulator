@@ -6,7 +6,9 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\ApplyRules;
 
 /**
- * @group Action\ApplyRules
+ * @group Cli
+ * @group Cli\Action
+ * @group Cli\Action\ApplyRules
  */
 class ApplyrulesTest extends \Tests\TestCase
 {

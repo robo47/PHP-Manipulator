@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
+ * @group TokenContainer
  * @group TokenContainer\Iterator
  */
 class IteratorTest extends \Tests\TestCase

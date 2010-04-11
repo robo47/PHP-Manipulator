@@ -6,7 +6,9 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\License;
 
 /**
- * @group Action\License
+ * @group Cli
+ * @group Cli\Action
+ * @group Cli\Action\License
  */
 class LicenseTest extends \Tests\TestCase
 {
@@ -22,7 +24,7 @@ class LicenseTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Action\License::__construct
+     * @covers \PHP\Manipulator\Cli\Action\License::run
      */
     public function testRun()
     {

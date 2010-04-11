@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsClosingCurlyBrace
+ * @group TokenConstraint
+ * @group TokenConstraint\IsClosingCurlyBrace
  */
 class IsClosingCurlyBraceTest extends \Tests\TestCase
 {

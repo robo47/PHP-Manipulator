@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_ReplaceLogicalOperatorsWithBooleanOperators
+ * @group Rule
+ * @group Rule\ReplaceLogicalOperatorsWithBooleanOperators
  */
 class ReplaceLogicalOperatorsWithBooleanOperatorsTest extends \Tests\TestCase
 {

@@ -7,7 +7,8 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenFinder_Result
+ * @group TokenFinder
+ * @group TokenFinder\Result
  */
 class ResultTest
 extends \Tests\TestCase

@@ -8,19 +8,19 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenContainer\Iterator
+ * @group Cli
  */
 class CliTest extends \Tests\TestCase
 {
     
     public function setUp()
     {
-        $this->setUseOutputBuffering(true);
+        \ob_start();
     }
     
     public function tearDown()
     {
-        $this->setUseOutputBuffering(false);
+        \ob_end_clean();
     }
 
     /**

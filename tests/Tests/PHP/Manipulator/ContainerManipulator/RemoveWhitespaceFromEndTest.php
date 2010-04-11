@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_RemoveWhitespaceFromEnd
+ * @group ContainerManipulator
+ * @group ContainerManipulator\RemoveWhitespaceFromEnd
  */
 class RemoveWhitespaceFromEndTest extends \Tests\TestCase
 {

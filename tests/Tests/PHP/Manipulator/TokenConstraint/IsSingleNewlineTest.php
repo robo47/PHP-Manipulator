@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsSingleNewline
+ * @group TokenConstraint
+ * @group TokenConstraint\IsSingleNewline
  */
 class IsSingleNewlineTest extends \Tests\TestCase
 {

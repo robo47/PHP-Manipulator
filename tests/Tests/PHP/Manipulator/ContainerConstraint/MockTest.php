@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerConstraint_Mock
+ * @group ContainerConstraint
+ * @group ContainerConstraint\Mock
  */
 class MockTest extends \Tests\TestCase
 {

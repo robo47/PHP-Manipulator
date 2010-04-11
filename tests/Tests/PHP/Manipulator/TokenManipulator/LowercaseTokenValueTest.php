@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\LowercaseTokenValue;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_LowercaseTokenValue
+ * @group TokenFinder
+ * @group TokenFinder\LowercaseTokenValue
  */
 class LowercaseTokenValueTest extends \Tests\TestCase
 {

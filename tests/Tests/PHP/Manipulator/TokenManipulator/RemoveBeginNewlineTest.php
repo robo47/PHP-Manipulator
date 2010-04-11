@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\RemoveBeginNewline;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_RemoveBeginNewline
+ * @group TokenFinder
+ * @group TokenFinder\RemoveBeginNewline
  */
 class RemoveBeginNewlineTest extends \Tests\TestCase
 {

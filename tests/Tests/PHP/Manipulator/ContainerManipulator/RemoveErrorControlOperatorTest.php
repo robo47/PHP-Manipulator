@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_RemoveErrorControlOperator
+ * @group ContainerManipulator
+ * @group ContainerManipulator\RemoveErrorControlOperator
  */
 class RemoveErrorControlOperatorTest extends \Tests\TestCase
 {

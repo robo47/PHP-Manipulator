@@ -5,7 +5,7 @@ namespace Tests\PHP\Manipulator;
 use PHP\Manipulator\TokenManipulator;
 
 /**
- * @group TokenManipulator_Interface
+ * @group TokenManipulator
  */
 class TokenManipulatorTest extends \Tests\TestCase
 {

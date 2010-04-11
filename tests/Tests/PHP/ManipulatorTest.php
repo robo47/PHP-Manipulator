@@ -5,7 +5,7 @@ namespace Tests\PHP;
 use PHP\Manipulator;
 
 /**
- * @group PHP_Manipulator
+ * @group Manipulator
  */
 class ManipulatorTest extends \Tests\TestCase
 {

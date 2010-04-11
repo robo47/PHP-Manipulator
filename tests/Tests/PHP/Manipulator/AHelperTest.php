@@ -8,15 +8,18 @@ use PHP\Manipulator\TokenContainer;
 
 class NonAbstractHelper extends AHelper
 {
-    
+
     public $init = false;
-    
+
     public function init()
     {
         $this->init = true;
     }
 }
 
+/**
+ * @group AHelper
+ */
 class AHelperTest extends \Tests\TestCase
 {
 

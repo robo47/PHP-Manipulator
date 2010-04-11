@@ -7,7 +7,9 @@ use PHP\Manipulator;
 use PHP\Manipulator\Cli\Action\Version;
 
 /**
- * @group Action\Version
+ * @group Cli
+ * @group Cli\Action
+ * @group Cli\Action\Version
  */
 class VersionTest extends \Tests\TestCase
 {

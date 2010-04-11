@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_RemoveMultipleEmptyLines
+ * @group Rule
+ * @group Rule\RemoveMultipleEmptyLines
  */
 class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
 {

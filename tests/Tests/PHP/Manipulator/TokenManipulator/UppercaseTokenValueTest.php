@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\UppercaseTokenValue;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_UppercaseTokenValue
+ * @group TokenFinder
+ * @group TokenFinder\UppercaseTokenValue
  */
 class UppercaseTokenValueTest extends \Tests\TestCase
 {

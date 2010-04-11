@@ -4,6 +4,9 @@ namespace Test\PHP\Manipulator;
 
 use PHP\Manipulator\IRuleset;
 
+/**
+ * @group IRuleset
+ */
 class IRulesetTest extends \Tests\TestCase
 {
 

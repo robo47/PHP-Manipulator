@@ -6,7 +6,9 @@ use PHP\Manipulator\Cli\Config;
 use PHP\Manipulator\Cli\Config\Xml as XmlConfig;
 
 /**
- * @group Cli_Config_Xml
+ * @group Cli\
+ * @group Cli\Config
+ * @group Cli\Config\Xml
  */
 class XmlTest extends \Tests\TestCase
 {

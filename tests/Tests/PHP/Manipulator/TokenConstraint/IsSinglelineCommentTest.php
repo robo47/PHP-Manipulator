@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsSinglelineComment
+ * @group TokenConstraint
+ * @group TokenConstraint\IsSinglelineComment
  */
 class IsSinglelineCommentTest extends \Tests\TestCase
 {

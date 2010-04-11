@@ -8,7 +8,8 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenFinder_FunctionFinder
+ * @group TokenFinder
+ * @group TokenFinder\FunctionFinder
  */
 class FunctionFinderTest
 extends \Tests\TestCase

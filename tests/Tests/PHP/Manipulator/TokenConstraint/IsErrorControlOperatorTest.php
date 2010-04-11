@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsErrorControlOperator
+ * @group TokenConstraint
+ * @group TokenConstraint\IsErrorControlOperator
  */
 class IsErrorControlOperatorTest extends \Tests\TestCase
 {

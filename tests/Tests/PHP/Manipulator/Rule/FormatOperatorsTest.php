@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_FormatOperators
+ * @group Rule
+ * @group Rule\FormatOperators
  */
 class FormatOperatorsTest extends \Tests\TestCase
 {

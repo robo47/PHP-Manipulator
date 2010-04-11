@@ -7,7 +7,9 @@ use PHP\Manipulator;
 use PHP\Manipulator\Cli\Action\Stats;
 
 /**
- * @group Action\Stats
+ * @group Cli
+ * @group Cli\Action
+ * @group Cli\Action\Stats
  */
 class StatsTest extends \Tests\TestCase
 {

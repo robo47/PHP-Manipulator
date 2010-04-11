@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_RemoveIndention
+ * @group Rule
+ * @group Rule\RemoveIndention
  */
 class RemoveIndentionTest extends \Tests\TestCase
 {

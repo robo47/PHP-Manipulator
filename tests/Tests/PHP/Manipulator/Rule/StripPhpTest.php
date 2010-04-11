@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_StripPhp
+ * @group Rule
+ * @group Rule\StripPhp
  */
 class StripPhpTest extends \Tests\TestCase
 {

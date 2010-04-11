@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_SetWhitespaceAfterToken
+ * @group ContainerManipulator
+ * @group ContainerManipulator\SetWhitespaceAfterToken
  */
 class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 {

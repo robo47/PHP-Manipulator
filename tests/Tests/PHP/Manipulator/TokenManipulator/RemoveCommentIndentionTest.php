@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\RemoveCommentIndention;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_RemoveCommentIndention
+ * @group TokenFinder
+ * @group TokenFinder\RemoveCommentIndention
  */
 class RemoveCommentIndentionTest extends \Tests\TestCase
 {

@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_UnifyCasts
+ * @group ContainerManipulator
+ * @group ContainerManipulator\UnifyCasts
  */
 class UnifyCastsTest extends \Tests\TestCase
 {

@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_ShorttagsToLongTags
+ * @group Rule
+ * @group Rule\ShorttagsToLongTags
  */
 class ShorttagsToLongTagsTest extends \Tests\TestCase
 {

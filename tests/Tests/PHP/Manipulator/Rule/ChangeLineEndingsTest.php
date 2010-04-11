@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_ChangeLineEndings
+ * @group Rule
+ * @group Rule\ChangeLineEndings
  */
 class ChangeLineEndingsTest extends \Tests\TestCase
 {

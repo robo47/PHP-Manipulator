@@ -6,6 +6,9 @@ use PHP\Manipulator\Util;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
+/**
+ * @group Util
+ */
 class UtilTest extends \Tests\TestCase
 {
 

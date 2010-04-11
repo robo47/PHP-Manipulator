@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_RemoveTypehints
+ * @group ContainerManipulator
+ * @group ContainerManipulator\RemoveTypehints
  */
 class RemoveTypehintsTest extends \Tests\TestCase
 {

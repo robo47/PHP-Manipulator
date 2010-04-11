@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\MultilineToSinglelineComment;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_MultilineToSinglelineComment
+ * @group TokenFinder
+ * @group TokenFinder\MultilineToSinglelineComment
  */
 class MultilineToSinglelineCommentTest
 extends \Tests\TestCase

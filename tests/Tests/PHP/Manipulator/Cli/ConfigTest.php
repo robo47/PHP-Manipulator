@@ -21,8 +21,9 @@ class NonAbstract extends Config
 }
 
 /**
- * @group Cli_Config
- * @todo array-support for the file-suffixes
+ * @group Cli
+ * @group Cli\Config
+ * @todo array-support for the file-suffixes ?
  */
 class ConfigTest extends \Tests\TestCase
 {

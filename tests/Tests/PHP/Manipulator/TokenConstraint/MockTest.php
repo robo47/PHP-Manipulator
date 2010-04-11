@@ -7,18 +7,11 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_Mock
+ * @group TokenConstraint
+ * @group TokenConstraint\Mock
  */
 class MockTest extends \Tests\TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\TokenConstraint\Mock
-     */
-    public function testDefaultConstruct()
-    {
-        $mock = new Mock();
-    }
 
     /**
      * @covers \PHP\Manipulator\TokenConstraint\Mock

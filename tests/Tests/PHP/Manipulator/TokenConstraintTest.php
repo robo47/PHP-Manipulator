@@ -5,7 +5,7 @@ namespace Tests\PHP\Manipulator;
 use PHP\Manipulator\TokenConstraint;
 
 /**
- * @group TokenConstraint_Interface
+ * @group TokenConstraint
  */
 class TokenConstraintTest extends \Tests\TestCase
 {

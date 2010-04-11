@@ -3,7 +3,6 @@
 namespace Tests\PHP\Manipulator\Cli;
 
 use PHP\Manipulator\Cli;
-use PHP\Manipulator\Cli\Action\ApplyRules;
 use PHP\Manipulator\Cli\Action;
 
 class NonAbstractAction extends Action
@@ -26,9 +25,10 @@ class NonAbstractAction extends Action
 }
 
 /**
- * @group TokenContainer\Iterator
+ * @group Cli
+ * @group Cli\Action
  */
-class ApplyrulesTest extends \Tests\TestCase
+class ActionTest extends \Tests\TestCase
 {
     
     public function setUp()

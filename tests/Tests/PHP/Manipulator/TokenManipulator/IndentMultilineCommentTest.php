@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\IndentMultilineComment;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_IndentMultilineComment
+ * @group TokenFinder
+ * @group TokenFinder\IndentMultilineComment
  */
 class IndentMultilineCommentTest
 extends \Tests\TestCase

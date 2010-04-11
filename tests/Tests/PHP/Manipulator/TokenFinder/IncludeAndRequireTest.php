@@ -8,7 +8,9 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenFinder_IncludeAndRequire
+ * @gr
+ * @group TokenFinder
+ * @group TokenFinder\IncludeAndRequire
  */
 class IncludeAndRequireTest
 extends \Tests\TestCase

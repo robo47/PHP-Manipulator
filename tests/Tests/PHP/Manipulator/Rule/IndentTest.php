@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_Indent
+ * @group Rule
+ * @group Rule\Indent
  */
 class IndentTest extends \Tests\TestCase
 {

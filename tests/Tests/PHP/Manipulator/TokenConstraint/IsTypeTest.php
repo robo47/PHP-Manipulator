@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsType
+ * @group TokenConstraint
+ * @group TokenConstraint\IsType
  */
 class IsTypeTest extends \Tests\TestCase
 {

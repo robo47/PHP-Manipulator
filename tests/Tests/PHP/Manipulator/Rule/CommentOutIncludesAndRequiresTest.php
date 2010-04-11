@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_CommentOutIncludesAndRequires
+ * @group Rule
+ * @group Rule\CommentOutIncludesAndRequires
  */
 class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
 {

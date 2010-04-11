@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_RemoveComments
+ * @group Rule
+ * @group Rule\RemoveComments
  */
 class RemoveCommentsTest extends \Tests\TestCase
 {

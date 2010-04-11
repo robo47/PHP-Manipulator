@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_CreateMultilineCommentFromTokenToToken
+ * @group ContainerManipulator
+ * @group ContainerManipulator\CreateMultilineCommentFromTokenToToken
  */
 class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
 {

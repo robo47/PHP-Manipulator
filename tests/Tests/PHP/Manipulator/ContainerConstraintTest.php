@@ -5,7 +5,7 @@ namespace Tests\PHP\Manipulator;
 use PHP\Manipulator\ContainerConstraint;
 
 /**
- * @group ContainerConstraint_Interface
+ * @group ContainerConstraint
  */
 class ContainerConstraintTest extends \Tests\TestCase
 {

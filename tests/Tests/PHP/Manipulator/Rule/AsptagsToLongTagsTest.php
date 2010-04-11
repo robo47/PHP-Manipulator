@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Rule_AsptagsToLongTags
+ * @group Rule
+ * @group Rule\AsptagsToLongTags
  */
 class AsptagsToLongTagsTest extends \Tests\TestCase
 {

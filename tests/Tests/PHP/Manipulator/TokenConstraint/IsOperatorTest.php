@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_IsOperator
+ * @group TokenConstraint
+ * @group TokenConstraint\IsOperator
  */
 class IsOperatorTest extends \Tests\TestCase
 {

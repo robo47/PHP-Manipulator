@@ -7,7 +7,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenContainer_Iterator
+ * @group TokenContainer
+ * @group TokenContainer\ReverseIterator
  */
 class ReverseIteratorTest extends \Tests\TestCase
 {

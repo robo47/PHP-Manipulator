@@ -8,7 +8,8 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenFinder_Mock
+ * @group TokenFinder
+ * @group TokenFinder\Mock
  */
 class MockTest
 extends \Tests\TestCase

@@ -6,16 +6,18 @@ use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Action\Help;
 
 /**
- * @group Action\Help
+ * @group Cli
+ * @group Cli\Action
+ * @group Cli\Action\Help
  */
 class HelpTest extends \Tests\TestCase
 {
-    
+
     public function setUp()
     {
         ob_start();
     }
-    
+
     public function tearDown()
     {
         \ob_clean();

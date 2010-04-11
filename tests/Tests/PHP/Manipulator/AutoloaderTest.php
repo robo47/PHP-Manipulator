@@ -2,6 +2,9 @@
 
 namespace Tests\PHP\Manipulator;
 
+/**
+ * @group Autoloader
+ */
 class AutoloaderTest extends \Tests\TestCase
 {
 

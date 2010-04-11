@@ -6,7 +6,8 @@ use PHP\Manipulator\TokenManipulator\Mock;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator_Mock
+ * @group TokenFinder
+ * @group TokenFinder\Mock
  */
 class MockTest extends \Tests\TestCase
 {
