@@ -90,8 +90,9 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
     protected function failureDescription($other, $description, $not)
     {
         $containerDiff = Util::compareContainers(
+                $this->_expectedContainer,
                 $other,
-                $this->_expectedContainer
+                $this->_strict
         );
 
         $message = 'Tokens are different: [length]' . PHP_EOL .
