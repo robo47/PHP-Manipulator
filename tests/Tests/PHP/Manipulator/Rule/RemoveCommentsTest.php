@@ -84,6 +84,13 @@ class RemoveCommentsTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output7'),
         );
 
+        #8 big real-life example
+        $data[] = array(
+            array('removeDocComments' => true, 'removeStandardComments' => true),
+            $this->getContainerFromFixture($path . 'input8'),
+            $this->getContainerFromFixture($path . 'output8'),
+        );
+
         return $data;
     }
 
