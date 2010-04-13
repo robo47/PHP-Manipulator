@@ -4,7 +4,6 @@ namespace PHP\Manipulator\Cli;
 
 use PHP\Manipulator\Cli;
 
-// @todo support for File_Iterators
 abstract class Config
 {
 
