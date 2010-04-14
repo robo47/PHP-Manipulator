@@ -4,6 +4,7 @@ namespace PHP\Manipulator\TokenManipulator;
 
 use PHP\Manipulator\TokenManipulator;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\Helper\NewlineDetector;
 
 class IndentMultilineComment
 extends TokenManipulator
@@ -21,8 +22,9 @@ extends TokenManipulator
         $indention = $params;
         $value = $token->getValue();
         $lines = preg_split('~' . $regexNewline . '~', $value);
-        // @todo preg_match the used newline [if one is used?]
-        $newline = "\n";
+
+        $helper = new NewlineDetector();
+        $newline = $helper->getNewline($token);
 
         $first = true;
         $value = '';

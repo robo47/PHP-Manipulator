@@ -36,6 +36,22 @@ extends \Tests\TestCase
             true
         );
 
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "/*\r\n* @return array\r\n*/\r\n")),
+            Token::factory(array(T_COMMENT, "/*\r\n     * @return array\r\n     */\r\n")),
+            '    ',
+            true
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "/*\r* @return array\r*/\r")),
+            Token::factory(array(T_COMMENT, "/*\r     * @return array\r     */\r")),
+            '    ',
+            true
+        );
+
         return $data;
     }
 
