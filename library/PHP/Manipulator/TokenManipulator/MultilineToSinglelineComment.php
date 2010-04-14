@@ -4,6 +4,7 @@ namespace PHP\Manipulator\TokenManipulator;
 
 use PHP\Manipulator\TokenManipulator;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\Helper\NewlineDetector;
 
 class MultilineToSinglelineComment
 extends TokenManipulator
@@ -22,10 +23,11 @@ extends TokenManipulator
         $value = preg_split('~(\r\n|\n|\r)~', $token->getValue());
 
         $newValue = '';
+        $helper = new NewlineDetector();
+        $newline = $helper->getNewline($token);
         foreach ($value as $line) {
             // removes */ and * and /** and /**
-            // @todo detected linebreak, fallback to \n
-            $newValue .= '//' . preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line) . "\n";
+            $newValue .= '//' . preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line) . $newline;
         }
 
         $token->setType(T_COMMENT);

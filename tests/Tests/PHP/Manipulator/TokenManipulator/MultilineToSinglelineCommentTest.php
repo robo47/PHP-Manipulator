@@ -41,6 +41,20 @@ extends \Tests\TestCase
             true
         );
 
+        #4 Test with \r\n
+        $data[] = array(
+            Token::factory(array(T_DOC_COMMENT, "/**Foo\r\n * Foo\r\n */")),
+            Token::factory(array(T_COMMENT, "//Foo\r\n// Foo\r\n//\r\n")),
+            true
+        );
+
+        #5 Test with \r
+        $data[] = array(
+            Token::factory(array(T_DOC_COMMENT, "/**Foo\r * Foo\r */")),
+            Token::factory(array(T_COMMENT, "//Foo\r// Foo\r//\r")),
+            true
+        );
+
         return $data;
     }
 
