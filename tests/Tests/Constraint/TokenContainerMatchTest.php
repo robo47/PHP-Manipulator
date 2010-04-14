@@ -50,7 +50,15 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        // @todo create tokens with different line-numbers
+        # 3 non-strict
+        $data[] = array(
+            $c1 = new TokenContainer('<?php echo "baa"; ?>'),
+            new TokenContainer('<?php echo "baa"; ?>'),
+            false,
+            true
+        );
+        // change a tokens linenumber
+        $c1[1]->setLinenumber(0);
 
         return $data;
     }
