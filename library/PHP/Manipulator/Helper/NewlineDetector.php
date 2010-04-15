@@ -53,9 +53,8 @@ class NewlineDetector
     }
 
     /**
-     *
      * @param Token $token
-     * @param <type> $default
+     * @param mixed $default
      * @return false|string
      */
     protected function _getNewlineFromToken(Token $token, $default = false)
