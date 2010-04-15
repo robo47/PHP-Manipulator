@@ -70,7 +70,7 @@ class ApplyRules extends Action
         // Finish progress bar and jump to next line.
         $progress->finish();
 
-        $output->outputText(PHP_EOL . "Applied all rules \n", 'success');
+        $output->outputText(PHP_EOL . "Applied all rules " . PHP_EOL, 'success');
     }
 
     /**
