@@ -3,6 +3,7 @@
 namespace PHP\Manipulator\Helper;
 
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
 class NewlineDetector
 {
@@ -44,11 +45,42 @@ class NewlineDetector
      */
     public function getNewline(Token $token)
     {
-        $newline = $this->_defaultNewline;
+        $newline = $this->_getNewlineFromToken($token);
+        if (false !== $newline) {
+            return $newline;
+        }
+        return $this->_defaultNewline;
+    }
+
+    /**
+     *
+     * @param Token $token
+     * @param <type> $default
+     * @return false|string
+     */
+    protected function _getNewlineFromToken(Token $token, $default = false)
+    {
         $matches = array();
         if(preg_match("~(\r\n|\r|\n)~", $token->getValue(), $matches)) {
             return $matches[0];
         }
-        return $newline;
+        return $default;
+    }
+
+    /**
+     * @param \PHP\Manipulator\Token $token
+     * @return string
+     */
+    public function getNewlineFromContainer(TokenContainer $container)
+    {
+        $iterator = $container->getIterator();
+        while ($iterator->valid()) {
+            $newline = $this->_getNewlineFromToken($iterator->current());
+            if (false !== $newline) {
+                return $newline;
+            }
+            $iterator->next();
+        }
+        return $this->_defaultNewline;
     }
 }

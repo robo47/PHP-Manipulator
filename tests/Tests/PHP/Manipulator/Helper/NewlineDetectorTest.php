@@ -3,6 +3,7 @@
 namespace Tests\PHP\Manipulator\Helper;
 
 use PHP\Manipulator\Helper\NewlineDetector;
+use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
@@ -15,7 +16,7 @@ class NewlineDetectorTest extends \Tests\TestCase
     /**
      * @return array
      */
-    public function helperProvider()
+    public function tokenProvider()
     {
         $data = array();
 
@@ -61,17 +62,75 @@ class NewlineDetectorTest extends \Tests\TestCase
             "\r",
         );
 
+        #6
+        $data[] = array(
+            new Token("/** Foo */"),
+            "\r",
+            "\r",
+        );
+
         return $data;
     }
 
     /**
-     * @dataProvider helperProvider
+     * @dataProvider tokenProvider
      * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewline
      */
-    public function testManipulate($token, $defaultNewline, $expectedNewline)
+    public function testGetNewline($token, $defaultNewline, $expectedNewline)
     {
-        $detector = new NewlineDetector();
+        $detector = new NewlineDetector($defaultNewline);
         $actualNewline = $detector->getNewline($token);
+        $this->assertEquals($expectedNewline, $actualNewline);
+    }
+
+
+
+    /**
+     * @return array
+     */
+    public function containerProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            new TokenContainer("<?php\r\necho \$foo;// foo\r\necho \$baa;\r\n ?>"),
+            "\r", // default
+            "\r\n", // expected
+        );
+
+        #1
+        $data[] = array(
+            new TokenContainer("<?php\necho \$foo;// foo\necho \$baa;\n ?>"),
+            "\r", // default
+            "\n", // expected
+        );
+
+        #2
+        $data[] = array(
+            new TokenContainer("<?php\recho \$foo;// foo\recho \$baa;\r ?>"),
+            "\n", // default
+            "\r", // expected
+        );
+
+        #3
+        $data[] = array(
+            new TokenContainer("<?php echo \$foo; ?>"),
+            "\r", // default
+            "\r", // expected
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider containerProvider
+     * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewline
+     */
+    public function testGetNewlineFromContainer($container, $defaultNewline, $expectedNewline)
+    {
+        $detector = new NewlineDetector($defaultNewline);
+        $actualNewline = $detector->getNewlineFromContainer($container);
         $this->assertEquals($expectedNewline, $actualNewline);
     }
     
