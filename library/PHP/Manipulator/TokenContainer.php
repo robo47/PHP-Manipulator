@@ -6,6 +6,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer\ReverseIterator;
 
+// @todo new method recreate container from string like the constructor does
 class TokenContainer
 implements \ArrayAccess, \Countable, \IteratorAggregate
 {

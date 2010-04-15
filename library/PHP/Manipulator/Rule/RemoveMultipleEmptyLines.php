@@ -14,6 +14,7 @@ extends Rule
         if (!$this->hasOption('maxEmptyLines')) {
             $this->setOption('maxEmptyLines', 2);
         }
+        // @todo Remove this setting and use NewlineDetector
         if (!$this->hasOption('defaultBreak')) {
             $this->setOption('defaultBreak', "\n");
         }
