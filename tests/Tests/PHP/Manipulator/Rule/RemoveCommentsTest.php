@@ -91,6 +91,20 @@ class RemoveCommentsTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output8'),
         );
 
+        #9 check works with \r\n
+        $data[] = array(
+            array(),
+            new TokenContainer("<?php\r\necho \$foo;// foo\r\necho \$baa;\r\n ?>"),
+            new TokenContainer("<?php\r\necho \$foo;\r\necho \$baa;\r\n ?>"),
+        );
+
+        #1 check works with \r
+        $data[] = array(
+            array(),
+            new TokenContainer("<?php\recho \$foo;// foo\recho \$baa;\r ?>"),
+            new TokenContainer("<?php\recho \$foo;\recho \$baa;\r ?>"),
+        );
+
         return $data;
     }
 

@@ -4,6 +4,7 @@ namespace PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Helper\NewlineDetector;
 use PHP\Manipulator\Token;
 
 class RemoveComments
@@ -27,14 +28,16 @@ extends Rule
      */
     public function apply(TokenContainer $container)
     {
+        $helper = new NewlineDetector();
+        $newline = $helper->getNewlineFromContainer($container);
+        // @todo optimize, find out whitespace only once directlyfrom the container
         $iterator = $container->getIterator();
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->_isCommentAndShouldBeRemoved($token)) {
                 if ($this->_isOneLineComment($token, $container)) {
                     $token->setType(T_WHITESPACE);
-                    // @todo checking code which linebreak is used and use that
-                    $token->setValue("\n");
+                    $token->setValue($newline);
                 } else {
                     $container->removeToken($token);
                 }
