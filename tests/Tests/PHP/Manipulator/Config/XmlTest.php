@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\PHP\Manipulator\Cli\Config;
+namespace Tests\PHP\Manipulator\Config;
 
-use PHP\Manipulator\Cli\Config;
-use PHP\Manipulator\Cli\Config\Xml as XmlConfig;
+use PHP\Manipulator\Config;
+use PHP\Manipulator\Config\Xml as XmlConfig;
 
 /**
  * @group Cli\
- * @group Cli\Config
- * @group Cli\Config\Xml
+ * @group Config
+ * @group Config\Xml
  */
 class XmlTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config\Xml
+     * @covers \PHP\Manipulator\Config\Xml
      */
     public function testConfig()
     {
@@ -75,7 +75,7 @@ class XmlTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config\Xml::_castValue
+     * @covers \PHP\Manipulator\Config\Xml::_castValue
      */
     public function testRuleOptionsCastWorks()
     {

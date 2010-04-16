@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\PHP\Manipulator\Cli;
+namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\Cli\Config;
+use PHP\Manipulator\Config;
 
 class NonAbstract extends Config
 {
@@ -22,15 +22,15 @@ class NonAbstract extends Config
 
 /**
  * @group Cli
- * @group Cli\Config
+ * @group Config
  * @todo array-support for the file-suffixes ?
  */
 class ConfigTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::__construct
-     * @covers \PHP\Manipulator\Cli\Config::getOptions
+     * @covers \PHP\Manipulator\Config::__construct
+     * @covers \PHP\Manipulator\Config::getOptions
      */
     public function testConstructorSetsDefaultOptions()
     {
@@ -54,8 +54,8 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addFile
-     * @covers \PHP\Manipulator\Cli\Config::getFiles
+     * @covers \PHP\Manipulator\Config::addFile
+     * @covers \PHP\Manipulator\Config::getFiles
      */
     public function testAddFile()
     {
@@ -71,9 +71,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addDirectory
-     * @covers \PHP\Manipulator\Cli\Config::getFiles
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addDirectory
+     * @covers \PHP\Manipulator\Config::getFiles
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddDirectory()
     {
@@ -90,9 +90,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addIterator
-     * @covers \PHP\Manipulator\Cli\Config::getFiles
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addIterator
+     * @covers \PHP\Manipulator\Config::getFiles
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddIterator()
     {
@@ -114,8 +114,8 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addDirectory
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addDirectory
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddDirectoryThrowsExceptionIfDirectoryWasNotFound()
     {
@@ -130,9 +130,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRuleset
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRuleset
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRuleset()
     {
@@ -157,9 +157,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRuleset
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRuleset
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRulesetWithPrefix()
     {
@@ -184,9 +184,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRule
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRule
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRule()
     {
@@ -205,9 +205,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRule
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRule
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRuleWithOptions()
     {
@@ -231,9 +231,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRule
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRule
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRuleWithPrefix()
     {
@@ -252,9 +252,9 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::addRule
-     * @covers \PHP\Manipulator\Cli\Config::getRules
-     * @covers \PHP\Manipulator\Cli\Config::<protected>
+     * @covers \PHP\Manipulator\Config::addRule
+     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::<protected>
      */
     public function testAddRuleWithPrefixAndOptions()
     {
@@ -278,7 +278,7 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::getFileContent
+     * @covers \PHP\Manipulator\Config::getFileContent
      */
     public function testGetFileContent()
     {
@@ -288,7 +288,7 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::getFileContent
+     * @covers \PHP\Manipulator\Config::getFileContent
      */
     public function testGetFileContentThrowExceptionOnNonExistingFile()
     {
@@ -302,7 +302,7 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::getFileContent
+     * @covers \PHP\Manipulator\Config::getFileContent
      */
     public function testGetFileContentThrowExceptionIfPathReferencesADirectory()
     {
@@ -316,42 +316,42 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::factory
+     * @covers \PHP\Manipulator\Config::factory
      */
     public function testFactoryWithXmlFromCode()
     {
         $config = Config::factory('xml', '<config></config>', false);
-        $this->assertType('\PHP\Manipulator\Cli\Config\Xml', $config);
+        $this->assertType('\PHP\Manipulator\Config\Xml', $config);
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::factory
+     * @covers \PHP\Manipulator\Config::factory
      */
     public function testFactoryWithNonAbstractFromCode()
     {
-        $config = Config::factory('\Tests\PHP\Manipulator\Cli\NonAbstract', '<config></config>', false);
-        $this->assertType('\Tests\PHP\Manipulator\Cli\NonAbstract', $config);
+        $config = Config::factory('\Tests\PHP\Manipulator\NonAbstract', '<config></config>', false);
+        $this->assertType('\Tests\PHP\Manipulator\NonAbstract', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::factory
+     * @covers \PHP\Manipulator\Config::factory
      */
     public function testFactoryWithXmlFromFile()
     {
         $file = 'Cli/Config/config0.xml';
         $config = Config::factory('xml', '_fixtures/' . $file, true);
-        $this->assertType('\PHP\Manipulator\Cli\Config\Xml', $config);
+        $this->assertType('\PHP\Manipulator\Config\Xml', $config);
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Config::factory
+     * @covers \PHP\Manipulator\Config::factory
      */
     public function testFactoryWithNonAbstractFromFile()
     {
         $file = 'Cli/Config/config0.xml';
-        $config = Config::factory('\Tests\PHP\Manipulator\Cli\NonAbstract', '_fixtures/' . $file, true);
-        $this->assertType('\Tests\PHP\Manipulator\Cli\NonAbstract', $config);
+        $config = Config::factory('\Tests\PHP\Manipulator\NonAbstract', '_fixtures/' . $file, true);
+        $this->assertType('\Tests\PHP\Manipulator\NonAbstract', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 }

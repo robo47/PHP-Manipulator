@@ -3,7 +3,7 @@
 namespace PHP\Manipulator\Cli\Action;
 
 use PHP\Manipulator\Cli\Action;
-use PHP\Manipulator\Cli\Config;
+use PHP\Manipulator\Config;
 use PHP\Manipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;

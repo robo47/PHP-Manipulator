@@ -4,6 +4,7 @@ namespace PHP\Manipulator;
 
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\Config;
 use PHP\Manipulator\ContainerConstraint;
 use PHP\Manipulator\ContainerManipulator;
 use PHP\Manipulator\TokenConstraint;
@@ -11,6 +12,7 @@ use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenManipulator;
 
 // @todo better name ?
+// @todo extend helper-methods to use config
 abstract class AHelper
 {
 

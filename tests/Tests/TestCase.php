@@ -5,7 +5,7 @@ namespace Tests;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\Cli\Config;
+use PHP\Manipulator\Config;
 use PHP\Manipulator\Util;
 use Tests\Constraint\Count;
 use Tests\Constraint\ResultsMatch;
@@ -173,18 +173,18 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      *
      * @param integer$number
-     * @return \PHP\Manipulator\Cli\Config
+     * @return \PHP\Manipulator\Config
      */
     public function getConfig($number)
     {
         $path = '_fixtures/Cli/Config/config' . $number . '.xml';
-        return Config::factory('\Tests\PHP\Manipulator\Cli\NonAbstract', $path, true);
+        return Config::factory('\Tests\PHP\Manipulator\NonAbstract', $path, true);
     }
 
     /**
      *
      * @param integer $number
-     * @return \PHP\Manipulator\Cli\Config\Xml
+     * @return \PHP\Manipulator\Config\Xml
      */
     public function getXmlConfig($number)
     {

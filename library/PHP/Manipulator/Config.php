@@ -1,9 +1,7 @@
 <?php
+namespace PHP\Manipulator;
 
-namespace PHP\Manipulator\Cli;
-
-use PHP\Manipulator\Cli;
-
+// @todo check how to auto-inject config in AHelper and co (a factory to cache and create rules, contraints and manipulators?) into all stuff ?
 abstract class Config
 {
 
@@ -29,8 +27,7 @@ abstract class Config
     protected $_files = array();
 
     /**
-     *
-     * @param string $config
+     * @param mixed $config
      */
     public function __construct($data)
     {
@@ -38,9 +35,6 @@ abstract class Config
         $this->_initConfig($data);
     }
 
-    /**
-     *
-     */
     protected function _initDefaultOptions()
     {
         $this->_options['rulePrefix'] = '\PHP\Manipulator\Rule\\';
@@ -88,7 +82,7 @@ abstract class Config
      * Add File
      *
      * @param string $file
-     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
     public function addFile($file)
     {
@@ -115,7 +109,7 @@ abstract class Config
      *
      * @param string $rule
      * @param string|null $prefix
-     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
     public function addRule($rule, $prefix = null, array $options = array())
     {
@@ -132,7 +126,7 @@ abstract class Config
      *
      * @param string $ruleset
      * @param string|null $prefix
-     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
     public function addRuleset($ruleset, $prefix = null)
     {
@@ -152,7 +146,7 @@ abstract class Config
      * Add directory
      *
      * @param string $path
-     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
     public function addDirectory($path)
     {
@@ -177,7 +171,7 @@ abstract class Config
      * Add directory
      *
      * @param string $path
-     * @return \PHP\Manipulator\Cli\Config *Provides Fluent Interface*
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
     public function addIterator(\Iterator $iterator)
     {
@@ -208,7 +202,7 @@ abstract class Config
         }
         switch (strtolower($type)) {
             case 'xml':
-                $type = '\PHP\Manipulator\Cli\Config\Xml';
+                $type = '\PHP\Manipulator\Config\Xml';
                 break;
             default:
                 break;
@@ -231,5 +225,16 @@ abstract class Config
             throw new \Exception('Unable to read file: ' . $oldFile);
         }
         return \file_get_contents($file);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     */
+    public function addOption($name, $value)
+    {
+        $this->_options[$name] = $value;
+        return $this;
     }
 }

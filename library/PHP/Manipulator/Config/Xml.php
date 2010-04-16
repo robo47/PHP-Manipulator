@@ -1,9 +1,9 @@
 <?php
 
-namespace PHP\Manipulator\Cli\Config;
+namespace PHP\Manipulator\Config;
 
-use PHP\Manipulator\Cli\Config;
-use PHP\Manipulator\Cli\Config\Xml;
+use PHP\Manipulator\Config;
+use PHP\Manipulator\Config\Xml;
 
 class Xml extends Config
 {

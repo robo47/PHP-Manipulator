@@ -3,7 +3,7 @@
 namespace PHP\Manipulator\Cli\Action;
 
 use PHP\Manipulator\Cli\Action;
-use PHP\Manipulator\Cli\Config;
+use PHP\Manipulator\Config;
 use PHP\Manipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
@@ -19,12 +19,13 @@ class ApplyRules extends Action
         $configFile = $input->getOption('config')->value;
 
         try {
+            // @todo make dynamic via cli/
             $config = Config::factory('xml', $configFile, true);
         } catch (\Exception $e) {
             $output->outputLine('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
             return;
         }
-        /* @var $config PHP\Manipulator\Cli\Config\Xml */
+        /* @var $config PHP\Manipulator\Config\Xml */
 
         $files = $config->getFiles();
         $rules = $config->getRules();
