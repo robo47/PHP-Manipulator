@@ -8,7 +8,7 @@ use PHP\Manipulator\Token;
 
 class RemoveTrailingWhitespace extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('removeEmptyLinesAtFileEnd')) {
@@ -38,8 +38,6 @@ class RemoveTrailingWhitespace extends Rule
             $code = rtrim($code);
         }
 
-        // @todo extend container to have a method which allows retokenizing from string
-        $newContainer = new TokenContainer($code);
-        $container->setContainer($newContainer->getContainer());
+        $container->reInitFromCode($code);
     }
 }

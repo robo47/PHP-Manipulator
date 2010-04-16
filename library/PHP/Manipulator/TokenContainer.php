@@ -6,7 +6,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer\ReverseIterator;
 
-// @todo new method recreate container from string like the constructor does
 class TokenContainer
 implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -38,10 +37,11 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     protected function _init($input)
     {
         if (is_string($input)) {
-            $input = $this->createTokensFromCode($input);
-        }
-        foreach ($input as $token) {
-            $this[] = $token;
+            $this->_container = $this->_createTokensFromCode($input);
+        } else {
+            foreach ($input as $token) {
+                $this[] = $token;
+            }
         }
     }
 
@@ -337,14 +337,24 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
+     *
+     * @param string $code
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     */
+    public function reInitFromCode($code)
+    {
+        $this->_container = $this->_createTokensFromCode($code);
+        return $this;
+    }
+
+    /**
      * Creates code from tokens and runs the tokenzier again on them
      *
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
     public function retokenize()
     {
-        $code = $this->toString();
-        $this->_container = $this->createTokensFromCode($code);
+        $this->reInitFromCode($this->toString());
         return $this;
     }
 
@@ -450,11 +460,10 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     *
      * @param string $code
      * @return array
      */
-    public function createTokensFromCode($code)
+    protected function _createTokensFromCode($code)
     {
         $array = array();
         $tokens = token_get_all($code);
