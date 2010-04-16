@@ -19,7 +19,6 @@ class Autoloader
     public function autoload($classname)
     {
         if ($this->_isEzcClass($classname)) {
-
             \ezcBase::autoload($classname);
             return true;
         }
@@ -33,6 +32,7 @@ class Autoloader
     }
 
     /**
+     * Check if class is part of ezc
      *
      * @param string $classname
      * @return boolean
@@ -43,7 +43,7 @@ class Autoloader
     }
 
     /**
-     *
+     * Registers the autoloader
      */
     public static function register()
     {
