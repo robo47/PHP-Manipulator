@@ -9,10 +9,12 @@ class Token
      * @var string
      */
     protected $_value = null;
+
     /**
      * @var integer|null
      */
     protected $_linenumber = null;
+
     /**
      * @var integer|null
      */

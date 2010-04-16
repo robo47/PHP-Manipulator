@@ -74,12 +74,12 @@ class NewlineDetectorTest extends \Tests\TestCase
 
     /**
      * @dataProvider tokenProvider
-     * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewline
+     * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewlineFromToken
      */
-    public function testGetNewline($token, $defaultNewline, $expectedNewline)
+    public function testGetNewlineFromToken($token, $defaultNewline, $expectedNewline)
     {
         $detector = new NewlineDetector($defaultNewline);
-        $actualNewline = $detector->getNewline($token);
+        $actualNewline = $detector->getNewlineFromToken($token);
         $this->assertEquals($expectedNewline, $actualNewline);
     }
 

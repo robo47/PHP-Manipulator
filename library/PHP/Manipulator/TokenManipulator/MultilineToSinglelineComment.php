@@ -24,7 +24,7 @@ extends TokenManipulator
 
         $newValue = '';
         $helper = new NewlineDetector();
-        $newline = $helper->getNewline($token);
+        $newline = $helper->getNewlineFromToken($token);
         foreach ($value as $line) {
             // removes */ and * and /** and /**
             $newValue .= '//' . preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line) . $newline;

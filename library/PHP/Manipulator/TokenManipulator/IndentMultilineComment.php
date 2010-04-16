@@ -24,7 +24,7 @@ extends TokenManipulator
         $lines = preg_split('~' . $regexNewline . '~', $value);
 
         $helper = new NewlineDetector();
-        $newline = $helper->getNewline($token);
+        $newline = $helper->getNewlineFromToken($token);
 
         $first = true;
         $value = '';

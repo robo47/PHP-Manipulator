@@ -43,7 +43,7 @@ class NewlineDetector
      * @param \PHP\Manipulator\Token $token
      * @return string
      */
-    public function getNewline(Token $token)
+    public function getNewlineFromToken(Token $token)
     {
         $newline = $this->_getNewlineFromToken($token);
         if (false !== $newline) {
