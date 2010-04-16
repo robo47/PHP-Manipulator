@@ -4,6 +4,7 @@ namespace PHP\Manipulator\TokenFinder;
 
 use PHP\Manipulator\Token;
 
+// @todo Subresult ? Iterator and Reverse-Iterator ?
 class Result
 implements \Countable
 {

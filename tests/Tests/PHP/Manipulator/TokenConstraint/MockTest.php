@@ -12,21 +12,6 @@ use PHP\Manipulator\TokenContainer;
  */
 class MockTest extends \Tests\TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\TokenConstraint\Mock
-     */
-    public function testOptionViaConstructorWorks()
-    {
-        $mock = new Mock(array('return' => true));
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $this->assertTrue($mock->evaluate($token));
-
-        $mock = new Mock(array('return' => false));
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $this->assertFalse($mock->evaluate($token));
-    }
-
     /**
      * @covers \PHP\Manipulator\TokenConstraint\Mock
      */

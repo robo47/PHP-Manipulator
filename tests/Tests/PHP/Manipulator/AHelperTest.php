@@ -8,12 +8,16 @@ use PHP\Manipulator\TokenContainer;
 
 class NonAbstractHelper extends AHelper
 {
-
     public $init = false;
 
     public function init()
     {
         $this->init = true;
+    }
+
+    public function apply(TokenContainer $container)
+    {
+
     }
 }
 
@@ -32,102 +36,7 @@ class AHelperTest extends \Tests\TestCase
         $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::__construct
-     */
-    public function testDefaultConstructor()
-    {
-        $abstractHelper = new NonAbstractHelper();
-        $this->assertEquals(array(), $abstractHelper->getOptions(), 'options don\'t match');
-    }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::__construct
-     * @covers \PHP\Manipulator\AHelper::init
-     */
-    public function testConstructorCallsInit()
-    {
-        $abstractHelper = new NonAbstractHelper();
-        $this->assertTrue($abstractHelper->init, 'init is not true');
-    }
-
-    /**
-     * @return array
-     */
-    public function constructorOptionsProvider()
-    {
-        $data = array();
-
-        $data[] = array(array());
-        $data[] = array(array('baa' => 'foo'));
-        $data[] = array(array('baa' => 'foo', 'blub' => 'bla'));
-
-        return $data;
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::__construct
-     * @dataProvider constructorOptionsProvider
-     */
-    public function testConstructorSetsOptions($options)
-    {
-        $abstractHelper = new NonAbstractHelper($options);
-        $this->assertEquals($options, $abstractHelper->getOptions(), 'options don\'t match');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::addOptions
-     * @covers \PHP\Manipulator\AHelper::getOptions
-     */
-    public function testAddOptionsAndGetOptions()
-    {
-        $options = array(
-            'baa' => 'foo',
-            'blub' => 'bla',
-        );
-        $abstractHelper = new NonAbstractHelper(array('foo' => 'bla'));
-        $fluent = $abstractHelper->addOptions($options);
-        $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
-
-        $this->assertCount(3, $abstractHelper->getOptions(), 'Wrong options count');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::setOption
-     * @covers \PHP\Manipulator\AHelper::getOption
-     */
-    public function testSetOptionAndGetOption()
-    {
-        $abstractHelper = new NonAbstractHelper();
-        $fluent = $abstractHelper->setOption('baa', 'foo');
-        $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
-        $this->assertEquals('foo', $abstractHelper->getOption('baa'), 'Wrong value');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::getOption
-     * @covers \Exception
-     */
-    public function testGetOptionThrowsExceptionOnNonExistingOption()
-    {
-        $abstractHelper = new NonAbstractHelper();
-        try {
-            $abstractHelper->getOption('foo');
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Option 'foo' not found", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::hasOption
-     */
-    public function testHasOption()
-    {
-        $abstractHelper = new NonAbstractHelper(array('foo' => 'bla'));
-        $this->assertTrue($abstractHelper->hasOption('foo'));
-        $this->assertFalse($abstractHelper->hasOption('blub'));
-    }
 
     /**
      * @covers \PHP\Manipulator\AHelper::getClassInstance

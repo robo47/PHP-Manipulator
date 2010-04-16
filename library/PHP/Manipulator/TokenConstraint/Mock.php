@@ -21,10 +21,6 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $params = null)
     {
-        if ($this->hasOption('return')) {
-            return $this->getOption('return');
-        } else {
-            return self::$return;
-        }
+        return self::$return;
     }
 }

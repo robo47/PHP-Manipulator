@@ -21,10 +21,6 @@ extends ContainerConstraint
      */
     public function evaluate(TokenContainer $container, $params = null)
     {
-        if ($this->hasOption('return')) {
-            return $this->getOption('return');
-        } else {
-            return self::$return;
-        }
+        return self::$return;
     }
 }
