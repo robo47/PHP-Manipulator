@@ -98,9 +98,7 @@ extends Rule
     protected function _isWhitespaceWithBreak(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE)
-            // @todo create \Constrant\ContainsNewline
-            && (false !== strpos($token->getValue(), "\n")
-                || false !== strpos($token->getValue(), "\r"));
+                && $this->evaluateConstraint('ContainsNewline', $token);
     }
     
     public function checkAndChangeIndentionLevel(Token $token)
