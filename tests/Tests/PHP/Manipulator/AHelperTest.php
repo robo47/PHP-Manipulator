@@ -135,9 +135,9 @@ class AHelperTest extends \Tests\TestCase
     public function testGetClassInstanceWithAutoPrefix()
     {
         $abstractHelper = new NonAbstractHelper();
-        $instance = $abstractHelper->getClassInstance('Dummy1', '\Tests\PHP\Manipulator\Temp\\', true);
-        $this->assertTrue(class_exists('\Tests\PHP\Manipulator\Temp\Dummy1', false), 'Class not loaded');
-        $this->assertType('\Tests\PHP\Manipulator\Temp\Dummy1', $instance, 'Wrong type');
+        $instance = $abstractHelper->getClassInstance('Dummy1', '\Baa\Foo\\', true);
+        $this->assertTrue(class_exists('\Baa\Foo\Dummy1', false), 'Class not loaded');
+        $this->assertType('\Baa\Foo\Dummy1', $instance, 'Wrong type');
     }
 
     /**
@@ -146,9 +146,9 @@ class AHelperTest extends \Tests\TestCase
     public function testGetClassInstanceWithoutAutoPrefix()
     {
         $abstractHelper = new NonAbstractHelper();
-        $instance = $abstractHelper->getClassInstance('\Tests\PHP\Manipulator\Temp\Dummy2', '', false);
-        $this->assertTrue(class_exists('\Tests\PHP\Manipulator\Temp\Dummy2', false), 'Class not loaded');
-        $this->assertType('\Tests\PHP\Manipulator\Temp\Dummy2', $instance, 'Wrong type');
+        $instance = $abstractHelper->getClassInstance('\Baa\Foo\Dummy2', '', false);
+        $this->assertTrue(class_exists('\Baa\Foo\Dummy2', false), 'Class not loaded');
+        $this->assertType('\Baa\Foo\Dummy2', $instance, 'Wrong type');
     }
 
     /**
@@ -156,7 +156,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testGetClassInstanceWithDirectClass()
     {
-        $class = new \Tests\PHP\Manipulator\Temp\Dummy2();
+        $class = new \Baa\Foo\Dummy2();
         $abstractHelper = new NonAbstractHelper();
         $instance = $abstractHelper->getClassInstance($class, '', false);
         $this->assertSame($class, $instance);
