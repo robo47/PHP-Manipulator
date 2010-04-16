@@ -29,8 +29,10 @@ class XmlTest extends \Tests\TestCase
         $this->assertEquals('\Baa\Foo\Ruleset\\', $options['rulesetPrefix']);
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.phtml', $options['fileSuffix']);
+        $this->assertArrayHasKey('defaultNewline', $options);
+        $this->assertEquals("\n", $options['defaultNewline']);
 
-        $this->assertCount(3, $options);
+        $this->assertCount(4, $options);
 
         $rules = $config->getRules();
         $this->assertType('array', $rules);

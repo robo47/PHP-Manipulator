@@ -14,7 +14,7 @@ class RemoveTrailingWhitespace extends Rule
         if (!$this->hasOption('removeEmptyLinesAtFileEnd')) {
             $this->setOption('removeEmptyLinesAtFileEnd', true);
         }
-        // @todo Remove this setting and use NewlineDetector
+        // @todo Remove this setting and use NewlineDetector ?
         if (!$this->hasOption('defaultBreak')) {
             $this->setOption('defaultBreak', "\n");
         }

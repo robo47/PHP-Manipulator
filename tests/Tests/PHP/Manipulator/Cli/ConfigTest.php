@@ -38,14 +38,19 @@ class ConfigTest extends \Tests\TestCase
 
         $options = $config->getOptions();
 
-        $this->assertCount(3, $options);
+        $this->assertCount(4, $options);
 
         $this->assertArrayHasKey('rulePrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Rule\\', $options['rulePrefix']);
+
         $this->assertArrayHasKey('rulesetPrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Ruleset\\', $options['rulesetPrefix']);
+
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.php', $options['fileSuffix']);
+
+        $this->assertArrayHasKey('defaultNewline', $options);
+        $this->assertEquals("\n", $options['defaultNewline']);
     }
 
     /**

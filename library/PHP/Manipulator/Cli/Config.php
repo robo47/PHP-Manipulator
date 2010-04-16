@@ -46,6 +46,7 @@ abstract class Config
         $this->_options['rulePrefix'] = '\PHP\Manipulator\Rule\\';
         $this->_options['rulesetPrefix'] = '\PHP\Manipulator\Ruleset\\';
         $this->_options['fileSuffix'] = '.php';
+        $this->_options['defaultNewline'] = "\n";
     }
 
     /**
