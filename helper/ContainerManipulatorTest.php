@@ -36,7 +36,6 @@ class __classname__Test extends \Tests\TestCase
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
-        $this->markTestSkipped('not implemented yet');
         $manipulator = new __classname__();
         $manipulator->manipulate($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);

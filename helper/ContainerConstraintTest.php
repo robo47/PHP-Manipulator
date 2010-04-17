@@ -33,7 +33,6 @@ class __classname__Test extends \Tests\TestCase
      */
     public function testContainerConstraint($input, $expectedResult)
     {
-        $this->markTestSkipped('not implemented yet');
         $constraint = new __classname__();
         $this->assertSame($expectedResult, $constraint->evaluate($input));
     }

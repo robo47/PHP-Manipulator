@@ -45,7 +45,6 @@ class __classname__Test extends \Tests\TestCase
      */
     public function testRule($options, $input, $expectedTokens)
     {
-        $this->markTestSkipped('not implemented yet');
         $rule = new __classname__($options);
         $rule->apply($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');

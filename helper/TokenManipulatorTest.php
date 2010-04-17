@@ -35,7 +35,6 @@ extends \Tests\TestCase
      */
     public function testManipulate($actualToken, $expectedToken, $strict)
     {
-        $this->markTestSkipped('not implemented yet');
         $manipulator = new __classname__();
         $manipulator->manipulate($token);
         $this->assertTokenMatch($token, $newToken, $strict);

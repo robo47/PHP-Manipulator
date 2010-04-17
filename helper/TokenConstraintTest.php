@@ -35,7 +35,6 @@ extends \Tests\TestCase
      */
     public function testEvaluate($token, $result)
     {
-        $this->markTestSkipped('not implemented yet');
         $constraint = new __classname__();
         $this->assertSame($result, $constraint->evaluate($token), 'Wrong result');
     }

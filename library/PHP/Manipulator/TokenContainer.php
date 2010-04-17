@@ -340,6 +340,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $code
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @todo name is ugly
      */
     public function reInitFromCode($code)
     {
@@ -479,6 +480,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $file
      * @return \PHP\Manipulator\TokenContainer
+     * @todo new FileTokenContainer which has constructor-parameter which get's passed in the name of the file
      */
     public static function createFromFile($file)
     {
@@ -495,6 +497,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $file
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     * @todo new FileTokenContainer which saves name and allows so save ?
      */
     public function saveToFile($file)
     {
