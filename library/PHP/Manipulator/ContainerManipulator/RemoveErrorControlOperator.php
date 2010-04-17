@@ -20,16 +20,13 @@ extends ContainerManipulator
     {
         $iterator = $container->getIterator();
 
-        $errorControllTokens = array();
+        $tokensToDelete = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsErrorControlOperator', $token)) {
-                $errorControllTokens[] = $token;
+                $container->removeToken($token);
             }
             $iterator->next();
-        }
-        foreach ($errorControllTokens as $errorControllToken) {
-            $container->removeToken($errorControllToken);
         }
         $container->retokenize();
     }

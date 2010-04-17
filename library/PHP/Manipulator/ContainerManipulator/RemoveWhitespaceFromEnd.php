@@ -20,20 +20,15 @@ extends ContainerManipulator
     {
         $iterator = $container->getReverseIterator();
 
-        $tokensToDelete = array();
-
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
-                $tokensToDelete[] = $token;
+                $container->removeToken($token);
             } else {
                 break;
             }
             $iterator->next();
         }
-
-        foreach ($tokensToDelete as $token) {
-            $container->removeToken($token);
-        }
+        $container->retokenize();
     }
 }
