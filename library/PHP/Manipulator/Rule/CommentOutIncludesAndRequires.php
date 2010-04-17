@@ -8,11 +8,37 @@ use PHP\Manipulator\TokenContainer;
 class CommentOutIncludesAndRequires
 extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('globalScopeOnly')) {
             $this->setOption('globalScopeOnly', true);
+        }
+    }
+
+    /**
+     * @param array $tokens
+     */
+    protected function _handleTokens(TokenContainer $container, array $tokens)
+    {
+        foreach ($tokens as $start) {
+            try {
+                $result = $this->findTokens('IncludeAndRequire', $start, $container);
+                $this->manipulateContainer(
+                        'CreateMultilineCommentFromTokenToToken',
+                        $container,
+                        array(
+                            'from' => $result->getFirstToken(),
+                            'to' => $result->getLastToken(),
+                        )
+                );
+            } catch (\Exception $e) {
+                // @todo better way to Catch this Exception, named exceptions or exceptions with error-codes
+                // ignore exceptions which occur on nested include/require-stuff
+                if (false === strpos($e->getMessage(), 'does not exist in this container')) {
+                    throw $e;
+                }
+            }
         }
     }
 
@@ -22,8 +48,18 @@ extends Rule
      */
     public function apply(TokenContainer $container)
     {
+        $tokens = $this->_searchStartTokens($container);
+        $this->_handleTokens($container, $tokens);
+        $container->retokenize();
+    }
+
+    /**
+     * @param TokenContainer $container
+     * @return array
+     */
+    protected function _searchStartTokens(TokenContainer $container)
+    {
         $iterator = $container->getIterator();
-        $iterator->rewind();
 
         $searchedTokens = array(
             T_INCLUDE,
@@ -71,30 +107,10 @@ extends Rule
             }
             $iterator->next();
         }
-
-        foreach ($foundPairs as $start) {
-            try {
-                $result = $this->findTokens('IncludeAndRequire', $start, $container);
-                $this->manipulateContainer(
-                        'CreateMultilineCommentFromTokenToToken',
-                        $container,
-                        array(
-                            'from' => $result->getFirstToken(),
-                            'to' => $result->getLastToken(),
-                        )
-                );
-            } catch (\Exception $e) {
-                // @todo better way to Catch this Exception, named exceptions or exceptions with error-codes
-                // ignore exceptions which occur on nested include/require-stuff
-                if (false === strpos($e->getMessage(), 'does not exist in this container')) {
-                    throw $e;
-                }
-            }
-        }
+        return $foundPairs;
     }
 
     /**
-     *
      * @param boolean $inClass
      * @param boolean $inFunction
      * @return boolean
