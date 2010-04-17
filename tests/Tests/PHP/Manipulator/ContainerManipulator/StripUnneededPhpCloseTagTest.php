@@ -7,7 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_StripUnneededPhpCloseTag
+ * @group ContainerManipulator\StripUnneededPhpCloseTag
  */
 class StripUnneededPhpCloseTagTest extends \Tests\TestCase
 {

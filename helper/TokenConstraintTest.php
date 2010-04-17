@@ -7,7 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint___classname__
+ * @group TokenConstraint\__classname__
  */
 class __classname__Test
 extends \Tests\TestCase

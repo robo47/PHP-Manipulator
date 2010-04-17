@@ -7,7 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint_ContainsNewline
+ * @group TokenConstraint\ContainsNewline
  */
 class ContainsNewlineTest
 extends \Tests\TestCase

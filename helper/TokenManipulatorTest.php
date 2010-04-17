@@ -6,7 +6,7 @@ use PHP\Manipulator\TokenManipulator\__classname__;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenManipulator___classname__
+ * @group TokenManipulator\__classname__
  */
 class __classname__Test
 extends \Tests\TestCase

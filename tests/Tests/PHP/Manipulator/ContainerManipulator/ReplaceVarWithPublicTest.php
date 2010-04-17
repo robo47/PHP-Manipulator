@@ -7,7 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group ContainerManipulator_ReplaceVarWithPublic
+ * @group ContainerManipulator\ReplaceVarWithPublic
  */
 class ReplaceVarWithPublicTest extends \Tests\TestCase
 {
