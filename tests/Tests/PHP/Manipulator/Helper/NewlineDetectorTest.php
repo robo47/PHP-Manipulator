@@ -125,7 +125,7 @@ class NewlineDetectorTest extends \Tests\TestCase
 
     /**
      * @dataProvider containerProvider
-     * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewline
+     * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewlineFromContainer
      */
     public function testGetNewlineFromContainer($container, $defaultNewline, $expectedNewline)
     {
