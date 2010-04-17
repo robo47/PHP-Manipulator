@@ -24,6 +24,17 @@ class AutoloaderTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\Autoloader::autoload
+     */
+    public function testAutoloadWithFullyQualifiedNamespace()
+    {
+        $autoloader = new Autoloader();
+        $this->assertFalse(class_exists('\Baa\Autoloader\Baa', false));
+        $autoloader->autoload('\Baa\Autoloader\Baa');
+        $this->assertTrue(class_exists('\Baa\Autoloader\Baa', false));
+    }
+
+    /**
      * @covers \PHP\Manipulator\Autoloader::register
      */
     public function testRegisterAutoloader()
