@@ -126,6 +126,7 @@ abstract class AHelper
      * @param string $prefix
      * @param boolean $autoPrefix
      * @return object
+     * @todo a cache which creates only one instance of each Constraint and Manipulator and uses it again and again.
      */
     public function getClassInstance($class, $prefix, $autoPrefix = true)
     {
