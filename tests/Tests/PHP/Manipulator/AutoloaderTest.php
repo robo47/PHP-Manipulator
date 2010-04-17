@@ -13,7 +13,16 @@ class AutoloaderTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Autoloader::__construct
+     */
+    public function testConstructorRequiresEzcBaseClass()
+    {
+        $this->markTestIncomplete('Currently no idea how to test this since the loader is used for the unittests');
+    }
+
+    /**
      * @covers \PHP\Manipulator\Autoloader::autoload
+     * @covers \PHP\Manipulator\Autoloader::<protected>
      */
     public function testAutoload()
     {
@@ -25,6 +34,7 @@ class AutoloaderTest extends \Tests\TestCase
 
     /**
      * @covers \PHP\Manipulator\Autoloader::autoload
+     * @covers \PHP\Manipulator\Autoloader::<protected>
      */
     public function testAutoloadWithFullyQualifiedNamespace()
     {

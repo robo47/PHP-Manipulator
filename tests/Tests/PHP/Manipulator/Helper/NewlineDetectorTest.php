@@ -75,6 +75,7 @@ class NewlineDetectorTest extends \Tests\TestCase
     /**
      * @dataProvider tokenProvider
      * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewlineFromToken
+     * @covers \PHP\Manipulator\Helper\NewlineDetector::<protected>
      */
     public function testGetNewlineFromToken($token, $defaultNewline, $expectedNewline)
     {
@@ -126,6 +127,7 @@ class NewlineDetectorTest extends \Tests\TestCase
     /**
      * @dataProvider containerProvider
      * @covers \PHP\Manipulator\Helper\NewlineDetector::getNewlineFromContainer
+     * @covers \PHP\Manipulator\Helper\NewlineDetector::<protected>
      */
     public function testGetNewlineFromContainer($container, $defaultNewline, $expectedNewline)
     {
