@@ -596,4 +596,31 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertNull($container->getPreviousToken($token1), 'Found Token before first token');
         $this->assertNull($container->getPreviousToken($token4), 'Found Token which could not be found');
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::reInitFromCode
+     */
+    public function testReInitFromCode()
+    {
+        $container = new TokenContainer();
+        $this->assertCount(0, $container, 'Count missmatch');
+        $container->reInitFromCode('<?php echo $foo; ?>');
+        $this->assertCount(7, $container, 'Count missmatch');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::createFromFile
+     */
+    public function testCreateFromFile()
+    {
+        $this->markTestIncomplete('not implemented yet');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::saveToFile
+     */
+    public function testSaveToFile()
+    {
+        $this->markTestIncomplete('not implemented yet');
+    }
 }
