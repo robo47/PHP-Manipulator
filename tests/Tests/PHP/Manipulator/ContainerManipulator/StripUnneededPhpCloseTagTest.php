@@ -52,6 +52,22 @@ class StripUnneededPhpCloseTagTest extends \Tests\TestCase
             false
         );
 
+        #2 strip whitespace
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input4'),
+            $this->getContainerFromFixture($path . 'output4'),
+            array('stripWhitespaceFromEnd' => false),
+            false
+        );
+
+        #2 strip whitespace
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input5'),
+            $this->getContainerFromFixture($path . 'output5'),
+            array('stripWhitespaceFromEnd' => true),
+            false
+        );
+
         return $data;
     }
 
