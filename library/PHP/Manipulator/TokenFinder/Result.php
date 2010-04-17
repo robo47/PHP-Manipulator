@@ -17,6 +17,7 @@ implements \Countable
     protected $_tokens = array();
 
     /**
+     * Add a token
      *
      * @param Token $token
      * @return \PHP\Manipulator\TokenFinder\Result *Provides Fluent Interface*
@@ -28,7 +29,6 @@ implements \Countable
     }
 
     /**
-     *
      * @return array
      */
     public function getTokens()
@@ -37,7 +37,6 @@ implements \Countable
     }
 
     /**
-     *
      * @return PHP\Manipulator\Token
      */
     public function getFirstToken()
@@ -51,7 +50,6 @@ implements \Countable
     }
 
     /**
-     *
      * @return PHP\Manipulator\Token
      * @throws Exception if result is empty
      */
@@ -66,7 +64,6 @@ implements \Countable
     }
 
     /**
-     *
      * @return boolean
      */
     public function isEmpty()
@@ -75,6 +72,7 @@ implements \Countable
     }
 
     /**
+     * Implements SPL::Countable
      *
      * @return integer
      */
@@ -84,7 +82,6 @@ implements \Countable
     }
 
     /**
-     *
      * @param array $tokens
      * @return \PHP\Manipulator\TokenFinder\Result
      */

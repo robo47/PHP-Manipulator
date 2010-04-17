@@ -97,6 +97,7 @@ abstract class AHelper
     }
 
     /**
+     * Searches a Tokencontainer starting from a Token and returns a Result-Set
      *
      * @param \PHP\Manipulator\TokenFinder|string $finder
      * @param \PHP\Manipulator\Token $token
