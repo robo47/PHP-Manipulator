@@ -42,7 +42,6 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_LOGICAL_AND);

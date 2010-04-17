@@ -21,7 +21,6 @@ extends Rule
         $deleteTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
 
             if ($this->_isOpenTag($token)) {
                 $open = true;

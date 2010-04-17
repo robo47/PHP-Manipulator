@@ -34,7 +34,6 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->_isLogicalAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_BOOLEAN_AND);

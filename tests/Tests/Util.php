@@ -26,7 +26,6 @@ class Util
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             $dump .= Util::dumpToken($token);
             $iterator->next();
         }

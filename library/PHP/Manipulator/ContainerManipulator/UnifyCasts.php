@@ -37,7 +37,6 @@ extends ContainerManipulator
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, array_keys($searchedTokens))) {
                 $newValue = $searchedTokens[$token->getType()];
                 if ($token->getValue() != $newValue) {

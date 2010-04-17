@@ -23,7 +23,6 @@ extends ContainerManipulator
         $errorControllTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsErrorControlOperator', $token)) {
                 $errorControllTokens[] = $token;
             }

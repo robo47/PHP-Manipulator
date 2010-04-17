@@ -19,16 +19,11 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
-
-            $value = $token->getValue();
             if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG)) {
-                $value = str_replace('<%', '<?php', $value);
+                $token->setValue(str_replace('<%', '<?php', $token->getValue()));
             } else if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG_WITH_ECHO)) {
-                $value = str_replace('<%=', '<?php echo ', $value);
+                $token->setValue(str_replace('<%=', '<?php echo ', $token->getValue()));
             }
-
-            $token->setValue($value);
             $iterator->next();
         }
         $container->retokenize();

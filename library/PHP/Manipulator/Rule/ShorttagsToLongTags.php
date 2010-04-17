@@ -19,7 +19,6 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
 
             $value = $token->getValue();
             if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG)) {

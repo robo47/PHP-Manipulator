@@ -20,7 +20,6 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP_Formatter_Token */
 
             $iterator->next();
         }

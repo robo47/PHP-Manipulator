@@ -65,7 +65,6 @@ extends Rule
                 }
             }
             if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
-                /* @var $token PHP\Manipulator\Token */
                 if ($this->evaluateConstraint('IsType', $token, $searchedTokens)) {
                     $foundPairs[] = $token;
                 }

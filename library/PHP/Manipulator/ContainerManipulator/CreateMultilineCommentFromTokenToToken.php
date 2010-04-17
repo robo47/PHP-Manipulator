@@ -107,7 +107,6 @@ extends ContainerManipulator
     {
         $value = '';
         foreach ($tokens as $token) {
-            /* @var $token PHP\Manipulator\Token */
             if (!$this->_isMultilineComment($token)) {
                 $value .= $token->getValue();
             }

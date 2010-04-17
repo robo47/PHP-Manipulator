@@ -23,7 +23,6 @@ extends ContainerManipulator
         $functionTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
                 $functionTokens[] = $token;
             }
@@ -51,7 +50,6 @@ extends ContainerManipulator
         $argument = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
                 $indentionLevel++;
             }
@@ -93,7 +91,6 @@ extends ContainerManipulator
     {
         $typehintToken = null;
         foreach ($argumentTokens as $token) {
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, T_STRING)) {
                 $typehintToken = $token;
                 break;

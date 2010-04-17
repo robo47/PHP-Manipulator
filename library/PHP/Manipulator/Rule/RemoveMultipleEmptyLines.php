@@ -35,7 +35,6 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            /* @var $token PHP\Manipulator\Token */
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
