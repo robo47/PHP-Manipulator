@@ -28,6 +28,13 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
             false
         );
 
+        #0
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
+            false
+        );
+
         return $data;
     }
 
