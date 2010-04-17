@@ -24,13 +24,31 @@ class StripUnneededPhpCloseTagTest extends \Tests\TestCase
         $data[] = array(
             $this->getContainerFromFixture($path . 'input0'),
             $this->getContainerFromFixture($path . 'output0'),
+            array(),
             false
         );
 
         #1 include all whitespace AFTER it too
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'output1'),
+            array(),
+            false
+        );
+
+        #2 strip whitespace
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
+            array('stripWhitespaceFromEnd' => true),
+            false
+        );
+
+        #3 strip whitespace
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'output3'),
+            array('stripWhitespaceFromEnd' => true),
             false
         );
 
@@ -41,10 +59,10 @@ class StripUnneededPhpCloseTagTest extends \Tests\TestCase
      * @covers \PHP\Manipulator\ContainerManipulator\StripUnneededPhpCloseTag
      * @dataProvider manipulateProvider
      */
-    public function testManipulate($container, $expectedContainer, $strict)
+    public function testManipulate($container, $expectedContainer, $params, $strict)
     {
         $manipulator = new StripUnneededPhpCloseTag();
-        $manipulator->manipulate($container);
+        $manipulator->manipulate($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 }
