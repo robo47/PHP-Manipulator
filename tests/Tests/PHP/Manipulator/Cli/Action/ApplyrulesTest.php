@@ -28,7 +28,7 @@ class ApplyrulesTest extends \Tests\TestCase
      */
     public function testRun()
     {
-        $this->markTestSkipped('not implemented yet');
+        $this->markTestIncomplete('not implemented yet');
         $cli = new Cli();
         $action = new ApplyRules($cli);
         $action->run();
