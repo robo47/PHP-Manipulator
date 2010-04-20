@@ -4,24 +4,7 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
 
-class NonAbstract extends Config
-{
-
-    public $data;
-
-    protected function _initConfig($data)
-    {
-        $this->data = $data;
-    }
-
-    public function setOption($option, $value)
-    {
-        $this->_options[$option] = $value;
-    }
-}
-
 /**
- * @group Cli
  * @group Config
  * @todo array-support for the file-suffixes ?
  */
@@ -34,7 +17,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testConstructorSetsDefaultOptions()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
 
         $options = $config->getOptions();
 
@@ -59,7 +42,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddFile()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
 
         $this->assertCount(0, $config->getFiles());
 
@@ -77,7 +60,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddDirectory()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
 
         $this->assertCount(0, $config->getFiles());
 
@@ -96,7 +79,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddIterator()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
 
         $this->assertCount(0, $config->getFiles());
 
@@ -119,7 +102,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddDirectoryThrowsExceptionIfDirectoryWasNotFound()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
 
         try {
             $config->addDirectory('/non/existing/path');
@@ -136,7 +119,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRuleset()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
         $config->setOption('rulesetPrefix', '\Baa\Foo\Ruleset\\');
 
@@ -163,7 +146,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRulesetWithPrefix()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
         $config->setOption('rulesetPrefix', '\Baa\Foo\Ruleset\\');
 
@@ -190,7 +173,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRule()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
 
         $this->assertCount(0, $config->getRules());
@@ -211,7 +194,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRuleWithOptions()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
 
         $this->assertCount(0, $config->getRules());
@@ -237,7 +220,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRuleWithPrefix()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
 
         $this->assertCount(0, $config->getRules());
@@ -258,7 +241,7 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testAddRuleWithPrefixAndOptions()
     {
-        $config = $this->getConfig(0);
+        $config = $this->getConfig();
         $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
 
         $this->assertCount(0, $config->getRules());
@@ -329,8 +312,8 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testFactoryWithNonAbstractFromCode()
     {
-        $config = Config::factory('\Tests\PHP\Manipulator\NonAbstract', '<config></config>', false);
-        $this->assertType('\Tests\PHP\Manipulator\NonAbstract', $config);
+        $config = Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '<config></config>', false);
+        $this->assertType('\Tests\PHP\Manipulator\Config\NonAbstract', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
@@ -350,8 +333,8 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithNonAbstractFromFile()
     {
         $file = 'Cli/Config/config0.xml';
-        $config = Config::factory('\Tests\PHP\Manipulator\NonAbstract', '_fixtures/' . $file, true);
-        $this->assertType('\Tests\PHP\Manipulator\NonAbstract', $config);
+        $config = Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '_fixtures/' . $file, true);
+        $this->assertType('\Tests\PHP\Manipulator\Config\NonAbstract', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 }
