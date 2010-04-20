@@ -5,7 +5,6 @@ namespace PHP;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Rule;
 
-// @todo check if this class is really needed for anything elsethan version and githash ... seems like it does not really offer anything
 // @todo add Support for iterators and stuff
 // @todo Should be the class used by apps not using the CLI
 class Manipulator
