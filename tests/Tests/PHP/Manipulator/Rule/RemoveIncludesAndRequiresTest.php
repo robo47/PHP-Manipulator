@@ -13,7 +13,7 @@ class RemoveIncludesAndRequiresTest extends \Tests\TestCase
 {
 
     /**
-     * @covers RemoveIncludesAndRequires::init
+     * @covers \PHP\Manipulator\Rule\RemoveIncludesAndRequires::init
      */
     public function testConstructorDefaults()
     {
