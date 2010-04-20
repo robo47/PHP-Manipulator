@@ -5,6 +5,9 @@ namespace PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
+/**
+ * @todo new method seekToToken which directly accepts Token for seeking instead of an offset
+ */
 class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
 
@@ -35,7 +38,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @param integer $position
      * @return integer|false
      */
@@ -59,7 +61,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @return \PHP\Manipulator\Token
      */
     public function current()
@@ -72,7 +73,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @return integer
      */
     public function key()
@@ -84,32 +84,22 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         return $key;
     }
 
-    /**
-     *
-     */
     public function next()
     {
         $this->_pos++;
     }
 
-    /**
-     *
-     */
     public function previous()
     {
         $this->_pos--;
     }
 
-    /**
-     *
-     */
     public function rewind()
     {
         $this->_pos = 0;
     }
 
     /**
-     *
      * @return boolean
      */
     public function valid()
@@ -118,7 +108,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @param integer $position
      * @return boolean
      */
@@ -132,7 +121,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @param integer $key
      * @return integer|false
      */
@@ -142,7 +130,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @param integer $position
      */
     public function seek($key)
