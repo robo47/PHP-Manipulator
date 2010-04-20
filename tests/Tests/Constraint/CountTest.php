@@ -161,4 +161,52 @@ class CountTest extends \PHPUnit_Framework_TestCase
         $count = new Count(0);
         $this->assertEquals('Count matches ', $count->toString());
     }
+
+    /**
+     * @covers \Tests\Constraint\Count::__construct
+     */
+    public function testConstructorThrowsExceptionIfExpectedIsNotInteger()
+    {
+        try {
+            $count = new Count('0');
+            $this->fail('Expected exception not thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Argument #1 of Tests\Constraint\Count::__construct() is no integer', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \Tests\Constraint\Count::evaluate
+     * @covers \Tests\Constraint\Count::<protected>
+     */
+    public function testEvaludateThrowsExceptionIfOtherIsNotInteger()
+    {
+        $count = new Count(0);
+        try {
+            $count->evaluate("foo");
+            $this->fail('Expected exception not thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Argument #1 of Tests\Constraint\Count::evaluate() is no countable type', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \Tests\Constraint\Count::failureDescription
+     */
+    public function testFailAndFailureDescription()
+    {
+        $expected = 0;
+        $other = array(1,2,3);
+
+        $count = new Count($expected);
+        $count->evaluate($other);
+        
+        try {
+            $count->fail($other, '');
+            $this->fail('no exception thrown');
+            //$this->assertEquals(, );
+        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals('Count of 3 does not match exptected count of 0', $e->getMessage());
+        }
+    }
 }

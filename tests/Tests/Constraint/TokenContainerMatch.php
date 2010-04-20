@@ -24,7 +24,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @param PHP\Manipulator\TokenContainer $expected
      * @param boolean $strict
      */
-    public function __construct(TokenContainer $expected, $strict)
+    public function __construct($expected, $strict)
     {
         if (!$expected instanceof TokenContainer) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(

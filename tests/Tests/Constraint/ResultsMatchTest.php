@@ -5,6 +5,7 @@ namespace Tests\Constraint;
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Token;
 use Tests\Constraint\ResultsMatch;
+use Tests\Util;
 
 // @todo test faile-message and stuff
 class ResultsMatchTest extends \PHPUnit_Framework_TestCase
@@ -78,8 +79,8 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testResultsMatch($other, $expected, $expectedEvaluationResult)
     {
-        $count = new ResultsMatch($expected);
-        $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        $resultsMatch = new ResultsMatch($expected);
+        $this->assertSame($expectedEvaluationResult, $resultsMatch->evaluate($other));
     }
 
     /**
@@ -87,7 +88,60 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testToString()
     {
-        $count = new ResultsMatch(new Result());
-        $this->assertEquals('Result matches ', $count->toString());
+        $resultsMatch = new ResultsMatch(new Result());
+        $this->assertEquals('Result matches ', $resultsMatch->toString());
+    }
+
+    /**
+     * @covers \Tests\Constraint\ResultsMatch::__construct
+     */
+    public function testConstructorThrowsExceptionIfExpectedIsNoResult()
+    {
+        try {
+            $count = new ResultsMatch('0');
+            $this->fail('Expected exception not thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::__construct() is no \PHP\Manipulator\Tokenfinder\Result', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+
+    /**
+     * @covers \Tests\Constraint\ResultsMatch::evaluate
+     * @covers \Tests\Constraint\ResultsMatch::<protected>
+     */
+    public function testEvaludateThrowsExceptionIfOtherIsNoResult()
+    {
+        $resultsMatch = new ResultsMatch(new Result());
+        try {
+            $resultsMatch->evaluate("foo");
+            $this->fail('Expected exception not thrown');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::evaluate() is no \PHP\Manipulator\Tokenfinder\Result', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \Tests\Constraint\ResultsMatch::failureDescription
+     */
+    public function testFailAndFailureDescription()
+    {
+        $expected = new Result();
+        $other = Result::factory(array(new Token('Foo')));
+        $resultsMatch = new ResultsMatch($expected);
+        $resultsMatch->evaluate($other);
+
+        $message =
+        'Results do not match: ' . PHP_EOL .
+        'Cause: length'  . PHP_EOL .
+        Util::compareResults($expected, $other);
+
+        try {
+            $resultsMatch->fail($other, '');
+            $this->fail('no exception thrown');
+            //$this->assertEquals(, );
+        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals($message, $e->getMessage());
+        }
     }
 }

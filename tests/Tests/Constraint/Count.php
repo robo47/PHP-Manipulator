@@ -36,7 +36,7 @@ class Count extends \PHPUnit_Framework_Constraint
     {
         if (!$this->_isCountable($other)) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'not countable'
+                1, 'countable type'
             );
         }
         $expectedCount = $this->_expectedCount;
@@ -54,7 +54,7 @@ class Count extends \PHPUnit_Framework_Constraint
      * @param mixed $other
      * @return boolean
      */
-    public function _isCountable($other)
+    protected function _isCountable($other)
     {
         if ($other instanceof \Countable ||
             $other instanceof \Iterator ||
