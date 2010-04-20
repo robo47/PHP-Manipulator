@@ -2,13 +2,13 @@
 
 namespace Baa\Foo\Ruleset;
 
-use PHP\Manipulator\IRuleset;
+use PHP\Manipulator\Ruleset;
 use PHP\Manipulator\Rule;
 use Baa\Foo\Rule\FifthRule;
 use Baa\Foo\Rule\SixthsRule;
 
 class FirstRuleset
-implements IRuleset
+extends Ruleset
 {
 
     public function getRules()

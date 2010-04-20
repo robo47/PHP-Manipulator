@@ -135,7 +135,7 @@ abstract class Config
         }
         $classname = $prefix . $ruleset;
         $ruleset = new $classname();
-        /* @var $ruleset \PHP\Manipulator\IRuleset */
+        /* @var $ruleset \PHP\Manipulator\Ruleset */
         foreach ($ruleset->getRules() as $rule) {
             $this->_rules[] = $rule;
         }
