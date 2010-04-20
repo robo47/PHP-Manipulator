@@ -58,14 +58,13 @@ class ApplyRules extends Action
         // Perform actions
         $i = 0;
         foreach ($files as $file) {
-            $container = TokenContainer::createFromFile($file);
+            $container = new FileContainer($file);
             foreach ($rules as $rule) {
                 /* @var $rule \PHP\Manipulator\Rule */
                 $rule->apply($container);
                 $progress->advance();
             }
-
-            $container->saveToFile($file);
+            $container->save();
         }
 
         // Finish progress bar and jump to next line.

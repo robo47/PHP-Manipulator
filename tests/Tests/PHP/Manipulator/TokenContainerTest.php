@@ -607,20 +607,4 @@ class TokenContainerTest extends \Tests\TestCase
         $container->reInitFromCode('<?php echo $foo; ?>');
         $this->assertCount(7, $container, 'Count missmatch');
     }
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::createFromFile
-     */
-    public function testCreateFromFile()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::saveToFile
-     */
-    public function testSaveToFile()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
 }

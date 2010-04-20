@@ -474,37 +474,4 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         }
         return $array;
     }
-
-    /**
-     * Create Container from File
-     *
-     * @param string $file
-     * @return \PHP\Manipulator\TokenContainer
-     * @todo new FileTokenContainer which has constructor-parameter which get's passed in the name of the file
-     */
-    public static function createFromFile($file)
-    {
-        if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
-            throw new Exception('Unable to open file for reading: ' . $file);
-        }
-        return new TokenContainer(
-            \file_get_contents($file)
-        );
-    }
-
-    /**
-     * Save to File
-     *
-     * @param string $file
-     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
-     * @todo new FileTokenContainer which saves name and allows so save ?
-     */
-    public function saveToFile($file)
-    {
-        if (!is_writeable($file)) {
-            throw new Exception('Unable to open file for writing: ' . $file);
-        }
-        \file_put_contents($file, $this->toString());
-        return $this;
-    }
 }
