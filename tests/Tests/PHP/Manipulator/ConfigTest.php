@@ -83,7 +83,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(0, $config->getFiles());
 
-        $iterator = \File_Iterator_Factory::getFileIterator(\getcwd() .'/_fixtures/Cli/Config/testDir0', '.php');
+        $iterator = \File_Iterator_Factory::getFileIterator(\getcwd() . '/_fixtures/Cli/Config/testDir0', '.php');
 
         $fluent = $config->addIterator($iterator);
 

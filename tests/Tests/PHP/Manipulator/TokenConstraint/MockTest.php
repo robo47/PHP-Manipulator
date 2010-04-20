@@ -12,6 +12,7 @@ use PHP\Manipulator\TokenContainer;
  */
 class MockTest extends \Tests\TestCase
 {
+
     /**
      * @covers \PHP\Manipulator\TokenConstraint\Mock
      */

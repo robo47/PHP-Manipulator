@@ -105,7 +105,6 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-
     /**
      * @covers \Tests\Constraint\ResultsMatch::evaluate
      * @covers \Tests\Constraint\ResultsMatch::<protected>
@@ -132,9 +131,9 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         $resultsMatch->evaluate($other);
 
         $message =
-        'Results do not match: ' . PHP_EOL .
-        'Cause: length'  . PHP_EOL .
-        Util::compareResults($expected, $other);
+            'Results do not match: ' . PHP_EOL .
+            'Cause: length' . PHP_EOL .
+            Util::compareResults($expected, $other);
 
         try {
             $resultsMatch->fail($other, '');

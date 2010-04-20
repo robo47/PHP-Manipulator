@@ -8,9 +8,10 @@ use PHP\Manipulator\Token;
 
 class ReverseIterator extends Iterator
 {
+
     /**
      *
-     * @param TokenContainer $container 
+     * @param TokenContainer $container
      */
     public function __construct(TokenContainer $container)
     {

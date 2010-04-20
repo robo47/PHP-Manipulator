@@ -196,11 +196,11 @@ class CountTest extends \PHPUnit_Framework_TestCase
     public function testFailAndFailureDescription()
     {
         $expected = 0;
-        $other = array(1,2,3);
+        $other = array(1, 2, 3);
 
         $count = new Count($expected);
         $count->evaluate($other);
-        
+
         try {
             $count->fail($other, '');
             $this->fail('no exception thrown');

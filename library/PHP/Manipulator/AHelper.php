@@ -15,6 +15,7 @@ use PHP\Manipulator\TokenManipulator;
 // @todo extend helper-methods to use config
 abstract class AHelper
 {
+
     /**
      * Load/Instantiate/Evaluate Token Constraint on a Token
      *

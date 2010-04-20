@@ -26,7 +26,6 @@ class Manipulator
      * @var array
      */
     protected $_rules = array();
-
     /**
      * Array with files
      *

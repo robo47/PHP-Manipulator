@@ -14,7 +14,7 @@ class Help extends Action
     {
         $input = $this->getCli()->getConsoleInput();
 
-        echo $input->getSynopsis() . PHP_EOL. PHP_EOL;
+        echo $input->getSynopsis() . PHP_EOL . PHP_EOL;
 
         foreach ($input->getOptions() as $option) {
             $curentOption = '  ' . str_pad("-{$option->short},", 6) . "--{$option->long}";

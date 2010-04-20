@@ -8,16 +8,17 @@ use PHP\Manipulator\TokenContainer;
 
 class NonAbstractHelper extends AHelper
 {
-    public $init = false;
 
+    public $init = false;
+    
     public function init()
     {
         $this->init = true;
     }
-
+    
     public function apply(TokenContainer $container)
     {
-
+        
     }
 }
 
@@ -35,8 +36,6 @@ class AHelperTest extends \Tests\TestCase
         $reflection = new \ReflectionClass('PHP\Manipulator\AHelper');
         $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
     }
-
-
 
     /**
      * @covers \PHP\Manipulator\AHelper::getClassInstance

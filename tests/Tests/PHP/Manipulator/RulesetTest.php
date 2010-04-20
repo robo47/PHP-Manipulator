@@ -28,7 +28,7 @@ class RulesetTest extends \Tests\TestCase
         $params = $constructor->getParameters();
         $optionsParameter = $params[0];
         /* @var $optionsParameter \ReflectionParameter */
-        $this->assertTrue($optionsParameter->isArray() , 'Parameter has no array type hint');
-        $this->assertEquals(array(), $optionsParameter->getDefaultValue() , 'Parameter was wrong default value');
+        $this->assertTrue($optionsParameter->isArray(), 'Parameter has no array type hint');
+        $this->assertEquals(array(), $optionsParameter->getDefaultValue(), 'Parameter was wrong default value');
     }
 }

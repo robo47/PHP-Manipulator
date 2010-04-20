@@ -15,7 +15,6 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @var \PHP\Manipulator\Tokenfinder\Result
      */
     protected $_expectedResult = null;
-
     /**
      * Cause of missmatch
      *

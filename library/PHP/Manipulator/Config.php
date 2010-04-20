@@ -1,4 +1,5 @@
 <?php
+
 namespace PHP\Manipulator;
 
 // @todo check how to auto-inject config in AHelper and co (a factory to cache and create rules, contraints and manipulators?) into all stuff ?
@@ -11,14 +12,12 @@ abstract class Config
      * @var array
      */
     protected $_options = array();
-
     /**
      * Array with all Rules
      *
      * @var array
      */
     protected $_rules = array();
-
     /**
      * Array with all Files
      *
@@ -34,7 +33,7 @@ abstract class Config
         $this->_initDefaultOptions();
         $this->_initConfig($data);
     }
-
+    
     protected function _initDefaultOptions()
     {
         $this->_options['rulePrefix'] = '\PHP\Manipulator\Rule\\';
@@ -180,7 +179,7 @@ abstract class Config
 
         foreach ($iterator as $file) {
             if ($file instanceof \SplFileInfo) {
-                $file = (string)$file;
+                $file = (string) $file;
             }
             $this->addFile((string) $file);
         }

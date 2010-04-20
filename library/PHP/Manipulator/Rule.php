@@ -9,18 +9,19 @@ extends AHelper
 {
 
     /**
+     * Array with options
+     *
+     * @var array
+     */
+    protected $_options = array();
+
+    /**
      * Performs the rule on the container
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
     abstract public function apply(TokenContainer $container);
 
-    /**
-     * Array with options
-     *
-     * @var array
-     */
-    protected $_options = array();
 
     /**
      * @param array $options
@@ -90,8 +91,6 @@ extends AHelper
         }
         return $this->_options[$option];
     }
-
-
 
     /**
      * Called from constructor for checking options, adding default options

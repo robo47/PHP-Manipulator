@@ -13,7 +13,6 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_expectedContainer = null;
-
     /**
      * @var boolean
      */

@@ -7,8 +7,9 @@ use PHP\Manipulator\TokenContainer;
 
 class NonAbstractRule extends Rule
 {
-    public $init = false;
 
+    public $init = false;
+    
     public function init()
     {
         $this->init = true;

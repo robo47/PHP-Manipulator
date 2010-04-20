@@ -47,7 +47,6 @@ extends ContainerManipulator
         if (true === $stripWhitespaceFromEnd) {
             $this->manipulateContainer('RemoveWhitespaceFromEnd', $container);
         }
-        
     }
 
     /**

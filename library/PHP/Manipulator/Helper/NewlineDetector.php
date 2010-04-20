@@ -7,13 +7,13 @@ use PHP\Manipulator\TokenContainer;
 
 class NewlineDetector
 {
+
     /**
      * @var string
      */
     protected $_defaultNewline = "\n";
 
     /**
-     *
      * @param string $defaultNewline
      */
     public function __construct($defaultNewline = "\n")
@@ -60,7 +60,7 @@ class NewlineDetector
     protected function _getNewlineFromToken(Token $token, $default = false)
     {
         $matches = array();
-        if(preg_match("~(\r\n|\r|\n)~", $token->getValue(), $matches)) {
+        if (preg_match("~(\r\n|\r|\n)~", $token->getValue(), $matches)) {
             return $matches[0];
         }
         return $default;

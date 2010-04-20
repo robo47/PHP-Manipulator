@@ -12,6 +12,7 @@ use PHP\Manipulator\TokenContainer;
  */
 class TestCaseTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @covers Tests\Testcase::getFixtureFileContent
      */
@@ -22,6 +23,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
         $content = $test->getFixtureFileContent($filename);
         $this->assertEquals(file_get_contents(TESTS_PATH . '/_fixtures/' . $filename), $content);
     }
+
     /**
      * @covers Tests\Testcase::getFixtureFileContent
      */
@@ -32,7 +34,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
         try {
             $test->getFixtureFileContent($filename);
             $this->fail('no exception thrown');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->assertEquals('Fixture ' . $filename . ' not found', $e->getMessage());
         }
     }

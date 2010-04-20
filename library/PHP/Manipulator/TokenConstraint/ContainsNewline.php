@@ -18,6 +18,6 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $params = null)
     {
-        return (bool)preg_match("~(\r|\n)~", $token->getValue());
+        return (bool) preg_match("~(\r|\n)~", $token->getValue());
     }
 }

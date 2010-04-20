@@ -84,8 +84,6 @@ class NewlineDetectorTest extends \Tests\TestCase
         $this->assertEquals($expectedNewline, $actualNewline);
     }
 
-
-
     /**
      * @return array
      */
@@ -135,7 +133,7 @@ class NewlineDetectorTest extends \Tests\TestCase
         $actualNewline = $detector->getNewlineFromContainer($container);
         $this->assertEquals($expectedNewline, $actualNewline);
     }
-    
+
     /**
      * @covers \PHP\Manipulator\Helper\NewlineDetector::__construct
      */
@@ -144,7 +142,7 @@ class NewlineDetectorTest extends \Tests\TestCase
         $detector = new NewlineDetector();
         $this->assertEquals("\n", $detector->getDefaultNewline());
     }
-    
+
     /**
      * @covers \PHP\Manipulator\Helper\NewlineDetector::__construct
      */

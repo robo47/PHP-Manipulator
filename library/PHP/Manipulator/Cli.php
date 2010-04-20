@@ -11,12 +11,10 @@ class Cli
      * @var float
      */
     protected $_start = - 1;
-
     /**
      * @var array
      */
     protected $_params = array();
-
     /**
      * @var \ezcConsoleInput
      */
@@ -25,7 +23,6 @@ class Cli
      * @var \ezcConsoleOutput
      */
     protected $_output = null;
-    
     /**
      * @var array
      */

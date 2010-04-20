@@ -8,7 +8,7 @@ use PHP\Manipulator\Token;
 
 class RemoveTrailingWhitespace extends Rule
 {
-
+    
     public function init()
     {
         if (!$this->hasOption('removeEmptyLinesAtFileEnd')) {

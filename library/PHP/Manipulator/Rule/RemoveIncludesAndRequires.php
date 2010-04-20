@@ -9,6 +9,7 @@ use PHP\Manipulator\TokenContainer;
 class RemoveIncludesAndRequires
 extends CommentOutIncludesAndRequires
 {
+
     /**
      * @param array $tokens
      */

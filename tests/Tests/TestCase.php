@@ -138,12 +138,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 $message
         );
     }
+
     /**
      * Marks test as skipped if asp-tags are inactive
      */
     public function checkAsptags()
     {
-        if (false === (bool)ini_get('asp_tags')) {
+        if (false === (bool) ini_get('asp_tags')) {
             $this->markTestSkipped('Can\'t ' . __CLASS__ . ' with asp_tags deactivated');
         }
     }
@@ -153,7 +154,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function checkShorttags()
     {
-        if (false === (bool)ini_get('short_open_tag')) {
+        if (false === (bool) ini_get('short_open_tag')) {
             $this->markTestSkipped('Can\'t run ' . __CLASS__ . ' with short_open_tag deactivated');
         }
     }

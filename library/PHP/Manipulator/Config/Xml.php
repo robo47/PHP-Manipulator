@@ -38,7 +38,7 @@ class Xml extends Config
     protected function _errorMessage($error)
     {
         $message = '';
-        if($error instanceof \LibXMLError) {
+        if ($error instanceof \LibXMLError) {
             /* @var $error libXMLError */
             $message .= 'Level: ' . $error->level . PHP_EOL;
             $message .= 'Code: ' . $error->code . PHP_EOL;
@@ -251,7 +251,7 @@ class Xml extends Config
                         $exclude[] = $value;
                         break;
                     default:
-                        // ignore
+                    // ignore
                         break;
                 }
             }

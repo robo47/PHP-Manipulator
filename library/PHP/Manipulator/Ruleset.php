@@ -6,9 +6,10 @@ use PHP\Manipulator\TokenContainer;
 
 abstract class Ruleset
 {
+
     /**
      * Array with Options
-     * 
+     *
      * @var array
      */
     protected $_options = array();
@@ -37,4 +38,5 @@ abstract class Ruleset
      * @return array
      */
     abstract public function getRules();
+
 }
