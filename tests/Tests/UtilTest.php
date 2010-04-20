@@ -22,19 +22,19 @@ class UtilTest extends \Tests\TestCase
         #0
         $data[] = array(
             Token::factory('('),
-            '[SIMPLE]                    |    1 | NULL | (' . PHP_EOL,
+            '[SIMPLE]                    |    1 | NULL | (',
         );
 
         #1
         $data[] = array(
             Token::factory(array(T_COMMENT, '// foo', 5)),
-            'T_COMMENT                   |    6 |    5 | //.foo' . PHP_EOL,
+            'T_COMMENT                   |    6 |    5 | //.foo',
         );
 
         #2
         $data[] = array(
             Token::factory(array(T_COMMENT, "/*\n\t * föü\n\t */", 10)),
-            'T_COMMENT                   |   15 |   10 | /*\n\t.*.föü\n\t.*/' . PHP_EOL,
+            'T_COMMENT                   |   15 |   10 | /*\n\t.*.föü\n\t.*/',
         );
 
         return $data;
@@ -48,7 +48,7 @@ class UtilTest extends \Tests\TestCase
      */
     public function testDumpToken($token, $dumpExpected)
     {
-        $dump = Util::dumpToken($token);
+        $dump = Util::dumpToken($token, false);
         $this->assertEquals($dumpExpected, $dump, 'dump does not match');
     }
 
@@ -103,19 +103,6 @@ class UtilTest extends \Tests\TestCase
     }
 
     /**
-     *
-     * @covers \Tests\Util::getLongestLineLength
-     * @dataProvider arrayProvider
-     * @param array $array
-     * @param integer $longest
-     */
-    public function testGetLongestLineLength($array, $expectedLongest)
-    {
-        $longest = Util::getLongestLineLength($array);
-        $this->assertSame($expectedLongest, $longest, 'Length does not match');
-    }
-
-    /**
      * @return array
      */
     public function containerProvider()
@@ -138,11 +125,8 @@ class UtilTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \Tests\Util::dumpContainer
      * @dataProvider containerProvider
-     * @param PHP\Manipulator\TokenContainer $container
-     * @param string $expectedDump
      */
     public function testDumpContainer($container, $expectedDump)
     {
@@ -224,16 +208,20 @@ class UtilTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \Tests\Util::compareContainers
      * @dataProvider containerCompareProvider
-     * @param PHP\Manipulator\TokenContainer $expectedContainer
-     * @param PHP\Manipulator\TokenContainer $actualContainer
-     * @param string $expectedDump
      */
     public function testCompareContainer($expectedContainer, $actualContainer, $expectedDump, $strict)
     {
         $dump = Util::compareContainers($expectedContainer, $actualContainer, $strict);
         $this->assertSame($expectedDump, $dump, 'Dump does not match');
+    }
+
+    /**
+     * @covers \Tests\Util::compareResults
+     */
+    public function testCompareResults()
+    {
+        $this->markTestIncomplete('not implemented yet');
     }
 }

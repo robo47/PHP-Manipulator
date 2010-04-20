@@ -27,7 +27,7 @@ class Util
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            $dump .= Util::dumpToken($token);
+            $dump .= Util::dumpToken($token) . PHP_EOL;
             $iterator->next();
         }
 
@@ -110,26 +110,6 @@ class Util
     }
 
     /**
-     * Get longest lines length
-     *
-     * Returns the length of the longest string in the array
-     *
-     * @param array $array
-     * @return integer
-     */
-    public static function getLongestLineLength(array $array)
-    {
-        $longest = 0;
-        foreach ($array as $line) {
-            $length = mb_strlen($line, 'utf-8');
-            if ($length > $longest) {
-                $longest = $length;
-            }
-        }
-        return $longest;
-    }
-
-    /**
      * Dump a token
      *
      * Replaces spaces, linebreaks and tabs with visual representations:
@@ -157,20 +137,13 @@ class Util
         if (null === $line) {
             $line = 'NULL';
         }
-        if ($add) {
-            return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
-                str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
-                str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value . PHP_EOL;
-        } else {
-            return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
-                str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
-                str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
-        }
+        return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
+            str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
+            str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
     }
 
-
-
     /**
+     * Compare two Results
      *
      * @param \PHP\Manipulator\Tokenfinder\Result $expectedResult
      * @param \PHP\Manipulator\Tokenfinder\Result $actualResult
