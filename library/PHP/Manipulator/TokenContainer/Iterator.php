@@ -128,6 +128,17 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
+     *
+     * @param Token $token
+     * @return
+     */
+    public function seekToToken(Token $token)
+    {
+        $key =$this->_container->getOffsetByToken($token);
+        $this->seek($key);
+    }
+
+    /**
      * @param integer $position
      */
     public function seek($key)

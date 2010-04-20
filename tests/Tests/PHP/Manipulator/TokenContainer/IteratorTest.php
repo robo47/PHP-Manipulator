@@ -160,6 +160,48 @@ class IteratorTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::seekToToken
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::<protected>
+     */
+    public function testSeekToToken()
+    {
+        $tokens = array(
+            0 => Token::factory(array(null, "<?php\n")),
+            1 => Token::factory(array(null, "dummy")),
+            2 => Token::factory(array(null, 'echo')),
+            3 => Token::factory(array(null, "dummy")),
+            4 => Token::factory(array(null, ' ')),
+            5 => Token::factory(array(null, '\$var')),
+            6 => Token::factory(array(null, ';')),
+        );
+        $container = new TokenContainer($tokens);
+        $iterator = new TokenContainer\Iterator($container);
+
+        foreach($tokens as $token) {
+            $iterator->seekToToken($token);
+            $this->assertTrue($iterator->valid());
+            $this->assertSame($token, $iterator->current());
+        }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::seek
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::<protected>
+     */
+    public function testSeekToTokenThrowsOutOfBoundsExceptionIfTokenNotInContainer()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new TokenContainer\Iterator($container);
+
+        try {
+            $iterator->seekToToken(new Token('Foo'));
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals("Token 'Foo' does not exist in this container", $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
      * @covers \PHP\Manipulator\TokenContainer\Iterator::count
      */
     public function testCountable()
