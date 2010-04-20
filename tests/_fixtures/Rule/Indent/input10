@@ -2,6 +2,7 @@
 
 switch($foo){
 case '-2':
+echo 'foo';
 case '-1':
 echo 'it is bad';
 break;

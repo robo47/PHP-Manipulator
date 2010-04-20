@@ -36,12 +36,19 @@ extends Rule
     }
 
     /**
+     *
+     * @var TokenContainer
+     */
+    protected $_container = null;
+
+    /**
      * Unindents all Code and then indent it right
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
     public function apply(TokenContainer $container)
     {
+        $this->_container = $container;
         $removeIndention = new RemoveIndentionRule();
         $removeIndention->apply($container);
 
@@ -56,8 +63,7 @@ extends Rule
                 $this->indentMultilineComment($token);
             }
 
-            $this->switchCaseIndentionIncreaseCheck($token);
-            $this->switchCaseIndentionDecreaseCheck($token);
+            $this->switchIndentionCheck($token);
 
             if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
@@ -68,9 +74,7 @@ extends Rule
                 if ($this->_isMultilineComment($nextToken)) {
                     $this->indentMultilineComment($nextToken);
                 }
-
-                $this->switchCaseIndentionIncreaseCheck($nextToken);
-                $this->switchCaseIndentionDecreaseCheck($nextToken);
+                $this->switchIndentionCheck($nextToken);
             }
 
             $iterator->next();
@@ -82,20 +86,87 @@ extends Rule
      */
     protected $_incase = false;
 
-    protected function switchCaseIndentionIncreaseCheck(Token $token)
-    {
-        if($this->evaluateConstraint('IsType', $token, T_CASE) && false === $this->_incase) {
-            $this->_incase = true;
-            $this->increasIndentionLevel();
-        }
-    }
-
-    protected function switchCaseIndentionDecreaseCheck(Token $token)
+    protected function switchIndentionCheck(Token $token)
     {
         if($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_incase) {
             $this->_incase = false;
             $this->decreaseIndentionLevel();
         }
+
+        // only indent if case is not directly followed by case
+        if($this->evaluateConstraint('IsType', $token, T_CASE) && $this->_caseIsDirectlyFollowedByAnotherCase($token)) {
+
+        } else if($this->evaluateConstraint('IsType', $token, T_CASE)) {
+            if ($this->evaluateConstraint('IsType', $token, T_CASE) &&
+                true === $this->_incase &&
+                !$this->_isT_CasePreceededByBreak($token)) {
+                echo 'foo decrease';
+                $this->decreaseIndentionLevel();
+            }
+            $this->_incase = true;
+            $this->increasIndentionLevel();
+        }
+    }
+
+
+    protected function _isT_CasePreceededByBreak(Token $caseToken)
+    {
+        $iterator = $this->_container->getReverseIterator();
+        $iterator->seekToToken($caseToken);
+        $iterator->previous();
+        while ($iterator->valid()) {
+            $token = $iterator->current();
+            if ($this->evaluateConstraint('IsType', $token, T_BREAK)) {
+                return true;
+            } else {
+                // later probably T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) || $token->getValue != ';')) {
+                    return false;
+                }
+            }
+            $iterator->next();
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param Token $caseToken
+     * @return Token
+     */
+    protected function _findNextDoppelPunktToken(Token $caseToken)
+    {
+        $iterator = $this->_container->getIterator();
+        $iterator->seekToToken($caseToken);
+        $iterator->next();
+        while ($iterator->valid()) {
+            $token = $iterator->current();
+            if ($token->getValue() === ':') {
+                return $iterator->current();
+            }
+            $iterator->next();
+        }
+        throw new \Exception('no doppelpunkt found');
+    }
+
+    protected function _caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
+    {
+        $iterator = $this->_container->getIterator();
+        $iterator->seekToToken($this->_findNextDoppelPunktToken($caseToken));
+        $iterator->next();
+        while ($iterator->valid()) {
+            $token = $iterator->current();
+            if ($this->evaluateConstraint('IsType', $token, T_CASE)) {
+                return true;
+            } else {
+                // later probably T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
+                    return false;
+                }
+            }
+            $iterator->next();
+        }
+        return false;
     }
 
     protected function _isMultilineComment(Token $token)
