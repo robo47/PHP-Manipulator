@@ -154,6 +154,20 @@ extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenFinder\Result::clean
+     */
+    public function testClean()
+    {
+        $t1 = new Token('foo');
+        $t2 = new Token('baa');
+        $t3 = new Token('blub');
+        $result = Result::factory(array($t1, $t2, $t3));
+        $this->assertCount(3, $result);
+        $result->clean();
+        $this->assertCount(0, $result);
+    }
+
+    /**
      * @covers \PHP\Manipulator\TokenFinder\Result::factory
      */
     public function testFactoryWithEmptyArray()

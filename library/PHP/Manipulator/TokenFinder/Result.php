@@ -72,6 +72,17 @@ implements \Countable
     }
 
     /**
+     * Cleans the result
+     *
+     * @return \PHP\Manipulator\TokenFinder\Result *Provides Fluent Interface*
+     */
+    public function clean()
+    {
+        $this->_tokens = array();
+        return $this;
+    }
+
+    /**
      * Implements SPL::Countable
      *
      * @return integer
