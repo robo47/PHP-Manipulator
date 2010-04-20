@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 use Tests\Constraint\TokensMatch as TokensMatchConstraint;

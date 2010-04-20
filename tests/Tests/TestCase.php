@@ -25,7 +25,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $file = TESTS_PATH . '/_fixtures/' . $filename;
         if (!file_exists($file) || !is_file($file)) {
-            throw new \Exception('Fixture ' . $file . ' not found');
+            throw new \Exception('Fixture ' . $filename . ' not found');
         }
         return file_get_contents($file);
     }
@@ -120,7 +120,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 $message
         );
     }
-    
+
+    /**
+     * @param \PHP\Manipulator\TokenFinder\Result $expectedResult
+     * @param \PHP\Manipulator\TokenFinder\Result $actualResult
+     * @param string $message
+     */
     public function assertFinderResultsMatch($expectedResult, $actualResult, $message = '')
     {
         $constraint = new ResultsMatch(
@@ -171,14 +176,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @param integer$number
      * @return \PHP\Manipulator\Config
      */
-    public function getConfig($number)
+    public function getConfig()
     {
-        $path = '_fixtures/Cli/Config/config' . $number . '.xml';
-        return Config::factory('\Tests\PHP\Manipulator\NonAbstract', $path, true);
+        return Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '', false);
     }
 
     /**
