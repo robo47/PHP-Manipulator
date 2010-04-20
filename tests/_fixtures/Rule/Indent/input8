@@ -1,16 +1,7 @@
 <?php
+
 switch($foo){
 case '-2':
-case '-1':
 echo 'it is bad';
 break;
-case '+2':
-case '+1':
-echo 'it is good';
-break;
-case '0':
-echo 'it is nothing';
-break;
-default:
-echo 'i don\'t know how it is';
 }
