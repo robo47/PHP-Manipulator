@@ -100,7 +100,6 @@ extends Rule
             if ($this->evaluateConstraint('IsType', $token, T_CASE) &&
                 true === $this->_incase &&
                 !$this->_isT_CasePreceededByBreak($token)) {
-                echo 'foo decrease';
                 $this->decreaseIndentionLevel();
             }
             $this->_incase = true;
