@@ -33,7 +33,7 @@ abstract class Config
         $this->_initDefaultOptions();
         $this->_initConfig($data);
     }
-    
+
     protected function _initDefaultOptions()
     {
         $this->_options['rulePrefix'] = '\PHP\Manipulator\Rule\\';

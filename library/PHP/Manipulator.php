@@ -9,7 +9,6 @@ use PHP\Manipulator\Rule;
 // @todo Should be the class used by apps not using the CLI
 class Manipulator
 {
-
     /**
      * Version number
      */

@@ -20,7 +20,6 @@ class Xml extends Config
         $loaded = @$dom->loadXML($data);
         if (!$loaded) {
             $error = $this->_errorMessage(\libxml_get_last_error());
-            var_dump($error);
             throw new \Exception('Unable to parse data: ' . PHP_EOL . $error);
         }
         \libxml_use_internal_errors($old);
@@ -220,7 +219,6 @@ class Xml extends Config
             }
         }
     }
-
     /**
      * Parse iterator
      *

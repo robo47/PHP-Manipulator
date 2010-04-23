@@ -4,6 +4,23 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
 
+class NonAbstract extends Config
+{
+
+    public $data;
+    
+    protected function _initConfig($data)
+    {
+        $this->data = $data;
+    }
+    
+    public function setOption($option, $value)
+    {
+        $this->_options[$option] = $value;
+    }
+}
+
+
 /**
  * @group Config
  * @todo array-support for the file-suffixes ?
