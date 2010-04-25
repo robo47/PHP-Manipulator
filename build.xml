@@ -19,16 +19,36 @@
 
     <!-- Run php lint check on lib and tests -->
     <target name="phplint">
-        <apply executable   = "php"
-               failonerror  = "true">
-            <arg value="-l" />
-            <fileset dir="library/PHP">
-                <include name="**/*.php" />
-            </fileset>
-            <fileset dir="tests">
-                <include name="**/*.php" />
-            </fileset>
-        </apply>
+        <parallel threadCount="4" failonany="true">
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="library/PHP">
+                    <include name="**/*.php" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/">
+                    <include name="**/*.php" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/Baa">
+                    <include name="**/*.php" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/Tests">
+                    <include name="**/*.php" />
+                </fileset>
+            </apply>
+        </parallel>
     </target>
 
     <!-- Run phpcpd -->
