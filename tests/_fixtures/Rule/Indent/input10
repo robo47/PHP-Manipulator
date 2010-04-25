@@ -1,9 +1,6 @@
 <?php
 
-switch($foo){
-case '-2':
-echo 'foo';
-case '-1':
-echo 'it is bad';
-break;
-}
+$foo = SomeClass::someMethod(
+$param1,
+$param2
+);

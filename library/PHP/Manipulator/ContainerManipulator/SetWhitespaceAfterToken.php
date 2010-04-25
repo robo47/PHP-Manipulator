@@ -84,7 +84,6 @@ extends ContainerManipulator
     }
 
     /**
-     *
      * @param \PHP\Manipulator\Token $token
      * @param array $whitespaces
      * @return mixed

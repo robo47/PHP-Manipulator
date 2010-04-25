@@ -103,15 +103,43 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output9'),
         );
 
-        // @todo get running
-//        #1 switch case without break
+        #10 static multi-line function call
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input10'),
+            $this->getContainerFromFixture($path . 'output10'),
+        );
+
+        #11 non-static multi-line function call
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input11'),
+            $this->getContainerFromFixture($path . 'output11'),
+        );
+
+        #12 multi-line array
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input12'),
+            $this->getContainerFromFixture($path . 'output12'),
+        );
+
+        #13 multi-line array in multi-line-function call
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input13'),
+            $this->getContainerFromFixture($path . 'output13'),
+        );
+
+        // @todo get switch without break running
+//        #12 switch case without break
 //        $data[] = array(
 //            array(),
-//            $this->getContainerFromFixture($path . 'input10'),
-//            $this->getContainerFromFixture($path . 'output10'),
+//            $this->getContainerFromFixture($path . 'input12'),
+//            $this->getContainerFromFixture($path . 'output12'),
 //        );
 
-        #11
+        #14
         $data[] = array(
             array('useSpaces' => false),
             new TokenContainer("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
