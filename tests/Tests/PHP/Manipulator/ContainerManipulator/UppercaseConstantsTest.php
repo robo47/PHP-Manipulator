@@ -42,6 +42,20 @@ class UppercaseConstantsTest extends \Tests\TestCase
             false
         );
 
+        #3 function-parameter
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input3'),
+            $this->getContainerFromFixture($path . 'output3'),
+            false
+        );
+
+        #4 method-parameter
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input4'),
+            $this->getContainerFromFixture($path . 'output4'),
+            false
+        );
+
         return $data;
     }
 

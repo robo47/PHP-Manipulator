@@ -48,35 +48,54 @@ extends ContainerManipulator
                     // only if it is not class-name, function/method-name
                     if (!$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
                         $token->setValue(strtoupper($token->getValue()));
-                    } elseif($this->_isFollowedBySemicolon($token)) {
-                        $token->setValue(strtoupper($token->getValue()));
                     }
+//                    } elseif($this->_isFollowedBySemicolon($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
+//                        $token->setValue(strtoupper($token->getValue()));
+//                    } elseif($this->_isFollowedByComma($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
+//                        $token->setValue(strtoupper($token->getValue()));
+//                    } elseif($this->_isFollowedByClosingBrace($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
+//                        $token->setValue(strtoupper($token->getValue()));
+//                    }else {
+////                        if ($token->getValue() === 'php_eol') {
+////                            var_dump($token);
+////                        }
+//                    }
                 }
             }
             $iterator->next();
         }
         $container->retokenize();
     }
-    
 
-    protected function _isFollowedBySemicolon(Token $token)
-    {
-        $next = $this->_container->getNextToken($token);
-        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && ';' === $next->getValue());
-    }
+//    protected function _isFollowedByComma(Token $token)
+//    {
+//        $next = $this->_container->getNextToken($token);
+//        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && ',' === $next->getValue());
+//    }
 
+//    protected function _isFollowedBySemicolon(Token $token)
+//    {
+//        $next = $this->_container->getNextToken($token);
+//        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && ';' === $next->getValue());
+//    }
 
     protected function _isFollowedByDoubleColon(Token $token)
     {
         $next = $this->_container->getNextToken($token);
-        return (null !== $next && $this->evaluateConstraint('IsType', $next, \T_DOUBLE_COLON));
+        return (null !== $next && $this->evaluateConstraint('IsType', $next, T_DOUBLE_COLON));
     }
 
     protected function _isFollowedByOpeningBrace(Token $token)
     {
         $next = $this->_container->getNextToken($token);
-        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && '(' !== $token->getValue());
+        return (null !== $next && $this->evaluateConstraint('IsOpeningBrace', $next, null));
     }
+
+//    protected function _isFollowedByClosingBrace(Token $token)
+//    {
+//        $next = $this->_container->getNextToken($token);
+//        return (null !== $next && $this->evaluateConstraint('IsClosingBrace', $next, null));
+//    }
 
     protected function _isClassMethodAccess(Token $token)
     {
@@ -93,6 +112,17 @@ extends ContainerManipulator
     {
         $previous = $this->_container->getPreviousToken($token);
         return (null !== $previous && $this->evaluateConstraint('IsType', $previous, T_DOUBLE_COLON));
+    }
+
+
+    protected function _isConstantT_STRING(Token $token)
+    {
+        return $this->_isConstantDeclaration($token);
+    }
+
+    protected function _isConstantDeclaration(Token $token)
+    {
+        return (true === $this->_isConstant && $this->evaluateConstraint('IsType', $token, T_STRING));
     }
 
     protected function _checkCurrentToken(Token $token)
@@ -120,15 +150,5 @@ extends ContainerManipulator
         if (true === $this->_isConstant && ';' === $token->getValue()) {
             $this->_isConstant = false;
         }
-    }
-
-    protected function _isConstantT_STRING(Token $token)
-    {
-        return $this->_isConstantDeclaration($token);
-    }
-
-    protected function _isConstantDeclaration(Token $token)
-    {
-        return (true === $this->_isConstant && $this->evaluateConstraint('IsType', $token, T_STRING));
     }
 }
