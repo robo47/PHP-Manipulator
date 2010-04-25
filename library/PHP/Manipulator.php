@@ -5,7 +5,6 @@ namespace PHP;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Rule;
 
-// @todo add Support for iterators and stuff
 // @todo Should be the class used by apps not using the CLI
 class Manipulator
 {
@@ -25,6 +24,7 @@ class Manipulator
      * @var array
      */
     protected $_rules = array();
+
     /**
      * Array with files
      *
