@@ -29,30 +29,4 @@ extends SetWhitespaceAfterToken
     {
         $container->insertTokenAfter($targetToken, $newToken);
     }
-
-    /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param \PHP\Manipulator\Token $token
-     * @param array $whitespace
-     */
-    public function setWhitespace(TokenContainer $container, Token $token, array $whitespace)
-    {
-        $targetToken = $this->getTargetToken($container, $token);
-
-        $tokenValue = $this->getWhitespaceForToken($token, $whitespace);
-
-        if (null !== $targetToken && $this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if (empty($tokenValue)) {
-                $container->removeToken($targetToken);
-            } else {
-                $targetToken->setValue($tokenValue);
-            }
-        }
-        if (null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
-            if (!empty($tokenValue)) {
-                $newToken = Token::factory(array(T_WHITESPACE, $tokenValue));
-                $this->insertToken($container, $targetToken, $newToken);
-            }
-        }
-    }
 }
