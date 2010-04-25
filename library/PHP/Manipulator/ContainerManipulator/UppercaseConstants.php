@@ -16,6 +16,10 @@ extends ContainerManipulator
 
     protected $_isFunctionDeclaration = false;
 
+    protected $_isUse = false;
+
+    protected $_isNamespace = false;
+
     /**
      *
      * @var TokenContainer
@@ -40,8 +44,8 @@ extends ContainerManipulator
 
             if ($this->_isConstantT_STRING($token)) {
                 $token->setValue(strtoupper($token->getValue()));
-            } else {
-                // @todo what about whitespace
+            } elseif($this->_isUse === false && $this->_isNamespace === false) {
+                
                 if ($this->_isClassMethodAccess($token)) {
                         $token->setValue(strtoupper($token->getValue()));
                 } elseif ($this->evaluateConstraint('IsType', $token, T_STRING)) {
@@ -149,6 +153,22 @@ extends ContainerManipulator
 
         if (true === $this->_isConstant && ';' === $token->getValue()) {
             $this->_isConstant = false;
+        }
+
+        if($this->evaluateConstraint('IsType', $token, T_USE)) {
+            $this->_isUse = true;
+        }
+        if (true === $this->_isUse && ';' === $token->getValue()) {
+            $this->_isUse = false;
+        }
+
+
+        if($this->evaluateConstraint('IsType', $token,\T_NAMESPACE)) {
+            $this->_isNamespace = true;
+        }
+
+        if (true === $this->_isNamespace && (';' === $token->getValue() || '{' === $token->getValue())) {
+            $this->_isNamespace = false;
         }
     }
 }

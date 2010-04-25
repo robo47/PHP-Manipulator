@@ -56,6 +56,34 @@ class UppercaseConstantsTest extends \Tests\TestCase
             false
         );
 
+        #5 namespaces should not be uppercased (using namespace via curly braces)
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input5'),
+            $this->getContainerFromFixture($path . 'output5'),
+            false
+        );
+
+        #6 namespaces should not be uppercased
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input6'),
+            $this->getContainerFromFixture($path . 'output6'),
+            false
+        );
+
+        #7 use inside namespace (using namespace via curly braces)
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input7'),
+            $this->getContainerFromFixture($path . 'output7'),
+            false
+        );
+
+        #8 use inside namespace
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input8'),
+            $this->getContainerFromFixture($path . 'output8'),
+            false
+        );
+
         return $data;
     }
 
