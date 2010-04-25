@@ -63,21 +63,40 @@ extends Rule
                 $this->indentMultilineComment($token);
             }
 
+            $this->useIndentionCheck($token);
             $this->switchIndentionCheck($token);
 
             if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 $nextToken = $iterator->current();
-
-                $this->checkAndChangeIndentionLevelDecreasment($nextToken);
-                $this->indentWhitespace($token);
+                $this->checkAndChangeIndentionLevelDecreasment($nextToken);//($nextToken);
+                $this->indentWhitespace($token, $container->getOffsetByToken($token));
                 if ($this->_isMultilineComment($nextToken)) {
                     $this->indentMultilineComment($nextToken);
                 }
+                $this->checkAndChangeIndentionLevelIncreasment($nextToken);//($nextToken);
+
+                $this->useIndentionCheck($nextToken);
                 $this->switchIndentionCheck($nextToken);
             }
 
             $iterator->next();
+        }
+    }
+
+    /**
+     * @var boolean
+     */
+    protected $_inuse = false;
+
+    protected function useIndentionCheck(Token $token) {
+        if($this->evaluateConstraint('IsType', $token, T_USE)) {
+            $this->_inuse = true;
+            $this->increasIndentionLevel();
+        }
+        if (';' === $token->getValue() && true === $this->_inuse) {
+            $this->_inuse = false;
+            $this->decreaseIndentionLevel();
         }
     }
 
@@ -129,7 +148,6 @@ extends Rule
     }
 
     /**
-     *
      * @param Token $caseToken
      * @return Token
      */
@@ -148,6 +166,10 @@ extends Rule
         throw new \Exception('no doppelpunkt found');
     }
 
+    /**
+     * @param Token $caseToken
+     * @return boolean
+     */
     protected function _caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
     {
         $iterator = $this->_container->getIterator();
@@ -175,17 +197,22 @@ extends Rule
 
     public function indentMultilineComment(Token $token)
     {
-        $this->manipulateToken('IndentMultilineComment', $token, $this->getIndention($this->getIndentionLevel()));
+        $this->manipulateToken(
+            'IndentMultilineComment',
+            $token,
+            $this->getIndention($this->getIndentionLevel())
+        );
     }
 
     /**
      * @param \PHP\Manipulator\Token $whitespaceToken
      */
-    public function indentWhitespace(Token $whitespaceToken)
+    public function indentWhitespace(Token $whitespaceToken, $iterkey)
     {
         $newValue = $whitespaceToken->getValue() .
             $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
+
     }
 
     /**
@@ -271,7 +298,7 @@ extends Rule
         if (!$useSpaces) {
             $indention = $this->getAsTabs($indentionLength, $tabWidth);
         } else {
-            $indention = str_repeat(' ', $indentionLength);
+            $indention = @str_repeat(' ', $indentionLength);
         }
 
         return $indention;

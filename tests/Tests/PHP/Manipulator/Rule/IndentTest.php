@@ -131,6 +131,27 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output13'),
         );
 
+        #14 multi-line use
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input14'),
+            $this->getContainerFromFixture($path . 'output14'),
+        );
+
+        #15 multi-line use inside namespace-declaration
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input15'),
+            $this->getContainerFromFixture($path . 'output15'),
+        );
+
+        #16 Indention after {
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input16'),
+            $this->getContainerFromFixture($path . 'output16'),
+        );
+
         // @todo get switch without break running
 //        #12 switch case without break
 //        $data[] = array(
