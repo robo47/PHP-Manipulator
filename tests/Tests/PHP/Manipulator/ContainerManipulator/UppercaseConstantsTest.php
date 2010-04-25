@@ -8,6 +8,7 @@ use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator\UppercaseConstants
+ * @todo constant in method-params (declaration and call)
  */
 class UppercaseConstantsTest extends \Tests\TestCase
 {
@@ -31,6 +32,13 @@ class UppercaseConstantsTest extends \Tests\TestCase
         $data[] = array(
             $this->getContainerFromFixture($path . 'input1'),
             $this->getContainerFromFixture($path . 'output1'),
+            false
+        );
+
+        #2 Normal constant
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input2'),
+            $this->getContainerFromFixture($path . 'output2'),
             false
         );
 
