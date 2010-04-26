@@ -8,7 +8,6 @@ use PHP\Manipulator\TokenContainer;
 
 /**
  * @group ContainerManipulator\UppercaseConstants
- * @todo constant in method-params (declaration and call)
  */
 class UppercaseConstantsTest extends \Tests\TestCase
 {
@@ -89,7 +88,7 @@ class UppercaseConstantsTest extends \Tests\TestCase
 
     /**
      * @covers \PHP\Manipulator\ContainerManipulator\UppercaseConstants
-     *      * @dataProvider manipulateProvider
+     * @dataProvider manipulateProvider
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {

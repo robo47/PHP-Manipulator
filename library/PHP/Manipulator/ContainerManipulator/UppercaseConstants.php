@@ -6,22 +6,37 @@ use PHP\Manipulator\ContainerManipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
+// @todo Extend to support whitespace-comments after some tokens
+// @todo Think about some kind of Token+Container-Constraint which can check if a token is followed or preceded by something ...
 class UppercaseConstants
 extends ContainerManipulator
 {
-
+    /**
+     * @var boolean
+     */
     protected $_isConstant = false;
 
+    /**
+     * @var boolean
+     */
     protected $_isClassDeclaration = false;
 
+    /**
+     * @var boolean
+     */
     protected $_isFunctionDeclaration = false;
 
+    /**
+     * @var boolean
+     */
     protected $_isUse = false;
 
+    /**
+     * @var boolean
+     */
     protected $_isNamespace = false;
 
     /**
-     *
      * @var TokenContainer
      */
     protected $_container = null;
@@ -42,133 +57,135 @@ extends ContainerManipulator
 
             $this->_checkCurrentToken($token);
 
-            if ($this->_isConstantT_STRING($token)) {
+            if ($this->_isConstant($token)) {
                 $token->setValue(strtoupper($token->getValue()));
-            } elseif($this->_isUse === false && $this->_isNamespace === false) {
-                
-                if ($this->_isClassMethodAccess($token)) {
-                        $token->setValue(strtoupper($token->getValue()));
-                } elseif ($this->evaluateConstraint('IsType', $token, T_STRING)) {
-                    // only if it is not class-name, function/method-name
-                    if (!$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
-                        $token->setValue(strtoupper($token->getValue()));
-                    }
-//                    } elseif($this->_isFollowedBySemicolon($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
-//                        $token->setValue(strtoupper($token->getValue()));
-//                    } elseif($this->_isFollowedByComma($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
-//                        $token->setValue(strtoupper($token->getValue()));
-//                    } elseif($this->_isFollowedByClosingBrace($token) && false === $this->_isFunctionDeclaration && false === $this->_isClassDeclaration) {
-//                        $token->setValue(strtoupper($token->getValue()));
-//                    }else {
-////                        if ($token->getValue() === 'php_eol') {
-////                            var_dump($token);
-////                        }
-//                    }
-                }
             }
+
             $iterator->next();
         }
         $container->retokenize();
     }
 
-//    protected function _isFollowedByComma(Token $token)
-//    {
-//        $next = $this->_container->getNextToken($token);
-//        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && ',' === $next->getValue());
-//    }
+    /**
+     * @var boolean
+     */
+    protected function _notInsideClassFunctionMethodUseOrNamespace()
+    {
+        return (false === $this->_isUse &&
+                false === $this->_isNamespace &&
+                false === $this->_isFunctionDeclaration &&
+                false === $this->_isClassDeclaration);
+    }
 
-//    protected function _isFollowedBySemicolon(Token $token)
-//    {
-//        $next = $this->_container->getNextToken($token);
-//        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && ';' === $next->getValue());
-//    }
+    /**
+     * @param Token $token
+     * @var boolean
+     */
+    protected function _isConstant(Token $token)
+    {
+        return $this->evaluateConstraint('IsType', $token, T_STRING) &&
+               ( (true === $this->_isConstant) ||
+                 ($this->_notInsideClassFunctionMethodUseOrNamespace() && $this->_isClassMethodAccess($token)) ||
+                 ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
+    }
 
+    /**
+     * @param Token $token
+     * @var boolean
+     */
     protected function _isFollowedByDoubleColon(Token $token)
     {
         $next = $this->_container->getNextToken($token);
         return (null !== $next && $this->evaluateConstraint('IsType', $next, T_DOUBLE_COLON));
     }
 
+    /**
+     * @param Token $token
+     * @var boolean
+     */
     protected function _isFollowedByOpeningBrace(Token $token)
     {
         $next = $this->_container->getNextToken($token);
-        return (null !== $next && $this->evaluateConstraint('IsOpeningBrace', $next, null));
+        return (null !== $next && $this->evaluateConstraint('IsOpeningBrace', $next));
     }
 
-//    protected function _isFollowedByClosingBrace(Token $token)
-//    {
-//        $next = $this->_container->getNextToken($token);
-//        return (null !== $next && $this->evaluateConstraint('IsClosingBrace', $next, null));
-//    }
-
+    /**
+     * @param Token $token
+     * @var boolean
+     */
     protected function _isClassMethodAccess(Token $token)
     {
-        return $this->_isStaticClassAccess($token) && $this->_isNoStaticMethodCall($token);
+        return $this->_previousIstDoubleColon($token) && $this->_isNotAMethodCall($token);
     }
 
-    protected function _isNoStaticMethodCall(Token $token)
+    /**
+     * @param Token $token
+     * @var boolean
+     */
+    protected function _isNotAMethodCall(Token $token)
     {
         $next = $this->_container->getNextToken($token);
-        return (null !== $next && $this->evaluateConstraint('IsType', $next, null) && '(' !== $next->getValue());
+        return (null !== $next && !$this->evaluateConstraint('IsOpeningBrace', $next));
     }
 
-    protected function _isStaticClassAccess(Token $token)
+    /**
+     * @param Token $token
+     * @var boolean
+     */
+    protected function _previousIstDoubleColon(Token $token)
     {
         $previous = $this->_container->getPreviousToken($token);
         return (null !== $previous && $this->evaluateConstraint('IsType', $previous, T_DOUBLE_COLON));
     }
 
-
-    protected function _isConstantT_STRING(Token $token)
-    {
-        return $this->_isConstantDeclaration($token);
-    }
-
-    protected function _isConstantDeclaration(Token $token)
-    {
-        return (true === $this->_isConstant && $this->evaluateConstraint('IsType', $token, T_STRING));
-    }
-
+    /**
+     * Checks the current token and sets internal flags to true or false
+     *
+     * @param Token $token
+     */
     protected function _checkCurrentToken(Token $token)
     {
         if($this->evaluateConstraint('IsType', $token, T_CONST)) {
             $this->_isConstant = true;
-        }
-
-        if($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+        } elseif($this->evaluateConstraint('IsType', $token, T_USE)) {
+            $this->_isUse = true;
+        } elseif($this->evaluateConstraint('IsType', $token, T_NAMESPACE)) {
+            $this->_isNamespace = true;
+        } elseif($this->evaluateConstraint('IsType', $token, T_CLASS)) {
             $this->_isClassDeclaration = true;
-        }
-
-        if (true === $this->_isClassDeclaration && '(' == $token->getValue()) {
-            $this->_isClassDeclaration = false;
-        }
-
-        if($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+        } elseif($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
         }
 
-        if (true === $this->_isFunctionDeclaration && '(' == $token->getValue()) {
-            $this->_isFunctionDeclaration = false;
+        if ($this->_isSemicolon($token)) {
+            if (true === $this->_isConstant) {
+                $this->_isConstant = false;
+            }
+            if (true === $this->_isUse) {
+                $this->_isUse = false;
+            }
         }
 
-        if (true === $this->_isConstant && ';' === $token->getValue()) {
-            $this->_isConstant = false;
+        if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
+            if (true === $this->_isClassDeclaration) {
+                $this->_isClassDeclaration = false;
+            }
+            if (true === $this->_isFunctionDeclaration) {
+                $this->_isFunctionDeclaration = false;
+            }
         }
 
-        if($this->evaluateConstraint('IsType', $token, T_USE)) {
-            $this->_isUse = true;
-        }
-        if (true === $this->_isUse && ';' === $token->getValue()) {
-            $this->_isUse = false;
-        }
-
-
-        if($this->evaluateConstraint('IsType', $token,\T_NAMESPACE)) {
-            $this->_isNamespace = true;
-        }
-
-        if (true === $this->_isNamespace && (';' === $token->getValue() || '{' === $token->getValue())) {
+        if (true === $this->_isNamespace && ($this->_isSemicolon($token) || $this->evaluateConstraint('IsClosingCurlyBrace', $token))) {
             $this->_isNamespace = false;
         }
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isSemicolon(Token $token)
+    {
+        return ';' === $token->getValue();
     }
 }
