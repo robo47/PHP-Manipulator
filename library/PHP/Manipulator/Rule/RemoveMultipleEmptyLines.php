@@ -8,7 +8,6 @@ use PHP\Manipulator\TokenContainer;
 class RemoveMultipleEmptyLines
 extends Rule
 {
-    
     public function init()
     {
         if (!$this->hasOption('maxEmptyLines')) {

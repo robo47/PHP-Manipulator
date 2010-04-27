@@ -85,9 +85,9 @@ class Cli
     {
         $options = array();
         $path = __DIR__ .
-            DIRECTORY_SEPARATOR . 'Cli' .
-            DIRECTORY_SEPARATOR . 'Action' .
-            DIRECTORY_SEPARATOR;
+        DIRECTORY_SEPARATOR . 'Cli' .
+        DIRECTORY_SEPARATOR . 'Action' .
+        DIRECTORY_SEPARATOR;
         $fileIterator = \File_Iterator_Factory::getFileIterator($path, '.php');
 
         foreach ($fileIterator as $file) {
@@ -210,8 +210,8 @@ class Cli
             }
 
             $action = $this->getAction(
-                    $actionName,
-                    $this->_params
+                $actionName,
+                $this->_params
             );
 
             $output->outputLine();
@@ -220,8 +220,8 @@ class Cli
 
             if ($actionName !== 'Stats' && false !== $input->getOption('stats')->value) {
                 $action = $this->getAction(
-                        'Stats',
-                        $this->_params
+                    'Stats',
+                    $this->_params
                 );
                 $action->run();
             }

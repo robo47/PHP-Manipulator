@@ -26,12 +26,12 @@ extends Rule
             try {
                 $result = $this->findTokens('IncludeAndRequire', $start, $container);
                 $this->manipulateContainer(
-                        'CreateMultilineCommentFromTokenToToken',
-                        $container,
-                        array(
-                            'from' => $result->getFirstToken(),
-                            'to' => $result->getLastToken(),
-                        )
+                    'CreateMultilineCommentFromTokenToToken',
+                    $container,
+                    array(
+                        'from' => $result->getFirstToken(),
+                        'to' => $result->getLastToken(),
+                    )
                 );
             } catch (\Exception $e) {
                 // @todo better way to Catch this Exception, named exceptions or exceptions with error-codes

@@ -226,7 +226,7 @@ extends Rule
     protected function _indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-            $this->getIndention($this->getIndentionLevel());
+        $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
 
     }
@@ -238,7 +238,7 @@ extends Rule
     protected function _isWhitespaceWithBreak(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE) &&
-               $this->evaluateConstraint('ContainsNewline', $token);
+        $this->evaluateConstraint('ContainsNewline', $token);
     }
 
     /**
@@ -286,7 +286,7 @@ extends Rule
     protected function _isIndentionLevelIncreasment(Token $token)
     {
         return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
-            || $this->evaluateConstraint('IsOpeningBrace', $token);
+        || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     /**
@@ -296,7 +296,7 @@ extends Rule
     protected function _isIndentionLevelDecreasement(Token $token)
     {
         return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
-            || $this->evaluateConstraint('IsClosingBrace', $token);
+        || $this->evaluateConstraint('IsClosingBrace', $token);
     }
 
     /**

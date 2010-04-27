@@ -10,7 +10,6 @@ use PHP\Manipulator\Token;
 class RemoveComments
 extends Rule
 {
-    
     public function init()
     {
         if (!$this->hasOption('removeDocComments')) {
@@ -68,6 +67,6 @@ extends Rule
     protected function _isCommentAndShouldBeRemoved(Token $token)
     {
         return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
-            || ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
+        || ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
     }
 }

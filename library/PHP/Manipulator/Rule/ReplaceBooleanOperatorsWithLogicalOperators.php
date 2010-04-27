@@ -9,7 +9,6 @@ use PHP\Manipulator\Token;
 class ReplaceBooleanOperatorsWithLogicalOperators
 extends Rule
 {
-    
     public function init()
     {
         if (!$this->hasOption('uppercase')) {

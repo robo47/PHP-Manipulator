@@ -99,7 +99,7 @@ extends ContainerManipulator
             return $whitespaces[$tokenval];
         } else {
             $message = 'No option found for: ' . $token->getTokenName() .
-                ' (' . $tokenval . ')';
+            ' (' . $tokenval . ')';
             throw new \Exception($message);
         }
     }

@@ -8,7 +8,6 @@ use PHP\Manipulator\TokenContainer;
 class ChangeLineEndings
 extends Rule
 {
-    
     public function init()
     {
         if (!$this->hasOption('newline')) {
