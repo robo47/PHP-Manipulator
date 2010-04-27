@@ -67,27 +67,33 @@ extends Rule
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-
             $this->_checkAndChangeIndentionLevel($token);
-
             $this->_checkForMultilineCommentAndIndent($token);
-
             $this->_useIndentionCheck($token);
             $this->_switchIndentionCheck($token);
 
-            if ($this->_isWhitespaceWithBreak($token)) {
+            $previous = $container->getPreviousToken($token);
+
+            if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous)) {
+                $newToken = new Token('', T_WHITESPACE);
+                $this->_indentWhitespace($newToken);
+                $container->insertTokenAfter($previous, $newToken);
+            } else if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
+                if(!$iterator->valid()) {
+                    break;
+                }
                 $nextToken = $iterator->current();
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
-                $this->_indentWhitespace($token, $container->getOffsetByToken($token));
+                $this->_indentWhitespace($token);
                 $this->_checkForMultilineCommentAndIndent($nextToken);
                 $this->_checkAndChangeIndentionLevelIncreasment($nextToken);
-
                 $this->_useIndentionCheck($nextToken);
                 $this->_switchIndentionCheck($nextToken);
             }
             $iterator->next();
         }
+        $container->retokenize();
     }
 
     /**
@@ -215,7 +221,7 @@ extends Rule
     /**
      * @param \PHP\Manipulator\Token $whitespaceToken
      */
-    protected function _indentWhitespace(Token $whitespaceToken, $iterkey)
+    protected function _indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
             $this->getIndention($this->getIndentionLevel());

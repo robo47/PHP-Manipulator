@@ -152,6 +152,13 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output16'),
         );
 
+        #17 Bugfix Indention after comment
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input17'),
+            $this->getContainerFromFixture($path . 'output17'),
+        );
+
         // @todo get switch without break running
 //        #12 switch case without break
 //        $data[] = array(
