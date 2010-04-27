@@ -74,10 +74,12 @@ extends Rule
 
             $previous = $container->getPreviousToken($token);
 
-            if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous)) {
+            if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous) && !$this->_isWhitespaceWithBreak($token)) {
                 $newToken = new Token('', T_WHITESPACE);
                 $this->_indentWhitespace($newToken);
                 $container->insertTokenAfter($previous, $newToken);
+                $iterator = $container->getIterator();
+                $iterator->seekToToken($token);
             } else if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 if(!$iterator->valid()) {

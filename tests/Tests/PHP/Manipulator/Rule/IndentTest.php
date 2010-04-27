@@ -159,6 +159,13 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output17'),
         );
 
+        #18 [BUG] Whitespace should not be prefixed with another whitespace
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input18'),
+            $this->getContainerFromFixture($path . 'output18'),
+        );
+
         // @todo get switch without break running
 //        #12 switch case without break
 //        $data[] = array(
@@ -168,7 +175,7 @@ class IndentTest extends \Tests\TestCase
 //        );
 
         // @todo more tests with tabs instead of spaces
-        #14
+        #19 Test with Tab
         $data[] = array(
             array('useSpaces' => false),
             new TokenContainer("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
