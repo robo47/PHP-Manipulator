@@ -19,6 +19,7 @@ class RemoveIndention extends Rule
         $regexWhitespace = '[\t ]{1,}';
         $regexNotWhitespace = '[^\t^ ]{1,}';
         $linebreak = '\n|\r\n|\r';
+
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {

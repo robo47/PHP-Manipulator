@@ -35,7 +35,6 @@ extends ContainerManipulator
     }
 
     /**
-     *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param \PHP\Manipulator\Token $token
      */
@@ -48,6 +47,7 @@ extends ContainerManipulator
         $inside = false;
         $arguments = array();
         $argument = array();
+
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
@@ -59,21 +59,22 @@ extends ContainerManipulator
             if ($this->evaluateConstraint('IsClosingBrace', $token)) {
                 $indentionLevel--;
             }
-            if ($token->getValue() == ',' && $token->getType() === null) {
+            // @todo IsComma-Constraint
+            if ($token->getValue() == ',' && null === $token->getType()) {
                 $arguments[] = $argument;
                 $argument = array();
-            } elseif($inside) {
+            } elseif (true === $inside) {
                 $argument[] = $token;
             }
+
             if ($indentionLevel > 0) {
                 $inside = true;
-
-            }
-            if ($indentionLevel == 0 && $inside) {
+            } elseif ($indentionLevel == 0 && $inside) {
                 break;
             }
             $iterator->next();
         }
+
         foreach ($arguments as $argument) {
             $typeHint = $this->_parseSingleArgument($argument);
             if ($typeHint instanceof Token) {
@@ -83,7 +84,6 @@ extends ContainerManipulator
     }
 
     /**
-     *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param array $argumentTokens
      */

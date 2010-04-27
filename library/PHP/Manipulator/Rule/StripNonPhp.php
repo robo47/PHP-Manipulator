@@ -21,38 +21,18 @@ extends Rule
         $deleteTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-
-            if ($this->_isOpenTag($token)) {
+            if ($this->evaluateConstraint('IsType', $token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
                 $open = true;
             }
             if (!$open) {
                 $deleteTokens[] = $token;
             }
-            if ($this->_isCloseTag($token)) {
+            if ($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
                 $open = false;
             }
             $iterator->next();
         }
         $container->removeTokens($deleteTokens);
         $container->retokenize();
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    protected function _isOpenTag(Token $token)
-    {
-        return ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG) ||
-                $this->evaluateConstraint('IsType', $token, T_OPEN_TAG_WITH_ECHO));
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    protected function _isCloseTag(Token $token)
-    {
-        return ($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG));
     }
 }

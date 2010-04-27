@@ -20,7 +20,6 @@ extends ContainerManipulator
     {
         $iterator = $container->getIterator();
 
-        $tokensToDelete = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsErrorControlOperator', $token)) {

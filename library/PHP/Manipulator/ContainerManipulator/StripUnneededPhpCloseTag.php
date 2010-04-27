@@ -24,6 +24,7 @@ extends ContainerManipulator
             $stripWhitespaceFromEnd = $params['stripWhitespaceFromEnd'];
         }
         $iterator = $container->getReverseIterator();
+        $helper = new NewlineDetector("\n");
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -32,7 +33,7 @@ extends ContainerManipulator
                 break;
             } elseif($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
                 if ($this->evaluateConstraint('EndsWithNewline', $token)) {
-                    $helper = new NewlineDetector("\n");
+
                     $newline = $helper->getNewlineFromToken($token);
                     $token->setType(T_WHITESPACE);
                     $token->setValue($newline);

@@ -84,6 +84,7 @@ extends TokenFinder
             }
 
             // abstract methods or interface-methods
+            // @todo IsSemicolon-Constraint
             if (false === $inside && $token->getValue() == ';') {
                 break;
             }
@@ -98,6 +99,11 @@ extends TokenFinder
         return $result;
     }
 
+    /**
+     *
+     * @param array|null $params
+     * @return boolean
+     */
     protected function _includePhpDoc($params)
     {
         if (is_array($params) && isset($params['includePhpdoc'])) {
@@ -107,7 +113,12 @@ extends TokenFinder
         }
     }
 
-    // wheter to check for public/protected/private
+    /**
+     * wheter to check for public/protected/private
+     *
+     * @param array|null $params
+     * @return boolean
+     */
     protected function _includeMethodProperties($params)
     {
         if (is_array($params) && isset($params['includeMethodProperties'])) {

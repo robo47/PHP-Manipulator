@@ -12,12 +12,14 @@ abstract class Config
      * @var array
      */
     protected $_options = array();
+
     /**
      * Array with all Rules
      *
      * @var array
      */
     protected $_rules = array();
+
     /**
      * Array with all Files
      *

@@ -183,6 +183,7 @@ extends ContainerManipulator
     /**
      * @param Token $token
      * @return boolean
+     * @todo Create IsSemicolonConstraint
      */
     protected function _isSemicolon(Token $token)
     {

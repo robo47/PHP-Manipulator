@@ -11,12 +11,32 @@ class Indent
 extends Rule
 {
 
+
+
+
+    /**
+     * @var boolean
+     */
+    protected $_inuse = false;
+
+    /**
+     * @var boolean
+     */
+    protected $_incase = false;
+
     /**
      * Current Level of Indention
      *
      * @var integer
      */
     protected $_indentionLevel = 0;
+
+    /**
+     * The current container to not have to pass it to each method
+     *
+     * @var TokenContainer
+     */
+    protected $_container = null;
 
     public function init()
     {
@@ -36,12 +56,6 @@ extends Rule
     }
 
     /**
-     *
-     * @var TokenContainer
-     */
-    protected $_container = null;
-
-    /**
      * Unindents all Code and then indent it right
      *
      * @param \PHP\Manipulator\TokenContainer $container
@@ -57,77 +71,87 @@ extends Rule
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            $this->checkAndChangeIndentionLevel($token);
+            $this->_checkAndChangeIndentionLevel($token);
 
-            if ($this->_isMultilineComment($token)) {
-                $this->indentMultilineComment($token);
-            }
+            $this->_checkForMultilineCommentAndIndent($token);
 
-            $this->useIndentionCheck($token);
-            $this->switchIndentionCheck($token);
+            $this->_useIndentionCheck($token);
+            $this->_switchIndentionCheck($token);
 
             if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 $nextToken = $iterator->current();
-                $this->checkAndChangeIndentionLevelDecreasment($nextToken);//($nextToken);
-                $this->indentWhitespace($token, $container->getOffsetByToken($token));
-                if ($this->_isMultilineComment($nextToken)) {
-                    $this->indentMultilineComment($nextToken);
-                }
-                $this->checkAndChangeIndentionLevelIncreasment($nextToken);//($nextToken);
+                $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
+                $this->_indentWhitespace($token, $container->getOffsetByToken($token));
+                $this->_checkForMultilineCommentAndIndent($nextToken);
+                $this->_checkAndChangeIndentionLevelIncreasment($nextToken);
 
-                $this->useIndentionCheck($nextToken);
-                $this->switchIndentionCheck($nextToken);
+                $this->_useIndentionCheck($nextToken);
+                $this->_switchIndentionCheck($nextToken);
             }
-
             $iterator->next();
         }
     }
 
     /**
-     * @var boolean
+     * Check if a Tiken is a Multilinecomment and indent it
+     *
+     * @param Token $token
      */
-    protected $_inuse = false;
-
-    protected function useIndentionCheck(Token $token) {
-        if($this->evaluateConstraint('IsType', $token, T_USE)) {
-            $this->_inuse = true;
-            $this->increasIndentionLevel();
-        }
-        if (';' === $token->getValue() && true === $this->_inuse) {
-            $this->_inuse = false;
-            $this->decreaseIndentionLevel();
+    protected function _checkForMultilineCommentAndIndent(Token $token)
+    {
+        if ($this->evaluateConstraint('IsMultilineComment', $token)) {
+            $this->manipulateToken(
+                'IndentMultilineComment',
+                $token,
+                $this->getIndention($this->getIndentionLevel())
+            );
         }
     }
 
     /**
-     * @var boolean
+     * @param Token $token
      */
-    protected $_incase = false;
-
-    protected function switchIndentionCheck(Token $token)
-    {
-        if($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_incase) {
-            $this->_incase = false;
-            $this->decreaseIndentionLevel();
+    protected function _useIndentionCheck(Token $token) {
+        if($this->evaluateConstraint('IsType', $token, T_USE)) {
+            $this->_inuse = true;
+            $this->_indentionLevel++;
         }
-
-        // only indent if case is not directly followed by case
-        if($this->evaluateConstraint('IsType', $token, T_CASE) && $this->_caseIsDirectlyFollowedByAnotherCase($token)) {
-
-        } else if($this->evaluateConstraint('IsType', $token, T_CASE)) {
-            if ($this->evaluateConstraint('IsType', $token, T_CASE) &&
-                true === $this->_incase &&
-                !$this->_isT_CasePreceededByBreak($token)) {
-                $this->decreaseIndentionLevel();
-            }
-            $this->_incase = true;
-            $this->increasIndentionLevel();
+        // @todo isSemicolonConstraint
+        if (';' === $token->getValue() && true === $this->_inuse) {
+            $this->_inuse = false;
+            $this->_indentionLevel--;
         }
     }
 
+    /**
+     * @param Token $token
+     */
+    protected function _switchIndentionCheck(Token $token)
+    {
+        if($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_incase) {
+            $this->_incase = false;
+            $this->_indentionLevel--;
+        }
 
-    protected function _isT_CasePreceededByBreak(Token $caseToken)
+        // only indent if case is not directly followed by case
+        if ($this->evaluateConstraint('IsType', $token, T_CASE) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
+            if ($this->evaluateConstraint('IsType', $token, T_CASE) &&
+                true === $this->_incase &&
+                !$this->_isCasePreceededByBreak($token)) {
+                $this->_indentionLevel--;
+            }
+            $this->_incase = true;
+            $this->_indentionLevel++;
+        }
+    }
+
+    /**
+     *
+     * @param Token $caseToken
+     * @return boolean
+     */
+    protected function _isCasePreceededByBreak(Token $caseToken)
     {
         $iterator = $this->_container->getReverseIterator();
         $iterator->seekToToken($caseToken);
@@ -137,7 +161,7 @@ extends Rule
             if ($this->evaluateConstraint('IsType', $token, T_BREAK)) {
                 return true;
             } else {
-                // later probably T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+                // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
                 if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) || $token->getValue != ';')) {
                     return false;
                 }
@@ -151,19 +175,20 @@ extends Rule
      * @param Token $caseToken
      * @return Token
      */
-    protected function _findNextDoppelPunktToken(Token $caseToken)
+    protected function _findNextColonToken(Token $caseToken)
     {
         $iterator = $this->_container->getIterator();
         $iterator->seekToToken($caseToken);
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
+            // @todo IsColon-Constraint
             if ($token->getValue() === ':') {
                 return $iterator->current();
             }
             $iterator->next();
         }
-        throw new \Exception('no doppelpunkt found');
+        throw new \Exception('no colon found');
     }
 
     /**
@@ -173,14 +198,14 @@ extends Rule
     protected function _caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
     {
         $iterator = $this->_container->getIterator();
-        $iterator->seekToToken($this->_findNextDoppelPunktToken($caseToken));
+        $iterator->seekToToken($this->_findNextColonToken($caseToken));
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_CASE)) {
                 return true;
             } else {
-                // later probably T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+                // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
                 if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
                     return false;
                 }
@@ -190,24 +215,10 @@ extends Rule
         return false;
     }
 
-    protected function _isMultilineComment(Token $token)
-    {
-        return $this->evaluateConstraint('IsMultilineComment', $token);
-    }
-
-    public function indentMultilineComment(Token $token)
-    {
-        $this->manipulateToken(
-            'IndentMultilineComment',
-            $token,
-            $this->getIndention($this->getIndentionLevel())
-        );
-    }
-
     /**
      * @param \PHP\Manipulator\Token $whitespaceToken
      */
-    public function indentWhitespace(Token $whitespaceToken, $iterkey)
+    protected function _indentWhitespace(Token $whitespaceToken, $iterkey)
     {
         $newValue = $whitespaceToken->getValue() .
             $this->getIndention($this->getIndentionLevel());
@@ -221,38 +232,38 @@ extends Rule
      */
     protected function _isWhitespaceWithBreak(Token $token)
     {
-        return $this->evaluateConstraint('IsType', $token, T_WHITESPACE)
-            && $this->evaluateConstraint('ContainsNewline', $token);
+        return $this->evaluateConstraint('IsType', $token, T_WHITESPACE) &&
+               $this->evaluateConstraint('ContainsNewline', $token);
     }
 
-    public function checkAndChangeIndentionLevel(Token $token)
+    /**
+     *
+     * @param Token $token
+     */
+    public function _checkAndChangeIndentionLevel(Token $token)
     {
-        $this->checkAndChangeIndentionLevelDecreasment($token);
-        $this->checkAndChangeIndentionLevelIncreasment($token);
+        $this->_checkAndChangeIndentionLevelDecreasment($token);
+        $this->_checkAndChangeIndentionLevelIncreasment($token);
     }
 
-    public function checkAndChangeIndentionLevelIncreasment(Token $token)
+    /**
+     * @param Token $token
+     */
+    public function _checkAndChangeIndentionLevelIncreasment(Token $token)
     {
         if ($this->_isIndentionLevelIncreasment($token)) {
-            $this->increasIndentionLevel();
+            $this->_indentionLevel++;
         }
     }
 
-    public function checkAndChangeIndentionLevelDecreasment(Token $token)
+    /**
+     * @param Token $token
+     */
+    public function _checkAndChangeIndentionLevelDecreasment(Token $token)
     {
         if ($this->_isIndentionLevelDecreasement($token)) {
-            $this->decreaseIndentionLevel();
+            $this->_indentionLevel--;
         }
-    }
-
-    public function increasIndentionLevel()
-    {
-        $this->_indentionLevel++;
-    }
-
-    public function decreaseIndentionLevel()
-    {
-        $this->_indentionLevel--;
     }
 
     /**

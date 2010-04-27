@@ -5,6 +5,7 @@ namespace PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\Token;
 
+// @todo a base-Constraint which allows setting
 class IsOpeningCurlyBrace
 extends TokenConstraint
 {

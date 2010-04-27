@@ -6,12 +6,12 @@ use PHP\Manipulator\Rule;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
+// @todo base on StripNonPhp 
 class StripPhp
 extends Rule
 {
 
     /**
-     *
      * @param \PHP\Manipulator\TokenContainer $container
      */
     public function apply(TokenContainer $container)

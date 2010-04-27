@@ -18,19 +18,17 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $param = null)
     {
-        $isType = false;
         if (is_array($param)) {
             foreach ($param as $tokenType) {
                 if ($token->getType() === $tokenType) {
-                    $isType = true;
-                    break;
+                    return true;
                 }
             }
         } else {
             if ($token->getType() === $param) {
-                $isType = true;
+                return true;
             }
         }
-        return $isType;
+        return false;
     }
 }

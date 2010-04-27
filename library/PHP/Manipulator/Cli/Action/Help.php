@@ -18,7 +18,6 @@ class Help extends Action
 
         foreach ($input->getOptions() as $option) {
             $curentOption = '  ' . str_pad("-{$option->short},", 6) . "--{$option->long}";
-
             echo \str_pad($curentOption, 30) . "  {$option->shorthelp}" . PHP_EOL;
         }
     }

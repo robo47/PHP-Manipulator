@@ -19,6 +19,7 @@ extends ContainerManipulator
      */
     public function manipulate(TokenContainer $container, $params = null)
     {
+        // @todo generic way for manipulators and constriants for checking $params ?
         if (!is_array($params)) {
             $message = 'invalid input $params should be an array';
             throw new \Exception($message);
@@ -42,6 +43,7 @@ extends ContainerManipulator
 
         $from = $params['from'];
         /* @var $from PHP\Manipulator\Token */
+
         $to = $params['to'];
         /* @var $from PHP\Manipulator\Token */
 
@@ -60,7 +62,7 @@ extends ContainerManipulator
         $endOffset = $container->getOffsetByToken($to);
 
         if ($startOffset > $endOffset) {
-            $message = "startOffset is behind endOffset";
+            $message = 'startOffset is behind endOffset';
             throw new \Exception($message);
         }
 
@@ -73,7 +75,6 @@ extends ContainerManipulator
         $commentToken = new Token($value, T_COMMENT);
 
         $container->insertAtOffset($startOffset, $commentToken);
-
         $container->removeTokens($tokens);
     }
 
@@ -107,21 +108,11 @@ extends ContainerManipulator
     {
         $value = '';
         foreach ($tokens as $token) {
-            if (!$this->_isMultilineComment($token)) {
+            if (!$this->evaluateConstraint('IsMultilineComment', $token)) {
                 $value .= $token->getValue();
             }
         }
         $value = str_replace('*/', '', $value);
         return $value;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    protected function _isMultilineComment(Token $token)
-    {
-        $constraint = new IsMultilineComment();
-        return $constraint->evaluate($token);
     }
 }

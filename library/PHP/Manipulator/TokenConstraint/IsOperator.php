@@ -8,7 +8,7 @@ use PHP\Manipulator\Token;
 class IsOperator
 extends TokenConstraint
 {
-    
+
     protected $_operatorsWithToken = array(
         // assignment operators
         T_AND_EQUAL, // &=
@@ -49,6 +49,10 @@ extends TokenConstraint
         // type-operators
         T_INSTANCEOF, // instanceof
     );
+
+    /**
+     * @var array
+     */
     protected $_operatorsWithoutTokens = array(
         '='
     );
@@ -62,16 +66,30 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $param = null)
     {
-        $operatorWithToken = $this->evaluateConstraint('IsType', $token, $this->_operatorsWithToken);
+        return $this->_isOperatorWithToken($token) ||
+               $this->_isOperatorWithoutToken($token);
+    }
 
-        $operatorWithoutToken = false;
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isOperatorWithToken(Token $token)
+    {
+        return $this->evaluateConstraint('IsType', $token, $this->_operatorsWithToken);
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isOperatorWithoutToken(Token $token)
+    {
         foreach ($this->_operatorsWithoutTokens as $operator) {
             if (null === $token->getType() && $operator === $token->getValue()) {
-                $operatorWithoutToken = true;
-                break;
+                return true;
             }
         }
-
-        return $operatorWithToken || $operatorWithoutToken;
+        return false;
     }
 }

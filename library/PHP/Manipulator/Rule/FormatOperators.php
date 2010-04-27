@@ -9,7 +9,7 @@ use PHP\Manipulator\TokenContainer;
 class FormatOperators
 extends Rule
 {
-    
+
     public function init()
     {
         if (!$this->hasOption('beforeOperator')) {
@@ -104,7 +104,7 @@ extends Rule
                     )
             );
         }
-// @todo if not has -> merge them (not with array_merge) + write test which checks it works
+    // @todo if not has -> merge them (not with array_merge) + write test which checks it works
     }
 
     /**

@@ -30,12 +30,12 @@ extends Rule
     {
         $helper = new NewlineDetector();
         $newline = $helper->getNewlineFromContainer($container);
-        // @todo optimize, find out whitespace only once directlyfrom the container
+
         $iterator = $container->getIterator();
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->_isCommentAndShouldBeRemoved($token)) {
-                if ($this->_isOneLineComment($token, $container)) {
+                if ($this->_isOneLineComment($token)) {
                     $token->setType(T_WHITESPACE);
                     $token->setValue($newline);
                 } else {
@@ -52,8 +52,9 @@ extends Rule
      * @param TokenContainer $container
      * @return boolean
      */
-    protected function _isOneLineComment(Token $token, TokenContainer $container)
+    protected function _isOneLineComment(Token $token)
     {
+        // @todo IsOnlinelineComment-Constraint ?
         if (true == preg_match('~^(\/\/|#){1,}~', $token->getValue())) {
             return true;
         }

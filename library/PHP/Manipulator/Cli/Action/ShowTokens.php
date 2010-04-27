@@ -8,10 +8,9 @@ use PHP\Manipulator\TokenContainer;
 
 class ShowTokens extends Action
 {
-    
+
     public function run()
     {
-
         $output = $this->getCli()->getConsoleOutput();
         $file = $this->getCli()->getConsoleInput()->getOption('showtokens')->value;
         $file = realpath($file);

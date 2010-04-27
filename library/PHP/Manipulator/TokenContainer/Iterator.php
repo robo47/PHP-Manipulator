@@ -5,9 +5,6 @@ namespace PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-/**
- * @todo new method seekToToken which directly accepts Token for seeking instead of an offset
- */
 class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
 
@@ -15,12 +12,14 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
+
     /**
      * Current Position in the $this->_keys-array
      *
      * @var integer
      */
     protected $_pos = 0;
+
     /**
      * @var array
      */
@@ -81,17 +80,17 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         }
         return $key;
     }
-    
+
     public function next()
     {
         $this->_pos++;
     }
-    
+
     public function previous()
     {
         $this->_pos--;
     }
-    
+
     public function rewind()
     {
         $this->_pos = 0;
