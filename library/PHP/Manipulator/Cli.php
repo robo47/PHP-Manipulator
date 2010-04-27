@@ -226,9 +226,11 @@ class Cli
                 $action->run();
             }
         } catch (\ezcConsoleException $e) {
-            $output->outputText('something with ezcConsole fucked up: ' . $e->getMessage(), 'failure');
+            $output->outputText(PHP_EOL . 'something with ezcConsole fucked up: ' . $e->getMessage() . PHP_EOL, 'failure');
+            $output->outputText(PHP_EOL . $e->getTraceAsString() . PHP_EOL, 'failure');
         } catch (\Exception $e) {
-            $output->outputText('something else fucked up: ' . $e->getMessage(), 'failure');
+            $output->outputText(PHP_EOL . 'something else fucked up: ' . $e->getMessage() . PHP_EOL, 'failure');
+            $output->outputText(PHP_EOL . $e->getTraceAsString() . PHP_EOL, 'failure');
         }
     }
 
