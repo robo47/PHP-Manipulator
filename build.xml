@@ -21,7 +21,7 @@
         <parallel threadCount="4" failonany="true">
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/_fixtures/Cli">
                     <include name="**/*.php" />
                     <include name="**/phtml" />
@@ -29,28 +29,28 @@
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/_fixtures/ContainerManipulator">
                     <include name="**/*" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/_fixtures/ContainerConstraint">
                     <include name="**/*" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/_fixtures/Rule">
                     <include name="**/*" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/_fixtures/TokenFinder">
                     <include name="**/*" />
                 </fileset>
@@ -63,28 +63,28 @@
         <parallel threadCount="4" failonany="true">
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="library/PHP">
                     <include name="**/*.php" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/">
                     <include name="**/*.php" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/Baa">
                     <include name="**/*.php" />
                 </fileset>
             </apply>
             <apply executable   = "php"
                    failonerror  = "true">
-                <arg value="-l" />
+                <arg value="-nl" />
                 <fileset dir="tests/Tests">
                     <include name="**/*.php" />
                 </fileset>
