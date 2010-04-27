@@ -4,6 +4,6 @@
         <ruleset name="PHPManipulator" />
     </rules>
     <files>
-        <directory>../library/PHP/</directory>
+        <directory>./library/PHP/</directory>
     </files>
 </config>
