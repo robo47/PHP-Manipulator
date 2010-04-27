@@ -6,7 +6,7 @@ use PHP\Manipulator\Cli\Action;
 use PHP\Manipulator\Config;
 use PHP\Manipulator;
 use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\FileContainer;
 
 class ApplyRules extends Action
 {
