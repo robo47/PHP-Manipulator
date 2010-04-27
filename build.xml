@@ -17,6 +17,47 @@
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
+    <target name="fixtureslint">
+        <parallel threadCount="4" failonany="true">
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/_fixtures/Cli">
+                    <include name="**/*.php" />
+                    <include name="**/phtml" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/_fixtures/ContainerManipulator">
+                    <include name="**/*" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/_fixtures/ContainerConstraint">
+                    <include name="**/*" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/_fixtures/Rule">
+                    <include name="**/*" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-l" />
+                <fileset dir="tests/_fixtures/TokenFinder">
+                    <include name="**/*" />
+                </fileset>
+            </apply>
+        </parallel>
+    </target>
+
     <!-- Run php lint check on lib and tests -->
     <target name="phplint">
         <parallel threadCount="4" failonany="true">
@@ -115,7 +156,10 @@
 
     <!-- Build complete Project -->
     <target name="build" depends="clean, prepare" >
-        <antcall target="phplint" />
+        <parallel threadCount="4" failonany="true">
+            <antcall target="phplint" />
+            <antcall target="fixtureslint" />
+        </parallel>
         <parallel threadCount="4" failonany="true">
             <antcall target="phpunit" />
             <antcall target="phpcs" />

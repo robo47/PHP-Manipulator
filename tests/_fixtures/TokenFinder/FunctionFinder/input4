@@ -4,7 +4,7 @@
  */
 class Foo
 {
-    abstract public static function foo(Iterator $param);
+    public static function baa(Iterator $param) { }
 }
 // Foo
-echo Foo::foo();
+echo Foo::baa();

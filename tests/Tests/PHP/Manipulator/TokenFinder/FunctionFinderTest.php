@@ -58,9 +58,9 @@ extends \Tests\TestCase
         #4 abstract class method
         $data[] = array(
             $c = $this->getContainerFromFixture($path . 'input4'),
-            $c[15],
+            $c[13],
             array(),
-            $this->getResultFromContainer($c, 15, 23),
+            $this->getResultFromContainer($c, 13, 24),
         );
 
         #5 including prefixes

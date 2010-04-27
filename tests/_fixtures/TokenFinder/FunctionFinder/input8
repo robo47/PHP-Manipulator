@@ -9,7 +9,7 @@ class Foo
      * @param Iterator $param
      */
     // foo
-    protected /* foo */ static /* baa */ function foo(Iterator $param)
+    protected /* foo */ static /* baa */ function baa(Iterator $param)
     {
         if($param->valid()) {
             echo 'valid';
@@ -19,4 +19,4 @@ class Foo
     }
 }
 // Foo
-echo Foo::foo();
+echo Foo::baa();

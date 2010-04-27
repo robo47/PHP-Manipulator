@@ -4,7 +4,7 @@
  */
 class Foo
 {
-    public static function foo(Iterator $param)
+    public static function baa(Iterator $param)
     {
         if($param->valid()) {
             echo 'valid';
@@ -14,4 +14,4 @@ class Foo
     }
 }
 // Foo
-echo Foo::foo();
+echo Foo::baa();
