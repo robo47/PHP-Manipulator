@@ -124,7 +124,7 @@ class Util
         $value = $token->getValue();
         $typeName = '[SIMPLE]';
         if (null !== $type) {
-            $typeName = token_name($token->getType());
+            $typeName = $token->getTokenName();
         }
         $length = (string) mb_strlen($value, 'utf-8');
         $search = array("\n\r", "\n", "\r", "\t", " ");

@@ -53,7 +53,7 @@ class ShowTokens extends Action
      */
     public function printToken(Token $token)
     {
-        $name = \str_pad(\token_name($token->getType()), 28, ' ');
+        $name = \str_pad($token->getTokenName(), 28, ' ');
         $value = $this->transformTokenValue($token->getValue());
         return $name . ' | ' . $value;
     }

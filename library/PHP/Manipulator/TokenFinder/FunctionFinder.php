@@ -22,7 +22,7 @@ extends TokenFinder
     public function find(Token $token, TokenContainer $container, $params = null)
     {
         if (!$this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
-            throw new \Exception('Start-token is not T_FUNCTION: ' . \token_name($token->getType()));
+            throw new \Exception('Start-token is not T_FUNCTION: ' . $token->getTokenName());
         }
 
         $pos = $container->getOffsetByToken($token);
@@ -67,8 +67,6 @@ extends TokenFinder
             }
         }
 
-
-
         $result = new Result();
         $inside = false;
         $level = 0;
@@ -99,7 +97,7 @@ extends TokenFinder
         }
         return $result;
     }
-    
+
     protected function _includePhpDoc($params)
     {
         if (is_array($params) && isset($params['includePhpdoc'])) {
@@ -109,7 +107,7 @@ extends TokenFinder
         }
     }
 
-// wheter to check for public/protected/private
+    // wheter to check for public/protected/private
     protected function _includeMethodProperties($params)
     {
         if (is_array($params) && isset($params['includeMethodProperties'])) {

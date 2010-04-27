@@ -91,15 +91,15 @@ extends ContainerManipulator
     public function getWhitespaceForToken(Token $token, array $whitespaces)
     {
         if (null === $token->getType()) {
-            $token = $token->getValue();
+            $tokenval = $token->getValue();
         } else {
-            $token = $token->getType();
+            $tokenval = $token->getType();
         }
-        if (array_key_exists($token, $whitespaces)) {
-            return $whitespaces[$token];
+        if (array_key_exists($tokenval, $whitespaces)) {
+            return $whitespaces[$tokenval];
         } else {
-            $message = 'No option found for: ' . token_name($token) .
-                ' (' . $token . ')';
+            $message = 'No option found for: ' . $token->getTokenName() .
+                ' (' . $tokenval . ')';
             throw new \Exception($message);
         }
     }
