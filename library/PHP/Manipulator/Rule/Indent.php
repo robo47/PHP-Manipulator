@@ -11,9 +11,6 @@ class Indent
 extends Rule
 {
 
-
-
-
     /**
      * @var boolean
      */
