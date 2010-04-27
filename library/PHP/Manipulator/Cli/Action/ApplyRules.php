@@ -53,16 +53,21 @@ class ApplyRules extends Action
 
         $progress->options->emptyChar = '-';
         $progress->options->progressChar = '#';
-        $progress->options->formatString = "Processing files %act% / %max%  [%bar%]";
+        $progress->options->formatString = "[%bar%]  %act% / %max%";
 
+        // @todo timings!
         // Perform actions
+        echo 'Processing ' . $filesCount . ' files and ' . $rulesCount . ' rules' . PHP_EOL;
         $i = 0;
         foreach ($files as $file) {
+            //echo 'File: ' . $file . PHP_EOL;
             $container = new FileContainer($file);
             foreach ($rules as $rule) {
+                
                 /* @var $rule \PHP\Manipulator\Rule */
                 $rule->apply($container);
                 $progress->advance();
+                //echo PHP_EOL . '    Rule: ' . get_class($rule) . PHP_EOL;
             }
             $container->save();
         }
