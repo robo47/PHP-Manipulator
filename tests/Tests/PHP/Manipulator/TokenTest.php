@@ -279,4 +279,16 @@ class TokenTest extends \Tests\TestCase
     {
         $this->assertSame($equals, $token->equals($otherToken, $strict), 'tokens aren\'t equal');
     }
+
+    /**
+     *@covers \PHP\Manipulator\Token::getTokenName
+     */
+    public function testGetTokenName()
+    {
+        $token = new Token('  ', T_WHITESPACE);
+        $this->assertEquals('T_WHITESPACE', $token->getTokenName());
+
+        $token = new Token('/* Foo */', T_COMMENT);
+        $this->assertEquals('T_COMMENT', $token->getTokenName());
+    }
 }

@@ -9,10 +9,12 @@ class Token
      * @var string
      */
     protected $_value = null;
+
     /**
      * @var integer|null
      */
     protected $_linenumber = null;
+
     /**
      * @var integer|null
      */
@@ -143,6 +145,16 @@ class Token
             $match = false;
         }
         return $match;
+    }
+
+    /**
+     * Returns the tokens name
+     *
+     * @return string
+     */
+    public function getTokenName()
+    {
+        return token_name($this->getType());
     }
 
     /**
