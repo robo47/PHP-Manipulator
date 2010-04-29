@@ -13,6 +13,7 @@ use PHP\Manipulator\TokenManipulator;
 
 // @todo better name ?
 // @todo extend helper-methods to use config
+// @todo caching for getClassInstance-Calls ?
 abstract class AHelper
 {
 
