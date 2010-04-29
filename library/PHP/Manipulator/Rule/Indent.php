@@ -65,14 +65,13 @@ extends Rule
 
         $iterator = $container->getIterator();
 
+        $previous = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
             $this->_checkAndChangeIndentionLevel($token);
             $this->_checkForMultilineCommentAndIndent($token);
             $this->_useIndentionCheck($token);
             $this->_switchIndentionCheck($token);
-
-            $previous = $container->getPreviousToken($token);
 
             if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous) && !$this->_isWhitespaceWithBreak($token)) {
                 $newToken = new Token('', T_WHITESPACE);
@@ -93,6 +92,7 @@ extends Rule
                 $this->_useIndentionCheck($nextToken);
                 $this->_switchIndentionCheck($nextToken);
             }
+            $previous = $iterator->current();
             $iterator->next();
         }
         $container->retokenize();

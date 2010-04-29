@@ -20,13 +20,13 @@ class RemoveIndention extends Rule
         $regexNotWhitespace = '[^\t^ ]{1,}';
         $linebreak = '\n|\r\n|\r';
 
+        $previousToken = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
                 $value = $token->getValue();
                 // @todo create RemoveWhitespaceIndention-TokenManipulator
                 // Spaces and Tabs in Lines which are completly empty
-                $previousToken = $container->getPreviousToken($token);
 
                 // Single-line-Comments include a Linebreak at the end, so the whitespace not begins with a linebreak
                 if ($this->evaluateConstraint('IsSinglelineComment', $previousToken, T_COMMENT)) {
@@ -40,6 +40,7 @@ class RemoveIndention extends Rule
             } else if ($this->evaluateConstraint('IsMultilineComment', $token)) {
                 $this->manipulateToken('RemoveCommentIndention', $token);
             }
+            $previousToken = $token;
             $iterator->next();
         }
         $container->retokenize();
