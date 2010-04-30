@@ -143,9 +143,9 @@ extends Action
     {
         if ($this->evaluateConstraint('IsMultilineComment', $token)) {
             $this->manipulateToken(
-                    'IndentMultilineComment',
-                    $token,
-                    $this->getIndention($this->getIndentionLevel())
+                'IndentMultilineComment',
+                $token,
+                $this->getIndention($this->getIndentionLevel())
             );
         }
     }
@@ -216,7 +216,7 @@ extends Action
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
                 if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) ||
-                    $this->evaluateConstraint('IsSemicolon', $token))) {
+                        $this->evaluateConstraint('IsSemicolon', $token))) {
                     return false;
                 }
             }
@@ -274,7 +274,7 @@ extends Action
     protected function _indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-            $this->getIndention($this->getIndentionLevel());
+        $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
     }
 
@@ -285,7 +285,7 @@ extends Action
     protected function _isWhitespaceWithBreak(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE) &&
-            $this->evaluateConstraint('ContainsNewline', $token);
+        $this->evaluateConstraint('ContainsNewline', $token);
     }
 
     /**
@@ -333,7 +333,7 @@ extends Action
     protected function _isIndentionLevelIncreasment(Token $token)
     {
         return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
-            || $this->evaluateConstraint('IsOpeningBrace', $token);
+        || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     /**
@@ -343,7 +343,7 @@ extends Action
     protected function _isIndentionLevelDecreasement(Token $token)
     {
         return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
-            || $this->evaluateConstraint('IsClosingBrace', $token);
+        || $this->evaluateConstraint('IsClosingBrace', $token);
     }
 
     /**

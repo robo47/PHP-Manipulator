@@ -10,7 +10,6 @@ use PHP\Manipulator\FileContainer;
 
 class RunActions extends Action
 {
-    
     public function run()
     {
         $input = $this->getCli()->getConsoleInput();
@@ -63,7 +62,6 @@ class RunActions extends Action
             //echo 'File: ' . $file . PHP_EOL;
             $container = new FileContainer($file);
             foreach ($actions as $action) {
-                
                 /* @var $action \PHP\Manipulator\Action */
                 $action->run($container);
                 $progress->advance();

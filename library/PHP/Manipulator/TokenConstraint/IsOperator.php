@@ -67,7 +67,7 @@ extends TokenConstraint
     public function evaluate(Token $token, $param = null)
     {
         return $this->_isOperatorWithToken($token) ||
-               $this->_isOperatorWithoutToken($token);
+        $this->_isOperatorWithoutToken($token);
     }
 
     /**

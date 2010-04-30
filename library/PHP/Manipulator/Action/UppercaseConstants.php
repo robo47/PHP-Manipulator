@@ -95,9 +95,9 @@ extends Action
     protected function _notInsideClassFunctionMethodUseOrNamespace()
     {
         return (false === $this->_isUse &&
-                false === $this->_isNamespace &&
-                false === $this->_isFunctionDeclaration &&
-                false === $this->_isClassDeclaration);
+            false === $this->_isNamespace &&
+            false === $this->_isFunctionDeclaration &&
+            false === $this->_isClassDeclaration);
     }
 
     /**
@@ -107,8 +107,8 @@ extends Action
     protected function _isConstant(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_STRING) &&
-               ( (true === $this->_isConstant) ||
-                 ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
+        ( (true === $this->_isConstant) ||
+            ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
     }
 
     /**

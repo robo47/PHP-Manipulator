@@ -65,18 +65,18 @@ class ShowTokens extends Action
     {
         return array (
             new \ezcConsoleOption(
-            'sh',
-            'showtokens',
-            \ezcConsoleInput::TYPE_STRING,
-            null,
-            false,
-            'Prints out the Tokens of a file',
-            '-- LONG --',
-            array(),
-            array(),
-            true,
-            false,
-            true
+                'sh',
+                'showtokens',
+                \ezcConsoleInput::TYPE_STRING,
+                null,
+                false,
+                'Prints out the Tokens of a file',
+                '-- LONG --',
+                array(),
+                array(),
+                true,
+                false,
+                true
             )
         );
     }

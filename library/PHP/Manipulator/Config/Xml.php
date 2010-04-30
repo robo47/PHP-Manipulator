@@ -209,11 +209,11 @@ class Xml extends Config
                             $iterator = $this->_parseIterator($option);
                             if ($iterator instanceof \Iterator) {
                                 $this->addIterator($iterator);
-                            }
+                        }
                             break;
                         default:
-                        // ignore
-                            break;
+                            // ignore
+                        break;
                     }
                 }
             }
@@ -249,8 +249,8 @@ class Xml extends Config
                         $exclude[] = $value;
                         break;
                     default:
-                    // ignore
-                        break;
+                        // ignore
+                    break;
                 }
             }
         }

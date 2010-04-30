@@ -24,7 +24,7 @@ class PHPManipulator extends Actionset
         );
 
         $emptyLinesOptions = array(
-            'maxEmptyLines' => 2,
+            'maxEmptyLines' => 3,
             'defaultBreak' => "\n",
         );
 
@@ -38,7 +38,6 @@ class PHPManipulator extends Actionset
         $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
         $actions[] = new ElseIfToElseAndIf();        
         $actions[] = new Indent($indentOptions);
-        
 
         return $actions;
     }

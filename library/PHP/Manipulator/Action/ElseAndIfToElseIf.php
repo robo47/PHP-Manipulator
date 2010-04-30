@@ -27,7 +27,6 @@ extends Action
                 $waitingForIf = true;
                 $replaceTokens = array();
             }
-            
             if (true === $waitingForIf && !$this->evaluateConstraint('IsType', $token, array(T_IF, T_ELSE, T_WHITESPACE))) {
                 $waitingForIf = false;
             } else {
@@ -36,9 +35,7 @@ extends Action
 
             if (true === $waitingForIf && $this->evaluateConstraint('IsType', $token, T_IF)) {
                 $waitingForIf = false;
-                
                 $token = array_pop($replaceTokens);
-                
                 $token->setType(T_ELSEIF);
                 $token->setValue('elseif');
 
