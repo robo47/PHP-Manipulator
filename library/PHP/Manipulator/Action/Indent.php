@@ -34,6 +34,11 @@ extends Action
     protected $_indentionLevel = 0;
 
     /**
+     * @var boolean
+     */
+    protected $_insideString = false;
+
+    /**
      * The current container to not have to pass it to each method
      *
      * @var TokenContainer
@@ -299,13 +304,27 @@ extends Action
     }
 
     /**
+     * @param Token $token
+     */
+    protected function _checkInsideString(Token $token)
+    {
+        // @todo isQuote-Constraint ?
+        if ($token->getValue() === '"') {
+            $this->_insideString = !$this->_insideString;
+        }
+    }
+
+    /**
      *
      * @param Token $token
      */
     public function _checkAndChangeIndentionLevel(Token $token)
     {
-        $this->_checkAndChangeIndentionLevelDecreasment($token);
-        $this->_checkAndChangeIndentionLevelIncreasment($token);
+        $this->_checkInsideString($token);
+        if (false === $this->_insideString) {
+            $this->_checkAndChangeIndentionLevelDecreasment($token);
+            $this->_checkAndChangeIndentionLevelIncreasment($token);
+        }
     }
 
     /**

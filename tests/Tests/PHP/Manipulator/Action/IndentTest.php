@@ -188,6 +188,13 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output21.php'),
         );
 
+        #22 Curly Braces inside strings
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input22.php'),
+            $this->getContainerFromFixture($path . 'output22.php'),
+        );
+
 //@todo nested switch
 //        #21 nested switch
 //        $data[] = array(
