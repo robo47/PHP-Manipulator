@@ -18,7 +18,7 @@ class PHPManipulatorTest extends \Tests\TestCase
     {
         $Actionset = new PHPManipulator();
         $actions = $Actionset->getActions();
-        $this->assertCount(3, $actions);
+        $this->assertCount(4, $actions);
         $this->markTestIncomplete('Foo');
     }
 }

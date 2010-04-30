@@ -6,6 +6,7 @@ use PHP\Manipulator\Actionset;
 use PHP\Manipulator\Action\ChangeLineEndings;
 use PHP\Manipulator\Action\RemoveMultipleEmptyLines;
 use PHP\Manipulator\Action\Indent;
+use PHP\Manipulator\Action\ElseIfToElseAndIf;
 
 class PHPManipulator extends Actionset
 {
@@ -33,9 +34,11 @@ class PHPManipulator extends Actionset
 
         $actions = array();
 
-        $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
-        $actions[] = new Indent($indentOptions);
         $actions[] = new ChangeLineEndings($changelineEndingsOptions);
+        $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
+        $actions[] = new ElseIfToElseAndIf();        
+        $actions[] = new Indent($indentOptions);
+        
 
         return $actions;
     }
