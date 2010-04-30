@@ -75,7 +75,7 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output5'),
         );
 
-        #6
+        #6 Empty code to test notething goes wrong with it :P
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input6'),
@@ -166,12 +166,28 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output18'),
         );
 
-        // @todo get switch without break running
-//        #12 switch case without break
+
+        #19 wrong indention for default
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input19'),
+            $this->getContainerFromFixture($path . 'output19'),
+        );
+
+
+        #20 wrong indention for default or break at the end without break
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input20'),
+            $this->getContainerFromFixture($path . 'output20'),
+        );
+
+//@todo nested switch
+//        #20 nested switch
 //        $data[] = array(
 //            array(),
-//            $this->getContainerFromFixture($path . 'input12'),
-//            $this->getContainerFromFixture($path . 'output12'),
+//            $this->getContainerFromFixture($path . 'inputx'),
+//            $this->getContainerFromFixture($path . 'outputx'),
 //        );
 
         // @todo more tests with tabs instead of spaces

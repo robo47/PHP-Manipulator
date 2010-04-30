@@ -3,7 +3,7 @@
 namespace PHP\Manipulator\Rule;
 
 use PHP\Manipulator\Rule;
-use PHP\Manipulator\Rule\RemoveIndention as RemoveIndentionRule;
+use PHP\Manipulator\Rule\RemoveIndention;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
@@ -14,13 +14,17 @@ extends Rule
     /**
      * @var boolean
      */
-    protected $_inuse = false;
+    protected $_inUse = false;
 
     /**
      * @var boolean
      */
-    protected $_incase = false;
+    protected $_inCase = false;
 
+    /**
+     * @var boolean
+     */
+    protected $_inSwitch = false;
     /**
      * Current Level of Indention
      *
@@ -34,6 +38,11 @@ extends Rule
      * @var TokenContainer
      */
     protected $_container = null;
+
+    /**
+     * @var  SplStack
+     */
+    protected $_switchStack = null;
 
     public function init()
     {
@@ -59,8 +68,9 @@ extends Rule
      */
     public function apply(TokenContainer $container)
     {
+        $this->_switchStack = new \SplStack();
         $this->_container = $container;
-        $removeIndention = new RemoveIndentionRule();
+        $removeIndention = new RemoveIndention();
         $removeIndention->apply($container);
 
         $iterator = $container->getIterator();
@@ -81,12 +91,15 @@ extends Rule
                 $iterator->seekToToken($token);
             } else if ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
-                if(!$iterator->valid()) {
+                if (!$iterator->valid()) {
                     break;
                 }
                 $nextToken = $iterator->current();
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->_indentWhitespace($token);
+                if ($this->evaluateConstraint('IsClosingCurlyBrace', $nextToken) && true === $this->_inSwitch && true === $this->_inCase) {
+                    $this->_removeLastIndention($token);
+                }
                 $this->_checkForMultilineCommentAndIndent($nextToken);
                 $this->_checkAndChangeIndentionLevelIncreasment($nextToken);
                 $this->_useIndentionCheck($nextToken);
@@ -99,6 +112,14 @@ extends Rule
     }
 
     /**
+     * @param Token $token
+     */
+    protected function _removeLastIndention(Token $token)
+    {
+        $token->setValue(substr($token->getValue(), 0, -4));
+    }
+
+    /**
      * Check if a Tiken is a Multilinecomment and indent it
      *
      * @param Token $token
@@ -107,9 +128,9 @@ extends Rule
     {
         if ($this->evaluateConstraint('IsMultilineComment', $token)) {
             $this->manipulateToken(
-                'IndentMultilineComment',
-                $token,
-                $this->getIndention($this->getIndentionLevel())
+                    'IndentMultilineComment',
+                    $token,
+                    $this->getIndention($this->getIndentionLevel())
             );
         }
     }
@@ -117,14 +138,15 @@ extends Rule
     /**
      * @param Token $token
      */
-    protected function _useIndentionCheck(Token $token) {
-        if($this->evaluateConstraint('IsType', $token, T_USE)) {
-            $this->_inuse = true;
+    protected function _useIndentionCheck(Token $token)
+    {
+        if ($this->evaluateConstraint('IsType', $token, T_USE)) {
+            $this->_inUse = true;
             $this->_indentionLevel++;
         }
 
-        if ($this->evaluateConstraint('IsSemicolon', $token) && true === $this->_inuse) {
-            $this->_inuse = false;
+        if ($this->evaluateConstraint('IsSemicolon', $token) && true === $this->_inUse) {
+            $this->_inUse = false;
             $this->_indentionLevel--;
         }
     }
@@ -134,19 +156,30 @@ extends Rule
      */
     protected function _switchIndentionCheck(Token $token)
     {
-        if($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_incase) {
-            $this->_incase = false;
+        if ($this->evaluateConstraint('IsClosingCurlyBrace', $token) && true === $this->_inSwitch) {
+            if ($this->_switchStack[$this->_switchStack->count() - 1] === $this->_indentionLevel) {
+                $this->_switchStack->pop();
+                $this->_inSwitch = false;
+            }
+        }
+        if ($this->evaluateConstraint('IsType', $token, T_SWITCH)) {
+            $this->_inSwitch = true;
+            $this->_switchStack->push($this->_indentionLevel);
+        }
+
+        if ($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_inCase) {
+            $this->_inCase = false;
             $this->_indentionLevel--;
         }
 
-        // only indent if case is not directly followed by case
-        if ($this->evaluateConstraint('IsType', $token, T_CASE) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
-            if ($this->evaluateConstraint('IsType', $token, T_CASE) &&
-                true === $this->_incase &&
+        // only indent if case/default is not directly followed by case/default
+        if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT)) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
+            if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT)) &&
+                true === $this->_inCase &&
                 !$this->_isCasePreceededByBreak($token)) {
                 $this->_indentionLevel--;
             }
-            $this->_incase = true;
+            $this->_inCase = true;
             $this->_indentionLevel++;
         }
     }
@@ -167,8 +200,8 @@ extends Rule
                 return true;
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) || 
-                     $this->evaluateConstraint('IsSemicolon', $token))) {
+                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) ||
+                    $this->evaluateConstraint('IsSemicolon', $token))) {
                     return false;
                 }
             }
@@ -208,7 +241,7 @@ extends Rule
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_CASE)) {
+            if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT))) {
                 return true;
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
@@ -227,9 +260,8 @@ extends Rule
     protected function _indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-        $this->getIndention($this->getIndentionLevel());
+            $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
-
     }
 
     /**
@@ -239,7 +271,7 @@ extends Rule
     protected function _isWhitespaceWithBreak(Token $token)
     {
         return $this->evaluateConstraint('IsType', $token, T_WHITESPACE) &&
-        $this->evaluateConstraint('ContainsNewline', $token);
+            $this->evaluateConstraint('ContainsNewline', $token);
     }
 
     /**
@@ -287,7 +319,7 @@ extends Rule
     protected function _isIndentionLevelIncreasment(Token $token)
     {
         return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
-        || $this->evaluateConstraint('IsOpeningBrace', $token);
+            || $this->evaluateConstraint('IsOpeningBrace', $token);
     }
 
     /**
@@ -297,7 +329,7 @@ extends Rule
     protected function _isIndentionLevelDecreasement(Token $token)
     {
         return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
-        || $this->evaluateConstraint('IsClosingBrace', $token);
+            || $this->evaluateConstraint('IsClosingBrace', $token);
     }
 
     /**
