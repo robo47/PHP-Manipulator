@@ -18,17 +18,17 @@
         <actionset prefix="\Foo\Baa\Actionset\" name="SecondActionset" />
     </actions>
     <files>
-        <directory>./_fixtures/Cli/Config/testDir0</directory>
-        <file>./_fixtures/Cli/Config/testDir1/Baafoo.php</file>
+        <directory>./_fixtures/Config/testDir0</directory>
+        <file>./_fixtures/Config/testDir1/Baafoo.php</file>
         <iterator>
-            <path>./_fixtures/Cli/Config/testDir2</path>
+            <path>./_fixtures/Config/testDir2</path>
             <suffix>.php</suffix>
             <prefix>Baa</prefix>
         </iterator>
         <iterator>
-            <path>./_fixtures/Cli/Config/testDir3</path>
+            <path>./_fixtures/Config/testDir3</path>
             <suffix>.php</suffix>
-            <exclude>./_fixtures/Cli/Config/testDir3/Foo.php</exclude>
+            <exclude>./_fixtures/Config/testDir3/Foo.php</exclude>
         </iterator>
     </files>
 </config>

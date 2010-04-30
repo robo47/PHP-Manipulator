@@ -175,7 +175,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getXmlConfig($number)
     {
-        $path = '_fixtures/Cli/Config/config' . $number . '.xml';
+        $path = '_fixtures/Config/config' . $number . '.xml';
         return Config::factory('xml', $path, true);
     }
 }
