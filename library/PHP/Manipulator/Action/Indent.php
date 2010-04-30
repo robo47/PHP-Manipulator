@@ -63,6 +63,18 @@ extends Action
     }
 
     /**
+     * Since Actions can be used multiple times, they need to reset themself each time they are used!
+     */
+    protected function reset()
+    {
+        $this->_inUse = false;
+        $this->_inCase = false;
+        $this->_inSwitch = false;
+        $this->_indentionLevel = 0;
+        $this->_switchStack = new \SplStack();
+    }
+
+    /**
      * Unindents all Code and then indent it right
      *
      * @param \PHP\Manipulator\TokenContainer $container
@@ -70,6 +82,7 @@ extends Action
      */
     public function run(TokenContainer $container, $params = null)
     {
+        $this->reset();
         $this->_switchStack = new \SplStack();
         $this->_container = $container;
         $removeIndention = new RemoveIndention();
