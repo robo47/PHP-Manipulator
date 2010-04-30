@@ -9,7 +9,6 @@ use PHP\Manipulator\TokenContainer;
 
 class Help extends Action
 {
-    
     public function run()
     {
         $input = $this->getCli()->getConsoleInput();
