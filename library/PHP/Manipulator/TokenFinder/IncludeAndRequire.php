@@ -33,8 +33,7 @@ extends TokenFinder
         while ($iterator->valid()) {
             $token = $iterator->current();
             $result->addToken($token);
-            // @todo isSemicolonConstraint
-            if ($token->getValue() == ';') {
+            if ($this->evaluateConstraint('IsSemicolon', $token)) {
                 break;
             }
             $iterator->next();

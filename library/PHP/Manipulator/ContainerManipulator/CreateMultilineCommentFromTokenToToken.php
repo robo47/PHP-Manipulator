@@ -19,7 +19,7 @@ extends ContainerManipulator
      */
     public function manipulate(TokenContainer $container, $params = null)
     {
-        // @todo generic way for manipulators and constriants for checking $params ?
+        // @todo generic way for manipulators and constraints for checking $params ?
         if (!is_array($params)) {
             $message = 'invalid input $params should be an array';
             throw new \Exception($message);

@@ -122,8 +122,8 @@ extends Rule
             $this->_inuse = true;
             $this->_indentionLevel++;
         }
-        // @todo isSemicolonConstraint
-        if (';' === $token->getValue() && true === $this->_inuse) {
+
+        if ($this->evaluateConstraint('IsSemicolon', $token) && true === $this->_inuse) {
             $this->_inuse = false;
             $this->_indentionLevel--;
         }
@@ -167,7 +167,8 @@ extends Rule
                 return true;
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) || $token->getValue != ';')) {
+                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) || 
+                     $this->evaluateConstraint('IsSemicolon', $token))) {
                     return false;
                 }
             }

@@ -160,7 +160,7 @@ extends ContainerManipulator
             $this->_isFunctionDeclaration = true;
         }
 
-        if ($this->_isSemicolon($token)) {
+        if ($this->evaluateConstraint('IsSemicolon', $token)) {
             if (true === $this->_isConstant) {
                 $this->_isConstant = false;
             }
@@ -178,18 +178,8 @@ extends ContainerManipulator
             }
         }
 
-        if (true === $this->_isNamespace && ($this->_isSemicolon($token) || $this->evaluateConstraint('IsClosingCurlyBrace', $token))) {
+        if (true === $this->_isNamespace && ($this->evaluateConstraint('IsSemicolon', $token) || $this->evaluateConstraint('IsClosingCurlyBrace', $token))) {
             $this->_isNamespace = false;
         }
-    }
-
-    /**
-     * @param Token $token
-     * @return boolean
-     * @todo Create IsSemicolonConstraint
-     */
-    protected function _isSemicolon(Token $token)
-    {
-        return ';' === $token->getValue();
     }
 }

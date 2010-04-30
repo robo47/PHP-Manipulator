@@ -7,6 +7,7 @@ use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
+// @todo refactor find into some more functions
 class FunctionFinder
 extends TokenFinder
 {
@@ -84,8 +85,7 @@ extends TokenFinder
             }
 
             // abstract methods or interface-methods
-            // @todo IsSemicolon-Constraint
-            if (false === $inside && $token->getValue() == ';') {
+            if (false === $inside && $this->evaluateConstraint('IsSemicolon', $token)) {
                 break;
             }
 
