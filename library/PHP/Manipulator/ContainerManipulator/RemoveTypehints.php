@@ -60,7 +60,7 @@ extends ContainerManipulator
                 $indentionLevel--;
             }
             // @todo IsComma-Constraint
-            if ($token->getValue() === ',' && null === $token->getType()) {
+            if ($this->evaluateConstraint('IsComma', $token)) {
                 $arguments[] = $argument;
                 $argument = array();
             } elseif (true === $inside) {
