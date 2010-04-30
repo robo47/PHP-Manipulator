@@ -22,20 +22,19 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            Token::factory(array(null, ";")),
+            Token::factory(array(null, ';')),
             true
         );
 
         #1
         $data[] = array(
-            Token::factory(array(T_WHITESPACE, ";")),
+            Token::factory(array(T_WHITESPACE, ';')),
             false
         );
 
-
         #2
         $data[] = array(
-            Token::factory(array(null, ":")),
+            Token::factory(array(null, ':')),
             false
         );
 

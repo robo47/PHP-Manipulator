@@ -39,11 +39,11 @@ class ApplyRules extends Action
             'step' => 1,
         );
 
-        if ($filesCount == 0) {
+        if ($filesCount === 0) {
             $output->outputLine('No files found');
             return;
         }
-        if ($rulesCount == 0) {
+        if ($rulesCount === 0) {
             $output->outputLine('No rules found');
             return;
         }

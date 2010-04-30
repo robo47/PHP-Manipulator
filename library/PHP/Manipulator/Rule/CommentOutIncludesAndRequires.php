@@ -91,7 +91,7 @@ extends Rule
                 }
                 if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
                     $bracesStatus--;
-                    if ($bracesStatus == 0) {
+                    if ($bracesStatus === 0) {
                         if ($inClass) {
                             $inClass = false;
                         }

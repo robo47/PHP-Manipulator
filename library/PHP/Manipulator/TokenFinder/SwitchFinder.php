@@ -35,7 +35,7 @@ extends TokenFinder
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
-                if (0 == $level) {
+                if (0 === $level) {
                     $inside = true;
                 }
                 $level++;
@@ -45,7 +45,7 @@ extends TokenFinder
             }
             $result->addToken($token);
 
-            if ($inside && 0 == $level) {
+            if ($inside && 0 === $level) {
                 break;
             }
             $iterator->next();

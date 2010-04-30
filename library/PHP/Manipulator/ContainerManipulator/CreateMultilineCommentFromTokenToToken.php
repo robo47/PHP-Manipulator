@@ -92,7 +92,7 @@ extends ContainerManipulator
         $tokens = array();
         while ($iterator->valid()) {
             $tokens[] = $iterator->current();
-            if ($iterator->key() == $endOffset) {
+            if ($iterator->key() === $endOffset) {
                 break;
             }
             $iterator->next();

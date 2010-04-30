@@ -90,7 +90,7 @@ extends TokenFinder
             }
 
             // last curly-brace closed
-            if (true === $inside && $level == 0) {
+            if (true === $inside && $level === 0) {
                 break;
             }
 

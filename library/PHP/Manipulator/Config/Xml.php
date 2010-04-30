@@ -79,7 +79,7 @@ class Xml extends Config
     {
         $ruleOptions = array();
         foreach ($options->childNodes as $option) {
-            if (strtolower($option->nodeName) == 'option') {
+            if (strtolower($option->nodeName) === 'option') {
                 $name = $option->attributes->getNamedItem('name');
                 $value = $option->attributes->getNamedItem('value');
                 if (null !== $name && null !== $value) {

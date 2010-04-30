@@ -68,7 +68,7 @@ implements \Countable
      */
     public function isEmpty()
     {
-        return (count($this->_tokens) == 0);
+        return (count($this->_tokens) === 0);
     }
 
     /**

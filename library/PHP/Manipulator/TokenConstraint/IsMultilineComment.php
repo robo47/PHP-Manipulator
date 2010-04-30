@@ -22,7 +22,7 @@ extends TokenConstraint
         if ($token->getType() === T_COMMENT) {
             $value = $token->getValue();
             if (strlen($value) > 2) {
-                if (substr($value, 0, 2) == '/*') {
+                if (substr($value, 0, 2) === '/*') {
                     $isMultilineComment = true;
                 }
             }

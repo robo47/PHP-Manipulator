@@ -21,9 +21,9 @@ extends TokenConstraint
         $isSinglelineComment = false;
         if ($token->getType() === T_COMMENT) {
             $value = $token->getValue();
-            if (strlen($value) >= 1 && substr($value, 0, 1) == '#') {
+            if (strlen($value) >= 1 && substr($value, 0, 1) === '#') {
                 $isSinglelineComment = true;
-            } else if (strlen($value) >= 2 && substr($value, 0, 2) == '//') {
+            } else if (strlen($value) >= 2 && substr($value, 0, 2) === '//') {
                 $isSinglelineComment = true;
             }
         }
