@@ -26,14 +26,9 @@ switch ($type) {
         $createFixturesDummy = true;
         $inputOnly = true;
         break;
-    case 'containermanipulator':
-    case 'cm':
-        $typeName = 'ContainerManipulator';
-        $createFixturesDummy = true;
-        break;
-    case 'rule':
-    case 'r':
-        $typeName = 'Rule';
+    case 'action':
+    case 'a':
+        $typeName = 'Action';
         $createFixturesDummy = true;
         break;
     case 'tokenconstraint':

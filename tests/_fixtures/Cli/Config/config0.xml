@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <options>
-        <rulePrefix>\Baa\Foo\Rule\</rulePrefix>
-        <rulesetPrefix>\Baa\Foo\Ruleset\</rulesetPrefix>
+        <actionPrefix>\Baa\Foo\Action\</actionPrefix>
+        <actionsetPrefix>\Baa\Foo\Actionset\</actionsetPrefix>
         <fileSuffix>.phtml</fileSuffix>
     </options>
-    <rules>
-        <rule name="FirstRule">
+    <actions>
+        <action name="FirstAction">
             <option name="baa" value="foo" />
-        </rule>
-        <rule prefix="\Foo\Baa\Rule\" name="SecondRule">
+        </action>
+        <action prefix="\Foo\Baa\Action\" name="SecondAction">
             <option name="foo" value="baa" />
             <option name="someTrueBoolean" value="1" cast="bool" />
             <option name="someFalseBoolean" value="0" cast="bool" />
-        </rule>
-        <ruleset name="FirstRuleset" />
-        <ruleset prefix="\Foo\Baa\Ruleset\" name="SecondRuleset" />
-    </rules>
+        </action>
+        <actionset name="FirstActionset" />
+        <actionset prefix="\Foo\Baa\Actionset\" name="SecondActionset" />
+    </actions>
     <files>
         <directory>./_fixtures/Cli/Config/testDir0</directory>
         <file>./_fixtures/Cli/Config/testDir1/Baafoo.php</file>

@@ -16,7 +16,7 @@ class NonAbstractHelper extends AHelper
         $this->init = true;
     }
     
-    public function apply(TokenContainer $container)
+    public function run(TokenContainer $container)
     {
         
     }
@@ -99,7 +99,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateContainerManipulatesContainer()
     {
-        \PHP\Manipulator\ContainerManipulator\Mock::$called = false;
+        \PHP\Manipulator\Action\Mock::$called = false;
         $abstractHelper = new NonAbstractHelper();
 
         $abstractHelper->manipulateContainer(
@@ -107,7 +107,7 @@ class AHelperTest extends \Tests\TestCase
                 new TokenContainer()
         );
 
-        $this->assertTrue(\PHP\Manipulator\ContainerManipulator\Mock::$called);
+        $this->assertTrue(\PHP\Manipulator\Action\Mock::$called);
     }
 
     /**
@@ -211,7 +211,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->manipulateContainer($manipulator, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\ContainerManipulator', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\Action', $e->getMessage(), 'Wrong exception message');
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace PHP\Manipulator;
 
-// @todo check how to auto-inject config in AHelper and co (a factory to cache and create rules, contraints and manipulators?) into all stuff ?
+// @todo check how to auto-inject config in AHelper and co (a factory to cache and create actions, contraints and manipulators?) into all stuff ?
 abstract class Config
 {
 
@@ -14,11 +14,11 @@ abstract class Config
     protected $_options = array();
 
     /**
-     * Array with all Rules
+     * Array with all Actions
      *
      * @var array
      */
-    protected $_rules = array();
+    protected $_actions = array();
 
     /**
      * Array with all Files
@@ -38,8 +38,8 @@ abstract class Config
 
     protected function _initDefaultOptions()
     {
-        $this->_options['rulePrefix'] = '\PHP\Manipulator\Rule\\';
-        $this->_options['rulesetPrefix'] = '\PHP\Manipulator\Ruleset\\';
+        $this->_options['actionPrefix'] = '\PHP\Manipulator\Action\\';
+        $this->_options['actionsetPrefix'] = '\PHP\Manipulator\Actionset\\';
         $this->_options['fileSuffix'] = '.php';
         $this->_options['defaultNewline'] = "\n";
     }
@@ -60,13 +60,13 @@ abstract class Config
     }
 
     /**
-     * Get Rules
+     * Get Actions
      *
      * @return array
      */
-    public function getRules()
+    public function getActions()
     {
-        return $this->_rules;
+        return $this->_actions;
     }
 
     /**
@@ -106,39 +106,39 @@ abstract class Config
     }
 
     /**
-     * Add rule
+     * Add action
      *
-     * @param string $rule
+     * @param string $action
      * @param string|null $prefix
      * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
-    public function addRule($rule, $prefix = null, array $options = array())
+    public function addAction($action, $prefix = null, array $options = array())
     {
         if (null === $prefix) {
-            $prefix = $this->_getOption('rulePrefix');
+            $prefix = $this->_getOption('actionPrefix');
         }
-        $classname = $prefix . $rule;
-        $this->_rules[] = new $classname($options);
+        $classname = $prefix . $action;
+        $this->_actions[] = new $classname($options);
         return $this;
     }
 
     /**
-     * Add Ruleset
+     * Add Actionset
      *
-     * @param string $ruleset
+     * @param string $actionset
      * @param string|null $prefix
      * @return \PHP\Manipulator\Config *Provides Fluent Interface*
      */
-    public function addRuleset($ruleset, $prefix = null)
+    public function addActionset($actionset, $prefix = null)
     {
         if (null === $prefix) {
-            $prefix = $this->_getOption('rulesetPrefix');
+            $prefix = $this->_getOption('actionsetPrefix');
         }
-        $classname = $prefix . $ruleset;
-        $ruleset = new $classname();
-        /* @var $ruleset \PHP\Manipulator\Ruleset */
-        foreach ($ruleset->getRules() as $rule) {
-            $this->_rules[] = $rule;
+        $classname = $prefix . $actionset;
+        $actionset = new $classname();
+        /* @var $actionset \PHP\Manipulator\Actionset */
+        foreach ($actionset->getActions() as $action) {
+            $this->_actions[] = $action;
         }
         return $this;
     }

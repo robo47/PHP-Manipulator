@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <options>
-        <rulePrefix>\Baa\Foo\Rule\</rulePrefix>
+        <actionPrefix>\Baa\Foo\Action\</actionPrefix>
     </options>
-    <rules>
-        <rule name="FirstRule">
+    <actions>
+        <action name="FirstAction">
             <option name="integerOne" value="1" cast="integer" />
             <option name="integerTwenty" value="20" cast="int" />
             <option name="booleanTrue" value="1" cast="bool" />
@@ -15,6 +15,6 @@
             <option name="real" value="1.23" cast="real" />
             <option name="double" value="1.23" cast="double" />
             <option name="linebreaks" value="\n\r\n\r" cast="linebreaks" />
-        </rule>
-    </rules>
+        </action>
+    </actions>
 </config>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <rules>
-        <ruleset name="PHPManipulator" />
-    </rules>
+    <actions>
+        <actionset name="PHPManipulator" />
+    </actions>
     <files>
         <directory>./library/PHP/</directory>
     </files>

@@ -24,7 +24,7 @@ class Xml extends Config
         }
         \libxml_use_internal_errors($old);
         $this->_parseOptions($dom);
-        $this->_parseRules($dom);
+        $this->_parseActions($dom);
         $this->_parseFiles($dom);
     }
 
@@ -70,14 +70,14 @@ class Xml extends Config
     }
 
     /**
-     * Parse Rules-Options out of the DOMNode
+     * Parse Actions-Options out of the DOMNode
      *
      * @param DOMNode $options
      * @return array
      */
-    protected function _parseRuleOptions(\DOMNode $options)
+    protected function _parseActionOptions(\DOMNode $options)
     {
-        $ruleOptions = array();
+        $actionOptions = array();
         foreach ($options->childNodes as $option) {
             if (strtolower($option->nodeName) === 'option') {
                 $name = $option->attributes->getNamedItem('name');
@@ -85,14 +85,14 @@ class Xml extends Config
                 if (null !== $name && null !== $value) {
                     $cast = $option->attributes->getNamedItem('cast');
                     if (null !== $cast) {
-                        $ruleOptions[$name->value] = $this->_castValue($cast->value, $value->value);
+                        $actionOptions[$name->value] = $this->_castValue($cast->value, $value->value);
                     } else {
-                        $ruleOptions[$name->value] = $value->value;
+                        $actionOptions[$name->value] = $value->value;
                     }
                 }
             }
         }
-        return $ruleOptions;
+        return $actionOptions;
     }
 
     /**
@@ -139,14 +139,14 @@ class Xml extends Config
     }
 
     /**
-     * Parses Rules out of the DOMDocument
+     * Parses Actions out of the DOMDocument
      *
      * @param DOMDocument $dom
      */
-    protected function _parseRules(\DOMDocument $dom)
+    protected function _parseActions(\DOMDocument $dom)
     {
         $xpath = new \DOMXpath($dom);
-        $list = $xpath->query('//config/rules');
+        $list = $xpath->query('//config/actions');
         foreach ($list as $node) {
             /* @var $node DOMNode*/
             foreach ($node->childNodes as $option) {
@@ -154,25 +154,25 @@ class Xml extends Config
                 if ($option->nodeType === XML_ELEMENT_NODE) {
                     $nodeName = strtolower($option->nodeName);
                     switch ($nodeName) {
-                        case 'ruleset':
+                        case 'actionset':
                             $prefix = $option->attributes->getNamedItem('prefix');
                             if ($prefix instanceof \DOMAttr) {
                                 $prefix = $prefix->value;
                             }
                             $name = $option->attributes->getNamedItem('name');
                             if ($name instanceof \DOMAttr) {
-                                $this->addRuleset($name->value, $prefix);
+                                $this->addActionset($name->value, $prefix);
                             }
                             break;
-                        case 'rule':
-                            $options = $this->_parseRuleOptions($option);
+                        case 'action':
+                            $options = $this->_parseActionOptions($option);
                             $prefix = $option->attributes->getNamedItem('prefix');
                             if ($prefix instanceof \DOMAttr) {
                                 $prefix = $prefix->value;
                             }
                             $name = $option->attributes->getNamedItem('name');
                             if ($name instanceof \DOMAttr) {
-                                $this->addRule($name->value, $prefix, $options);
+                                $this->addAction($name->value, $prefix, $options);
                             }
                             break;
                         default:

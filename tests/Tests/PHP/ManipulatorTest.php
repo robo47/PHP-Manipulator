@@ -12,35 +12,35 @@ class ManipulatorTest extends \Tests\TestCase
 
     /**
      * @covers \PHP\Manipulator::__construct
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::getActions
      */
     public function testDefaultConstruct()
     {
         $manipulator = new Manipulator();
-        $this->assertEquals(array(), $manipulator->getRules());
+        $this->assertEquals(array(), $manipulator->getActions());
     }
 
     /**
      * @covers \PHP\Manipulator::__construct
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testConstructAddsRules()
+    public function testConstructAddsActions()
     {
-        $addRules = array(
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
+        $addActions = array(
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
 
         );
 
-        $manipulator = new Manipulator($addRules);
+        $manipulator = new Manipulator($addActions);
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(3, $rules, 'Wrong rules count');
-        $this->assertContains($addRules[0], $rules, 'Rule1 not found');
-        $this->assertContains($addRules[1], $rules, 'Rule2 not found');
-        $this->assertContains($addRules[2], $rules, 'Rule3 not found');
+        $this->assertCount(3, $actions, 'Wrong actions count');
+        $this->assertContains($addActions[0], $actions, 'Action1 not found');
+        $this->assertContains($addActions[1], $actions, 'Action2 not found');
+        $this->assertContains($addActions[2], $actions, 'Action3 not found');
     }
 
     /**
@@ -62,129 +62,129 @@ class ManipulatorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator::addRule
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::addAction
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testAddRule()
+    public function testAddAction()
     {
-        $rule = new \PHP\Manipulator\Rule\RemoveComments();
+        $action = new \PHP\Manipulator\Action\RemoveComments();
         $manipulator = new Manipulator();
-        $fluent = $manipulator->addRule($rule);
+        $fluent = $manipulator->addAction($action);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(1, $rules, 'Wrong rules count');
-        $this->assertContains($rule, $rules, 'Rule not found');
+        $this->assertCount(1, $actions, 'Wrong actions count');
+        $this->assertContains($action, $actions, 'Action not found');
     }
 
     /**
-     * @covers \PHP\Manipulator::addRules
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::addActions
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testAddRules()
+    public function testAddActions()
     {
-        $addRules = array(
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
+        $addActions = array(
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
 
         );
         $manipulator = new Manipulator();
-        $fluent = $manipulator->addRules($addRules);
+        $fluent = $manipulator->addActions($addActions);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(3, $rules, 'Wrong rules count');
-        $this->assertContains($addRules[0], $rules, 'Rule1 not found');
-        $this->assertContains($addRules[1], $rules, 'Rule2 not found');
-        $this->assertContains($addRules[2], $rules, 'Rule3 not found');
+        $this->assertCount(3, $actions, 'Wrong actions count');
+        $this->assertContains($addActions[0], $actions, 'Action1 not found');
+        $this->assertContains($addActions[1], $actions, 'Action2 not found');
+        $this->assertContains($addActions[2], $actions, 'Action3 not found');
     }
 
     /**
-     * @covers \PHP\Manipulator::removeRule
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeAction
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testRemoveRule()
+    public function testRemoveAction()
     {
-        $addRules = array(
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
+        $addActions = array(
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
 
         );
-        $manipulator = new Manipulator($addRules);
-        $fluent = $manipulator->removeRule($addRules[1]);
+        $manipulator = new Manipulator($addActions);
+        $fluent = $manipulator->removeAction($addActions[1]);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(2, $rules, 'Wrong rules count');
-        $this->assertContains($addRules[0], $rules, 'Rule1 not found');
-        $this->assertContains($addRules[2], $rules, 'Rule3 not found');
+        $this->assertCount(2, $actions, 'Wrong actions count');
+        $this->assertContains($addActions[0], $actions, 'Action1 not found');
+        $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeRule($addRules[0]);
-        $manipulator->removeRule($addRules[2]);
+        $manipulator->removeAction($addActions[0]);
+        $manipulator->removeAction($addActions[2]);
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(0, $rules, 'Wrong rules count');
+        $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
     /**
-     * @covers \PHP\Manipulator::removeAllRules
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeAllActions
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testRemoveAllRules()
+    public function testRemoveAllActions()
     {
-        $addRules = array(
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\RemoveComments(),
+        $addActions = array(
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\RemoveComments(),
 
         );
-        $manipulator = new Manipulator($addRules);
-        $fluent = $manipulator->removeAllRules();
+        $manipulator = new Manipulator($addActions);
+        $fluent = $manipulator->removeAllActions();
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(0, $rules, 'Wrong rules count');
+        $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
     /**
-     * @covers \PHP\Manipulator::removeRuleByClassname
-     * @covers \PHP\Manipulator::getRules
+     * @covers \PHP\Manipulator::removeActionByClassname
+     * @covers \PHP\Manipulator::getActions
      */
-    public function testRemoveRuleByClassname()
+    public function testRemoveActionByClassname()
     {
-        $addRules = array(
-            new \PHP\Manipulator\Rule\RemoveComments(),
-            new \PHP\Manipulator\Rule\ChangeLineEndings(),
-            new \PHP\Manipulator\Rule\RemoveTrailingWhitespace(),
+        $addActions = array(
+            new \PHP\Manipulator\Action\RemoveComments(),
+            new \PHP\Manipulator\Action\ChangeLineEndings(),
+            new \PHP\Manipulator\Action\RemoveTrailingWhitespace(),
 
         );
-        $manipulator = new Manipulator($addRules);
-        $fluent = $manipulator->removeRuleByClassname('PHP\Manipulator\Rule\ChangeLineEndings');
+        $manipulator = new Manipulator($addActions);
+        $fluent = $manipulator->removeActionByClassname('PHP\Manipulator\Action\ChangeLineEndings');
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(2, $rules, 'Wrong rules count');
-        $this->assertContains($addRules[0], $rules, 'Rule1 not found');
-        $this->assertContains($addRules[2], $rules, 'Rule3 not found');
+        $this->assertCount(2, $actions, 'Wrong actions count');
+        $this->assertContains($addActions[0], $actions, 'Action1 not found');
+        $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeRuleByClassname('\PHP\Manipulator\Rule\RemoveComments');
+        $manipulator->removeActionByClassname('\PHP\Manipulator\Action\RemoveComments');
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(1, $rules, 'Wrong rules count');
-        $this->assertContains($addRules[2], $rules, 'Rule3 not found');
+        $this->assertCount(1, $actions, 'Wrong actions count');
+        $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeRuleByClassname('PHP\Manipulator\Rule\RemoveTrailingWhitespace');
+        $manipulator->removeActionByClassname('PHP\Manipulator\Action\RemoveTrailingWhitespace');
 
-        $rules = $manipulator->getRules();
+        $actions = $manipulator->getActions();
 
-        $this->assertCount(0, $rules, 'Wrong rules count');
+        $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
     /**

@@ -23,10 +23,10 @@ class XmlTest extends \Tests\TestCase
         $options = $config->getOptions();
         $this->assertType('array', $options);
 
-        $this->assertArrayHasKey('rulePrefix', $options);
-        $this->assertEquals('\Baa\Foo\Rule\\', $options['rulePrefix']);
-        $this->assertArrayHasKey('rulesetPrefix', $options);
-        $this->assertEquals('\Baa\Foo\Ruleset\\', $options['rulesetPrefix']);
+        $this->assertArrayHasKey('actionPrefix', $options);
+        $this->assertEquals('\Baa\Foo\Action\\', $options['actionPrefix']);
+        $this->assertArrayHasKey('actionsetPrefix', $options);
+        $this->assertEquals('\Baa\Foo\Actionset\\', $options['actionsetPrefix']);
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.phtml', $options['fileSuffix']);
         $this->assertArrayHasKey('defaultNewline', $options);
@@ -34,31 +34,31 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertCount(4, $options);
 
-        $rules = $config->getRules();
-        $this->assertType('array', $rules);
+        $actions = $config->getActions();
+        $this->assertType('array', $actions);
 
-        $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
+        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
 
-        $this->assertEquals('foo', $rules[0]->getOption('baa'));
+        $this->assertEquals('foo', $actions[0]->getOption('baa'));
 
-        $this->assertType('\Foo\Baa\Rule\SecondRule', $rules[1]);
-        $this->assertEquals('baa', $rules[1]->getOption('foo'));
-        $this->assertTrue($rules[1]->getOption('someTrueBoolean'));
-        $this->assertFalse($rules[1]->getOption('someFalseBoolean'));
+        $this->assertType('\Foo\Baa\Action\SecondAction', $actions[1]);
+        $this->assertEquals('baa', $actions[1]->getOption('foo'));
+        $this->assertTrue($actions[1]->getOption('someTrueBoolean'));
+        $this->assertFalse($actions[1]->getOption('someFalseBoolean'));
 
-        $this->assertType('\Baa\Foo\Rule\ThirdRule', $rules[2]);
-        $this->assertEquals('bla', $rules[2]->getOption('blub'));
+        $this->assertType('\Baa\Foo\Action\ThirdAction', $actions[2]);
+        $this->assertEquals('bla', $actions[2]->getOption('blub'));
 
-        $this->assertType('\Baa\Foo\Rule\FourthRule', $rules[3]);
-        $this->assertEquals('blub', $rules[3]->getOption('bla'));
+        $this->assertType('\Baa\Foo\Action\FourthAction', $actions[3]);
+        $this->assertEquals('blub', $actions[3]->getOption('bla'));
 
-        $this->assertType('\Foo\Baa\Rule\FifthRule', $rules[4]);
-        $this->assertEquals('foo', $rules[4]->getOption('baa'));
+        $this->assertType('\Foo\Baa\Action\FifthAction', $actions[4]);
+        $this->assertEquals('foo', $actions[4]->getOption('baa'));
 
-        $this->assertType('\Foo\Baa\Rule\SixthsRule', $rules[5]);
-        $this->assertEquals('baa', $rules[5]->getOption('foo'));
+        $this->assertType('\Foo\Baa\Action\SixthsAction', $actions[5]);
+        $this->assertEquals('baa', $actions[5]->getOption('foo'));
 
-        $this->assertCount(6, $rules);
+        $this->assertCount(6, $actions);
 
         $files = $config->getFiles();
         $this->assertType('array', $files);
@@ -77,49 +77,49 @@ class XmlTest extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\Config\Xml::_castValue
      */
-    public function testRuleOptionsCastWorks()
+    public function testActionOptionsCastWorks()
     {
         $config = $this->getXmlConfig(2);
 
-        $rules = $config->getRules();
-        $this->assertType('array', $rules);
-        $this->assertCount(1, $rules);
+        $actions = $config->getActions();
+        $this->assertType('array', $actions);
+        $this->assertCount(1, $actions);
 
-        $rule = $rules[0];
+        $action = $actions[0];
 
-        $this->assertType('\Baa\Foo\Rule\FirstRule', $rule);
-        /* @var $rule \PHP\Manipulator\Rule */
+        $this->assertType('\Baa\Foo\Action\FirstAction', $action);
+        /* @var $action \PHP\Manipulator\Action */
 
-        $this->assertType('integer', $rule->getOption('integerOne'));
-        $this->assertSame(1, $rule->getOption('integerOne'));
+        $this->assertType('integer', $action->getOption('integerOne'));
+        $this->assertSame(1, $action->getOption('integerOne'));
 
-        $this->assertType('integer', $rule->getOption('integerTwenty'));
-        $this->assertSame(20, $rule->getOption('integerTwenty'));
+        $this->assertType('integer', $action->getOption('integerTwenty'));
+        $this->assertSame(20, $action->getOption('integerTwenty'));
 
-        $this->assertType('bool', $rule->getOption('booleanTrue'));
-        $this->assertSame(true, $rule->getOption('booleanTrue'));
+        $this->assertType('bool', $action->getOption('booleanTrue'));
+        $this->assertSame(true, $action->getOption('booleanTrue'));
 
-        $this->assertType('bool', $rule->getOption('booleanFalse'));
-        $this->assertSame(false, $rule->getOption('booleanFalse'));
+        $this->assertType('bool', $action->getOption('booleanFalse'));
+        $this->assertSame(false, $action->getOption('booleanFalse'));
 
-        $this->assertType('array', $rule->getOption('array'));
-        $this->assertEquals(array('foo'), $rule->getOption('array'));
+        $this->assertType('array', $action->getOption('array'));
+        $this->assertEquals(array('foo'), $action->getOption('array'));
 
-        $this->assertType('object', $rule->getOption('object'));
-        $this->assertEquals((object) 'foo', $rule->getOption('object'));
+        $this->assertType('object', $action->getOption('object'));
+        $this->assertEquals((object) 'foo', $action->getOption('object'));
 
-        $this->assertType('float', $rule->getOption('real'));
-        $this->assertEquals(1.23, $rule->getOption('real'));
+        $this->assertType('float', $action->getOption('real'));
+        $this->assertEquals(1.23, $action->getOption('real'));
 
-        $this->assertType('float', $rule->getOption('float'));
-        $this->assertEquals(1.23, $rule->getOption('float'));
+        $this->assertType('float', $action->getOption('float'));
+        $this->assertEquals(1.23, $action->getOption('float'));
 
-        $this->assertType('float', $rule->getOption('double'));
-        $this->assertEquals(1.23, $rule->getOption('double'));
+        $this->assertType('float', $action->getOption('double'));
+        $this->assertEquals(1.23, $action->getOption('double'));
 
-        $this->assertType('string', $rule->getOption('linebreaks'));
-        $this->assertEquals("\n\r\n\r", $rule->getOption('linebreaks'));
+        $this->assertType('string', $action->getOption('linebreaks'));
+        $this->assertEquals("\n\r\n\r", $action->getOption('linebreaks'));
 
-        $this->assertCount(10, $rule->getOptions());
+        $this->assertCount(10, $action->getOptions());
     }
 }

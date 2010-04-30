@@ -30,7 +30,7 @@
             <apply executable   = "php"
                    failonerror  = "true">
                 <arg value="-nl" />
-                <fileset dir="tests/_fixtures/ContainerManipulator">
+                <fileset dir="tests/_fixtures/Action">
                     <include name="**/*" />
                 </fileset>
             </apply>
@@ -44,7 +44,7 @@
             <apply executable   = "php"
                    failonerror  = "true">
                 <arg value="-nl" />
-                <fileset dir="tests/_fixtures/Rule">
+                <fileset dir="tests/_fixtures/Action">
                     <include name="**/*" />
                 </fileset>
             </apply>

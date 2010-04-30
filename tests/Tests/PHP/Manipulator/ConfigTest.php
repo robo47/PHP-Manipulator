@@ -40,11 +40,11 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(4, $options);
 
-        $this->assertArrayHasKey('rulePrefix', $options);
-        $this->assertEquals('\PHP\Manipulator\Rule\\', $options['rulePrefix']);
+        $this->assertArrayHasKey('actionPrefix', $options);
+        $this->assertEquals('\PHP\Manipulator\Action\\', $options['actionPrefix']);
 
-        $this->assertArrayHasKey('rulesetPrefix', $options);
-        $this->assertEquals('\PHP\Manipulator\Ruleset\\', $options['rulesetPrefix']);
+        $this->assertArrayHasKey('actionsetPrefix', $options);
+        $this->assertEquals('\PHP\Manipulator\Actionset\\', $options['actionsetPrefix']);
 
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.php', $options['fileSuffix']);
@@ -130,151 +130,151 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRuleset
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addActionset
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRuleset()
+    public function testAddActionset()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
-        $config->setOption('rulesetPrefix', '\Baa\Foo\Ruleset\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionsetPrefix', '\Baa\Foo\Actionset\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRuleset('FirstRuleset');
+        $fluent = $config->addActionset('FirstActionset');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(2, $config->getRules());
+        $this->assertCount(2, $config->getActions());
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
-        $this->assertType('\Baa\Foo\Rule\ThirdRule', $rules[0]);
-        $this->assertType('\Baa\Foo\Rule\FourthRule', $rules[1]);
+        $this->assertType('\Baa\Foo\Action\ThirdAction', $actions[0]);
+        $this->assertType('\Baa\Foo\Action\FourthAction', $actions[1]);
 
-        $this->assertEquals('bla', $rules[0]->getOption('blub'));
-        $this->assertEquals('blub', $rules[1]->getOption('bla'));
+        $this->assertEquals('bla', $actions[0]->getOption('blub'));
+        $this->assertEquals('blub', $actions[1]->getOption('bla'));
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRuleset
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addActionset
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRulesetWithPrefix()
+    public function testAddActionsetWithPrefix()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
-        $config->setOption('rulesetPrefix', '\Baa\Foo\Ruleset\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionsetPrefix', '\Baa\Foo\Actionset\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRuleset('FirstRuleset', '\Foo\Baa\Ruleset\\');
+        $fluent = $config->addActionset('FirstActionset', '\Foo\Baa\Actionset\\');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(2, $config->getRules());
+        $this->assertCount(2, $config->getActions());
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
-        $this->assertType('\Foo\Baa\Rule\ThirdRule', $rules[0]);
-        $this->assertType('\Foo\Baa\Rule\FourthRule', $rules[1]);
+        $this->assertType('\Foo\Baa\Action\ThirdAction', $actions[0]);
+        $this->assertType('\Foo\Baa\Action\FourthAction', $actions[1]);
 
-        $this->assertEquals('bla', $rules[0]->getOption('blub'));
-        $this->assertEquals('blub', $rules[1]->getOption('bla'));
+        $this->assertEquals('bla', $actions[0]->getOption('blub'));
+        $this->assertEquals('blub', $actions[1]->getOption('bla'));
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRule
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addAction
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRule()
+    public function testAddAction()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRule('FirstRule');
+        $fluent = $config->addAction('FirstAction');
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(1, $rules);
-        $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
+        $this->assertCount(1, $actions);
+        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRule
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addAction
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRuleWithOptions()
+    public function testAddActionWithOptions()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRule('FirstRule', null, array('baa' => 'foo', 'blub' => 'bla'));
+        $fluent = $config->addAction('FirstAction', null, array('baa' => 'foo', 'blub' => 'bla'));
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(1, $rules);
-        $this->assertType('\Baa\Foo\Rule\FirstRule', $rules[0]);
+        $this->assertCount(1, $actions);
+        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
 
-        $rule = $rules[0];
-        /* @var $rule \Baa\Foo\Rule\FirstRule */
-        $this->assertEquals('foo', $rule->getOption('baa'));
-        $this->assertEquals('bla', $rule->getOption('blub'));
+        $action = $actions[0];
+        /* @var $action \Baa\Foo\Action\FirstAction */
+        $this->assertEquals('foo', $action->getOption('baa'));
+        $this->assertEquals('bla', $action->getOption('blub'));
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRule
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addAction
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRuleWithPrefix()
+    public function testAddActionWithPrefix()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRule('FirstRule', '\Foo\Baa\Rule\\');
+        $fluent = $config->addAction('FirstAction', '\Foo\Baa\Action\\');
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(1, $rules);
-        $this->assertType('\Foo\Baa\Rule\FirstRule', $rules[0]);
+        $this->assertCount(1, $actions);
+        $this->assertType('\Foo\Baa\Action\FirstAction', $actions[0]);
     }
 
     /**
-     * @covers \PHP\Manipulator\Config::addRule
-     * @covers \PHP\Manipulator\Config::getRules
+     * @covers \PHP\Manipulator\Config::addAction
+     * @covers \PHP\Manipulator\Config::getActions
      * @covers \PHP\Manipulator\Config::<protected>
      */
-    public function testAddRuleWithPrefixAndOptions()
+    public function testAddActionWithPrefixAndOptions()
     {
         $config = $this->getConfig();
-        $config->setOption('rulePrefix', '\Baa\Foo\Rule\\');
+        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
 
-        $this->assertCount(0, $config->getRules());
+        $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addRule('FirstRule', '\Foo\Baa\Rule\\', array('baa' => 'foo', 'blub' => 'bla'));
+        $fluent = $config->addAction('FirstAction', '\Foo\Baa\Action\\', array('baa' => 'foo', 'blub' => 'bla'));
 
-        $rules = $config->getRules();
+        $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
-        $this->assertCount(1, $rules);
-        $this->assertType('\Foo\Baa\Rule\FirstRule', $rules[0]);
+        $this->assertCount(1, $actions);
+        $this->assertType('\Foo\Baa\Action\FirstAction', $actions[0]);
 
-        $rule = $rules[0];
-        /* @var $rule \Foo\Baa\Rule\FirstRule */
-        $this->assertEquals('foo', $rule->getOption('baa'));
-        $this->assertEquals('bla', $rule->getOption('blub'));
+        $action = $actions[0];
+        /* @var $action \Foo\Baa\Action\FirstAction */
+        $this->assertEquals('foo', $action->getOption('baa'));
+        $this->assertEquals('bla', $action->getOption('blub'));
     }
 
     /**

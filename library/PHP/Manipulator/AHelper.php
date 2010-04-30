@@ -6,7 +6,7 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\Config;
 use PHP\Manipulator\ContainerConstraint;
-use PHP\Manipulator\ContainerManipulator;
+use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenManipulator;
@@ -80,22 +80,22 @@ abstract class AHelper
     /**
      * Load/Instantiate/Run a ContainManipulator on a Container
      *
-     * @param \PHP\Manipulator\ContainerManipulator|string $manipulator
+     * @param \PHP\Manipulator\Action|string $manipulator
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @param boolean $autoPrefix
      */
-    public function manipulateContainer($manipulator, TokenContainer $container, $params = null, $autoPrefix = true)
+    public function manipulateContainer($action, TokenContainer $container, $params = null, $autoPrefix = true)
     {
-        $manipulator = $this->getClassInstance($manipulator, 'PHP\Manipulator\ContainerManipulator\\', $autoPrefix);
+        $action = $this->getClassInstance($action, 'PHP\Manipulator\Action\\', $autoPrefix);
 
-        if (!$manipulator instanceof ContainerManipulator) {
-            $message = 'manipulator is not instance of \PHP\Manipulator\ContainerManipulator';
+        if (!$action instanceof Action) {
+            $message = 'manipulator is not instance of \PHP\Manipulator\Action';
             throw new \Exception($message);
         }
 
-        /* @var $manipulator  \PHP\Manipulator\ContainerManipulator */
-        $manipulator->manipulate($container, $params);
+        /* @var $manipulator  \PHP\Manipulator\Action */
+        $action->run($container, $params);
     }
 
     /**

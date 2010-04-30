@@ -3,7 +3,7 @@
 namespace PHP;
 
 use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\Rule;
+use PHP\Manipulator\Action;
 
 // @todo Should be the class used by apps not using the CLI
 class Manipulator
@@ -19,11 +19,11 @@ class Manipulator
     const GITHASH = '@githash@';
 
     /**
-     * Array with used rules
+     * Array with used actions
      *
      * @var array
      */
-    protected $_rules = array();
+    protected $_actions = array();
 
     /**
      * Array with files
@@ -34,71 +34,71 @@ class Manipulator
 
     /**
      *
-     * @param array $rules
+     * @param array $actions
      */
-    public function __construct(array $rules = array(), $files = null)
+    public function __construct(array $actions = array(), $files = null)
     {
-        $this->addRules($rules);
+        $this->addActions($actions);
         $this->addFiles($files);
     }
 
     /**
      *
-     * @param \PHP\Manipulator\Rule $rule
+     * @param \PHP\Manipulator\Action $action
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
-    public function addRule(Rule $rule)
+    public function addAction(Action $action)
     {
-        $this->_rules[] = $rule;
+        $this->_actions[] = $action;
         return $this;
     }
 
     /**
      *
-     * @param array $rules
+     * @param array $actions
      * @return \PHP_Manipulator *Provides Fluent Interface*
      */
-    public function addRules(array $rules)
+    public function addActions(array $actions)
     {
-        foreach ($rules as $rule) {
-            $this->addRule($rule);
+        foreach ($actions as $action) {
+            $this->addAction($action);
         }
         return $this;
     }
 
     /**
-     * Remove Rule
+     * Remove Action
      *
-     * @param \PHP\Manipulator\Rule $removeRule
+     * @param \PHP\Manipulator\Action $removeAction
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
-    public function removeRule(Rule $removeRule)
+    public function removeAction(Action $removeAction)
     {
-        foreach ($this->_rules as $key => $rule) {
-            if ($rule === $removeRule) {
-                unset($this->_rules[$key]);
+        foreach ($this->_actions as $key => $action) {
+            if ($action === $removeAction) {
+                unset($this->_actions[$key]);
             }
         }
         return $this;
     }
 
     /**
-     * Get Rules
+     * Get Actions
      *
      * @return array
      */
-    public function getRules()
+    public function getActions()
     {
-        return $this->_rules;
+        return $this->_actions;
     }
 
     /**
      *
      * @return \PHP_Manipulator *Provides Fluent Interface*
      */
-    public function removeAllRules()
+    public function removeAllActions()
     {
-        $this->_rules = array();
+        $this->_actions = array();
         return $this;
     }
 
@@ -107,11 +107,11 @@ class Manipulator
      * @param string $classname
      * @return \PHP_Manipulator *Provides Fluent Interface*
      */
-    public function removeRuleByClassname($classname)
+    public function removeActionByClassname($classname)
     {
-        foreach ($this->_rules as $key => $rule) {
-            if ($rule instanceof $classname) {
-                unset($this->_rules[$key]);
+        foreach ($this->_actions as $key => $action) {
+            if ($action instanceof $classname) {
+                unset($this->_actions[$key]);
             }
         }
         return $this;
