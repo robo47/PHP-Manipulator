@@ -209,7 +209,7 @@ class Xml extends Config
                             $iterator = $this->_parseIterator($option);
                             if ($iterator instanceof \Iterator) {
                                 $this->addIterator($iterator);
-                        }
+                            }
                             break;
                         default:
                             // ignore
@@ -219,6 +219,7 @@ class Xml extends Config
             }
         }
     }
+
     /**
      * Parse iterator
      *

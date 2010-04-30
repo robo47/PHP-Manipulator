@@ -30,18 +30,18 @@ class Help extends Action
     {
         return array (
             new \ezcConsoleOption(
-            'h',
-            'help',
-            \ezcConsoleInput::TYPE_NONE,
-            null,
-            false,
-            'Shows you the help-function',
-            '',
-            array(),
-            array(),
-            true,
-            false,
-            true
+                'h',
+                'help',
+                \ezcConsoleInput::TYPE_NONE,
+                null,
+                false,
+                'Shows you the help-function',
+                '',
+                array(),
+                array(),
+                true,
+                false,
+                true
             )
         );
     }
