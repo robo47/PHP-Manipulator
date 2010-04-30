@@ -221,8 +221,7 @@ extends Rule
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            // @todo IsColon-Constraint
-            if ($token->getValue() === ':') {
+            if ($this->evaluateConstraint('IsColon', $token)) {
                 return $iterator->current();
             }
             $iterator->next();
