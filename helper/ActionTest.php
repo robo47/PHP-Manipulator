@@ -18,7 +18,6 @@ class __classname__Test extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new __classname__();
-// @todo test for options ?
     }
 
     /**
@@ -32,8 +31,8 @@ class __classname__Test extends \Tests\TestCase
         #0
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
         );
 
         return $data;

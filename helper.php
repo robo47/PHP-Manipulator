@@ -66,9 +66,9 @@ if ($createFixturesDummy && $_SERVER['argc'] > 3) {
     @mkdir($path, 0755, true);
     $fixturesCount = $_SERVER['argv'][3];
     for ($i = 0; $i < $fixturesCount; $i++) {
-        touch($path . '/input' . $i);
+        touch($path . '/input' . $i . '.php');
         if (!$inputOnly) {
-            touch($path . '/output' . $i);
+            touch($path . '/output' . $i . '.php');
         }
     }
 }

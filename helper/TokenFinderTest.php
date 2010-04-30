@@ -24,7 +24,7 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $container = $this->getContainerFromFixture($path . 'input0'),
+            $container = $this->getContainerFromFixture($path . 'input0.php'),
             $container[1],
             array(),
             Result::factory(array($container[1], $container[2], $container[3], $container[4])),

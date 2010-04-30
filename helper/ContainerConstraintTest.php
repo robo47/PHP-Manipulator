@@ -20,7 +20,7 @@ class __classname__Test extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
             true,
         );
 
