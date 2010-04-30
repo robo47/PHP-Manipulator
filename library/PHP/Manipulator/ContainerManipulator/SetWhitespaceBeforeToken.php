@@ -6,6 +6,7 @@ use PHP\Manipulator\ContainerManipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
+// @todo don't use getNext/getPreviousToken anymore
 class SetWhitespaceBeforeToken
 extends SetWhitespaceAfterToken
 {

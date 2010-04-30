@@ -11,6 +11,7 @@ use PHP\Manipulator\TokenContainer;
 class UppercaseConstants
 extends ContainerManipulator
 {
+
     /**
      * @var boolean
      */
@@ -42,6 +43,11 @@ extends ContainerManipulator
     protected $_container = null;
 
     /**
+     * @var Token
+     */
+    protected $_next = null;
+
+    /**
      * Manipulate
      *
      * @param PHP\Manipulator\TokenContainer $container
@@ -52,6 +58,7 @@ extends ContainerManipulator
         $iterator = $container->getIterator();
         $this->_container = $container;
 
+        $this->_setNext($iterator);
         while ($iterator->valid()) {
             $token = $iterator->current();
 
@@ -60,10 +67,26 @@ extends ContainerManipulator
             if ($this->_isConstant($token)) {
                 $token->setValue(strtoupper($token->getValue()));
             }
-
+            $this->_setNext($iterator);
             $iterator->next();
         }
         $container->retokenize();
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainerIterator $iterator
+     */
+    protected function _setNext(TokenContainer\Iterator $iterator)
+    {
+        $iterator->next();
+        $iterator->next();
+        if ($iterator->valid()) {
+            $this->_next = $iterator->current();
+        } else {
+            $this->_next = null;
+        }
+        $iterator->previous();
+        $iterator->previous();
     }
 
     /**
@@ -85,7 +108,6 @@ extends ContainerManipulator
     {
         return $this->evaluateConstraint('IsType', $token, T_STRING) &&
                ( (true === $this->_isConstant) ||
-                 ($this->_notInsideClassFunctionMethodUseOrNamespace() && $this->_isClassMethodAccess($token)) ||
                  ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
     }
 
@@ -95,7 +117,7 @@ extends ContainerManipulator
      */
     protected function _isFollowedByDoubleColon(Token $token)
     {
-        $next = $this->_container->getNextToken($token);
+        $next = $this->_next;
         return (null !== $next && $this->evaluateConstraint('IsType', $next, T_DOUBLE_COLON));
     }
 
@@ -105,17 +127,8 @@ extends ContainerManipulator
      */
     protected function _isFollowedByOpeningBrace(Token $token)
     {
-        $next = $this->_container->getNextToken($token);
+        $next = $this->_next;
         return (null !== $next && $this->evaluateConstraint('IsOpeningBrace', $next));
-    }
-
-    /**
-     * @param Token $token
-     * @var boolean
-     */
-    protected function _isClassMethodAccess(Token $token)
-    {
-        return $this->_previousIstDoubleColon($token) && $this->_isNotAMethodCall($token);
     }
 
     /**
@@ -124,18 +137,8 @@ extends ContainerManipulator
      */
     protected function _isNotAMethodCall(Token $token)
     {
-        $next = $this->_container->getNextToken($token);
+        $next = $this->_next;
         return (null !== $next && !$this->evaluateConstraint('IsOpeningBrace', $next));
-    }
-
-    /**
-     * @param Token $token
-     * @var boolean
-     */
-    protected function _previousIstDoubleColon(Token $token)
-    {
-        $previous = $this->_container->getPreviousToken($token);
-        return (null !== $previous && $this->evaluateConstraint('IsType', $previous, T_DOUBLE_COLON));
     }
 
     /**
