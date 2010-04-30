@@ -24,8 +24,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
             array(
                 'tokens' => array($inputContainer[3]),
                 'whitespace' => array(T_CONCAT_EQUAL => ' '),
@@ -35,8 +35,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 
         #1
         $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input1.php'),
+            $this->getContainerFromFixture($path . 'output1.php'),
             array(
                 'tokens' => array($inputContainer[3]),
                 'whitespace' => array(T_CONCAT_EQUAL => '  '),
@@ -46,8 +46,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 
         #2
         $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
             array(
                 'tokens' => array($inputContainer[3]),
                 'whitespace' => array(T_CONCAT_EQUAL => ''),
@@ -57,8 +57,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
 
         #3
         $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input3'),
-            $this->getContainerFromFixture($path . 'output3'),
+            $inputContainer = $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
             array(
                 'tokens' => array($inputContainer[3]),
                 'whitespace' => array('=' => ' '),

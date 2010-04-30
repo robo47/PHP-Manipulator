@@ -33,22 +33,22 @@ class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
         #0
         $data[] = array(
             array('globalScopeOnly' => false),
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
         );
 
         #1
         $data[] = array(
             array('globalScopeOnly' => true),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1.php'),
+            $this->getContainerFromFixture($path . 'output1.php'),
         );
 
         #2
         $data[] = array(
             array('globalScopeOnly' => true),
-            $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
         );
 
         return $data;

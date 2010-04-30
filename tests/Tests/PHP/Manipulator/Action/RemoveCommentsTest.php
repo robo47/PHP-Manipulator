@@ -31,64 +31,64 @@ class RemoveCommentsTest extends \Tests\TestCase
         #0
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
         );
 
         #1
         $data[] = array(
             array('removeDocComments' => false, 'removeStandardComments' => true),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1.php'),
+            $this->getContainerFromFixture($path . 'output1.php'),
         );
 
         #2
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
         );
 
         #3
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input3'),
-            $this->getContainerFromFixture($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
         );
 
         #4
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input4'),
-            $this->getContainerFromFixture($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input4.php'),
+            $this->getContainerFromFixture($path . 'output4.php'),
         );
 
         #5
         $data[] = array(
             array('removeDocComments' => true, 'removeStandardComments' => false),
-            $this->getContainerFromFixture($path . 'input5'),
-            $this->getContainerFromFixture($path . 'output5'),
+            $this->getContainerFromFixture($path . 'input5.php'),
+            $this->getContainerFromFixture($path . 'output5.php'),
         );
 
         #6
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input6'),
-            $this->getContainerFromFixture($path . 'output6'),
+            $this->getContainerFromFixture($path . 'input6.php'),
+            $this->getContainerFromFixture($path . 'output6.php'),
         );
 
         #7
         $data[] = array(
             array(),
-            $this->getContainerFromFixture($path . 'input7'),
-            $this->getContainerFromFixture($path . 'output7'),
+            $this->getContainerFromFixture($path . 'input7.php'),
+            $this->getContainerFromFixture($path . 'output7.php'),
         );
 
         #8 big real-life example
         $data[] = array(
             array('removeDocComments' => true, 'removeStandardComments' => true),
-            $this->getContainerFromFixture($path . 'input8'),
-            $this->getContainerFromFixture($path . 'output8'),
+            $this->getContainerFromFixture($path . 'input8.php'),
+            $this->getContainerFromFixture($path . 'output8.php'),
         );
 
         #9 check works with \r\n
@@ -98,7 +98,7 @@ class RemoveCommentsTest extends \Tests\TestCase
             new TokenContainer("<?php\r\necho \$foo;\r\necho \$baa;\r\n ?>"),
         );
 
-        #1 check works with \r
+        #10 check works with \r
         $data[] = array(
             array(),
             new TokenContainer("<?php\recho \$foo;// foo\recho \$baa;\r ?>"),

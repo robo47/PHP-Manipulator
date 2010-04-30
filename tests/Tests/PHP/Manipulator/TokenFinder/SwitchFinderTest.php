@@ -24,7 +24,7 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $c = $this->getContainerFromFixture($path . 'input0'),
+            $c = $this->getContainerFromFixture($path . 'input0.php'),
             $c[2],
             $this->getResultFromContainer($c, 2, 60),
         );

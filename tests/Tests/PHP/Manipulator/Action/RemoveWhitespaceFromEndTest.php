@@ -23,15 +23,15 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
             false
         );
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1.php'),
+            $this->getContainerFromFixture($path . 'output1.php'),
             false
         );
 

@@ -21,13 +21,13 @@ class ContainsClassTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
             true,
         );
 
         #1
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input1'),
+            $this->getContainerFromFixture($path . 'input1.php'),
             false,
         );
 

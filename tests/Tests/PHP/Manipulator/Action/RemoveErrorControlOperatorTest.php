@@ -23,8 +23,8 @@ class RemoveErrorControlOperatorTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
             false
         );
 

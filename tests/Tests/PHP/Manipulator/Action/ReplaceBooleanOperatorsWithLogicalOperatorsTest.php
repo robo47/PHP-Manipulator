@@ -35,36 +35,36 @@ class ReplaceBooleanOperatorsWithLogicalOperatorsTest extends \Tests\TestCase
         #0
         $data[] = array(
             array('uppercase' => false),
-            $this->getContainerFromFixture($path . 'input0'),
-            $this->getContainerFromFixture($path . 'output0'),
+            $this->getContainerFromFixture($path . 'input0.php'),
+            $this->getContainerFromFixture($path . 'output0.php'),
         );
 
         #1
         $data[] = array(
             array('uppercase' => true),
-            $this->getContainerFromFixture($path . 'input1'),
-            $this->getContainerFromFixture($path . 'output1'),
+            $this->getContainerFromFixture($path . 'input1.php'),
+            $this->getContainerFromFixture($path . 'output1.php'),
         );
 
         #2
         $data[] = array(
             array('replaceAnd' => false),
-            $this->getContainerFromFixture($path . 'input2'),
-            $this->getContainerFromFixture($path . 'output2'),
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false),
-            $this->getContainerFromFixture($path . 'input3'),
-            $this->getContainerFromFixture($path . 'output3'),
+            $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
         );
 
         #3
         $data[] = array(
             array('replaceOr' => false, 'replaceAnd' => false),
-            $this->getContainerFromFixture($path . 'input4'),
-            $this->getContainerFromFixture($path . 'output4'),
+            $this->getContainerFromFixture($path . 'input4.php'),
+            $this->getContainerFromFixture($path . 'output4.php'),
         );
 
         return $data;
