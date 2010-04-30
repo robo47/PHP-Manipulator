@@ -129,7 +129,7 @@ class Manipulator
                 // string-cast if it is something else (SplFileInfo)
                 $this->addFile((string) $file);
             }
-        } elseif(is_string($files)) {
+        } else if(is_string($files)) {
             $this->addFile($files);
         }
         return $this;
