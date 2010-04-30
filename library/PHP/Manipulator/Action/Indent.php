@@ -25,6 +25,7 @@ extends Action
      * @var boolean
      */
     protected $_inSwitch = false;
+
     /**
      * Current Level of Indention
      *

@@ -26,7 +26,7 @@ extends TokenConstraint
                     $isMultilineComment = true;
                 }
             }
-        } elseif($token->getType() === T_DOC_COMMENT) {
+        } else if($token->getType() === T_DOC_COMMENT) {
             $isMultilineComment = true;
         }
         return $isMultilineComment;

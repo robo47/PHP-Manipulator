@@ -23,7 +23,7 @@ extends TokenManipulator
             $token->setValue(substr($value, 2));
         } else if (substr($value, 0, 1) === "\n") {
             $token->setValue(substr($value, 1));
-        } elseif (substr($value, 0, 1) === "\r") {
+        } else if (substr($value, 0, 1) === "\r") {
             $token->setValue(substr($value, 1));
         }
     }

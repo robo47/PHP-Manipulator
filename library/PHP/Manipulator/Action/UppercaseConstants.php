@@ -150,13 +150,13 @@ extends Action
     {
         if($this->evaluateConstraint('IsType', $token, T_CONST)) {
             $this->_isConstant = true;
-        } elseif($this->evaluateConstraint('IsType', $token, T_USE)) {
+        } else if($this->evaluateConstraint('IsType', $token, T_USE)) {
             $this->_isUse = true;
-        } elseif($this->evaluateConstraint('IsType', $token, T_NAMESPACE)) {
+        } else if($this->evaluateConstraint('IsType', $token, T_NAMESPACE)) {
             $this->_isNamespace = true;
-        } elseif($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+        } else if($this->evaluateConstraint('IsType', $token, T_CLASS)) {
             $this->_isClassDeclaration = true;
-        } elseif($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+        } else if($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
         }
 

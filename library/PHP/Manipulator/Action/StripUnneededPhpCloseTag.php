@@ -31,7 +31,7 @@ extends Action
 
             if (!$this->_isNotAllowedTag($token)) {
                 break;
-            } elseif($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
+            } else if($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
                 if ($this->evaluateConstraint('EndsWithNewline', $token)) {
 
                     $newline = $helper->getNewlineFromToken($token);

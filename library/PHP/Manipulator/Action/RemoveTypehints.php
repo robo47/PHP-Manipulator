@@ -63,13 +63,13 @@ extends Action
             if ($this->evaluateConstraint('IsComma', $token)) {
                 $arguments[] = $argument;
                 $argument = array();
-            } elseif (true === $inside) {
+            } else if (true === $inside) {
                 $argument[] = $token;
             }
 
             if ($indentionLevel > 0) {
                 $inside = true;
-            } elseif ($indentionLevel === 0 && $inside) {
+            } else if ($indentionLevel === 0 && $inside) {
                 break;
             }
             $iterator->next();

@@ -52,7 +52,7 @@ class Token
             } else {
                 $token = new Token($input[1], $input[0], $input[2]);
             }
-        } elseif (is_string($input)) {
+        } else if (is_string($input)) {
             $token = new Token($input);
         } else {
             $message = 'invalid datatype for creating a token: ' . gettype($input);

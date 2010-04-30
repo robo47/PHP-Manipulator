@@ -121,7 +121,7 @@ extends Action
         $globalScopeOnly = $this->getOption('globalScopeOnly');
         if (true === $globalScopeOnly && !($inClass || $inFunction)) {
             return true;
-        } elseif (false === $globalScopeOnly) {
+        } else if (false === $globalScopeOnly) {
             return true;
         }
         return false;
