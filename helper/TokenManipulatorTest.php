@@ -36,7 +36,7 @@ extends \Tests\TestCase
     public function testManipulate($actualToken, $expectedToken, $strict)
     {
         $manipulator = new __classname__();
-        $manipulator->manipulate($token);
-        $this->assertTokenMatch($token, $newToken, $strict);
+        $manipulator->manipulate($actualToken);
+        $this->assertTokenMatch($expectedToken, $actualToken, $strict);
     }
 }

@@ -32,7 +32,7 @@ class __classname__Test extends \Tests\TestCase
 
     /**
      * @covers __completeclassname__
-     *      * @dataProvider manipulateProvider
+     * @dataProvider manipulateProvider
      */
     public function testManipulate($container, $expectedContainer, $strict)
     {
