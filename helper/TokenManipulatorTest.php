@@ -21,8 +21,8 @@ extends \Tests\TestCase
 
         #0
         $data[] = array(
-            Token::factory(array(T_BOOLEAN_AND, "AND")),
-            Token::factory(array(T_BOOLEAN_AND, "and")),
+            Token::factory(array(T_BOOLEAN_AND, 'AND')),
+            Token::factory(array(T_BOOLEAN_AND, 'and')),
             true
         );
 

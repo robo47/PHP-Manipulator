@@ -45,11 +45,11 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     public function testGetResultFromContainer()
     {
         $test = new TestCase();
-        $t1 = new Token("<?php\n", T_OPEN_TAG);
-        $t2 = new Token("echo", T_ECHO);
-        $t3 = new Token(" ", T_WHITESPACE);
-        $t4 = new Token("\$var", T_VARIABLE);
-        $t5 = new Token(";");
+        $t1 = new Token('<?php' . PHP_EOL, T_OPEN_TAG);
+        $t2 = new Token('echo', T_ECHO);
+        $t3 = new Token(' ', T_WHITESPACE);
+        $t4 = new Token('$var', T_VARIABLE);
+        $t5 = new Token(';');
         $container = new TokenContainer(array($t1, $t2, $t3, $t4, $t5));
         $result = $test->getResultFromContainer($container, 1, 3);
         $this->assertEquals(3, count($result->getTokens()));

@@ -21,15 +21,15 @@ class UppercaseTokenValueTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            Token::factory(array(T_BOOLEAN_AND, "and")),
-            Token::factory(array(T_BOOLEAN_AND, "AND")),
+            Token::factory(array(T_BOOLEAN_AND, 'and')),
+            Token::factory(array(T_BOOLEAN_AND, 'AND')),
             true
         );
 
         #1
         $data[] = array(
-            Token::factory(array(T_BOOLEAN_OR, "or")),
-            Token::factory(array(T_BOOLEAN_OR, "OR")),
+            Token::factory(array(T_BOOLEAN_OR, 'or')),
+            Token::factory(array(T_BOOLEAN_OR, 'OR')),
             true
         );
 

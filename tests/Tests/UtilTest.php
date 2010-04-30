@@ -143,7 +143,7 @@ class UtilTest extends \Tests\TestCase
 
         #0
         $data[] = array(
-            new TokenContainer("<?php echo \$foo; ?>"),
+            new TokenContainer('<?php echo $foo; ?>'),
             new TokenContainer("<?php echo \$foo;\n?>"),
             '                         Tokens: 7                       |                      Tokens: 7                      ' . PHP_EOL .
                 PHP_EOL .
@@ -160,7 +160,7 @@ class UtilTest extends \Tests\TestCase
 
         # 1 strict
         $data[] = array(
-            new TokenContainer("<?php echo \$foo; ?>"),
+            new TokenContainer('<?php echo $foo; ?>'),
             new TokenContainer("<?php echo \$foo;\n?>"),
             '                         Tokens: 7                       |                      Tokens: 7                      ' . PHP_EOL .
                 PHP_EOL .

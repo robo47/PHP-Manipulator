@@ -53,7 +53,7 @@ class ApplyRules extends Action
 
         $progress->options->emptyChar = '-';
         $progress->options->progressChar = '#';
-        $progress->options->formatString = "[%bar%]  %act% / %max%";
+        $progress->options->formatString = '[%bar%]  %act% / %max%';
 
         // @todo timings!
         // Perform actions
@@ -75,7 +75,7 @@ class ApplyRules extends Action
         // Finish progress bar and jump to next line.
         $progress->finish();
 
-        $output->outputText(PHP_EOL . "Applied all rules " . PHP_EOL, 'success');
+        $output->outputText(PHP_EOL . 'Applied all rules ' . PHP_EOL, 'success');
     }
 
     /**

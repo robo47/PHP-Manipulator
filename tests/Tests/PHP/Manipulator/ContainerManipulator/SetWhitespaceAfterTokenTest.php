@@ -126,7 +126,7 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
             $manipulator->manipulate($container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals("invalid input \$params should be an array", $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('invalid input $params should be an array', $e->getMessage(), 'Wrong exception message');
         }
     }
 
