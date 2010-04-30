@@ -11,7 +11,7 @@ extends Action
 {
 
     /**
-     * Manipulate
+     * Remove Whitespace from the end
      *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params

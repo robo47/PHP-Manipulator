@@ -10,8 +10,10 @@ extends Action
 {
 
     /**
+     * Transform Shorttags to Longtags
      *
      * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
     {

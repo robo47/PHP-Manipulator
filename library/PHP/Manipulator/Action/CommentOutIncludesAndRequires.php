@@ -18,6 +18,17 @@ extends Action
     }
 
     /**
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
+     */
+    public function run(TokenContainer $container, $params = null)
+    {
+        $tokens = $this->_searchStartTokens($container);
+        $this->_handleTokens($container, $tokens);
+        $container->retokenize();
+    }
+
+    /**
      * @param array $tokens
      */
     protected function _handleTokens(TokenContainer $container, array $tokens)
@@ -41,17 +52,6 @@ extends Action
                 }
             }
         }
-    }
-
-    /**
-     *
-     * @param \PHP\Manipulator\TokenContainer $tokens
-     */
-    public function run(TokenContainer $container, $params = null)
-    {
-        $tokens = $this->_searchStartTokens($container);
-        $this->_handleTokens($container, $tokens);
-        $container->retokenize();
     }
 
     /**

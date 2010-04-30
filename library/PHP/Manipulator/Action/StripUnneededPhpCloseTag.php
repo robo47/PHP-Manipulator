@@ -12,7 +12,7 @@ extends Action
 {
 
     /**
-     * Manipulate
+     * Remove unneded ?> from the file-end
      *
      * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params

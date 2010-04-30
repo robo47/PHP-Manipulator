@@ -7,13 +7,12 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenConstraint\IsMultilineComment;
 
+// @todo not really fits as action as long as it has params which are tokens
 class CreateMultilineCommentFromTokenToToken
 extends Action
 {
 
     /**
-     * Manipulate
-     *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */

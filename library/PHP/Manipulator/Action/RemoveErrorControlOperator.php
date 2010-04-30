@@ -11,7 +11,7 @@ extends Action
 {
 
     /**
-     * Manipulate Container
+     * Remove ErrorControlOperators (@)
      *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params

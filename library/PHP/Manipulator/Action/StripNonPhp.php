@@ -11,7 +11,9 @@ extends Action
 {
 
     /**
+     * Remove non-php-code
      * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
     {

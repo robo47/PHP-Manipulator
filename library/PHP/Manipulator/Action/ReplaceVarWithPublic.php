@@ -11,7 +11,7 @@ extends Action
 {
 
     /**
-     * Manipulate
+     * Replace var $foo; with public $foo;
      *
      * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params

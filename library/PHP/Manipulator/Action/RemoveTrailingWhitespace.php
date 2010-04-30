@@ -21,9 +21,10 @@ class RemoveTrailingWhitespace extends Action
     }
 
     /**
+     * Remove trailing spaces
      *
      * @param \PHP\Manipulator\TokenContainer $container
-     * @todo possible without tokens2code2tokens ?
+     * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
     {

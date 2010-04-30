@@ -6,12 +6,13 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
+// @todo Rename to FormatCasts
 class UnifyCasts
 extends Action
 {
 
     /**
-     * Manipulate
+     * Format casts
      *
      * @param \PHP\Manipulator\TokenContainer $container
      * @param array $params
@@ -20,6 +21,7 @@ extends Action
     {
         $iterator = $container->getIterator();
 
+        // @todo move into options ?
         $searchedTokens = array(
             T_INT_CAST => '(int)',
             T_BOOL_CAST => '(bool)',
@@ -38,10 +40,7 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->evaluateConstraint('IsType', $token, array_keys($searchedTokens))) {
-                $newValue = $searchedTokens[$token->getType()];
-                if ($token->getValue() != $newValue) {
-                    $token->setValue($newValue);
-                }
+                $token->setValue($searchedTokens[$token->getType()]);
             }
             $iterator->next();
         }

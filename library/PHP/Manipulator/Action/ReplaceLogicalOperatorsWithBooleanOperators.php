@@ -23,6 +23,7 @@ extends Action
      * Replace boolean and (AND)/or (OR) with logical and (&&)/or (||)
      *
      * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
     {

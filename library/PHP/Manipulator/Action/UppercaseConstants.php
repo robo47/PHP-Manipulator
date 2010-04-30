@@ -48,7 +48,7 @@ extends Action
     protected $_next = null;
 
     /**
-     * Manipulate
+     * Make all Constants uppercase
      *
      * @param PHP\Manipulator\TokenContainer $container
      * @param mixed $params

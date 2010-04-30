@@ -12,7 +12,10 @@ extends Action
 {
 
     /**
+     * Remove php-code
+     *
      * @param \PHP\Manipulator\TokenContainer $container
+     * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
     {
