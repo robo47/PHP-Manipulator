@@ -19,7 +19,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     public function testGetFixtureFileContent()
     {
         $test = new TestCase();
-        $filename = '/TokenFinder/SwitchFinder/input0';
+        $filename = '/TokenFinder/SwitchFinder/input0.php';
         $content = $test->getFixtureFileContent($filename);
         $this->assertEquals(file_get_contents(TESTS_PATH . '/_fixtures/' . $filename), $content);
     }
