@@ -174,12 +174,18 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output19.php'),
         );
 
-
         #20 wrong indention for default or break at the end without break
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input20.php'),
             $this->getContainerFromFixture($path . 'output20.php'),
+        );
+
+        #21 switch with if in case
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input21.php'),
+            $this->getContainerFromFixture($path . 'output21.php'),
         );
 
 //@todo nested switch

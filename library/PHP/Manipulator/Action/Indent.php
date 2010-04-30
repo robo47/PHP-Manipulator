@@ -113,7 +113,9 @@ extends Action
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->_indentWhitespace($token);
                 if ($this->evaluateConstraint('IsClosingCurlyBrace', $nextToken) && true === $this->_inSwitch && true === $this->_inCase) {
-                    $this->_removeLastIndention($token);
+                    if ($this->_isSwitchClosingCurlyBrace($nextToken)) {
+                        $this->_removeLastIndention($token);
+                    }
                 }
                 $this->_checkForMultilineCommentAndIndent($nextToken);
                 $this->_checkAndChangeIndentionLevelIncreasment($nextToken);
@@ -124,6 +126,14 @@ extends Action
             $iterator->next();
         }
         $container->retokenize();
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isSwitchClosingCurlyBrace(Token $token) {
+        return (($this->_switchStack[$this->_switchStack->count() - 1]+1) === $this->_indentionLevel);
     }
 
     /**
