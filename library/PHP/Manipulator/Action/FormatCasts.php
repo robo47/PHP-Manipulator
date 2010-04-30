@@ -6,8 +6,7 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-// @todo Rename to FormatCasts
-class UnifyCasts
+class FormatCasts
 extends Action
 {
 

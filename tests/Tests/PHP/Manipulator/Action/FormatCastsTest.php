@@ -2,15 +2,15 @@
 
 namespace Tests\PHP\Manipulator\Action;
 
-use PHP\Manipulator\Action\UnifyCasts;
+use PHP\Manipulator\Action\FormatCasts;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Action
- * @group Action\UnifyCasts
+ * @group Action\FormatCasts
  */
-class UnifyCastsTest extends \Tests\TestCase
+class FormatCastsTest extends \Tests\TestCase
 {
 
     /**
@@ -19,7 +19,7 @@ class UnifyCastsTest extends \Tests\TestCase
     public function manipulateProvider()
     {
         $data = array();
-        $path = '/Action/UnifyCasts/';
+        $path = '/Action/FormatCasts/';
 
         #0
         $data[] = array(
@@ -50,12 +50,12 @@ class UnifyCastsTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\UnifyCasts::manipulate
-     * @covers \PHP\Manipulator\Action\UnifyCasts::<protected>
+     * @covers \PHP\Manipulator\Action\FormatCasts::manipulate
+     * @covers \PHP\Manipulator\Action\FormatCasts::<protected>
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {
-        $manipulator = new UnifyCasts();
+        $manipulator = new FormatCasts();
         $manipulator->run($container, $params);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
