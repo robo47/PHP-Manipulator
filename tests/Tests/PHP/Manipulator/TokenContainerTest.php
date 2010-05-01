@@ -598,6 +598,20 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenContainer::getPreviousToken::removeTokensFromTo
+     */
+    public function testRemoveTokensFromTo()
+    {
+    {
+        $t1 = Token::factory('Token1');
+        $t2 = Token::factory('Token2');
+        $t3 = Token::factory('Token3');
+        $t4 = Token::factory('Token4');
+        $t5 = Token::factory('Token5');
+        $container = new TokenContainer(array($t1,$t2, $t3, $t4, $t5));
+    }
+
+    /**
      * @covers \PHP\Manipulator\TokenContainer::reInitFromCode
      */
     public function testReInitFromCode()

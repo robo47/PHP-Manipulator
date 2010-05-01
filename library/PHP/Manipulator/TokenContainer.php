@@ -6,6 +6,8 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer\ReverseIterator;
 
+// @todo insertTokenBefore
+// @todo insertTokensBefore
 class TokenContainer
 implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -436,6 +438,29 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $this->_container = $container;
         return $this;
+    }
+
+    /**
+     * Removes a sequence of Tokens from a token to another (including start and end-token)
+     *
+     * @param Token $from
+     * @param Token $end
+     */
+    public function removeTokensFromTo(Token $from, Token $to)
+    {
+        $iterator = $this->getIterator();
+        $iterator->seekToToken($from);
+
+        $delete = array();
+        while ($iterator->valid()) {
+            $token = $iterator->current();
+            $delete[] = $token;
+            if ($token === $to) {
+                break;
+            }
+            $iterator->next();
+        }
+        $this->removeTokens($delete);
     }
 
     /**
