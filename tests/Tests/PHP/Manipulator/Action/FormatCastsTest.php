@@ -50,7 +50,7 @@ class FormatCastsTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\FormatCasts::manipulate
+     * @covers \PHP\Manipulator\Action\FormatCasts::run
      * @covers \PHP\Manipulator\Action\FormatCasts::<protected>
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)

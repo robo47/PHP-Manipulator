@@ -3,6 +3,7 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
+use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 class ElseAndIfToElseIf

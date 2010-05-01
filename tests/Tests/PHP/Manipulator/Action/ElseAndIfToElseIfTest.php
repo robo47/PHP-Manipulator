@@ -13,7 +13,7 @@ class ElseAndIfToElseIfTest extends \Tests\TestCase
 {
 
     /**
-     * @covers ElseAndIfToElseIf::init
+     * @covers \PHP\Manipulator\Action\ElseAndIfToElseIf::init
      */
     public function testConstructorDefaults()
     {

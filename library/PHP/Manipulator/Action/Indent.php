@@ -315,7 +315,6 @@ extends Action
     }
 
     /**
-     *
      * @param Token $token
      */
     public function _checkAndChangeIndentionLevel(Token $token)

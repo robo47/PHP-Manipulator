@@ -13,7 +13,7 @@ class __classname__Test extends \Tests\TestCase
 {
 
     /**
-     * @covers __classname__::init
+     * @covers __completeclassname__::init
      */
     public function testConstructorDefaults()
     {

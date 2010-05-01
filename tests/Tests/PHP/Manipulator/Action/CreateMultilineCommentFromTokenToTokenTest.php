@@ -49,7 +49,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::<protected>
      */
     public function testManipulate($container, $params, $expectedContainer, $strict)
@@ -60,7 +60,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testNonArrayAsParamsThrowsException()
@@ -77,7 +77,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testMissingFromThrowsException()
@@ -94,7 +94,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testMissingToThrowsException()
@@ -111,7 +111,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testWrongDatatypeForFromThrowsException()
@@ -128,7 +128,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testWrongDatatypeForToThrowsException()
@@ -145,7 +145,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testFromTokenisBehindToTokenThrowsException()
@@ -162,7 +162,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testToIsNotContainedInTheContainerThrowsException()
@@ -179,7 +179,7 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::manipulate
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::run
      * @covers \Exception
      */
     public function testFromIsNotContainedInTheContainerThrowsException()
