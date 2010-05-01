@@ -1,30 +1,30 @@
 <?php
 
-namespace Tests\PHP\Manipulator\TokenConstraint;
+namespace Tests\Mock;
 
-use PHP\Manipulator\TokenConstraint\Mock;
+use Tests\Mock\TokenConstraintMock;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group TokenConstraint
- * @group TokenConstraint\Mock
+ * @group Mock
+ * @group Mock\TokenConstraintMock
  */
-class MockTest extends \Tests\TestCase
+class TokenConstraintMockTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\TokenConstraint\Mock
+     * @covers \Tests\Mock\TokenConstraintMock
      */
     public function testOptionViastaticVariableWorks()
     {
-        Mock::$return = true;
-        $mock = new Mock();
+        TokenConstraintMock::$return = true;
+        $mock = new TokenConstraintMock();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $this->assertTrue($mock->evaluate($token));
 
-        Mock::$return = false;
-        $mock = new Mock();
+        TokenConstraintMock::$return = false;
+        $mock = new TokenConstraintMock();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $this->assertFalse($mock->evaluate($token));
     }

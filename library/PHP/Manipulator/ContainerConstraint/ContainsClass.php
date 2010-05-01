@@ -5,6 +5,7 @@ namespace PHP\Manipulator\ContainerConstraint;
 use PHP\Manipulator\ContainerConstraint;
 use PHP\Manipulator\TokenContainer;
 
+// @todo Create generic Constraint for checking if a container contains a specific token-type
 class ContainsClass
 extends ContainerConstraint
 {

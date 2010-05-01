@@ -1,13 +1,13 @@
 <?php
 
-namespace PHP\Manipulator\TokenFinder;
+namespace Tests\Mock;
 
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-class Mock
+class TokenFinderMock
 extends TokenFinder
 {
 

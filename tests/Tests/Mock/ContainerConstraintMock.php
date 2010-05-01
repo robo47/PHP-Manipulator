@@ -1,11 +1,11 @@
 <?php
 
-namespace PHP\Manipulator\ContainerConstraint;
+namespace Tests\Mock;
 
 use PHP\Manipulator\ContainerConstraint;
 use PHP\Manipulator\TokenContainer;
 
-class Mock
+class ContainerConstraintMock
 extends ContainerConstraint
 {
 

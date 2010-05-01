@@ -72,10 +72,15 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testEvaluateTokenConstraintEvaluatesTokenConstraint()
     {
-        \PHP\Manipulator\TokenConstraint\Mock::$return = false;
+        \Tests\Mock\TokenConstraintMock::$return = false;
         $abstractHelper = new NonAbstractHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $result = $abstractHelper->evaluateConstraint('Mock', $token);
+        $result = $abstractHelper->evaluateConstraint(
+            '\Tests\Mock\TokenConstraintMock',
+            $token,
+            null,
+            false
+        );
         $this->assertFalse($result);
     }
 
@@ -84,10 +89,15 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testEvaluateContainerConstraintEvaluatesContainerConstraint()
     {
-        \PHP\Manipulator\ContainerConstraint\Mock::$return = false;
+        \Tests\Mock\ContainerConstraintMock::$return = false;
         $abstractHelper = new NonAbstractHelper();
         $container = new TokenContainer();
-        $result = $abstractHelper->evaluateContainerConstraint('Mock', $container);
+        $result = $abstractHelper->evaluateContainerConstraint(
+            '\Tests\Mock\ContainerConstraintMock',
+            $container,
+            null,
+            false
+        );
         $this->assertFalse($result);
     }
 
@@ -96,15 +106,17 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateContainerManipulatesContainer()
     {
-        \PHP\Manipulator\Action\Mock::$called = false;
+        \Tests\Mock\ActionMock::$called = false;
         $abstractHelper = new NonAbstractHelper();
 
         $abstractHelper->manipulateContainer(
-            'Mock',
-            new TokenContainer()
+            '\Tests\Mock\ActionMock',
+            new TokenContainer(),
+            null,
+            false
         );
 
-        $this->assertTrue(\PHP\Manipulator\Action\Mock::$called);
+        $this->assertTrue(\Tests\Mock\ActionMock::$called);
     }
 
     /**
@@ -112,15 +124,17 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateTokenManipulatesToken()
     {
-        \PHP\Manipulator\TokenManipulator\Mock::$called = false;
+        \Tests\Mock\TokenManipulatorMock::$called = false;
         $abstractHelper = new NonAbstractHelper();
 
         $abstractHelper->manipulateToken(
-            'Mock',
-            Token::factory(array(T_WHITESPACE, "\n"))
+            '\Tests\Mock\TokenManipulatorMock',
+            Token::factory(array(T_WHITESPACE, "\n")),
+            null,
+            false
         );
 
-        $this->assertTrue(\PHP\Manipulator\TokenManipulator\Mock::$called);
+        $this->assertTrue(\Tests\Mock\TokenManipulatorMock::$called);
     }
 
     /**
@@ -129,7 +143,7 @@ class AHelperTest extends \Tests\TestCase
     public function testFindTokensFindsTokens()
     {
         $expectedResult = new \PHP\Manipulator\TokenFinder\Result();
-        $finder = new \PHP\Manipulator\TokenFinder\Mock($expectedResult);
+        $finder = new \Tests\Mock\TokenFinderMock($expectedResult);
         $token = new Token('Foo');
         $container = new TokenContainer();
         $abstractHelper = new NonAbstractHelper();

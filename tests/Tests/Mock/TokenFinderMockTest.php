@@ -1,27 +1,27 @@
 <?php
 
-namespace Tests\PHP\Manipulator\TokenFinder;
+namespace Tests\Mock;
 
+use Tests\Mock\TokenFinderMock;
 use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenFinder\Mock;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group TokenFinder
- * @group TokenFinder\Mock
+ * @group Mock
+ * @group Mock\TokenFinder
  */
-class MockTest
+class TokenFinderMockTest
 extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\TokenFinder\Mock::__construct
+     * @covers \Tests\Mock\TokenFinderMock::__construct
      */
     public function testConstruct()
     {
         $result = new Result();
-        $mock = new Mock($result);
+        $mock = new TokenFinderMock($result);
         $this->assertSame($result, $mock->result);
     }
 
@@ -46,12 +46,12 @@ extends \Tests\TestCase
 
     /**
      * @dataProvider findProvider
-     * @covers \PHP\Manipulator\TokenFinder\Mock::find
-     * @covers \PHP\Manipulator\TokenFinder\Mock::<protected>
+     * @covers \Tests\Mock\TokenFinderMock::find
+     * @covers \Tests\Mock\TokenFinderMock::<protected>
      */
     public function testFind($token, $params, $container, $expectedResult)
     {
-        $finder = new Mock($expectedResult);
+        $finder = new TokenFinderMock($expectedResult);
         $actualResult = $finder->find($token, $container, $params);
         $this->assertFinderResultsMatch($expectedResult, $actualResult);
     }
