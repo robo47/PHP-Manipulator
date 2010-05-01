@@ -111,6 +111,14 @@ extends \Tests\TestCase
             $this->getResultFromContainer($c, 8, 16),
         );
 
+        #11 include phpdoc finds methods without phpdoc too
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input11.php'),
+            $c[8],
+            array('includePhpdoc' => true),
+            $this->getResultFromContainer($c, 8, 16),
+        );
+
         // abstract functions / methods
 
         return $data;
