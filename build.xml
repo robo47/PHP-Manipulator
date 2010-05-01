@@ -17,48 +17,7 @@
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
-    <target name="fixtureslint">
-        <parallel threadCount="4" failonany="true">
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/_fixtures/Cli">
-                    <include name="**/*.php" />
-                    <include name="**/phtml" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/_fixtures/Action">
-                    <include name="**/*" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/_fixtures/ContainerConstraint">
-                    <include name="**/*" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/_fixtures/Action">
-                    <include name="**/*" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/_fixtures/TokenFinder">
-                    <include name="**/*" />
-                </fileset>
-            </apply>
-        </parallel>
-    </target>
-
-    <!-- Run php lint check on lib and tests -->
+    <!-- Run php lint check on lib, tests and fixtures -->
     <target name="phplint">
         <parallel threadCount="4" failonany="true">
             <apply executable   = "php"
@@ -73,20 +32,7 @@
                 <arg value="-nl" />
                 <fileset dir="tests/">
                     <include name="**/*.php" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/Baa">
-                    <include name="**/*.php" />
-                </fileset>
-            </apply>
-            <apply executable   = "php"
-                   failonerror  = "true">
-                <arg value="-nl" />
-                <fileset dir="tests/Tests">
-                    <include name="**/*.php" />
+                    <include name="**/phtml" />
                 </fileset>
             </apply>
         </parallel>
@@ -156,10 +102,7 @@
 
     <!-- Build complete Project -->
     <target name="build" depends="clean, prepare" >
-        <parallel threadCount="4" failonany="true">
-            <antcall target="phplint" />
-            <antcall target="fixtureslint" />
-        </parallel>
+        <antcall target="phplint" />
         <parallel threadCount="4" failonany="true">
             <antcall target="phpunit" />
             <antcall target="phpcs" />
