@@ -54,5 +54,3 @@ class RemoveIndentionTest extends \Tests\TestCase
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }
-
-?>

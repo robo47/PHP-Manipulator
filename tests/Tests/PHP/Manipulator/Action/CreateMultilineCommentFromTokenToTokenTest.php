@@ -195,5 +195,3 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         }
     }
 }
-
-?>

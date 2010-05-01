@@ -6,7 +6,7 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-// @todo base on StripNonPhp 
+// @todo base on StripNonPhp
 class StripPhp
 extends Action
 {
