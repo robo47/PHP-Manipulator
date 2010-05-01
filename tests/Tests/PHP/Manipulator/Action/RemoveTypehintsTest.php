@@ -42,6 +42,13 @@ class RemoveTypehintsTest extends \Tests\TestCase
             false
         );
 
+        #2 Test it works with namespaces too
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
+            false
+        );
+
         return $data;
     }
 
