@@ -589,4 +589,49 @@ class AHelperTest extends \Tests\TestCase
         $ahelper = new NonAbstractHelper();
         $this->assertSame($result, $ahelper->isSemicolon($token), 'Wrong result');
     }
+
+
+    /**
+     * @return array
+     */
+    public function isQuestionMarkProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, '?')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_WHITESPACE, '?')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(null, ':')),
+            false
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_WHITESPACE, ':')),
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isQuestionMarkProvider
+     * @covers \PHP\Manipulator\AHelper::isQuestionMark
+     */
+    public function testIsQuestionMark($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isQuestionMark($token), 'Wrong result');
+    }
 }

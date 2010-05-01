@@ -248,4 +248,16 @@ abstract class AHelper
         return false;
     }
 
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isQuestionMark(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === '?') {
+            return true;
+        }
+        return false;
+    }
+
 }
