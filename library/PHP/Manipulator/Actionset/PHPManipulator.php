@@ -34,6 +34,10 @@ class PHPManipulator extends Actionset
             'newline' => "\n",
         );
 
+        $removeTrailingWhitespaceOptions = array(
+            'stripWhitespaceFromEnd' => true
+        );
+
         $actions = array();
 
         $actions[] = new ChangeLineEndings($changelineEndingsOptions);
@@ -41,7 +45,7 @@ class PHPManipulator extends Actionset
         $actions[] = new StripUnneededPhpCloseTag();
         $actions[] = new ElseIfToElseAndIf();
         $actions[] = new Indent($indentOptions);
-        $actions[] = new RemoveTrailingWhitespace();
+        $actions[] = new RemoveTrailingWhitespace($removeTrailingWhitespaceOptions);
 
         return $actions;
     }

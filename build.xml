@@ -66,7 +66,7 @@
         </exec>
     </target>
 
-    <!-- Run PHPUnit -->
+    <!-- Run PHPUnit for libraray -->
     <target name="phpunit">
         <exec dir="${basedir}/tests/"
             executable="phpunit"
@@ -75,7 +75,17 @@
                        --configuration &quot;${basedir}/tests/phpunit.xml&quot;
                        --log-junit &quot;${basedir}/build/logs/junit.xml&quot;
                        --coverage-html &quot;${basedir}/build/logs/coverage/&quot;
-                       --coverage-clover &quot;${basedir}/build/logs/clover.xml&quot;"/>
+                       --coverage-clover &quot;${basedir}/build/logs/clover.xml&quot;" />
+        </exec>
+    </target>
+
+    <!-- Run PHPUnit for Tests (Constraints, Mocks, TestCase, Util, ... ) -->
+    <target name="phpunitTestcode">
+        <exec dir="${basedir}/tests/"
+            executable="phpunit"
+            failonerror="true">
+            <arg line="--no-configuration
+                       --configuration &quot;${basedir}/tests/phpunitTests.xml&quot;" />
         </exec>
     </target>
 
@@ -109,6 +119,7 @@
             <antcall target="phpcpd" />
             <antcall target="pdepend" />
             <antcall target="sloccount" />
+            <antcall target="phpunitTestcode" />
         </parallel>
         <antcall target="phpcb" />
     </target>
