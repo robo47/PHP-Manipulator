@@ -20,7 +20,7 @@ class HelpTest extends \Tests\TestCase
 
     public function tearDown()
     {
-        ob_clean();
+        ob_end_clean();
     }
 
     /**
