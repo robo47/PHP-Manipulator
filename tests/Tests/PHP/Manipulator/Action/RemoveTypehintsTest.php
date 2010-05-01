@@ -35,6 +35,13 @@ class RemoveTypehintsTest extends \Tests\TestCase
             false
         );
 
+        #2 Test = null not get's removed
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
+            false
+        );
+
         return $data;
     }
 

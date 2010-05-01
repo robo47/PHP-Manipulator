@@ -40,41 +40,46 @@ extends Action
      */
     protected function _parseFunctionArguments(TokenContainer $container, Token $startToken)
     {
-        $argumentTokens = array();
+        
         $iterator = $container->getIterator();
         $iterator->seek($container->getOffsetByToken($startToken));
         $indentionLevel = 0;
         $inside = false;
         $arguments = array();
-        $argument = array();
+        $argumentTokens = array();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
+
+            if ($indentionLevel > 0) {
+                $argumentTokens[] = $token;
+            }
+
             if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
                 $indentionLevel++;
             }
-            if ($indentionLevel) {
-                $argumentTokens[] = $token;
-            }
+
             if ($this->evaluateConstraint('IsClosingBrace', $token)) {
                 $indentionLevel--;
             }
-            // @todo IsComma-Constraint
+
             if ($this->evaluateConstraint('IsComma', $token)) {
-                $arguments[] = $argument;
-                $argument = array();
-            } else if (true === $inside) {
-                $argument[] = $token;
+                $arguments[] = $argumentTokens;
+                $argumentTokens = array();
             }
 
             if ($indentionLevel > 0) {
                 $inside = true;
-            } else if ($indentionLevel === 0 && $inside) {
+                // break if we are at the end of the arguments
+            } else if ($indentionLevel === 0 && true === $inside) {
                 break;
             }
             $iterator->next();
         }
 
+        if (!empty($argumentTokens)) {
+            $arguments[] = $argumentTokens;
+        }
         foreach ($arguments as $argument) {
             $typeHint = $this->_parseSingleArgument($argument);
             if ($typeHint instanceof Token) {
@@ -90,8 +95,16 @@ extends Action
     protected function _parseSingleArgument(array $argumentTokens)
     {
         $typehintToken = null;
+        $afterAssignment = false;
         foreach ($argumentTokens as $token) {
-            if ($this->evaluateConstraint('IsType', $token, T_STRING)) {
+            if ('=' === $token->getValue()) {
+                $afterAssignment = true;
+            }
+            if ($this->evaluateConstraint('IsType', $token, T_STRING) && 'null' !== strtolower($token->getValue())) {
+                $typehintToken = $token;
+                break;
+            }
+            if ($this->evaluateConstraint('IsType', $token, T_ARRAY) && false === $afterAssignment) {
                 $typehintToken = $token;
                 break;
             }
