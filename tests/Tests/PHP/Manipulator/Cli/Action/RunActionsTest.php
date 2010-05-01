@@ -12,12 +12,10 @@ use PHP\Manipulator\Cli\Action\RunActions;
  */
 class RunActionsTest extends \Tests\TestCase
 {
-    
     public function setUp()
     {
         ob_start();
     }
-    
     public function tearDown()
     {
         ob_clean();

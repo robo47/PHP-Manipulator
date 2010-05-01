@@ -21,9 +21,8 @@ class FormatOperatorsTest extends \Tests\TestCase
         $action = new FormatOperators();
         $this->assertType('array', $action->getOption('beforeOperator'), 'Wrong default Option value for beforeOperator');
         $this->assertType('array', $action->getOption('afterOperator'), 'Wrong default Option value for afterOperator');
-// @todo check number of elements, check all are operators ...
+        // @todo check number of elements, check all are operators ...
     }
-    
     public function actionProvider()
     {
         $data = array();

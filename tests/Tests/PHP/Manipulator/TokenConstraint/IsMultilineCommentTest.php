@@ -69,7 +69,6 @@ class IsMultilineCommentTest extends \Tests\TestCase
         );
 
 
-
         return $data;
     }
 

@@ -10,15 +10,12 @@ class NonAbstractHelper extends AHelper
 {
 
     public $init = false;
-    
     public function init()
     {
         $this->init = true;
     }
-    
     public function run(TokenContainer $container)
     {
-        
     }
 }
 
@@ -103,8 +100,8 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new NonAbstractHelper();
 
         $abstractHelper->manipulateContainer(
-                'Mock',
-                new TokenContainer()
+            'Mock',
+            new TokenContainer()
         );
 
         $this->assertTrue(\PHP\Manipulator\Action\Mock::$called);
@@ -119,8 +116,8 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new NonAbstractHelper();
 
         $abstractHelper->manipulateToken(
-                'Mock',
-                Token::factory(array(T_WHITESPACE, "\n"))
+            'Mock',
+            Token::factory(array(T_WHITESPACE, "\n"))
         );
 
         $this->assertTrue(\PHP\Manipulator\TokenManipulator\Mock::$called);
@@ -138,9 +135,9 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new NonAbstractHelper();
 
         $actualResult = $abstractHelper->findTokens(
-                $finder,
-                $token,
-                $container
+            $finder,
+            $token,
+            $container
         );
 
         $this->assertSame($expectedResult, $actualResult);

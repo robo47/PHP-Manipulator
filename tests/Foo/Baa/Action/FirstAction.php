@@ -15,6 +15,5 @@ extends Action
      */
     public function run(TokenContainer $container, $params = null)
     {
-        
     }
 }

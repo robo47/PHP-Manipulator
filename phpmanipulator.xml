@@ -5,5 +5,8 @@
     </actions>
     <files>
         <directory>./library/PHP/</directory>
+        <directory>./tests/Baa/</directory>
+        <directory>./tests/Foo/</directory>
+        <directory>./tests/Tests/</directory>
     </files>
 </config>

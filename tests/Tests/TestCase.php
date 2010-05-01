@@ -73,9 +73,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
 
         self::assertThat(
-                $element,
-                $constraint,
-                $message
+            $element,
+            $constraint,
+            $message
         );
     }
 
@@ -94,9 +94,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
 
         self::assertThat(
-                $actualToken,
-                $constraint,
-                $message
+            $actualToken,
+            $constraint,
+            $message
         );
     }
 
@@ -115,9 +115,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
 
         self::assertThat(
-                $actualTokens,
-                $constraint,
-                $message
+            $actualTokens,
+            $constraint,
+            $message
         );
     }
 
@@ -133,9 +133,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
 
         self::assertThat(
-                $actualResult,
-                $constraint,
-                $message
+            $actualResult,
+            $constraint,
+            $message
         );
     }
 

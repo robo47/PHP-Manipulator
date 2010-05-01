@@ -195,13 +195,13 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output22.php'),
         );
 
-//@todo nested switch
-//        #21 nested switch
-//        $data[] = array(
-//            array(),
-//            $this->getContainerFromFixture($path . 'inputx.php'),
-//            $this->getContainerFromFixture($path . 'outputx.php'),
-//        );
+        //@todo nested switch
+        //        #21 nested switch
+        //        $data[] = array(
+        //            array(),
+        //            $this->getContainerFromFixture($path . 'inputx.php'),
+        //            $this->getContainerFromFixture($path . 'outputx.php'),
+        //        );
 
         // @todo more tests with tabs instead of spaces
         #19 Test with Tab

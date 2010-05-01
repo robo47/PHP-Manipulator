@@ -9,15 +9,12 @@ class NonAbstractAction extends Action
 {
 
     public $init = false;
-    
     public function init()
     {
         $this->init = true;
     }
-    
     public function run(TokenContainer $container, $params = null)
     {
-        
     }
 }
 
@@ -39,7 +36,6 @@ class ActionTest extends \Tests\TestCase
         /* @var $runMethod ReflectionMethod */
         $this->assertTrue($runMethod->isAbstract());
         $this->assertSame('run', $runMethod->getName(), 'Method has wrong name');
-        
         $this->assertSame(2, $runMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $runMethod->getParameters();
         $containerParameter = $parameters[0];

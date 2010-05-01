@@ -21,9 +21,9 @@ class Util
         $dump = '';
         $iterator = $container->getIterator();
         $dump .= str_pad('Token', 28, ' ', STR_PAD_RIGHT) . '| ' .
-            str_pad('LEN', 4, ' ', STR_PAD_LEFT) . ' | ' .
-            str_pad('LINE', 4, ' ', STR_PAD_LEFT) . ' | VALUE' .
-            PHP_EOL . PHP_EOL;
+        str_pad('LEN', 4, ' ', STR_PAD_LEFT) . ' | ' .
+        str_pad('LINE', 4, ' ', STR_PAD_LEFT) . ' | VALUE' .
+        PHP_EOL . PHP_EOL;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -138,8 +138,8 @@ class Util
             $line = 'NULL';
         }
         return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
-            str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
-            str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
+        str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
+        str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
     }
 
     /**

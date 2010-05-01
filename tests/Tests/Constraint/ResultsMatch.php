@@ -76,8 +76,8 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     protected function failureDescription($other, $description, $not)
     {
         return 'Results do not match: ' . PHP_EOL .
-            'Cause: ' . $this->_cause . PHP_EOL .
-            Util::compareResults($this->_expectedResult, $other);
+        'Cause: ' . $this->_cause . PHP_EOL .
+        Util::compareResults($this->_expectedResult, $other);
     }
 
     /**

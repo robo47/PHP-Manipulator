@@ -20,7 +20,6 @@ class StripPhpTest extends \Tests\TestCase
     {
         $action = new StripPhp();
     }
-    
     public function actionProvider()
     {
         $data = array();

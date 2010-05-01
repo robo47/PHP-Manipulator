@@ -21,7 +21,6 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
         $action = new RemoveMultipleEmptyLines();
         $this->assertEquals(2, $action->getOption('maxEmptyLines'), 'Wrong default Option value for maxEmptyLines');
     }
-    
     public function actionProvider()
     {
         $data = array();

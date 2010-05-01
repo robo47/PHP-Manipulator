@@ -12,12 +12,10 @@ use PHP\Manipulator\TokenContainer;
  */
 class CliTest extends \Tests\TestCase
 {
-    
     public function setUp()
     {
         \ob_start();
     }
-    
     public function tearDown()
     {
         \ob_end_clean();
@@ -65,8 +63,8 @@ class CliTest extends \Tests\TestCase
     {
         $cli = new Cli();
         $this->assertEquals(
-                'PHP Manipulator ' . Manipulator::VERSION . PHP_EOL,
-                $cli->getHeader()
+            'PHP Manipulator ' . Manipulator::VERSION . PHP_EOL,
+            $cli->getHeader()
         );
     }
 

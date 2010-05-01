@@ -10,7 +10,6 @@ use Foo\Baa\Action\SixthsAction;
 class SecondActionset
 extends Actionset
 {
-    
     public function getActions()
     {
         return array(
