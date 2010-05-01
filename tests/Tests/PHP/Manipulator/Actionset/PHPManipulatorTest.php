@@ -16,9 +16,9 @@ class PHPManipulatorTest extends \Tests\TestCase
      */
     public function testEvaluate()
     {
-        $Actionset = new PHPManipulator();
-        $actions = $Actionset->getActions();
-        $this->assertCount(4, $actions);
+        $actionset = new PHPManipulator();
+        $actions = $actionset->getActions();
+        $this->assertCount(6, $actions);
         $this->markTestIncomplete('Foo');
     }
 }

@@ -7,6 +7,8 @@ use PHP\Manipulator\Action\ChangeLineEndings;
 use PHP\Manipulator\Action\RemoveMultipleEmptyLines;
 use PHP\Manipulator\Action\Indent;
 use PHP\Manipulator\Action\ElseIfToElseAndIf;
+use PHP\Manipulator\Action\StripUnneededPhpCloseTag;
+use PHP\Manipulator\Action\RemoveTrailingWhitespace;
 
 class PHPManipulator extends Actionset
 {
@@ -36,8 +38,10 @@ class PHPManipulator extends Actionset
 
         $actions[] = new ChangeLineEndings($changelineEndingsOptions);
         $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
-        $actions[] = new ElseIfToElseAndIf();        
+        $actions[] = new StripUnneededPhpCloseTag();
+        $actions[] = new ElseIfToElseAndIf();
         $actions[] = new Indent($indentOptions);
+        $actions[] = new RemoveTrailingWhitespace();
 
         return $actions;
     }
