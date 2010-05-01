@@ -59,7 +59,7 @@ extends Action
      */
     protected function _isBooleanAndAndShouldBeReplaced(Token $token)
     {
-        return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
+        return ($this->isType($token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
     }
 
     /**
@@ -68,6 +68,6 @@ extends Action
      */
     protected function _isBooleanOrAndShouldBeReplaced(Token $token)
     {
-        return ($this->evaluateConstraint('IsType', $token, T_BOOLEAN_OR) && $this->getOption('replaceOr'));
+        return ($this->isType($token, T_BOOLEAN_OR) && $this->getOption('replaceOr'));
     }
 }

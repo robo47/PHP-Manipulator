@@ -22,7 +22,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_VAR)) {
+            if ($this->isType($token, T_VAR)) {
                 $token->setType(T_PUBLIC);
                 $token->setValue('public');
             }

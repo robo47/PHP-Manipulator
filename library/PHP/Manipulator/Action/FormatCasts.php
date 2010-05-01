@@ -47,7 +47,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, array_keys($searchedTokens))) {
+            if ($this->isType($token, array_keys($searchedTokens))) {
                 $token->setValue($searchedTokens[$token->getType()]);
             }
             $iterator->next();

@@ -23,7 +23,7 @@ extends Action
         $functionTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+            if ($this->isType($token, T_FUNCTION)) {
                 $functionTokens[] = $token;
             }
             $iterator->next();
@@ -50,14 +50,14 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
+            if ($this->isOpeningBrace( $token)) {
                 $indentionLevel++;
-            } else if ($this->evaluateConstraint('IsClosingBrace', $token)) {
+            } else if ($this->isClosingBrace( $token)) {
                 $indentionLevel--;
             }
 
             // next argument
-            if ($this->evaluateConstraint('IsComma', $token)) {
+            if ($this->isComma($token)) {
                 $arguments[] = $argumentTokens;
                 $argumentTokens = array();
             }
@@ -92,7 +92,7 @@ extends Action
             if ('=' === $token->getValue()) {
                 break;
             }
-            if ($this->evaluateConstraint('IsType', $token, array(T_STRING, T_ARRAY, T_NS_SEPARATOR))) {
+            if ($this->isType($token, array(T_STRING, T_ARRAY, T_NS_SEPARATOR))) {
                 $container->removeToken($token);
             }
         }

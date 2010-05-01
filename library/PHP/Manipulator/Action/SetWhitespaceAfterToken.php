@@ -70,14 +70,14 @@ extends Action
 
         $tokenValue = $this->getWhitespaceForToken($token, $whitespace);
 
-        if (null !== $targetToken && $this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
+        if (null !== $targetToken && $this->isType($targetToken, T_WHITESPACE)) {
             if (empty($tokenValue)) {
                 $container->removeToken($targetToken);
             } else {
                 $targetToken->setValue($tokenValue);
             }
         }
-        if (null !== $targetToken && !$this->evaluateConstraint('IsType', $targetToken, T_WHITESPACE)) {
+        if (null !== $targetToken && !$this->isType($targetToken, T_WHITESPACE)) {
             if (!empty($tokenValue)) {
                 $newToken = Token::factory(array(T_WHITESPACE, $tokenValue));
                 $this->insertToken($container, $targetToken, $newToken);

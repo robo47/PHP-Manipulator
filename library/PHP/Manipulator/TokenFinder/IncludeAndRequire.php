@@ -22,7 +22,7 @@ extends TokenFinder
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->evaluateConstraint('IsType', $token, array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE))) {
+        if (!$this->isType($token, array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE))) {
             throw new \Exception('Start-token is not one of T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE');
         }
         $result = new Result();
@@ -33,7 +33,7 @@ extends TokenFinder
         while ($iterator->valid()) {
             $token = $iterator->current();
             $result->addToken($token);
-            if ($this->evaluateConstraint('IsSemicolon', $token)) {
+            if ($this->isSemicolon( $token)) {
                 break;
             }
             $iterator->next();

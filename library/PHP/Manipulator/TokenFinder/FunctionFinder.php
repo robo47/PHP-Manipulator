@@ -24,7 +24,7 @@ extends TokenFinder
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+        if (!$this->isType($token, T_FUNCTION)) {
             throw new \Exception('Start-token is not T_FUNCTION: ' . $token->getTokenName());
         }
 
@@ -36,10 +36,10 @@ extends TokenFinder
             // travel reverse as long as there is only whitespace and stuff
             $iterator->previous();
             while ($iterator->valid()) {
-                if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                     $iterator->next();
                     while ($iterator->valid()) {
-                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
+                        if (!$this->isType($iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
                             $iterator->next();
                         } else {
                             break;
@@ -59,10 +59,10 @@ extends TokenFinder
             // travel reverse as long as there is only whitespace and stuff
             $iterator->previous();
             while ($iterator->valid()) {
-                if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                     $iterator->next();
                     while ($iterator->valid()) {
-                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
+                        if (!$this->isType($iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
                             $iterator->next();
                         } else {
                             break;
@@ -85,17 +85,17 @@ extends TokenFinder
             $token = $iterator->current();
             $result->addToken($token);
 
-            if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+            if ($this->isOpeningCurlyBrace( $token)) {
                 $inside = true;
                 $level++;
             }
 
-            if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+            if ($this->isClosingCurlyBrace( $token)) {
                 $level--;
             }
 
             // abstract methods or interface-methods
-            if (false === $inside && $this->evaluateConstraint('IsSemicolon', $token)) {
+            if (false === $inside && $this->isSemicolon( $token)) {
                 break;
             }
 

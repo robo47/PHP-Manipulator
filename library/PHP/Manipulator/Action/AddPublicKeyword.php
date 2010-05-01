@@ -36,10 +36,10 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token, T_CLASS)) {
+            if ($this->isOpeningCurlyBrace( $token, T_CLASS)) {
                 $level++;
             }
-            if ($this->evaluateConstraint('IsClosingCurlyBrace', $token, T_CLASS)) {
+            if ($this->isClosingCurlyBrace( $token, T_CLASS)) {
                 $level--;
 
                 if ($classLevel === $level  && true === $insideClass) {
@@ -51,12 +51,12 @@ extends Action
                     }
                 }
             }
-            if ($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+            if ($this->isType($token, T_CLASS)) {
                 $insideClass = true;
                 $classLevel = $level;
             }
             if (true === $insideClass && false === $insideMethod) {
-                if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+                if ($this->isType($token, T_FUNCTION)) {
                     $insideMethod = true;
                     $result = $this->findTokens('FunctionFinder', $token, $container, array('includeMethodProperties' => true));
                     $this->_checkAndAddPublic($result);
@@ -88,7 +88,7 @@ extends Action
     protected function _checkResultContainsTokenType(Result $result, array $tokentypes)
     {
         foreach($result->getTokens() as $token) {
-            if($this->evaluateConstraint('IsType', $token, $tokentypes)) {
+            if($this->isType($token, $tokentypes)) {
                 return true;
             }
         }

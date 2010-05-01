@@ -20,7 +20,7 @@ extends ContainerConstraint
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
-            if ($this->evaluateConstraint('IsType', $iterator->current(), T_CLASS)) {
+            if ($this->isType($iterator->current(), T_CLASS)) {
                 return true;
             }
             $iterator->next();

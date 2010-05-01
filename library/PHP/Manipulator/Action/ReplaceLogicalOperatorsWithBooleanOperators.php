@@ -51,7 +51,7 @@ extends Action
      */
     protected function _isLogicalAndAndShouldBeReplaced(Token $token)
     {
-        return ($this->evaluateConstraint('IsType', $token, T_LOGICAL_AND) && $this->getOption('replaceAnd'));
+        return ($this->isType($token, T_LOGICAL_AND) && $this->getOption('replaceAnd'));
     }
 
     /**
@@ -60,6 +60,6 @@ extends Action
      */
     protected function _isLogicalOrAndShouldBeReplaced(Token $token)
     {
-        return ($this->evaluateConstraint('IsType', $token, T_LOGICAL_OR) && $this->getOption('replaceOr'));
+        return ($this->isType($token, T_LOGICAL_OR) && $this->getOption('replaceOr'));
     }
 }

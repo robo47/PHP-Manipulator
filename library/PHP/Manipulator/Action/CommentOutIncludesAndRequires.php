@@ -77,19 +77,19 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+            if ($this->isType($token, T_CLASS)) {
                 $inClass = true;
                 $bracesStatus = 0;
             }
-            if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+            if ($this->isType($token, T_FUNCTION)) {
                 $inFunction = true;
                 $bracesStatus = 0;
             }
             if ($inClass || $inFunction) {
-                if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+                if ($this->isOpeningCurlyBrace( $token)) {
                     $bracesStatus++;
                 }
-                if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+                if ($this->isClosingCurlyBrace( $token)) {
                     $bracesStatus--;
                     if ($bracesStatus === 0) {
                         if ($inClass) {
@@ -102,7 +102,7 @@ extends Action
                 }
             }
             if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
-                if ($this->evaluateConstraint('IsType', $token, $searchedTokens)) {
+                if ($this->isType($token, $searchedTokens)) {
                     $foundPairs[] = $token;
                 }
             }

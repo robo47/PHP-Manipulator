@@ -67,7 +67,7 @@ extends Action
      */
     protected function _isCommentAndShouldBeRemoved(Token $token)
     {
-        return ($this->evaluateConstraint('IsType', $token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
-        || ($this->evaluateConstraint('IsType', $token, T_COMMENT) && $this->getOption('removeStandardComments'));
+        return ($this->isType($token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
+        || ($this->isType($token, T_COMMENT) && $this->getOption('removeStandardComments'));
     }
 }

@@ -242,4 +242,351 @@ class AHelperTest extends \Tests\TestCase
             $this->assertEquals('manipulator is not instance of \PHP\Manipulator\TokenManipulator', $e->getMessage(), 'Wrong exception message');
         }
     }
+
+    /**
+     * @return array
+     */
+    public function isColonProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, ':')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_WHITESPACE, ':')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(null, ';')),
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isColonProvider
+     * @covers \PHP\Manipulator\AHelper::isColon
+     */
+    public function testIsColon($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isColon($token), 'Wrong result');
+    }
+
+    /**
+     * @return array
+     */
+    public function isCommaProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, ',')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_WHITESPACE, ',')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(null, ':')),
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isCommaProvider
+     * @covers \PHP\Manipulator\AHelper::isComma
+     */
+    public function testIsComma($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isComma($token), 'Wrong result');
+    }
+
+    /**
+     * @return array
+     */
+    public function isTypeProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "// some comment")),
+            T_COMMENT,
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "// some comment")),
+            T_WHITESPACE,
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "// some comment")),
+            array(T_WHITESPACE, T_CLOSE_TAG, T_COMMENT),
+            true
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, "// some comment")),
+            array(T_WHITESPACE, T_CLOSE_TAG, T_DOC_COMMENT),
+            false
+        );
+
+
+        return $data;
+    }
+
+
+    /**
+     * @dataProvider isTypeProvider
+     * @covers \PHP\Manipulator\AHelper::isType
+     */
+    public function testIsType($token, $param, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isType($token, $param), 'Wrong result');
+    }
+
+
+    /**
+     * @return array
+     */
+    public function isClosingBraceProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, '(')),
+            false
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(null, ')')),
+            true
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '(')),
+            false
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, ')')),
+            false
+        );
+
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isClosingBraceProvider
+     * @covers \PHP\Manipulator\AHelper::isClosingBrace
+     */
+    public function testIsClosingBrace($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isClosingBrace($token), 'Wrong result');
+    }
+
+
+    /**
+     * @return array
+     */
+    public function isClosingCurlyBraceProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, '{')),
+            false
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(null, '}')),
+            true
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '{')),
+            false
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '}')),
+            false
+        );
+
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isClosingCurlyBraceProvider
+     * @covers \PHP\Manipulator\AHelper::isClosingCurlyBrace
+     */
+    public function testIsClosingCurlyBrace($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isClosingCurlyBrace($token), 'Wrong result');
+    }
+
+    /**
+     * @return array
+     */
+    public function isOpeningBraceProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, '(')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(null, ')')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '(')),
+            false
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, ')')),
+            false
+        );
+
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isOpeningBraceProvider
+     * @covers \PHP\Manipulator\AHelper::isOpeningBrace
+     */
+    public function testIsOpeningBrace($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isOpeningBrace($token), 'Wrong result');
+    }
+
+    /**
+     * @return array
+     */
+    public function isOpeningCurlyBraceProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, '{')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(null, '}')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '{')),
+            false
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, '}')),
+            false
+        );
+
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isOpeningCurlyBraceProvider
+     * @covers \PHP\Manipulator\AHelper::isOpeningCurlyBrace
+     */
+    public function testIsOpeningCurlyBrace($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isOpeningCurlyBrace($token), 'Wrong result');
+    }
+
+
+    /**
+     * @return array
+     */
+    public function isSemicolonProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(null, ';')),
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_WHITESPACE, ';')),
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(null, ':')),
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isSemicolonProvider
+     * @covers \PHP\Manipulator\AHelper::isSemicolon
+     */
+    public function testIsSemicolon($token, $result)
+    {
+        $ahelper = new NonAbstractHelper();
+        $this->assertSame($result, $ahelper->isSemicolon($token), 'Wrong result');
+    }
 }

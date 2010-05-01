@@ -23,13 +23,13 @@ extends Action
         $deleteTokens = array();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
+            if ($this->isType($token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
                 $open = true;
             }
             if (!$open) {
                 $deleteTokens[] = $token;
             }
-            if ($this->evaluateConstraint('IsType', $token, T_CLOSE_TAG)) {
+            if ($this->isType($token, T_CLOSE_TAG)) {
                 $open = false;
             }
             $iterator->next();

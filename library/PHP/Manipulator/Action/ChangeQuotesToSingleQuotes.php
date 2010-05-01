@@ -21,7 +21,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_CONSTANT_ENCAPSED_STRING)) {
+            if ($this->isType($token, T_CONSTANT_ENCAPSED_STRING)) {
                 if (!$this->_containsEscapeSequence($token)) {
                     $value = $token->getValue();
                     $token->setValue(str_replace('"', '\'', $value));

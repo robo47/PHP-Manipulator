@@ -19,9 +19,9 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG)) {
+            if ($this->isType($token, T_OPEN_TAG)) {
                 $token->setValue(str_replace('<%', '<?php', $token->getValue()));
-            } else if ($this->evaluateConstraint('IsType', $token, T_OPEN_TAG_WITH_ECHO)) {
+            } else if ($this->isType($token, T_OPEN_TAG_WITH_ECHO)) {
                 $token->setValue(str_replace('<%=', '<?php echo ', $token->getValue()));
             }
             $iterator->next();

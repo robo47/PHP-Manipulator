@@ -36,13 +36,13 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
             $this->_checkLevel($token);
-            if ($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+            if ($this->isType($token, T_CLASS)) {
                 $this->_classStack->push($this->_level);
                 $iterator->next();
                 while ($iterator->valid()) {
                     $token = $iterator->current();
                     $this->_checkLevel($token);
-                    if ($this->evaluateConstraint('IsType', $token, T_STRING)) {
+                    if ($this->isType($token, T_STRING)) {
                         $classname = $token->getValue();
                         break;
                     }
@@ -50,11 +50,11 @@ extends Action
                 }
             }
             if (!$this->_classStack->isEmpty()) {
-                if ($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+                if ($this->isType($token, T_FUNCTION)) {
                     while ($iterator->valid()) {
                         $token = $iterator->current();
                         $this->_checkLevel($token);
-                        if ($this->evaluateConstraint('IsType', $token, T_STRING)) {
+                        if ($this->isType($token, T_STRING)) {
                             if (strtolower($token->getValue()) === strtolower($classname)) {
                                 $token->setValue('__construct');
                             }
@@ -75,11 +75,11 @@ extends Action
      */
     protected function _checkLevel(Token $token)
     {
-        if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+        if ($this->isOpeningCurlyBrace( $token)) {
             $this->_level++;
             $this->_maxLevel = max(array($this->_level, $this->_maxLevel));
         }
-        if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+        if ($this->isClosingCurlyBrace( $token)) {
             $this->_level--;
             if (!$this->_classStack->isEmpty() &&
                  $this->_level === $this->_classStack[count($this->_classStack) -1]) {

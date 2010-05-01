@@ -117,7 +117,7 @@ extends Action
                 $nextToken = $iterator->current();
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->_indentWhitespace($token);
-                if ($this->evaluateConstraint('IsClosingCurlyBrace', $nextToken) && true === $this->_inSwitch && true === $this->_inCase) {
+                if ($this->isClosingCurlyBrace( $nextToken) && true === $this->_inSwitch && true === $this->_inCase) {
                     if ($this->_isSwitchClosingCurlyBrace($nextToken)) {
                         $this->_removeLastIndention($token);
                     }
@@ -170,12 +170,12 @@ extends Action
      */
     protected function _useIndentionCheck(Token $token)
     {
-        if ($this->evaluateConstraint('IsType', $token, T_USE)) {
+        if ($this->isType($token, T_USE)) {
             $this->_inUse = true;
             $this->_indentionLevel++;
         }
 
-        if ($this->evaluateConstraint('IsSemicolon', $token) && true === $this->_inUse) {
+        if ($this->isSemicolon( $token) && true === $this->_inUse) {
             $this->_inUse = false;
             $this->_indentionLevel--;
         }
@@ -186,25 +186,25 @@ extends Action
      */
     protected function _switchIndentionCheck(Token $token)
     {
-        if ($this->evaluateConstraint('IsClosingCurlyBrace', $token) && true === $this->_inSwitch) {
+        if ($this->isClosingCurlyBrace( $token) && true === $this->_inSwitch) {
             if ($this->_switchStack[$this->_switchStack->count() - 1] === $this->_indentionLevel) {
                 $this->_switchStack->pop();
                 $this->_inSwitch = false;
             }
         }
-        if ($this->evaluateConstraint('IsType', $token, T_SWITCH)) {
+        if ($this->isType($token, T_SWITCH)) {
             $this->_inSwitch = true;
             $this->_switchStack->push($this->_indentionLevel);
         }
 
-        if ($this->evaluateConstraint('IsType', $token, T_BREAK) && true === $this->_inCase) {
+        if ($this->isType($token, T_BREAK) && true === $this->_inCase) {
             $this->_inCase = false;
             $this->_indentionLevel--;
         }
 
         // only indent if case/default is not directly followed by case/default
-        if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT)) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
-            if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT)) &&
+        if ($this->isType($token, array(T_CASE, T_DEFAULT)) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
+            if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
                 true === $this->_inCase &&
                 !$this->_isCasePreceededByBreak($token)) {
                 $this->_indentionLevel--;
@@ -226,12 +226,12 @@ extends Action
         $iterator->previous();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_BREAK)) {
+            if ($this->isType($token, T_BREAK)) {
                 return true;
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) ||
-                        $this->evaluateConstraint('IsSemicolon', $token))) {
+                if (!$this->isType($token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) ||
+                        $this->isSemicolon( $token))) {
                     return false;
                 }
             }
@@ -251,7 +251,7 @@ extends Action
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsColon', $token)) {
+            if ($this->isColon( $token)) {
                 return $iterator->current();
             }
             $iterator->next();
@@ -270,11 +270,11 @@ extends Action
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, array(T_CASE, T_DEFAULT))) {
+            if ($this->isType($token, array(T_CASE, T_DEFAULT))) {
                 return true;
             } else {
                 // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->evaluateConstraint('IsType', $token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
+                if (!$this->isType($token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
                     return false;
                 }
             }
@@ -299,7 +299,7 @@ extends Action
      */
     protected function _isWhitespaceWithBreak(Token $token)
     {
-        return $this->evaluateConstraint('IsType', $token, T_WHITESPACE) &&
+        return $this->isType($token, T_WHITESPACE) &&
         $this->evaluateConstraint('ContainsNewline', $token);
     }
 
@@ -360,8 +360,8 @@ extends Action
      */
     protected function _isIndentionLevelIncreasment(Token $token)
     {
-        return $this->evaluateConstraint('IsOpeningCurlyBrace', $token)
-        || $this->evaluateConstraint('IsOpeningBrace', $token);
+        return $this->isOpeningCurlyBrace( $token)
+        || $this->isOpeningBrace( $token);
     }
 
     /**
@@ -370,8 +370,8 @@ extends Action
      */
     protected function _isIndentionLevelDecreasement(Token $token)
     {
-        return $this->evaluateConstraint('IsClosingCurlyBrace', $token)
-        || $this->evaluateConstraint('IsClosingBrace', $token);
+        return $this->isClosingCurlyBrace( $token)
+        || $this->isClosingBrace( $token);
     }
 
     /**

@@ -76,7 +76,7 @@ extends TokenConstraint
      */
     protected function _isOperatorWithToken(Token $token)
     {
-        return $this->evaluateConstraint('IsType', $token, $this->_operatorsWithToken);
+        return $this->isType($token, $this->_operatorsWithToken);
     }
 
     /**

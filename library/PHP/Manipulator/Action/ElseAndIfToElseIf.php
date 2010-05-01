@@ -24,17 +24,17 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_ELSE)) {
+            if ($this->isType($token, T_ELSE)) {
                 $waitingForIf = true;
                 $replaceTokens = array();
             }
-            if (true === $waitingForIf && !$this->evaluateConstraint('IsType', $token, array(T_IF, T_ELSE, T_WHITESPACE))) {
+            if (true === $waitingForIf && !$this->isType($token, array(T_IF, T_ELSE, T_WHITESPACE))) {
                 $waitingForIf = false;
             } else {
                 $replaceTokens[] = $token;
             }
 
-            if (true === $waitingForIf && $this->evaluateConstraint('IsType', $token, T_IF)) {
+            if (true === $waitingForIf && $this->isType($token, T_IF)) {
                 $waitingForIf = false;
                 $token = array_pop($replaceTokens);
                 $token->setType(T_ELSEIF);

@@ -37,7 +37,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_ELSE)) {
+            if ($this->isType($token, T_ELSE)) {
                 $lastElse = $token;
                 $noOtherTokens = true;
             }
@@ -50,7 +50,7 @@ extends Action
                 $start = $lastElse;
                 $end = $token;
                 $previous = $container->getPreviousToken($start);
-                if ($this->evaluateConstraint('IsType', $end, T_ENDIF)) {
+                if ($this->isType($end, T_ENDIF)) {
                     $end = $container->getPreviousToken($end);
                 }
                 $container->removeTokensFromTo($start, $end);
@@ -70,10 +70,10 @@ extends Action
      */
     protected function _isEndElse(Token $token)
     {
-        if($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+        if($this->isClosingCurlyBrace( $token)) {
             return true;
         }
-        if($this->evaluateConstraint('IsType', $token, T_ENDIF)) {
+        if($this->isType($token, T_ENDIF)) {
             return true;
         }
         return false;
@@ -85,15 +85,15 @@ extends Action
      */
     protected function _isAllowedTokenInsideEmptyElse(Token $token)
     {
-        if($this->evaluateConstraint('IsColon', $token) ||
-           $this->evaluateConstraint('IsType', $token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
-           $this->evaluateConstraint('IsClosingCurlyBrace', $token) ||
-           $this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+        if($this->isColon( $token) ||
+           $this->isType($token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
+           $this->isClosingCurlyBrace( $token) ||
+           $this->isOpeningCurlyBrace( $token)) {
             return true;
         }
         // check for ignored comments
         if (true === $this->getOption('ignoreComments') &&
-            $this->evaluateConstraint('IsType', $token, array(T_COMMENT, T_DOC_COMMENT)) ) {
+            $this->isType($token, array(T_COMMENT, T_DOC_COMMENT)) ) {
             return true;
         }
         return false;

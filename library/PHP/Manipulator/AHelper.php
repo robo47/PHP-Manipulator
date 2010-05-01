@@ -141,4 +141,111 @@ abstract class AHelper
         }
         return new $classname;
     }
+
+    /**
+     * @param Token $token
+     * @param array|integer $type
+     * @return boolean
+     */
+    public function isType(Token $token, $type)
+    {
+        if (is_array($type)) {
+            foreach ($type as $tokenType) {
+                if ($token->getType() === $tokenType) {
+                    return true;
+                }
+            }
+        } else {
+            if ($token->getType() === $type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param Token $token
+     * @return boolean
+     */
+    public function isColon(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === ':') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param Token $token
+     */
+    public function isComma(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === ',') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isClosingBrace(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === ')') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isOpeningBrace(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === '(') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isClosingCurlyBrace(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === '}') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isOpeningCurlyBrace(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === '{') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    public function isSemicolon(Token $token)
+    {
+        if ($token->getType() === null && $token->getValue() === ';') {
+            return true;
+        }
+        return false;
+    }
+
 }

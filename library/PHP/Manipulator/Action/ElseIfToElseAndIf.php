@@ -21,7 +21,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_ELSEIF)) {
+            if ($this->isType($token, T_ELSEIF)) {
                 $token->setType(T_ELSE);
                 $token->setValue('else');
                 $whitespaceToken = new Token(' ', T_WHITESPACE);

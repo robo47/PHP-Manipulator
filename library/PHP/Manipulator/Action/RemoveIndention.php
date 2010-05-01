@@ -24,7 +24,7 @@ class RemoveIndention extends Action
         $previousToken = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
+            if ($this->isType($token, T_WHITESPACE)) {
                 $value = $token->getValue();
                 // @todo create RemoveWhitespaceIndention-TokenManipulator
                 // Spaces and Tabs in Lines which are completly empty

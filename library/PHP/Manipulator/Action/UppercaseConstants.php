@@ -106,7 +106,7 @@ extends Action
      */
     protected function _isConstant(Token $token)
     {
-        return $this->evaluateConstraint('IsType', $token, T_STRING) &&
+        return $this->isType($token, T_STRING) &&
         ( (true === $this->_isConstant) ||
             ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
     }
@@ -118,7 +118,7 @@ extends Action
     protected function _isFollowedByDoubleColon(Token $token)
     {
         $next = $this->_next;
-        return (null !== $next && $this->evaluateConstraint('IsType', $next, T_DOUBLE_COLON));
+        return (null !== $next && $this->isType($next, T_DOUBLE_COLON));
     }
 
     /**
@@ -128,7 +128,7 @@ extends Action
     protected function _isFollowedByOpeningBrace(Token $token)
     {
         $next = $this->_next;
-        return (null !== $next && $this->evaluateConstraint('IsOpeningBrace', $next));
+        return (null !== $next && $this->isOpeningBrace($next));
     }
 
     /**
@@ -138,7 +138,7 @@ extends Action
     protected function _isNotAMethodCall(Token $token)
     {
         $next = $this->_next;
-        return (null !== $next && !$this->evaluateConstraint('IsOpeningBrace', $next));
+        return (null !== $next && !$this->isOpeningBrace($next));
     }
 
     /**
@@ -148,19 +148,19 @@ extends Action
      */
     protected function _checkCurrentToken(Token $token)
     {
-        if($this->evaluateConstraint('IsType', $token, T_CONST)) {
+        if($this->isType($token, T_CONST)) {
             $this->_isConstant = true;
-        } else if($this->evaluateConstraint('IsType', $token, T_USE)) {
+        } else if($this->isType($token, T_USE)) {
             $this->_isUse = true;
-        } else if($this->evaluateConstraint('IsType', $token, T_NAMESPACE)) {
+        } else if($this->isType($token, T_NAMESPACE)) {
             $this->_isNamespace = true;
-        } else if($this->evaluateConstraint('IsType', $token, T_CLASS)) {
+        } else if($this->isType($token, T_CLASS)) {
             $this->_isClassDeclaration = true;
-        } else if($this->evaluateConstraint('IsType', $token, T_FUNCTION)) {
+        } else if($this->isType($token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
         }
 
-        if ($this->evaluateConstraint('IsSemicolon', $token)) {
+        if ($this->isSemicolon( $token)) {
             if (true === $this->_isConstant) {
                 $this->_isConstant = false;
             }
@@ -169,7 +169,7 @@ extends Action
             }
         }
 
-        if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
+        if ($this->isOpeningBrace($token)) {
             if (true === $this->_isClassDeclaration) {
                 $this->_isClassDeclaration = false;
             }
@@ -178,7 +178,7 @@ extends Action
             }
         }
 
-        if (true === $this->_isNamespace && ($this->evaluateConstraint('IsSemicolon', $token) || $this->evaluateConstraint('IsClosingCurlyBrace', $token))) {
+        if (true === $this->_isNamespace && ($this->isSemicolon($token) || $this->isClosingCurlyBrace($token))) {
             $this->_isNamespace = false;
         }
     }

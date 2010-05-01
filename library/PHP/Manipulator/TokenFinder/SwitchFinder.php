@@ -21,7 +21,7 @@ extends TokenFinder
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->evaluateConstraint('IsType', $token, T_SWITCH)) {
+        if (!$this->isType($token, T_SWITCH)) {
             throw new Exception('Starttoken is not T_SWITCH');
         }
         $result = new Result();
@@ -34,13 +34,13 @@ extends TokenFinder
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+            if ($this->isOpeningCurlyBrace( $token)) {
                 if (0 === $level) {
                     $inside = true;
                 }
                 $level++;
             }
-            if ($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
+            if ($this->isClosingCurlyBrace( $token)) {
                 $level--;
             }
             $result->addToken($token);

@@ -34,7 +34,7 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->evaluateConstraint('IsType', $token, T_WHITESPACE)) {
+            if ($this->isType($token, T_WHITESPACE)) {
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
             }
