@@ -10,6 +10,12 @@ use PHP\Manipulator\TokenContainer;
 class StripUnneededPhpCloseTag
 extends Action
 {
+    public function init()
+    {
+        if (!$this->hasOption('stripWhitespaceFromEnd')) {
+            $this->setOption('stripWhitespaceFromEnd', false);
+        }
+    }
 
     /**
      * Remove unneded ?> from the file-end
@@ -19,10 +25,8 @@ extends Action
      */
     public function run(TokenContainer $container, $params = null)
     {
-        $stripWhitespaceFromEnd = false;
-        if (is_array($params) && isset($params['stripWhitespaceFromEnd'])) {
-            $stripWhitespaceFromEnd = $params['stripWhitespaceFromEnd'];
-        }
+        $stripWhitespaceFromEnd = $this->getOption('stripWhitespaceFromEnd');
+
         $iterator = $container->getReverseIterator();
         $helper = new NewlineDetector("\n");
 

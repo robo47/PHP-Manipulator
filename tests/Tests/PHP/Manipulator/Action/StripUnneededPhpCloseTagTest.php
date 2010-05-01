@@ -75,10 +75,10 @@ class StripUnneededPhpCloseTagTest extends \Tests\TestCase
      * @covers \PHP\Manipulator\Action\StripUnneededPhpCloseTag
      * @dataProvider manipulateProvider
      */
-    public function testManipulate($container, $expectedContainer, $params, $strict)
+    public function testManipulate($container, $expectedContainer, $options, $strict)
     {
-        $manipulator = new StripUnneededPhpCloseTag();
-        $manipulator->run($container, $params);
+        $manipulator = new StripUnneededPhpCloseTag($options);
+        $manipulator->run($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 }
