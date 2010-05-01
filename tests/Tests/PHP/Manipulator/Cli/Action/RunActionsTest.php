@@ -20,7 +20,7 @@ class RunActionsTest extends \Tests\TestCase
     
     public function tearDown()
     {
-        \ob_clean();
+        ob_clean();
     }
 
     /**
