@@ -50,24 +50,20 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            if ($indentionLevel > 0) {
-                $argumentTokens[] = $token;
-            }
-
             if ($this->evaluateConstraint('IsOpeningBrace', $token)) {
                 $indentionLevel++;
-            }
-
-            if ($this->evaluateConstraint('IsClosingBrace', $token)) {
+            } else if ($this->evaluateConstraint('IsClosingBrace', $token)) {
                 $indentionLevel--;
             }
 
+            // next argument
             if ($this->evaluateConstraint('IsComma', $token)) {
                 $arguments[] = $argumentTokens;
                 $argumentTokens = array();
             }
 
             if ($indentionLevel > 0) {
+                $argumentTokens[] = $token;
                 $inside = true;
             } else if ($indentionLevel === 0 && true === $inside) {
                 // break if we are at the end of the arguments
@@ -76,6 +72,7 @@ extends Action
             $iterator->next();
         }
 
+        // add last argument
         if (!empty($argumentTokens)) {
             $arguments[] = $argumentTokens;
         }
@@ -91,24 +88,13 @@ extends Action
      */
     protected function _parseSingleArgument(array $argumentTokens, $container)
     {
-        $afterAssignment = false;
-        $typehintTokens = array();
         foreach ($argumentTokens as $token) {
             if ('=' === $token->getValue()) {
-                $afterAssignment = true;
+                break;
             }
-            if ($this->evaluateConstraint('IsType', $token, T_STRING) && 'null' !== strtolower($token->getValue())) {
-                $typehintTokens[] = $token;
+            if ($this->evaluateConstraint('IsType', $token, array(T_STRING, T_ARRAY, T_NS_SEPARATOR))) {
+                $container->removeToken($token);
             }
-            if ($this->evaluateConstraint('IsType', $token, T_ARRAY) && false === $afterAssignment) {
-                $typehintTokens[] = $token;
-            }
-            if (false === $afterAssignment && $this->evaluateConstraint('IsType', $token, T_NS_SEPARATOR)) {
-                $typehintTokens[] = $token;
-            }
-        }
-        foreach($typehintTokens as $token) {
-            $container->removeToken($token);
         }
     }
 }
