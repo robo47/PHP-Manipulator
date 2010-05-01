@@ -95,6 +95,22 @@ extends \Tests\TestCase
             $this->getResultFromContainer($c, 9, 61),
         );
 
+        #9 include methodproperties finds methods without properties too
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input9.php'),
+            $c[22],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 22, 62),
+        );
+
+        #10 include methodproperties finds methods without properties too
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input10.php'),
+            $c[8],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 8, 16),
+        );
+
         // abstract functions / methods
 
         return $data;

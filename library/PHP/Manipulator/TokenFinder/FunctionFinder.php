@@ -37,7 +37,7 @@ extends TokenFinder
                 if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
                     $iterator->next();
                     while ($iterator->valid()) {
-                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                        if (!$this->evaluateConstraint('IsType', $iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
                             $iterator->next();
                         } else {
                             break;
@@ -47,8 +47,13 @@ extends TokenFinder
                 }
                 $iterator->previous();
             }
+            // didn't find anything
+            if (!$iterator->valid()) {
+                $iterator->seek($pos);
+            }
         }
 
+        // @todo test including method without phpdoc
         if ($this->_includePhpDoc($params)) {
             // travel reverse as long as there is only whitespace and stuff
             $iterator->previous();
