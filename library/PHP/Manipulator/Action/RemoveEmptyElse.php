@@ -3,6 +3,7 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
+use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 class RemoveEmptyElse
@@ -13,8 +14,6 @@ extends Action
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
-
-
 
     public function init()
     {
@@ -43,7 +42,7 @@ extends Action
                 $noOtherTokens = true;
             }
 
-            if(null !== $lastElse && !$this->_isConsideredEmpty($token)) {
+            if(null !== $lastElse && !$this->_isAllowedTokenInsideEmptyElse($token)) {
                 $noOtherTokens = false;
             }
 
@@ -54,7 +53,7 @@ extends Action
                 if ($this->evaluateConstraint('IsType', $end, T_ENDIF)) {
                     $end = $container->getPreviousToken($end);
                 }
-                $this->_deleteTokensFromTo($start, $end);
+                $container->removeTokensFromTo($start, $end);
 
                 $iterator = $container->getIterator();
                 $iterator->seekToToken($previous);
@@ -65,7 +64,11 @@ extends Action
         $container->retokenize();
     }
 
-    protected function _isEndElse($token)
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isEndElse(Token $token)
     {
         if($this->evaluateConstraint('IsClosingCurlyBrace', $token)) {
             return true;
@@ -76,32 +79,21 @@ extends Action
         return false;
     }
 
-    // @todo add as method to the container
-    protected function _deleteTokensFromTo($start, $end)
+    /**
+     * @param Token $token
+     * @return boolean
+     */
+    protected function _isAllowedTokenInsideEmptyElse(Token $token)
     {
-        $iterator = $this->_container->getIterator();
-        $iterator->seekToToken($start);
-
-        $delete = array();
-        while ($iterator->valid()) {
-            $token = $iterator->current();
-            $delete[] = $token;
-            if ($token === $end) {
-                break;
-            }
-            $iterator->next();
-        }
-        $this->_container->removeTokens($delete);
-
-    }
-
-    protected function _isConsideredEmpty($token)
-    {
-        if($this->evaluateConstraint('IsColon', $token) ||$this->evaluateConstraint('IsType', $token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) || $this->evaluateConstraint('IsClosingCurlyBrace', $token) ||$this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
+        if($this->evaluateConstraint('IsColon', $token) ||
+           $this->evaluateConstraint('IsType', $token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
+           $this->evaluateConstraint('IsClosingCurlyBrace', $token) ||
+           $this->evaluateConstraint('IsOpeningCurlyBrace', $token)) {
             return true;
         }
         // check for ignored comments
-        if (true === $this->getOption('ignoreComments') && $this->evaluateConstraint('IsType', $token, array(T_COMMENT, T_DOC_COMMENT)) ) {
+        if (true === $this->getOption('ignoreComments') &&
+            $this->evaluateConstraint('IsType', $token, array(T_COMMENT, T_DOC_COMMENT)) ) {
             return true;
         }
         return false;
