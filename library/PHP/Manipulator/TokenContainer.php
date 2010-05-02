@@ -389,7 +389,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Creates Code from a TokenArray
+     * Creates Code from the tokens
      *
      * @param \PHP\Manipulator\TokenContainer $tokens
      * @return string
@@ -405,8 +405,6 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * __toString
-     *
      * @return string
      */
     public function __toString()
@@ -417,11 +415,9 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Get Container
      *
-     * @todo rename to toArray ?
-     *
      * @return array
      */
-    public function getContainer()
+    public function toArray()
     {
         return $this->_container;
     }
@@ -429,12 +425,10 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Set Container
      *
-     * @todo strict checking ?
-     * @todo rename to setArray ?
      * @param array $container
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    public function setContainer(array $container)
+    public function setArray(array $container)
     {
         $this->_container = $container;
         return $this;
@@ -464,7 +458,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Get Iterator
+     * Get Iterator for traversing the Container from begin to end
      *
      * Implements SPL::IteratorAggregate
      *
@@ -476,7 +470,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Get a reverse Iterator for traversing the Container from End to begin
+     * Get a reverse Iterator for traversing the Container from end to begin
      *
      * @return \PHP\Manipulator\TokenContainer\ReverseIterator
      */

@@ -45,8 +45,8 @@ class Util
     public static function compareContainers(TokenContainer $expectedContainer,
         TokenContainer $actualContainer, $strict)
     {
-        $expectedIterator = new \ArrayIterator($expectedContainer->getContainer());
-        $actualIterator = new \ArrayIterator($actualContainer->getContainer());
+        $expectedIterator = new \ArrayIterator($expectedContainer->toArray());
+        $actualIterator = new \ArrayIterator($actualContainer->toArray());
 
         $values = array();
         $longest = 0;

@@ -30,7 +30,7 @@ class TokenContainerTest extends \Tests\TestCase
     public function testDefaultConstruct()
     {
         $container = new TokenContainer();
-        $this->assertEquals(array(), $container->getContainer(), 'Container missmatch');
+        $this->assertEquals(array(), $container->toArray(), 'Container missmatch');
         $this->assertCount(0, $container, 'Count missmatch');
     }
 
@@ -47,7 +47,7 @@ class TokenContainerTest extends \Tests\TestCase
         );
         $container = new TokenContainer($tokens);
         $this->assertCount(3, $container, 'Count missmatch');
-        $array = $container->getContainer();
+        $array = $container->toArray();
         $this->assertArrayHasKey(0, $array, 'Array misses key');
         $this->assertArrayHasKey(1, $array, 'Array misses key');
         $this->assertArrayHasKey(2, $array, 'Array misses key');
@@ -237,7 +237,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container[] = Token::factory('foo');
         $container[] = Token::factory('foo');
         $this->assertCount(3, $container, 'Wrong container count');
-        $container->setContainer(array());
+        $container->setArray(array());
         $this->assertCount(0, $container, 'Wrong container count');
     }
 
@@ -441,10 +441,10 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer::setContainer
+     * @covers \PHP\Manipulator\TokenContainer::setArray
      * @covers \PHP\Manipulator\TokenContainer::getContainer
      */
-    public function testGetContainerSetContainer()
+    public function testGetContainersetArray()
     {
         $token1 = Token::factory('Token1');
         $token2 = Token::factory('Token2');
@@ -455,15 +455,15 @@ class TokenContainerTest extends \Tests\TestCase
         $container[] = $token2;
         $container[] = $token3;
 
-        $array = $container->getContainer();
+        $array = $container->toArray();
         $this->assertType('array', $array);
         $this->assertCount(3, $array);
         $this->assertContains($token1, $array);
         $this->assertContains($token2, $array);
         $this->assertContains($token3, $array);
 
-        $container->setContainer(array());
-        $array = $container->getContainer();
+        $container->setArray(array());
+        $array = $container->toArray();
         $this->assertType('array', $array);
         $this->assertCount(0, $array);
     }
@@ -610,7 +610,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container = new TokenContainer(array($t1,$t2, $t3, $t4, $t5));
 
         $container->removeTokensFromTo($t2, $t4);
-        $array = $container->getContainer();
+        $array = $container->toArray();
         $this->assertCount(2, $array);
         $this->assertContains($t1, $array);
         $this->assertContains($t5, $array);

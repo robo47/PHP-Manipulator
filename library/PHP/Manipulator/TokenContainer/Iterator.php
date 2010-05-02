@@ -31,7 +31,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     public function __construct(TokenContainer $container)
     {
         $this->_container = $container;
-        $this->_keys = array_keys($container->getContainer());
+        $this->_keys = array_keys($container->toArray());
     }
 
     /**
