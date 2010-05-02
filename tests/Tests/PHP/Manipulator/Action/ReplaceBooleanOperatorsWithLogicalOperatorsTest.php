@@ -19,9 +19,10 @@ class ReplaceBooleanOperatorsWithLogicalOperatorsTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new ReplaceBooleanOperatorsWithLogicalOperators();
-        $this->assertFalse($action->getOption('uppercase'));
-        $this->assertTrue($action->getOption('replaceAnd'));
-        $this->assertTrue($action->getOption('replaceOr'));
+        $this->assertFalse($action->getOption('uppercase'), 'Default value for uppercase is wrong');
+        $this->assertTrue($action->getOption('replaceAnd'), 'Default value for replaceAnd is wrong');
+        $this->assertTrue($action->getOption('replaceOr'), 'Default value for replaceOr is wrong');
+        $this->assertCount(3, $action->getOptions());
     }
 
     /**

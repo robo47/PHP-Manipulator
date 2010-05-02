@@ -18,6 +18,7 @@ class ElseIfToElseAndIfTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new ElseIfToElseAndIf();
+        $this->assertCount(0, $action->getOptions());
     }
 
     /**

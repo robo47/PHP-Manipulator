@@ -11,7 +11,6 @@ extends Action
 {
     public function init()
     {
-        // indentions are always given in tabs!
         if (!$this->hasOption('searchedTokens')) {
             $this->setOption(
                 'searchedTokens',

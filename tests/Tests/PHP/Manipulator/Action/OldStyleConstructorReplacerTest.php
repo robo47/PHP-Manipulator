@@ -18,6 +18,7 @@ class OldStyleConstructorReplacerTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new OldStyleConstructorReplacer();
+        $this->assertCount(0, $action->getOptions());
     }
 
     /**

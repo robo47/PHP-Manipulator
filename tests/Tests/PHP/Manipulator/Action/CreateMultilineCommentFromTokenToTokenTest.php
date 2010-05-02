@@ -14,6 +14,15 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\CreateMultilineCommentFromTokenToToken::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new CreateMultilineCommentFromTokenToToken();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()

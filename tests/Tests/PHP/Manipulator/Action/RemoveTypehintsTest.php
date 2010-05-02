@@ -14,6 +14,15 @@ class RemoveTypehintsTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\RemoveTypehints::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new RemoveTypehints();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()

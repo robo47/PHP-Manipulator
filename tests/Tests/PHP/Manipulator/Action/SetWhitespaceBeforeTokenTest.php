@@ -14,6 +14,15 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\SetWhitespaceBeforeToken::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new SetWhitespaceBeforeToken();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()

@@ -12,6 +12,14 @@ use PHP\Manipulator\TokenContainer;
  */
 class RemoveIndentionTest extends \Tests\TestCase
 {
+    /**
+     * @covers \PHP\Manipulator\Action\RemoveIndention::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new RemoveIndention();
+        $this->assertCount(0, $action->getOptions());
+    }
 
     /**
      * @return array

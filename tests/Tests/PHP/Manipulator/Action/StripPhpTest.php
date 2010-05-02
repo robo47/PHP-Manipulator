@@ -19,7 +19,12 @@ class StripPhpTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new StripPhp();
+        $this->assertCount(0, $action->getOptions());
     }
+
+    /**
+     * @return array
+     */
     public function actionProvider()
     {
         $data = array();
@@ -74,7 +79,6 @@ class StripPhpTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\StripPhp::run
      * @covers \PHP\Manipulator\Action\StripPhp::<protected>
      * @dataProvider shortTagsOnlyactionProvider

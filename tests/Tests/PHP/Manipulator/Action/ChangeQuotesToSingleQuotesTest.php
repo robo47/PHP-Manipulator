@@ -18,6 +18,7 @@ class ChangeQuotesToSingleQuotesTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new ChangeQuotesToSingleQuotes();
+        $this->assertCount(0, $action->getOptions());
     }
 
     /**

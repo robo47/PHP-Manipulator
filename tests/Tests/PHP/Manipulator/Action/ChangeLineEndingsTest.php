@@ -19,7 +19,8 @@ class ChangeLineEndingsTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new ChangeLineEndings();
-        $this->assertEquals("\n", $action->getOption('newline'), 'Wrong default Option value for newline');
+        $this->assertEquals("\n", $action->getOption('newline'), 'Default Value for newline is wrong');
+        $this->assertCount(1, $action->getOptions());
     }
 
     /**

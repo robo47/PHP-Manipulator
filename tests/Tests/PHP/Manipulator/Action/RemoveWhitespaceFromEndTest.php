@@ -14,6 +14,15 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\RemoveWhitespaceFromEnd::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new RemoveWhitespaceFromEnd();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()

@@ -12,6 +12,14 @@ use PHP\Manipulator\TokenContainer;
  */
 class RemoveErrorControlOperatorTest extends \Tests\TestCase
 {
+    /**
+     * @covers \PHP\Manipulator\Action\RemoveErrorControlOperator::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new RemoveErrorControlOperator();
+        $this->assertCount(0, $action->getOptions());
+    }
 
     /**
      * @return array

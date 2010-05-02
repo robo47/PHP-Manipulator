@@ -18,7 +18,8 @@ class RemoveIncludesAndRequiresTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new RemoveIncludesAndRequires();
-        $this->assertTrue($action->getOption('globalScopeOnly'), 'Wrong default Option value for globalScopeOnly');
+        $this->assertTrue($action->getOption('globalScopeOnly'), 'Default value for globalScopeOnly is wrong');
+        $this->assertCount(1, $action->getOptions());
     }
 
     /**

@@ -13,6 +13,15 @@ class UppercaseConstantsTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\UppercaseConstants::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new UppercaseConstants();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()

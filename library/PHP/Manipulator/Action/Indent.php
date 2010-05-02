@@ -7,6 +7,9 @@ use PHP\Manipulator\Action\RemoveIndention;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
+/**
+ * @todo Enhance to work with alternate syntax!
+ */
 class Indent
 extends Action
 {

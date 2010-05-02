@@ -19,8 +19,9 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new RemoveTrailingWhitespace();
-        $removeEmptyLinesAtFileEnd = $action->getOption('removeEmptyLinesAtFileEnd');
-        $this->assertTrue($removeEmptyLinesAtFileEnd, 'Default Value for removeEmptyLinesAtFileEnd is wrong');
+        $this->assertTrue($action->getOption('removeEmptyLinesAtFileEnd'), 'Default Value for removeEmptyLinesAtFileEnd is wrong');
+        $this->assertEquals("\n", $action->getOption('defaultBreak'), 'Default Value for defaultBreak is wrong');
+        $this->assertCount(2, $action->getOptions());
     }
 
     /**

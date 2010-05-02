@@ -19,9 +19,14 @@ class RemoveCommentsTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new RemoveComments();
-        $this->assertTrue($action->getOption('removeDocComments'), 'Wrong default Option value for removeDocComments');
-        $this->assertTrue($action->getOption('removeStandardComments'), 'Wrong default Option value for removeStandardComments');
+        $this->assertTrue($action->getOption('removeDocComments'), 'Default value for removeDocComments is wrong');
+        $this->assertTrue($action->getOption('removeStandardComments'), 'Default value for removeStandardComments is wrong');
+        $this->assertCount(2, $action->getOptions());
     }
+
+    /**
+     * @return array
+     */
     public function actionProvider()
     {
         $data = array();

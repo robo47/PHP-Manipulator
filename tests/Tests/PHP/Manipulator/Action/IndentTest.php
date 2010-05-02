@@ -9,6 +9,11 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group Action
  * @group Action\Indent
+ *
+ * @todo more tests with tabs instead of spaces
+ * @todo test initial Indention
+ * @todo test indentionWidth
+ * @todo test tabWidth
  */
 class IndentTest extends \Tests\TestCase
 {
@@ -19,10 +24,11 @@ class IndentTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new Indent();
-        $this->assertTrue($action->getOption('useSpaces'), 'Wrong default Option value for useSpaces');
-        $this->assertEquals(4, $action->getOption('tabWidth'), 'Wrong default Option value for tabWidth');
-        $this->assertEquals(4, $action->getOption('indentionWidth'), 'Wrong default Option value for indentionWidth');
-        $this->assertEquals(0, $action->getOption('initialIndentionWidth'), 'Wrong default Option value for initialIndentionWidth');
+        $this->assertTrue($action->getOption('useSpaces'), 'Default value for useSpaces is wrong');
+        $this->assertEquals(4, $action->getOption('tabWidth'), 'Default value for tabWidth is wrong');
+        $this->assertEquals(4, $action->getOption('indentionWidth'), 'Default value for indentionWidth is wrong');
+        $this->assertEquals(0, $action->getOption('initialIndentionWidth'), 'Default value for initialIndentionWidth is wrong');
+        $this->assertCount(4, $action->getOptions());
     }
 
     /**
@@ -195,15 +201,6 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output22.php'),
         );
 
-        //@todo nested switch
-        //        #21 nested switch
-        //        $data[] = array(
-        //            array(),
-        //            $this->getContainerFromFixture($path . 'inputx.php'),
-        //            $this->getContainerFromFixture($path . 'outputx.php'),
-        //        );
-
-        // @todo more tests with tabs instead of spaces
         #19 Test with Tab
         $data[] = array(
             array('useSpaces' => false),

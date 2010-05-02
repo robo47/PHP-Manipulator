@@ -18,6 +18,8 @@ class RemoveEmptyElseTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new RemoveEmptyElse();
+        $this->assertFalse($action->getOption('ignoreComments'), 'Default value for ignoreComments is wrong');
+        $this->assertCount(1, $action->getOptions());
     }
 
     /**

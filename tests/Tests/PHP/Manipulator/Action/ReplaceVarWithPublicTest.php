@@ -11,6 +11,14 @@ use PHP\Manipulator\TokenContainer;
  */
 class ReplaceVarWithPublicTest extends \Tests\TestCase
 {
+    /**
+     * @covers \PHP\Manipulator\Action\ReplaceVarWithPublic::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new ReplaceVarWithPublic();
+        $this->assertCount(0, $action->getOptions());
+    }
 
     /**
      * @return array

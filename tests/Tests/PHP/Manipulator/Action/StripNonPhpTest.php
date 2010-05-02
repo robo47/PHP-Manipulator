@@ -14,6 +14,15 @@ class StripNonPhpTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\StripNonPhp::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new StripNonPhp();
+        $this->assertCount(0, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function actionProvider()
@@ -69,7 +78,6 @@ class StripNonPhpTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\StripNonPhp::run
      * @covers \PHP\Manipulator\Action\StripNonPhp::<protected>
      * @dataProvider shortTagsOnlyactionProvider

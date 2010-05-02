@@ -19,10 +19,16 @@ class FormatOperatorsTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new FormatOperators();
-        $this->assertType('array', $action->getOption('beforeOperator'), 'Wrong default Option value for beforeOperator');
-        $this->assertType('array', $action->getOption('afterOperator'), 'Wrong default Option value for afterOperator');
+        $this->assertType('array', $action->getOption('beforeOperator'), 'Default value for beforeOperator is wrong');
+        $this->assertType('array', $action->getOption('afterOperator'), 'Default value for afterOperator is wrong');
         // @todo check number of elements, check all are operators ...
+        $this->assertCount(2, $action->getOptions());
     }
+
+    /**
+     *
+     * @return array
+     */
     public function actionProvider()
     {
         $data = array();

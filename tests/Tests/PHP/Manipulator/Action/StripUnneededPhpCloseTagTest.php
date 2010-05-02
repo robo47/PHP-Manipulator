@@ -13,6 +13,16 @@ class StripUnneededPhpCloseTagTest extends \Tests\TestCase
 {
 
     /**
+     * @covers \PHP\Manipulator\Action\StripUnneededPhpCloseTag::init
+     */
+    public function testConstructorDefaults()
+    {
+        $action = new StripUnneededPhpCloseTag();
+        $this->assertFalse($action->getOption('stripWhitespaceFromEnd'), 'Default value for stripWhitespaceFromEnd is wrong');
+        $this->assertCount(1, $action->getOptions());
+    }
+
+    /**
      * @return array
      */
     public function manipulateProvider()
