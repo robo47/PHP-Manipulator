@@ -14,6 +14,7 @@ use PHP\Manipulator\TokenContainer;
  * @todo test initial Indention
  * @todo test indentionWidth
  * @todo test tabWidth
+ * @todo test indention works if we place the curly braces on the following line
  */
 class IndentTest extends \Tests\TestCase
 {
