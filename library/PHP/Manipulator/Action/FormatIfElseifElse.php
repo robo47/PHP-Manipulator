@@ -34,7 +34,7 @@ extends Action
      * @var integer
      */
     protected $_level = 0;
-    
+
     public function init()
     {
         if (!$this->hasOption('spaceAfterIf')) {
@@ -79,10 +79,10 @@ extends Action
         $this->_ifStack = new \SplStack();
         $this->_elseStack = new \SplStack();
         $this->_elseifStack = new \SplStack();
+        $this->_level = 0;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-
 
             if ($this->isType($token, (T_IF))) {
                 $this->_ifStack->push($this->_level);
@@ -100,72 +100,89 @@ extends Action
                 $this->_level++;
                 $this->_applyBreaksAfterCurlyBraces($token, $iterator);
             }
+
             if ($this->isClosingCurlyBrace($token)) {
                 $this->_level--;
                 if(!$this->_isPrecededByWhitespace($token, $iterator)) {
-                    if (true === $this->getOption('breakAfterIf') && !$this->_ifStack->isEmpty() && $this->_level === $this->_ifStack[count($this->_ifStack) -1]) {
-                        $newToken = new Token("\n", T_WHITESPACE);
-                        $this->_container->insertTokenBefore($token, $newToken);
-                    }
-                    if (true === $this->getOption('breakAfterElseif') && !$this->_elseifStack->isEmpty() && $this->_level === $this->_elseifStack[count($this->_elseifStack) -1]) {
-                        $newToken = new Token("\n", T_WHITESPACE);
-                        $this->_container->insertTokenBefore($token, $newToken);
-                    }
-                    if (true === $this->getOption('breakAfterElse') && !$this->_elseStack->isEmpty() && $this->_level === $this->_elseStack[count($this->_elseStack) -1]) {
+                    if ($this->_shouldInsertBreakBeforeCurrentCurlyBrace()) {
                         $newToken = new Token("\n", T_WHITESPACE);
                         $this->_container->insertTokenBefore($token, $newToken);
                     }
                 }
-                if (!$this->_ifStack->isEmpty() && $this->_level === $this->_ifStack[count($this->_ifStack) -1]) {
+                if ($this->_stackHasLevelMatchingItem($this->_ifStack)) {
                     $this->_ifStack->pop();
                 }
-                if (!$this->_elseifStack->isEmpty() && $this->_level === $this->_elseifStack[count($this->_elseifStack) -1]) {
+                if ($this->_stackHasLevelMatchingItem($this->_elseifStack)) {
                     $this->_elseifStack->pop();
                 }
-                if (!$this->_elseStack->isEmpty() && $this->_level === $this->_elseStack[count($this->_elseStack) -1]) {
+                if ($this->_stackHasLevelMatchingItem($this->_elseStack)) {
                     $this->_elseStack->pop();
                 }
             }
             $iterator->next();
         }
+        //var_dump($this->_ifStack->isEmpty(), $this->_elseStack->isEmpty(), $this->_elseifStack->isEmpty());
         $container->retokenize();
     }
 
-    // @todo after : too!
+    protected function _shouldInsertBreakBeforeCurrentCurlyBrace()
+    {
+        if (true === $this->getOption('breakAfterIf') && $this->_stackHasLevelMatchingItem($this->_ifStack)) {
+            return true;
+        }
+        if (true === $this->getOption('breakAfterElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack)) {
+            return true;
+        }
+        if (true === $this->getOption('breakAfterElse') && $this->_stackHasLevelMatchingItem($this->_elseStack)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param \SplStack $stack
+     * @return boolean
+     */
+    protected function _stackHasLevelMatchingItem(\SplStack $stack)
+    {
+        return (!$stack->isEmpty() && $this->_level === $stack[count($stack) -1]);
+    }
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     */
     protected function _applyBreaksAfterCurlyBraces(Token $token, Iterator $iterator)
     {
-        if (true === $this->getOption('breakAfterIf')) {
-            if ($this->_isOpeningBraceAfterType($token, T_IF, $iterator)) {
-                if (/* there is no break already after*/ true) {
-                    $newToken = new Token("\n", T_WHITESPACE);
-                    $this->_container->insertTokenAfter($token, $newToken);
-                    $iterator->reInit();
-                    $iterator->seekToToken($token);
-                }
-            }
+        if ($this->_shouldInsertBreakAfterCurrentOpeningCurlyBrace($token, $iterator)) {
+            $newToken = new Token("\n", T_WHITESPACE);
+            $this->_container->insertTokenAfter($token, $newToken);
+            $iterator->reInit();
+            $iterator->seekToToken($token);
         }
+    }
 
-        if (true === $this->getOption('breakAfterElseif')) {
-            if ($this->_isOpeningBraceAfterType($token, T_ELSEIF, $iterator)) {
-                if (/* there is no break already after*/ true) {
-                    $newToken = new Token("\n", T_WHITESPACE);
-                    $this->_container->insertTokenAfter($token, $newToken);
-                    $iterator->reInit();
-                    $iterator->seekToToken($token);
-                }
-            }
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     * @return boolean
+     */
+    protected function _shouldInsertBreakAfterCurrentOpeningCurlyBrace(Token $token, Iterator $iterator)
+    {
+        // @todo check if there is already a break ?!?!
+        if (true === $this->getOption('breakAfterIf') &&
+            $this->_isOpeningBraceAfterType($token, T_IF, $iterator)) {
+            return true;
         }
-
-        if (true === $this->getOption('breakAfterElse')) {
-            if ($this->_isOpeningBraceAfterType($token, T_ELSE, $iterator)) {
-                if (/* there is no break already after*/ true) {
-                    $newToken = new Token("\n", T_WHITESPACE);
-                    $this->_container->insertTokenAfter($token, $newToken);
-                    $iterator->reInit();
-                    $iterator->seekToToken($token);
-                }
-            }
+        if (true === $this->getOption('breakAfterElseif') &&
+            $this->_isOpeningBraceAfterType($token, T_ELSEIF, $iterator)) {
+            return true;
         }
+        if (true === $this->getOption('breakAfterElse') &&
+            $this->_isOpeningBraceAfterType($token, T_ELSE, $iterator)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -193,7 +210,12 @@ extends Action
             $iterator->seekToToken($token);
         }
     }
-    
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     * @return boolean
+     */
     protected function _isFollowedByWrongWhitespace(Token $token, Iterator $iterator)
     {
         $iterator->next();
@@ -299,7 +321,12 @@ extends Action
         }
         $iterator->seekToToken($token);
     }
-    
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     * @return boolean
+     */
     protected function _isFollowedByWhitespace(Token $token, Iterator $iterator)
     {
         $iterator->next();
@@ -310,7 +337,12 @@ extends Action
         }
         return false;
     }
-    
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     * @return boolean
+     */
     protected function _isPrecededByWhitespace(Token $token, Iterator $iterator)
     {
         $iterator->previous();
@@ -321,7 +353,12 @@ extends Action
         }
         return false;
     }
-    
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     * @return boolean
+     */
     protected function _isPrecededByWrongWhitespace(Token $token, Iterator $iterator)
     {
         $iterator->previous();
@@ -332,7 +369,13 @@ extends Action
         }
         return false;
     }
-    
+
+    /**
+     * @param Token $token
+     * @param integer|null $type
+     * @param Iterator $iterator
+     * @return boolean
+     */
     protected function _isOpeningBraceAfterType(Token $token, $type, Iterator $iterator)
     {
         if (!$this->isOpeningCurlyBrace($token)) {

@@ -108,8 +108,6 @@ class FormatIfElseifElseTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output9.php'),
         );
 
-
-
         return $data;
     }
 
