@@ -31,7 +31,25 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     public function __construct(TokenContainer $container)
     {
         $this->_container = $container;
-        $this->_keys = array_keys($container->toArray());
+        $this->_init();
+    }
+
+    protected function _init()
+    {
+        $this->_keys = array_keys($this->_container->toArray());
+    }
+
+    /**
+     * Reinits the Iterator from the container and resets it's position;
+     *
+     * @param Token $token
+     * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
+     */
+    public function reInit(Token $token = null)
+    {
+        $this->_init();
+        $this->_pos = 0;
+        return $this;
     }
 
     /**
@@ -127,18 +145,19 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     *
      * @param Token $token
-     * @return
+     * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
      */
     public function seekToToken(Token $token)
     {
         $key =$this->_container->getOffsetByToken($token);
         $this->seek($key);
+        return $this;
     }
 
     /**
      * @param integer $position
+     * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
      */
     public function seek($key)
     {
@@ -148,5 +167,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         } else {
             throw new \OutOfBoundsException('Position not found');
         }
+        return $this;
     }
 }

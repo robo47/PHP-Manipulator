@@ -9,6 +9,8 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group TokenContainer
  * @group TokenContainer\Iterator
+ * @todo test Iterator works if first element has not pos = 0
+ * @todo test fluent Interfaces!
  */
 class IteratorTest extends \Tests\TestCase
 {
@@ -51,7 +53,7 @@ class IteratorTest extends \Tests\TestCase
     public function testIterator()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[0], $iterator->current());
@@ -133,7 +135,7 @@ class IteratorTest extends \Tests\TestCase
     public function testSeek()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
 
         $iterator->next();
         $iterator->next();
@@ -175,7 +177,7 @@ class IteratorTest extends \Tests\TestCase
             6 => Token::factory(array(null, ';')),
         );
         $container = new TokenContainer($tokens);
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
 
         foreach($tokens as $token) {
             $iterator->seekToToken($token);
@@ -191,7 +193,7 @@ class IteratorTest extends \Tests\TestCase
     public function testSeekToTokenThrowsOutOfBoundsExceptionIfTokenNotInContainer()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
 
         try {
             $iterator->seekToToken(new Token('Foo'));
@@ -207,11 +209,11 @@ class IteratorTest extends \Tests\TestCase
     public function testCountable()
     {
         $container = new TokenContainer();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
         $this->assertCount(0, $iterator);
 
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
         $this->assertCount(5, $iterator);
     }
 
@@ -222,7 +224,7 @@ class IteratorTest extends \Tests\TestCase
     public function testKeyThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
         $iterator->seek(6);
         $iterator->next();
 
@@ -241,7 +243,7 @@ class IteratorTest extends \Tests\TestCase
     public function testCurrentThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
         $iterator->seek(6);
         $iterator->next();
 
@@ -260,7 +262,7 @@ class IteratorTest extends \Tests\TestCase
     public function testSeekThrowsOutOfBoundsExceptionIfIteratorIsNotValid()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\Iterator($container);
+        $iterator = new Iterator($container);
 
         try {
             $iterator->seek(8);
@@ -268,5 +270,22 @@ class IteratorTest extends \Tests\TestCase
         } catch (\OutOfBoundsException $e) {
             $this->assertEquals('Position not found', $e->getMessage(), 'Wrong exception message');
         }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     */
+    public function testReInit()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new Iterator($container);
+
+        $this->assertCount(count($container), $iterator);
+
+        $container[] = new Token('Foo', null);
+
+        $this->assertCount(count($container)-1, $iterator);
+        $iterator->reInit();
+        $this->assertCount(count($container), $iterator);
     }
 }

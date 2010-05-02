@@ -122,4 +122,23 @@ class ReverseIteratorTest extends \Tests\TestCase
         $this->assertSame($container[6], $iterator->current());
         $this->assertEquals(6, $iterator->key(), 'Wrong key');
     }
+
+
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator::reInit
+     */
+    public function testReInit()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new ReverseIterator($container);
+
+        $this->assertCount(count($container), $iterator);
+
+        $container[] = new Token('Foo', null);
+
+        $this->assertCount(count($container)-1, $iterator);
+        $iterator->reInit();
+        $this->assertCount(count($container), $iterator);
+    }
 }

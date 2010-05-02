@@ -10,12 +10,16 @@ class ReverseIterator extends Iterator
 {
 
     /**
-     *
      * @param TokenContainer $container
      */
     public function __construct(TokenContainer $container)
     {
         parent::__construct($container);
+    }
+
+    protected function _init()
+    {
+        parent::_init();
         $this->_keys = array_reverse($this->_keys);
     }
 }
