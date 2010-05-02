@@ -43,21 +43,19 @@ class AddPublicKeywordTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output1.php'),
         );
 
-        // @todo test this
-        #2 Test it only adds to methods and not to functions inside methods
+        #2 Test it only adds public to methods and not to functions inside methods (crazy ... but possible :P)
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
         );
-//
-//        // @todo test this
-//        #3 Test it not adds to anonymous functions!
-//        $data[] = array(
-//            array(),
-//            $this->getContainerFromFixture($path . 'input3.php'),
-//            $this->getContainerFromFixture($path . 'output3.php'),
-//        );
+        
+        #3 Test it not adds public to anonymous functions
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
+        );
 
         return $data;
     }
