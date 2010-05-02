@@ -28,7 +28,7 @@ extends Action
         $this->_container = $container;
         $iterator = $container->getIterator();
 
-        $insideClass = false;
+        $insideClassOrInterface = false;
         $classLevel = null;
         $level = 0;
         $insideMethod = false;
@@ -36,14 +36,14 @@ extends Action
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isOpeningCurlyBrace( $token, T_CLASS)) {
+            if ($this->isOpeningCurlyBrace($token)) {
                 $level++;
             }
-            if ($this->isClosingCurlyBrace( $token, T_CLASS)) {
+            if ($this->isClosingCurlyBrace($token)) {
                 $level--;
-
-                if ($classLevel === $level  && true === $insideClass) {
-                    $insideClass = false;
+                
+                if ($classLevel === $level && true === $insideClassOrInterface) {
+                    $insideClassOrInterface = false;
                     $classLevel = null;
                     if (true === $insideMethod) {
                         $insideMethod = false;
@@ -51,11 +51,11 @@ extends Action
                     }
                 }
             }
-            if ($this->isType($token, T_CLASS)) {
-                $insideClass = true;
+            if ($this->isType($token, array(T_CLASS, T_INTERFACE))) {
+                $insideClassOrInterface = true;
                 $classLevel = $level;
             }
-            if (true === $insideClass && false === $insideMethod) {
+            if (true === $insideClassOrInterface && false === $insideMethod) {
                 if ($this->isType($token, T_FUNCTION)) {
                     $insideMethod = true;
                     $result = $this->findTokens('FunctionFinder', $token, $container, array('includeMethodProperties' => true));
@@ -67,9 +67,12 @@ extends Action
         $container->retokenize();
     }
 
+    /**
+     * @param Result $result
+     */
     protected function _checkAndAddPublic(Result $result)
     {
-        if(!$this->_checkResultContainsTokenType($result, array(T_PUBLIC, T_PRIVATE, T_PROTECTED))) {
+        if (!$this->_checkResultContainsTokenType($result, array(T_PUBLIC, T_PRIVATE, T_PROTECTED))) {
             $previous = $this->_container->getPreviousToken($result->getFirstToken());
             $publicToken = new Token('public', T_PUBLIC);
             $whitespaceToken = new Token(' ', T_WHITESPACE);
@@ -80,15 +83,14 @@ extends Action
     }
 
     /**
-     *
      * @param Result $result
      * @param array $tokentype
      * @return boolean
      */
     protected function _checkResultContainsTokenType(Result $result, array $tokentypes)
     {
-        foreach($result->getTokens() as $token) {
-            if($this->isType($token, $tokentypes)) {
+        foreach ($result->getTokens() as $token) {
+            if ($this->isType($token, $tokentypes)) {
                 return true;
             }
         }

@@ -57,6 +57,13 @@ class AddPublicKeywordTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output3.php'),
         );
 
+        #3 Test it works with interfaces too
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input4.php'),
+            $this->getContainerFromFixture($path . 'output4.php'),
+        );
+
         return $data;
     }
 
