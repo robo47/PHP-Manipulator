@@ -29,7 +29,7 @@ abstract class AHelper
     public function evaluateConstraint($constraint, Token $token, $params = null, $autoPrefix = true)
     {
         $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\TokenConstraint\\', $autoPrefix);
-        if (!$constraint instanceof \PHP\Manipulator\TokenConstraint) {
+        if (!$constraint instanceof TokenConstraint) {
             $message = 'constraint is not instance of \PHP\Manipulator\TokenConstraint';
             throw new \Exception($message);
         }
@@ -49,7 +49,7 @@ abstract class AHelper
     public function evaluateContainerConstraint($constraint, TokenContainer $container, $params = null, $autoPrefix = true)
     {
         $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\ContainerConstraint\\', $autoPrefix);
-        if (!$constraint instanceof \PHP\Manipulator\ContainerConstraint) {
+        if (!$constraint instanceof ContainerConstraint) {
             $message = 'constraint is not instance of \PHP\Manipulator\ContainerConstraint';
             throw new \Exception($message);
         }
@@ -69,7 +69,7 @@ abstract class AHelper
     {
         $manipulator = $this->getClassInstance($manipulator, 'PHP\Manipulator\TokenManipulator\\', $autoPrefix);
 
-        if (!$manipulator instanceof \PHP\Manipulator\TokenManipulator) {
+        if (!$manipulator instanceof TokenManipulator) {
             $message = 'manipulator is not instance of \PHP\Manipulator\TokenManipulator';
             throw new \Exception($message);
         }
@@ -112,7 +112,7 @@ abstract class AHelper
     {
         $finder = $this->getClassInstance($finder, 'PHP\Manipulator\TokenFinder\\', $autoPrefix);
 
-        if (!$finder instanceof \PHP\Manipulator\TokenFinder) {
+        if (!$finder instanceof TokenFinder) {
             $message = 'finder is not instance of \PHP\Manipulator\TokenFinder';
             throw new \Exception($message);
         }
