@@ -18,6 +18,7 @@ class __classname__Test extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $action = new __classname__();
+        $this->assertCount(0, $action->getOptions());
     }
 
     /**
