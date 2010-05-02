@@ -288,4 +288,30 @@ class IteratorTest extends \Tests\TestCase
         $iterator->reInit();
         $this->assertCount(count($container), $iterator);
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     */
+    public function testReInitWithoutSeek()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new Iterator($container);
+        $iterator->seekToToken($container[5]);
+        $this->assertSame($iterator->current(), $container[5]);
+        $iterator->reInit();
+        $this->assertSame($iterator->current(), $container[0]);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     */
+    public function testReInitWithSeek()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new Iterator($container);
+        $iterator->seekToToken($container[5]);
+        $this->assertSame($iterator->current(), $container[5]);
+        $iterator->reInit($container[5]);
+        $this->assertSame($iterator->current(), $container[5]);
+    }
 }

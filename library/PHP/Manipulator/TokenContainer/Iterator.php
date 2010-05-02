@@ -49,6 +49,10 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     {
         $this->_init();
         $this->_pos = 0;
+        // @todo test!
+        if (null !== $token) {
+            $this->seekToToken($token);
+        }
         return $this;
     }
 
