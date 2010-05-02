@@ -6,8 +6,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer\ReverseIterator;
 
-// @todo insertTokenBefore
-// @todo insertTokensBefore
 class TokenContainer
 implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -315,6 +313,53 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         $offset = $this->getOffsetByToken($after);
         $position = $this->_getPositionForOffset($offset);
         $this->_insertAtPosition($position + 1, $newToken);
+        return $this;
+    }
+
+
+
+    /**
+     * Insert Token Before
+     *
+     * @param \PHP\Manipulator\Token $after
+     * @param \PHP\Manipulator\Token $newToken
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     */
+    public function insertTokenBefore(Token $before, Token $newToken)
+    {
+        if (!$this->contains($before)) {
+            $message = "Container does not contain Token: $before";
+            throw new \Exception($message);
+        }
+        $iterator = $this->getIterator();
+        $iterator->seekToToken($before);
+        $iterator->previous();
+        $position = -1;
+        if ($iterator->valid()) {
+            $position = $this->_getPositionForOffset($iterator->key());
+        }
+        $this->_insertAtPosition($position+1, $newToken);
+        return $this;
+    }
+
+    /**
+     * Insert Tokens After
+     *
+     * @param \PHP\Manipulator\Token $after
+     * @param array $newTokens
+     * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
+     */
+    public function insertTokensBefore(Token $before, array $newTokens)
+    {
+        if (!$this->contains($before)) {
+            $message = "Container does not contain Token: $before";
+            throw new \Exception($message);
+        }
+        $newTokens = array_reverse($newTokens);
+        foreach ($newTokens as $newToken) {
+            $this->insertTokenBefore($before, $newToken);
+            $before = $newToken;
+        }
         return $this;
     }
 

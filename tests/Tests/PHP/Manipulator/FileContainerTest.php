@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 
 /**
  * @group TokenContainer
+ * @group FileContainer
  */
 class FileContainerTest extends \Tests\TestCase
 {

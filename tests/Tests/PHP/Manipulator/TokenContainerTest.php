@@ -341,6 +341,53 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     */
+    public function testInsertTokenBefore()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer(array($token1,$token4));
+        $container->insertTokenBefore($token4, $token3);
+
+        $this->assertCount(3, $container);
+
+        $container->insertTokenBefore($token3, $token2);
+
+        $this->assertCount(4, $container);
+
+        $this->assertEquals(0, $container->getOffsetByToken($token1));
+        $this->assertEquals(1, $container->getOffsetByToken($token2));
+        $this->assertEquals(2, $container->getOffsetByToken($token3));
+        $this->assertEquals(3, $container->getOffsetByToken($token4));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     */
+    public function testInsertTokenBeforeOnFirstToken()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer(array($token3));
+        $container->insertTokenBefore($token3, $token2);
+
+        $this->assertCount(2, $container);
+
+        $container->insertTokenBefore($token2, $token1);
+
+        $this->assertCount(3, $container);
+
+        $this->assertEquals(0, $container->getOffsetByToken($token1));
+        $this->assertEquals(1, $container->getOffsetByToken($token2));
+        $this->assertEquals(2, $container->getOffsetByToken($token3));
+        
+    }
+
+    /**
      * @covers \PHP\Manipulator\TokenContainer::insertTokenAfter
      * @covers \Exception
      */
@@ -357,6 +404,65 @@ class TokenContainerTest extends \Tests\TestCase
         } catch (\Exception $e) {
             $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
         }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     * @covers \Exception
+     */
+    public function testInsertTokenBeforeThrowsExceptionIfAfterTokenNotExists()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $container = new TokenContainer(array($token1));
+
+        try {
+            $container->insertTokenBefore($token2, $token3);
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     */
+    public function testInsertTokensBefore()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer(array($token1,$token4));
+        $container->insertTokensBefore($token4, array($token2, $token3));
+
+        $this->assertCount(4, $container);
+
+        $this->assertEquals(0, $container->getOffsetByToken($token1));
+        $this->assertEquals(1, $container->getOffsetByToken($token2));
+        $this->assertEquals(2, $container->getOffsetByToken($token3));
+        $this->assertEquals(3, $container->getOffsetByToken($token4));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     */
+    public function testInsertTokensBeforeOnFirst()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer(array($token4));
+        $container->insertTokensBefore($token4, array($token1, $token2, $token3));
+
+        $this->assertCount(4, $container);
+
+        $this->assertEquals(0, $container->getOffsetByToken($token1));
+        $this->assertEquals(1, $container->getOffsetByToken($token2));
+        $this->assertEquals(2, $container->getOffsetByToken($token3));
+        $this->assertEquals(3, $container->getOffsetByToken($token4));
     }
 
     /**
