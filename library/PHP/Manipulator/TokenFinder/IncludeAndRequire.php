@@ -27,8 +27,7 @@ extends TokenFinder
         }
         $result = new Result();
         $iterator = $container->getIterator();
-        $pos = $container->getOffsetByToken($token);
-        $iterator->seek($pos);
+        $iterator->seekToToken($token);
 
         while ($iterator->valid()) {
             $token = $iterator->current();

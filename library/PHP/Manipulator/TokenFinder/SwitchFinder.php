@@ -26,8 +26,7 @@ extends TokenFinder
         }
         $result = new Result();
         $iterator = $container->getIterator();
-        $key = $container->getOffsetByToken($token);
-        $iterator->seek($key);
+        $iterator->seekToToken($token);
 
         $level = 0;
         $inside = false;

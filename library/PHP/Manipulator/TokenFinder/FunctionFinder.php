@@ -28,9 +28,8 @@ extends TokenFinder
             throw new \Exception('Start-token is not T_FUNCTION: ' . $token->getTokenName());
         }
 
-        $pos = $container->getOffsetByToken($token);
         $iterator = $container->getIterator();
-        $iterator->seek($pos);
+        $iterator->seekToToken($token);
 
         if ($this->_includeMethodProperties($params) && !$this->_includePhpDoc($params)) {
             // travel reverse as long as there is only whitespace and stuff
@@ -51,7 +50,7 @@ extends TokenFinder
             }
             // didn't find anything
             if (!$iterator->valid()) {
-                $iterator->seek($pos);
+                $iterator->seekToToken($token);
             }
         }
 
@@ -74,7 +73,7 @@ extends TokenFinder
             }
             // didn't find anything
             if (!$iterator->valid()) {
-                $iterator->seek($pos);
+                $iterator->seekToToken($token);
             }
         }
 

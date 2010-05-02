@@ -41,7 +41,7 @@ extends Action
     protected function _parseFunctionArguments(TokenContainer $container, Token $startToken)
     {
         $iterator = $container->getIterator();
-        $iterator->seek($container->getOffsetByToken($startToken));
+        $iterator->seekToToken($startToken);
         $indentionLevel = 0;
         $inside = false;
         $arguments = array();
