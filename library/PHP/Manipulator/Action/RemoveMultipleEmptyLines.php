@@ -29,15 +29,21 @@ extends Action
         $maxEmptyLines = $this->getOption('maxEmptyLines');
         $defaultBreak = $this->getOption('defaultBreak');
 
-        $pattern = '~(((\r\n|\r|\n)[\t| ]{0,}){' . ($maxEmptyLines + 1) . ',})~';
-        $replace = str_repeat($defaultBreak, $maxEmptyLines);
-
+        $previous = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->isType($token, T_WHITESPACE)) {
+                if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous)) {
+                    $maxEmptyLines = $this->getOption('maxEmptyLines') - 1;
+                } else {
+                    $maxEmptyLines = $this->getOption('maxEmptyLines');
+                }
+                $pattern = '~(((\r\n|\r|\n)([\t| ]{0,})){' . ($maxEmptyLines + 1) . ',}([\t| ]{0,}))~';
+                $replace = str_repeat($defaultBreak, $maxEmptyLines) . '\4';
                 $value = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
             }
+            $previous = $token;
             $iterator->next();
         }
     }
