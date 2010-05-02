@@ -101,7 +101,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      */
     public function valid()
     {
-        return $this->_isValidPosition($this->_pos + 1);
+        return $this->_isValidPosition($this->_pos);
     }
 
     /**
@@ -110,7 +110,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      */
     protected function _isValidPosition($position)
     {
-        if (array_key_exists($this->_pos, $this->_keys)) {
+        if (array_key_exists($position, $this->_keys)) {
             return true;
         } else {
             return false;
