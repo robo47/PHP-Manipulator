@@ -187,28 +187,24 @@ extends Action
 
     /**
      * @param Token $token
-     * @param \PHP\Formatter\TokenContainer\Iterator $iterator
+     * @param Iterator $iterator
      */
-    protected function _formatIf(Token $token, Iterator $iterator)
+    protected function _removeNextToken(Token $token, Iterator $iterator)
     {
-        if (!$this->_isFollowedByWhitespace($token, $iterator) &&
-            true === $this->getOption('spaceAfterIf')) {
-            $whitespaceToken = new Token(' ', null);
-            $this->_container->insertTokenAfter($token, $whitespaceToken);
-            $iterator->reInit();
-            $iterator->seekToToken($token);
-        } elseif ($this->_isFollowedByWrongWhitespace($token, $iterator) &&
-            true === $this->getOption('spaceAfterIf')) {
-            $iterator->next();
-            $whitespaceToken = $iterator->current();
-            $whitespaceToken->setValue(' ');
-        } elseif (false === $this->getOption('spaceAfterIf') &&
-            $this->_isFollowedByWhitespace($token, $iterator)) {
-            $iterator->next();
-            $this->_container->removeToken($iterator->current());
-            $iterator->reInit();
-            $iterator->seekToToken($token);
-        }
+        $iterator->next();
+        $this->_container->removeToken($iterator->current());
+        $iterator->reInit($token);
+    }
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     */
+    protected function _removePreviousToken(Token $token, Iterator $iterator)
+    {
+        $iterator->previous();
+        $this->_container->removeToken($iterator->current());
+        $iterator->reInit($token);
     }
 
     /**
@@ -229,48 +225,93 @@ extends Action
 
     /**
      * @param Token $token
+     * @param Iterator $iterator
+     */
+    protected function _addWhitespaceTokenAfter(Token $token, Iterator $iterator)
+    {
+        $whitespaceToken = new Token(' ', null);
+        $this->_container->insertTokenAfter($token, $whitespaceToken);
+        $iterator->reInit($token);
+    }
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     */
+    protected function _addWhitespaceTokenBefore(Token $token, Iterator $iterator)
+    {
+        $whitespaceToken = new Token(' ', null);
+        $this->_container->insertTokenBefore($token, $whitespaceToken);
+        $iterator->reInit($token);
+    }
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     */
+    protected function _setNextTokenValueToOneSpace(Token $token, Iterator $iterator)
+    {
+        $iterator->next();
+        $iterator->current()->setValue(' ');
+        $iterator->reInit($token);
+    }
+
+    /**
+     * @param Token $token
+     * @param Iterator $iterator
+     */
+    protected function _setPreviousTokenValueToOneSpace(Token $token, Iterator $iterator)
+    {
+        $iterator->previous();
+        $iterator->current()->setValue(' ');
+        $iterator->reInit($token);
+    }
+
+    /**
+     * @param Token $token
+     * @param \PHP\Formatter\TokenContainer\Iterator $iterator
+     */
+    protected function _formatIf(Token $token, Iterator $iterator)
+    {
+        if (!$this->_isFollowedByWhitespace($token, $iterator) &&
+            true === $this->getOption('spaceAfterIf')) {
+            $this->_addWhitespaceTokenAfter($token, $iterator);
+        } elseif ($this->_isFollowedByWrongWhitespace($token, $iterator) &&
+            true === $this->getOption('spaceAfterIf')) {
+            $this->_setNextTokenValueToOneSpace($token, $iterator);
+        } elseif (false === $this->getOption('spaceAfterIf') &&
+            $this->_isFollowedByWhitespace($token, $iterator)) {
+            $this->_removeNextToken($token, $iterator);
+        }
+    }
+
+    /**
+     * @param Token $token
      * @param \PHP\Formatter\TokenContainer\Iterator $iterator
      */
     protected function _formatElseIf(Token $token, Iterator $iterator)
     {
         if (!$this->_isFollowedByWhitespace($token, $iterator) &&
             true === $this->getOption('spaceAfterElseif')) {
-            $whitespaceToken = new Token(' ', null);
-            $this->_container->insertTokenAfter($token, $whitespaceToken);
-            $iterator->reInit();
-            $iterator->seekToToken($token);
+            $this->_addWhitespaceTokenAfter($token, $iterator);
         } elseif ($this->_isFollowedByWrongWhitespace($token, $iterator) &&
             true === $this->getOption('spaceAfterElseif')) {
-            $iterator->next();
-            $whitespaceToken = $iterator->current();
-            $whitespaceToken->setValue(' ');
+            $this->_setNextTokenValueToOneSpace($token, $iterator);
         } elseif (false === $this->getOption('spaceAfterElseif') &&
             $this->_isFollowedByWhitespace($token, $iterator)) {
-            $iterator->next();
-            $this->_container->removeToken($iterator->current());
-            $iterator->reInit();
+            $this->_removeNextToken($token, $iterator);
         }
         $iterator->seekToToken($token);
 
         if (!$this->_isPrecededByWhitespace($token, $iterator) &&
             true === $this->getOption('spaceBeforeElseif')) {
-            $whitespaceToken = new Token(' ', null);
-            $this->_container->insertTokenBefore($token, $whitespaceToken);
-            $iterator->reInit();
-            $iterator->seekToToken($token);
-        }if
-        ($this->_isPrecededByWrongWhitespace($token, $iterator) &&
+            $this->_addWhitespaceTokenBefore($token, $iterator);
+        } elseif ($this->_isPrecededByWrongWhitespace($token, $iterator) &&
             true === $this->getOption('spaceBeforeElseif')) {
-            $iterator->previous();
-            $whitespaceToken = $iterator->current();
-            $whitespaceToken->setValue(' ');
+            $this->_setPreviousTokenValueToOneSpace($token, $iterator);
         } elseif (false === $this->getOption('spaceBeforeElseif') &&
             $this->_isPrecededByWhitespace($token, $iterator)) {
-
-            $iterator->previous();
-            $this->_container->removeToken($iterator->current());
-            $iterator->reInit();
-            $iterator->seekToToken($token);
+            $this->_removePreviousToken($token, $iterator);
         }
         $iterator->seekToToken($token);
     }
@@ -283,41 +324,25 @@ extends Action
     {
         if (!$this->_isFollowedByWhitespace($token, $iterator) &&
             true === $this->getOption('spaceAfterElse')) {
-            $whitespaceToken = new Token(' ', null);
-            $this->_container->insertTokenAfter($token, $whitespaceToken);
-            $iterator->reInit();
-            $iterator->seekToToken($token);
+            $this->_addWhitespaceTokenAfter($token, $iterator);
         } elseif ($this->_isFollowedByWrongWhitespace($token, $iterator) &&
             true === $this->getOption('spaceAfterElse')) {
-            $iterator->next();
-            $whitespaceToken = $iterator->current();
-            $whitespaceToken->setValue(' ');
+            $this->_setNextTokenValueToOneSpace($token, $iterator);
         } elseif (false === $this->getOption('spaceAfterElse') &&
             $this->_isFollowedByWhitespace($token, $iterator)) {
-            $iterator->next();
-            $this->_container->removeToken($iterator->current());
-            $iterator->reInit();
+            $this->_removeNextToken($token, $iterator);
         }
         $iterator->seekToToken($token);
 
         if (!$this->_isPrecededByWhitespace($token, $iterator) &&
             true === $this->getOption('spaceBeforeElse')) {
-            $whitespaceToken = new Token(' ', null);
-            $this->_container->insertTokenBefore($token, $whitespaceToken);
-            $iterator->reInit();
-            $iterator->seekToToken($token);
-        }if
-        ($this->_isPrecededByWrongWhitespace($token, $iterator) &&
+            $this->_addWhitespaceTokenBefore($token, $iterator);
+        } elseif ($this->_isPrecededByWrongWhitespace($token, $iterator) &&
             true === $this->getOption('spaceBeforeElse')) {
-            $iterator->previous();
-            $whitespaceToken = $iterator->current();
-            $whitespaceToken->setValue(' ');
+            $this->_setPreviousTokenValueToOneSpace($token, $iterator);
         } elseif (false === $this->getOption('spaceBeforeElse') &&
             $this->_isPrecededByWhitespace($token, $iterator)) {
-            $iterator->previous();
-            $this->_container->removeToken($iterator->current());
-            $iterator->reInit();
-            $iterator->seekToToken($token);
+            $this->_removePreviousToken($token, $iterator);
         }
         $iterator->seekToToken($token);
     }
@@ -382,10 +407,10 @@ extends Action
             return false;
         }
         $breakTokens = array(T_CLASS, T_FUNCTION, T_IF, T_ELSE, T_ELSEIF);
-        $compareCallback = function($tokentype) use ($type) {
+        $filterCallback = function($tokentype) use ($type) {
             return ($tokentype === $type) ? false : true;
         };
-        $breakTokens = array_filter($breakTokens, $compareCallback);
+        $breakTokens = array_filter($breakTokens, $filterCallback);
         $result = false;
         while ($iterator->valid()) {
             $iterator->previous();
