@@ -2,39 +2,19 @@
 
 namespace PHP\Manipulator\Action;
 
-use PHP\Manipulator\Action;
+use PHP\Manipulator\Action\StripPhp;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 class StripNonPhp
-extends Action
+extends StripPhp
 {
-
     /**
-     * Remove non-php-code
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
+     * @param boolean $open
+     * @return boolean
      */
-    public function run(TokenContainer $container, $params = null)
+    protected function _shoudDelete($open)
     {
-        $iterator = $container->getIterator();
-
-        $open = false;
-        $deleteTokens = array();
-        while ($iterator->valid()) {
-            $token = $iterator->current();
-            if ($this->isType($token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
-                $open = true;
-            }
-            if (!$open) {
-                $deleteTokens[] = $token;
-            }
-            if ($this->isType($token, T_CLOSE_TAG)) {
-                $open = false;
-            }
-            $iterator->next();
-        }
-        $container->removeTokens($deleteTokens);
-        $container->retokenize();
+        return !$open;
     }
 }
