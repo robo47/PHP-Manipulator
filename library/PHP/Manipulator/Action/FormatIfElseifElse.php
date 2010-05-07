@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
 
+// @todo support break directly before and after elseif/else (brace on the next line) ...
 class FormatIfElseifElse
 extends Action
 {
@@ -56,15 +57,22 @@ extends Action
             $this->setOption('spaceBeforeElse', true);
         }
 
-        if (!$this->hasOption('breakAfterIf')) {
-            $this->setOption('breakAfterIf', true);
+        if (!$this->hasOption('breakAfterCurlyBraceOfIf')) {
+            $this->setOption('breakAfterCurlyBraceOfIf', true);
         }
-        if (!$this->hasOption('breakAfterElse')) {
-            $this->setOption('breakAfterElse', true);
+        if (!$this->hasOption('breakAfterCurlyBraceOfElse')) {
+            $this->setOption('breakAfterCurlyBraceOfElse', true);
         }
-        if (!$this->hasOption('breakAfterElseif')) {
-            $this->setOption('breakAfterElseif', true);
+        if (!$this->hasOption('breakAfterCurlyBraceOfElseif')) {
+            $this->setOption('breakAfterCurlyBraceOfElseif', true);
         }
+
+//        if (!$this->hasOption('breakBeforeCurlyBraceOfElse')) {
+//            $this->setOption('breakBeforeCurlyBraceOfElse', true);
+//        }
+//        if (!$this->hasOption('breakBeforeCurlyBraceOfElseif')) {
+//            $this->setOption('breakBeforeCurlyBraceOfElseif', true);
+//        }
     }
 
     /**
@@ -109,6 +117,11 @@ extends Action
                         $this->_container->insertTokenBefore($token, $newToken);
                     }
                 }
+
+//                if (true === $this->getOption('breakBeforeCurlyBraceOfElse') && $this->_isFollowedByElseOrElseIf($token, $iterator)) {
+//                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($token, $iterator);
+//                }
+
                 if ($this->_stackHasLevelMatchingItem($this->_ifStack)) {
                     $this->_ifStack->pop();
                 }
@@ -121,19 +134,61 @@ extends Action
             }
             $iterator->next();
         }
-        //var_dump($this->_ifStack->isEmpty(), $this->_elseStack->isEmpty(), $this->_elseifStack->isEmpty());
         $container->retokenize();
     }
 
+//    /**
+//     * @param Token $token
+//     * @param Iterator $iterator
+//     */
+//    protected function _addLineBreakBeforeCurlyBraceIfNotPresent(Token $token, Iterator $iterator)
+//    {
+//        $iterator->previous();
+//        if (!$this->isType($token, T_WHITESPACE) || $this->evaluateConstraint('ContainsNewline', $token)) {
+//            $whitespaceToken = new Token("\n", T_WHITESPACE);
+//            $this->_container->insertTokenBefore($token, $whitespaceToken);
+//        }
+//        $iterator->reInit($token);
+//    }
+
+//    /**
+//     * @param Token $token
+//     * @param Iterator $iterator
+//     * @return boolean
+//     */
+//    protected function _isFollowedByElseOrElseIf(Token $token, Iterator $iterator)
+//    {
+//        $result = false;
+//        $iterator->next();
+//        while ($iterator->valid()) {
+//
+//            $current = $iterator->current();
+//            if($this->isType($current, array(T_ELSE, T_ELSEIF))) {
+//                $result = true;
+//                break;
+//            }
+//            if(!$this->isType($current, array(T_WHITESPACE, T_COMMENT))) {
+//                $result = false;
+//                break;
+//            }
+//            $iterator->next();
+//        }
+//        $iterator->reInit($token);
+//        return $result;
+//    }
+
+    /**
+     * @return boolean
+     */
     protected function _shouldInsertBreakBeforeCurrentCurlyBrace()
     {
-        if (true === $this->getOption('breakAfterIf') && $this->_stackHasLevelMatchingItem($this->_ifStack)) {
+        if (true === $this->getOption('breakAfterCurlyBraceOfIf') && $this->_stackHasLevelMatchingItem($this->_ifStack)) {
             return true;
         }
-        if (true === $this->getOption('breakAfterElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack)) {
+        if (true === $this->getOption('breakAfterCurlyBraceOfElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack)) {
             return true;
         }
-        if (true === $this->getOption('breakAfterElse') && $this->_stackHasLevelMatchingItem($this->_elseStack)) {
+        if (true === $this->getOption('breakAfterCurlyBraceOfElse') && $this->_stackHasLevelMatchingItem($this->_elseStack)) {
             return true;
         }
         return false;
@@ -170,15 +225,15 @@ extends Action
     protected function _shouldInsertBreakAfterCurrentOpeningCurlyBrace(Token $token, Iterator $iterator)
     {
         // @todo check if there is already a break ?!?!
-        if (true === $this->getOption('breakAfterIf') &&
+        if (true === $this->getOption('breakAfterCurlyBraceOfIf') &&
             $this->_isOpeningBraceAfterType($token, T_IF, $iterator)) {
             return true;
         }
-        if (true === $this->getOption('breakAfterElseif') &&
+        if (true === $this->getOption('breakAfterCurlyBraceOfElseif') &&
             $this->_isOpeningBraceAfterType($token, T_ELSEIF, $iterator)) {
             return true;
         }
-        if (true === $this->getOption('breakAfterElse') &&
+        if (true === $this->getOption('breakAfterCurlyBraceOfElse') &&
             $this->_isOpeningBraceAfterType($token, T_ELSE, $iterator)) {
             return true;
         }
