@@ -2,7 +2,6 @@
 
 namespace PHP\Manipulator;
 
-// @todo check how to auto-inject config in AHelper and co (a factory to cache and create actions, contraints and manipulators?) into all stuff ?
 abstract class Config
 {
 

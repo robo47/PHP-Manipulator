@@ -6,6 +6,7 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
+// passing in own options will only apply rule for them
 class FormatOperators
 extends Action
 {
@@ -104,7 +105,6 @@ extends Action
                 )
             );
         }
-        // @todo if not has -> merge them (not with array_merge) + write test which checks it works
     }
 
     /**

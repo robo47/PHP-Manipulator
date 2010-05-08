@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use Tests\Constraint\ResultsMatch;
 use Tests\Util;
 
-// @todo test faile-message and stuff
 class ResultsMatchTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -138,7 +137,6 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         try {
             $resultsMatch->fail($other, '');
             $this->fail('no exception thrown');
-            //$this->assertEquals(, );
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
         }

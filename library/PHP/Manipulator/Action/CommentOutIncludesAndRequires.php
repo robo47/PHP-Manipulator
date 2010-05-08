@@ -5,7 +5,6 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
 
-// @todo add possibility to filter which tokens should be deleted and which not
 class CommentOutIncludesAndRequires
 extends Action
 {

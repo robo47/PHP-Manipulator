@@ -7,9 +7,6 @@ use PHP\Manipulator\Action\RemoveIndention;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-/**
- * @todo Enhance to work with alternate syntax!
- */
 class Indent
 extends Action
 {
@@ -17,21 +14,19 @@ extends Action
     /**
      * @var boolean
      */
-    protected $_inUse = false;
+    protected $_insideUse = false;
 
     /**
      * @var boolean
      */
-    protected $_inCase = false;
+    protected $_insideCase = false;
 
     /**
      * @var boolean
      */
-    protected $_inSwitch = false;
+    protected $_insideSwitch = false;
 
     /**
-     * Current Level of Indention
-     *
      * @var integer
      */
     protected $_indentionLevel = 0;
@@ -42,8 +37,6 @@ extends Action
     protected $_insideString = false;
 
     /**
-     * The current container to not have to pass it to each method
-     *
      * @var TokenContainer
      */
     protected $_container = null;
@@ -75,9 +68,9 @@ extends Action
      */
     protected function reset()
     {
-        $this->_inUse = false;
-        $this->_inCase = false;
-        $this->_inSwitch = false;
+        $this->_insideUse = false;
+        $this->_insideCase = false;
+        $this->_insideSwitch = false;
         $this->_indentionLevel = 0;
         $this->_switchStack = new \SplStack();
     }
@@ -120,7 +113,7 @@ extends Action
                 $nextToken = $iterator->current();
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->_indentWhitespace($token);
-                if ($this->isClosingCurlyBrace( $nextToken) && true === $this->_inSwitch && true === $this->_inCase) {
+                if ($this->isClosingCurlyBrace( $nextToken) && true === $this->_insideSwitch && true === $this->_insideCase) {
                     if ($this->_isSwitchClosingCurlyBrace($nextToken)) {
                         $this->_removeLastIndention($token);
                     }
@@ -140,7 +133,8 @@ extends Action
      * @param Token $token
      * @return boolean
      */
-    protected function _isSwitchClosingCurlyBrace(Token $token) {
+    protected function _isSwitchClosingCurlyBrace(Token $token)
+    {
         return (($this->_switchStack[$this->_switchStack->count() - 1]+1) === $this->_indentionLevel);
     }
 
@@ -174,12 +168,12 @@ extends Action
     protected function _useIndentionCheck(Token $token)
     {
         if ($this->isType($token, T_USE)) {
-            $this->_inUse = true;
+            $this->_insideUse = true;
             $this->_indentionLevel++;
         }
 
-        if ($this->isSemicolon( $token) && true === $this->_inUse) {
-            $this->_inUse = false;
+        if ($this->isSemicolon( $token) && true === $this->_insideUse) {
+            $this->_insideUse = false;
             $this->_indentionLevel--;
         }
     }
@@ -189,30 +183,30 @@ extends Action
      */
     protected function _switchIndentionCheck(Token $token)
     {
-        if ($this->isClosingCurlyBrace( $token) && true === $this->_inSwitch) {
+        if ($this->isClosingCurlyBrace( $token) && true === $this->_insideSwitch) {
             if ($this->_switchStack[$this->_switchStack->count() - 1] === $this->_indentionLevel) {
                 $this->_switchStack->pop();
-                $this->_inSwitch = false;
+                $this->_insideSwitch = false;
             }
         }
         if ($this->isType($token, T_SWITCH)) {
-            $this->_inSwitch = true;
+            $this->_insideSwitch = true;
             $this->_switchStack->push($this->_indentionLevel);
         }
 
-        if ($this->isType($token, T_BREAK) && true === $this->_inCase) {
-            $this->_inCase = false;
+        if ($this->isType($token, T_BREAK) && true === $this->_insideCase) {
+            $this->_insideCase = false;
             $this->_indentionLevel--;
         }
 
         // only indent if case/default is not directly followed by case/default
         if ($this->isType($token, array(T_CASE, T_DEFAULT)) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
             if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
-                true === $this->_inCase &&
+                true === $this->_insideCase &&
                 !$this->_isCasePreceededByBreak($token)) {
                 $this->_indentionLevel--;
             }
-            $this->_inCase = true;
+            $this->_insideCase = true;
             $this->_indentionLevel++;
         }
     }

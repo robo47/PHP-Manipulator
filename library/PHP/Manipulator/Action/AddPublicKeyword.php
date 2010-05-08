@@ -12,8 +12,6 @@ extends Action
 {
 
     /**
-     * @todo Many Actions need access to container in methods, maybe that could be moved to Action
-     *
      * @var \PHP\Manipulator\TokenContainer
      */
     protected $_container = null;
