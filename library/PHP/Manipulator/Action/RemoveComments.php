@@ -35,7 +35,7 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->_isCommentAndShouldBeRemoved($token)) {
-                if ($this->_isOneLineComment($token)) {
+                if ($this->evaluateConstraint('IsSinglelineComment', $token)) {
                     $token->setType(T_WHITESPACE);
                     $token->setValue($newline);
                 } else {
@@ -45,20 +45,6 @@ extends Action
             $iterator->next();
         }
         $container->retokenize();
-    }
-
-    /**
-     * @param Token $token
-     * @param TokenContainer $container
-     * @return boolean
-     */
-    protected function _isOneLineComment(Token $token)
-    {
-        // @todo IsOnlinelineComment-Constraint ?
-        if (true == preg_match('~^(\/\/|#){1,}~', $token->getValue())) {
-            return true;
-        }
-        return false;
     }
 
     /**
