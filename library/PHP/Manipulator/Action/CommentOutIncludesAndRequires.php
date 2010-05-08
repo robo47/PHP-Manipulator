@@ -33,7 +33,7 @@ extends Action
     protected function _handleTokens(TokenContainer $container, array $tokens)
     {
         foreach ($tokens as $start) {
-            try {
+            if ($container->contains($start)) {
                 $result = $this->findTokens('IncludeAndRequire', $start, $container);
                 $this->manipulateContainer(
                     'CreateMultilineCommentFromTokenToToken',
@@ -43,12 +43,6 @@ extends Action
                         'to' => $result->getLastToken(),
                     )
                 );
-            } catch (\Exception $e) {
-                // @todo better way to Catch this Exception, named exceptions or exceptions with error-codes
-                // ignore exceptions which occur on nested include/require-stuff
-                if (false === strpos($e->getMessage(), 'does not exist in this container')) {
-                    throw $e;
-                }
             }
         }
     }
