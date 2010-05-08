@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 // @todo Extend to support whitespace-comments after some tokens
-// @todo Think about some kind of Token+Container-Constraint which can check if a token is followed or preceded by something ...
 class UppercaseConstants
 extends Action
 {
