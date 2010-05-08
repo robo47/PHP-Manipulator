@@ -2,6 +2,7 @@
 
 namespace PHP\Manipulator;
 
+// @todo have a look at http://de3.php.net/manual/en/function.stream-resolve-include-path.php would require php 5.3.2 at least
 class Autoloader
 {
 
