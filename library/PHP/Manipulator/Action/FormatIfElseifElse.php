@@ -362,6 +362,7 @@ extends Action
      */
     protected function _isFollowedByWhitespace(Token $token, Iterator $iterator)
     {
+        // @todo Use isFollowedBy because of possible whitespace and stuff
         $iterator->next();
         $newToken = $iterator->current();
         $iterator->previous();
@@ -378,6 +379,7 @@ extends Action
      */
     protected function _isPrecededByWhitespace(Token $token, Iterator $iterator)
     {
+        // @todo Use isPrecededBy because of possible whitespace and stuff
         $iterator->previous();
         $newToken = $iterator->current();
         $iterator->next();
