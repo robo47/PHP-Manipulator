@@ -147,7 +147,7 @@ extends Action
     }
 
     /**
-     * Check if a Tiken is a Multilinecomment and indent it
+     * Check if a Token is a Multilinecomment and indent it
      *
      * @param Token $token
      */
@@ -212,7 +212,6 @@ extends Action
     }
 
     /**
-     *
      * @param Token $caseToken
      * @return boolean
      */
@@ -281,7 +280,7 @@ extends Action
     protected function _checkInsideString(Token $token)
     {
         // @todo isQuote-Constraint ?
-        if ($token->getValue() === '"') {
+        if (null === $token->getType() && $token->getValue() === '"') {
             $this->_insideString = !$this->_insideString;
         }
     }
