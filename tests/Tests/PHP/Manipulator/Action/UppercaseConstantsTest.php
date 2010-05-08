@@ -92,6 +92,13 @@ class UppercaseConstantsTest extends \Tests\TestCase
             false
         );
 
+        #9 test WHITESPACE between someTokens does not make any problems
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input9.php'),
+            $this->getContainerFromFixture($path . 'output9.php'),
+            false
+        );
+
         return $data;
     }
 
