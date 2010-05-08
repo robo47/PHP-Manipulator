@@ -14,7 +14,7 @@ class FormatCastsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers PHP\Manipulator\Action\FormatCasts::init
+     * @covers \PHP\Manipulator\Action\FormatCasts::init
      */
     public function testConstructorDefaults()
     {

@@ -14,7 +14,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers Tests\Testcase::getFixtureFileContent
+     * @covers \Tests\Testcase::getFixtureFileContent
      */
     public function testGetFixtureFileContent()
     {
@@ -25,7 +25,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::getFixtureFileContent
+     * @covers \Tests\Testcase::getFixtureFileContent
      */
     public function testGetFixtureFileContentThrowsExceptionOnNonExistingFile()
     {
@@ -40,7 +40,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::getResultFromContainer
+     * @covers \Tests\Testcase::getResultFromContainer
      */
     public function testGetResultFromContainer()
     {
@@ -59,7 +59,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::getContainerFromFixture
+     * @covers \Tests\Testcase::getContainerFromFixture
      */
     public function testGetContainerFromFixture()
     {
@@ -72,7 +72,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::assertCount
+     * @covers \Tests\Testcase::assertCount
      */
     public function testAssertCount()
     {
@@ -80,7 +80,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::assertTokenMatch
+     * @covers \Tests\Testcase::assertTokenMatch
      */
     public function testAssertTokenMatch()
     {
@@ -88,7 +88,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::assertTokenContainerMatch
+     * @covers \Tests\Testcase::assertTokenContainerMatch
      */
     public function testAssertTokenContainerMatch()
     {
@@ -96,7 +96,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::checkAsptags
+     * @covers \Tests\Testcase::checkAsptags
      */
     public function testCheckAsptags()
     {
@@ -105,7 +105,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::checkShorttags
+     * @covers \Tests\Testcase::checkShorttags
      */
     public function testCheckShorttags()
     {
@@ -114,7 +114,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::getConfig
+     * @covers \Tests\Testcase::getConfig
      */
     public function testGetConfig()
     {
@@ -124,7 +124,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Tests\Testcase::getXmlConfig
+     * @covers \Tests\Testcase::getXmlConfig
      */
     public function testGetXmlConfig()
     {
