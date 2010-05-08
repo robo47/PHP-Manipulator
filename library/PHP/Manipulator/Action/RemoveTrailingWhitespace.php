@@ -5,6 +5,7 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\Helper\NewlineDetector;
 
 class RemoveTrailingWhitespace extends Action
 {
@@ -13,10 +14,6 @@ class RemoveTrailingWhitespace extends Action
     {
         if (!$this->hasOption('removeEmptyLinesAtFileEnd')) {
             $this->setOption('removeEmptyLinesAtFileEnd', true);
-        }
-        // @todo Remove this setting and use NewlineDetector ?
-        if (!$this->hasOption('defaultBreak')) {
-            $this->setOption('defaultBreak', "\n");
         }
     }
 
@@ -28,8 +25,9 @@ class RemoveTrailingWhitespace extends Action
      */
     public function run(TokenContainer $container, $params = null)
     {
+        $newlineDetector = new NewlineDetector();
         $code = $container->toString();
-        $defaultBreak = $this->getOption('defaultBreak');
+        $defaultBreak = $newlineDetector->getNewlineFromContainer($container);
 
         $code = preg_split('~(\r\n|\n|\r)~', $code);
         $code = array_map('rtrim', $code);

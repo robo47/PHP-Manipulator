@@ -4,6 +4,7 @@ namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Helper\NewlineDetector;
 
 class RemoveMultipleEmptyLines
 extends Action
@@ -13,10 +14,6 @@ extends Action
         if (!$this->hasOption('maxEmptyLines')) {
             $this->setOption('maxEmptyLines', 2);
         }
-        // @todo Remove this setting and use NewlineDetector
-        if (!$this->hasOption('defaultBreak')) {
-            $this->setOption('defaultBreak', "\n");
-        }
     }
 
     /**
@@ -25,9 +22,10 @@ extends Action
      */
     public function run(TokenContainer $container, $params = null)
     {
+        $newlineDetector = new NewlineDetector();
         $iterator = $container->getIterator();
         $maxEmptyLines = $this->getOption('maxEmptyLines');
-        $defaultBreak = $this->getOption('defaultBreak');
+        $defaultBreak = $newlineDetector->getNewlineFromContainer($container);
 
         $previous = null;
         while ($iterator->valid()) {
