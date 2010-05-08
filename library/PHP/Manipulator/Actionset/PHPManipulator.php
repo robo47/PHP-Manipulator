@@ -9,6 +9,7 @@ use PHP\Manipulator\Action\Indent;
 use PHP\Manipulator\Action\ElseIfToElseAndIf;
 use PHP\Manipulator\Action\StripUnneededPhpCloseTag;
 use PHP\Manipulator\Action\RemoveTrailingWhitespace;
+use PHP\Manipulator\Action\FormatIfElseifElse;
 
 class PHPManipulator extends Actionset
 {
@@ -38,12 +39,25 @@ class PHPManipulator extends Actionset
             'stripWhitespaceFromEnd' => true
         );
 
+        $formatIfElseifElseOptions = array(
+            'spaceAfterIf' => true,
+            'spaceAfterElseif' => true,
+            'spaceAfterElse' => true,
+            'spaceBeforeIf' => true,
+            'spaceBeforeElseif' => true,
+            'spaceBeforeElse' => true,
+            'breakAfterCurlyBraceOfIf' => true,
+            'breakAfterCurlyBraceOfElse' => true,
+            'breakAfterCurlyBraceOfElseif' => true
+        );
+
         $actions = array();
 
         $actions[] = new ChangeLineEndings($changelineEndingsOptions);
         $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
         $actions[] = new StripUnneededPhpCloseTag();
         $actions[] = new ElseIfToElseAndIf();
+        $actions[] = new FormatIfElseifElse($formatIfElseifElseOptions);
         $actions[] = new Indent($indentOptions);
         $actions[] = new RemoveTrailingWhitespace($removeTrailingWhitespaceOptions);
 
