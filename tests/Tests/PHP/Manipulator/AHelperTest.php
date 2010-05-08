@@ -634,7 +634,7 @@ class AHelperTest extends \Tests\TestCase
         $ahelper = new NonAbstractHelper();
         $this->assertSame($result, $ahelper->isQuestionMark($token), 'Wrong result');
     }
-    
+
     /**
      * @return array
      */
@@ -643,7 +643,7 @@ class AHelperTest extends \Tests\TestCase
         $data = array();
         $path = '/AHelper/isFollowedByTokenType/';
         $container = $this->getContainerFromFixture($path . 'input0.php');
-        
+
         $data[] = array(
             $container->getIterator()->seekToToken($container[21]),
             T_ECHO,
@@ -715,6 +715,92 @@ class AHelperTest extends \Tests\TestCase
         $result = $ahelper->isPrecededByTokenType(
             $iterator,
             $followedByType,
+            $allowedTokens
+        );
+        $this->assertSame($expectedResult, $result);
+        $this->assertSame($startToken, $iterator->current());
+    }
+
+    /**
+     * @return array
+     */
+    public function isFollowedByTokenValueProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isFollowedByTokenValue/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            'echo',
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            false,
+        );
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            'echo',
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            true,
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isFollowedByTokenValueProvider
+     * @covers \PHP\Manipulator\AHelper::isFollowedByTokenValue
+     */
+    public function testIsFollowedByTokenValue($iterator, $followedByType, $allowedTokens, $expectedResult)
+    {
+        $ahelper = new NonAbstractHelper();
+        $startToken = $iterator->current();
+        $result = $ahelper->isFollowedByTokenValue(
+            $iterator,
+            $followedByType,
+            $allowedTokens
+        );
+        $this->assertSame($expectedResult, $result);
+        $this->assertSame($startToken, $iterator->current());
+    }
+
+    /**
+     * @return array
+     */
+    public function isPrecededByTokenValueProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isFollowedByTokenValue/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            'else',
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            false,
+        );
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            'else',
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            true,
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isPrecededByTokenValueProvider
+     * @covers \PHP\Manipulator\AHelper::isPrecededByTokenValue
+     */
+    public function testIsPrecededByTokenValue($iterator, $value, $allowedTokens, $expectedResult)
+    {
+        $ahelper = new NonAbstractHelper();
+        $startToken = $iterator->current();
+        $result = $ahelper->isPrecededByTokenValue(
+            $iterator,
+            $value,
             $allowedTokens
         );
         $this->assertSame($expectedResult, $result);

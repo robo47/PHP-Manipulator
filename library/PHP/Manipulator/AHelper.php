@@ -312,4 +312,54 @@ abstract class AHelper
         $iterator->seekToToken($token);
         return $result;
     }
+    
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param string $followValue
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    public function isFollowedByTokenValue(Iterator $iterator, $followValue, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        $token = $iterator->current();
+        $result = false;
+        $iterator->next();
+        while($iterator->valid()) {
+            if ($iterator->current()->getValue() ===  $followValue) {
+                $result = true;
+                break;
+            }
+            if (!$this->isType($iterator->current(), $allowedTypes)) {
+                break;
+            }
+            $iterator->next();
+        }
+        $iterator->seekToToken($token);
+        return $result;
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param string $followValue
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    public function isPrecededByTokenValue(Iterator $iterator, $followValue, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        $token = $iterator->current();
+        $result = false;
+        $iterator->previous();
+        while($iterator->valid()) {
+            if ($iterator->current()->getValue() ===  $followValue) {
+                $result = true;
+                break;
+            }
+            if (!$this->isType($iterator->current(), $allowedTypes)) {
+                break;
+            }
+            $iterator->previous();
+        }
+        $iterator->seekToToken($token);
+        return $result;
+    }
 }
