@@ -19,7 +19,7 @@ implements \Countable
     /**
      * Add a token
      *
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return \PHP\Manipulator\TokenFinder\Result *Provides Fluent Interface*
      */
     public function addToken(Token $token)
@@ -37,7 +37,7 @@ implements \Countable
     }
 
     /**
-     * @return PHP\Manipulator\Token
+     * @return \PHP\Manipulator\Token
      */
     public function getFirstToken()
     {
@@ -50,7 +50,7 @@ implements \Countable
     }
 
     /**
-     * @return PHP\Manipulator\Token
+     * @return \PHP\Manipulator\Token
      * @throws Exception if result is empty
      */
     public function getLastToken()

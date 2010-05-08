@@ -48,7 +48,7 @@ extends Action
     }
 
     /**
-     * @param TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @return array
      */
     protected function _searchStartTokens(TokenContainer $container)

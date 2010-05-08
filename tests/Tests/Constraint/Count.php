@@ -29,7 +29,7 @@ class Count extends \PHPUnit_Framework_Constraint
     /**
      * Evaluate
      *
-     * @param PHP\Manipulator\Token $other
+     * @param \PHP\Manipulator\Token $other
      * @return boolean
      */
     public function evaluate($other)

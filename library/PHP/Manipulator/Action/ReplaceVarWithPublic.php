@@ -13,7 +13,7 @@ extends Action
     /**
      * Replace var $foo; with public $foo;
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)

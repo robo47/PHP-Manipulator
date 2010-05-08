@@ -8,8 +8,6 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\Token;
 
-// @todo test with anon-functions
-// @todo instead of $params use options
 class FunctionFinder
 extends TokenFinder
 {
@@ -69,6 +67,9 @@ extends TokenFinder
         return $result;
     }
 
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
     protected function _checkBreak(Iterator $iterator)
     {
         $token = $iterator->current();

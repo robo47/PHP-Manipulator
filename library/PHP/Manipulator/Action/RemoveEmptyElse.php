@@ -25,7 +25,7 @@ extends Action
     /**
      * Run Action
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function run(TokenContainer $container, $params = null)
     {
@@ -65,7 +65,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isEndElse(Token $token)
@@ -80,7 +80,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isAllowedTokenInsideEmptyElse(Token $token)

@@ -48,7 +48,7 @@ class ShowTokens extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     public function printToken(Token $token)
     {

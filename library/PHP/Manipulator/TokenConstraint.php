@@ -14,7 +14,7 @@ extends AHelper
      *
      * @param \PHP\Manipulator\Token $token
      * @param mixed $params
-     * @return bool
+     * @return boolean
      */
     abstract public function evaluate(Token $token, $params = null);
 

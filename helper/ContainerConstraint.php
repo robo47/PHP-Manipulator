@@ -12,7 +12,7 @@ extends ContainerConstraint
     /**
      * Evaluate if the container
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      * @return boolean
      */

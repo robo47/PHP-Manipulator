@@ -53,9 +53,9 @@ class NewlineDetector
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param mixed $default
-     * @return false|string
+     * @return boolean|string
      */
     protected function _getNewlineFromToken(Token $token, $default = false)
     {

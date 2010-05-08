@@ -23,7 +23,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      *
      * Strict checking compares linenumbers too
      *
-     * @param PHP\Manipulator\TokenContainer $expected
+     * @param \PHP\Manipulator\TokenContainer $expected
      * @param boolean $strict
      */
     public function __construct($expected, $strict)
@@ -45,7 +45,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     * @param PHP\Manipulator\TokenContainer $other
+     * @param \PHP\Manipulator\TokenContainer $other
      * @return boolean
      */
     public function evaluate($other)

@@ -43,7 +43,7 @@ class UtilTest extends \Tests\TestCase
     /**
      * @covers \Tests\Util::dumpToken
      * @dataProvider tokenProvider
-     * @param PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param string $dumpExpected
      */
     public function testDumpToken($token, $dumpExpected)

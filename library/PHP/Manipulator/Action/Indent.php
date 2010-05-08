@@ -130,7 +130,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isSwitchClosingCurlyBrace(Token $token)
@@ -139,7 +139,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _removeLastIndention(Token $token)
     {
@@ -149,7 +149,7 @@ extends Action
     /**
      * Check if a Token is a Multilinecomment and indent it
      *
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _checkForMultilineCommentAndIndent(Token $token)
     {
@@ -163,7 +163,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _useIndentionCheck(Token $token)
     {
@@ -179,7 +179,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _switchIndentionCheck(Token $token)
     {
@@ -212,7 +212,7 @@ extends Action
     }
 
     /**
-     * @param Token $caseToken
+     * @param \PHP\Manipulator\Token $caseToken
      * @return boolean
      */
     protected function _isCasePreceededByBreak(Token $caseToken)
@@ -224,8 +224,8 @@ extends Action
     }
 
     /**
-     * @param Token $caseToken
-     * @return Token
+     * @param \PHP\Manipulator\Token $caseToken
+     * @return \PHP\Manipulator\Token
      */
     protected function _findNextColonToken(Token $caseToken)
     {
@@ -243,7 +243,7 @@ extends Action
     }
 
     /**
-     * @param Token $caseToken
+     * @param \PHP\Manipulator\Token $caseToken
      * @return boolean
      */
     protected function _caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
@@ -275,7 +275,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _checkInsideString(Token $token)
     {
@@ -286,7 +286,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     public function _checkAndChangeIndentionLevel(Token $token)
     {
@@ -298,7 +298,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     public function _checkAndChangeIndentionLevelIncreasment(Token $token)
     {
@@ -308,7 +308,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     public function _checkAndChangeIndentionLevelDecreasment(Token $token)
     {

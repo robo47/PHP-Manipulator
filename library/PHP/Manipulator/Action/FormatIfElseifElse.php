@@ -78,7 +78,7 @@ extends Action
     /**
      * Run Action
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function run(TokenContainer $container, $params = null)
     {
@@ -138,8 +138,8 @@ extends Action
     }
 
 //    /**
-//     * @param Token $token
-//     * @param Iterator $iterator
+//     * @param \PHP\Manipulator\Token $token
+//     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
 //     */
 //    protected function _addLineBreakBeforeCurlyBraceIfNotPresent(Token $token, Iterator $iterator)
 //    {
@@ -152,8 +152,8 @@ extends Action
 //    }
 
 //    /**
-//     * @param Token $token
-//     * @param Iterator $iterator
+//     * @param \PHP\Manipulator\Token $token
+//     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
 //     * @return boolean
 //     */
 //    protected function _isFollowedByElseOrElseIf(Token $token, Iterator $iterator)
@@ -204,8 +204,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _applyBreaksAfterCurlyBraces(Token $token, Iterator $iterator)
     {
@@ -218,8 +218,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _shouldInsertBreakAfterCurrentOpeningCurlyBrace(Token $token, Iterator $iterator)
@@ -241,8 +241,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _removeNextToken(Token $token, Iterator $iterator)
     {
@@ -252,8 +252,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _removePreviousToken(Token $token, Iterator $iterator)
     {
@@ -263,8 +263,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _isFollowedByWrongWhitespace(Token $token, Iterator $iterator)
@@ -279,8 +279,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _addWhitespaceTokenAfter(Token $token, Iterator $iterator)
     {
@@ -290,8 +290,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _addWhitespaceTokenBefore(Token $token, Iterator $iterator)
     {
@@ -301,8 +301,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _setNextTokenValueToOneSpace(Token $token, Iterator $iterator)
     {
@@ -312,8 +312,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _setPreviousTokenValueToOneSpace(Token $token, Iterator $iterator)
     {
@@ -323,8 +323,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _format(Token $token, Iterator $iterator)
     {
@@ -356,8 +356,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _isFollowedByWhitespace(Token $token, Iterator $iterator)
@@ -366,8 +366,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _isPrecededByWhitespace(Token $token, Iterator $iterator)
@@ -376,8 +376,8 @@ extends Action
     }
 
     /**
-     * @param Token $token
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\Token $token
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _isPrecededByWrongWhitespace(Token $token, Iterator $iterator)
@@ -392,9 +392,9 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param integer|null $type
-     * @param Iterator $iterator
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _isOpeningBraceAfterType(Token $token, $type, Iterator $iterator)

@@ -10,7 +10,7 @@ class ReverseIterator extends Iterator
 {
 
     /**
-     * @param TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function __construct(TokenContainer $container)
     {

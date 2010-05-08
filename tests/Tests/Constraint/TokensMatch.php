@@ -25,7 +25,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
 
     /**
      *
-     * @param PHP\Manipulator\Token $expected
+     * @param \PHP\Manipulator\Token $expected
      * @param boolean $strict
      */
     public function __construct($expected, $strict)
@@ -48,7 +48,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
 
     /**
      *
-     * @param PHP\Manipulator\Token $other
+     * @param \PHP\Manipulator\Token $other
      * @return boolean
      */
     public function evaluate($other)

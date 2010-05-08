@@ -480,8 +480,8 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Removes a sequence of Tokens from a token to another (including start and end-token)
      *
-     * @param Token $from
-     * @param Token $end
+     * @param \PHP\Manipulator\Token $from
+     * @param \PHP\Manipulator\Token $end
      */
     public function removeTokensFromTo(Token $from, Token $to)
     {

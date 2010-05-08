@@ -42,7 +42,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     /**
      * Reinits the Iterator from the container and resets it's position;
      *
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
      */
     public function reInit(Token $token = null)
@@ -148,7 +148,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
      */
     public function seekToToken(Token $token)

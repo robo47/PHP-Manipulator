@@ -13,7 +13,7 @@ extends Action
     /**
      * Run Action
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function run(TokenContainer $container, $params = null)
     {

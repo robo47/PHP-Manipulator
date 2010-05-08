@@ -107,7 +107,7 @@ class Cli
     /**
      * Set console input
      *
-     * @param ezcConsoleInput $input
+     * @param \ezcConsoleInput $input
      * @return \PHP\Manipulator\Cli *Returns Fluent Interface*
      */
     public function setConsoleInput(\ezcConsoleInput $input)
@@ -119,7 +119,7 @@ class Cli
     /**
      * Set console output
      *
-     * @param ezcConsoleOutput $output
+     * @param \ezcConsoleOutput $output
      * @return \PHP\Manipulator\Cli *Returns Fluent Interface*
      */
     public function setConsoleOutput(\ezcConsoleOutput $output)
@@ -130,7 +130,7 @@ class Cli
 
     /**
      *
-     * @return ezcConsoleInput
+     * @return \ezcConsoleInput
      */
     public function getConsoleInput()
     {
@@ -139,7 +139,7 @@ class Cli
 
     /**
      *
-     * @return ezcConsoleOutput
+     * @return \ezcConsoleOutput
      */
     public function getConsoleOutput()
     {

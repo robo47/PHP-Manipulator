@@ -36,7 +36,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param \PHP\Manipulator\TokenContainer $container
      * @param integer $start
      * @param integer $end
-     * @return Result
+     * @return \PHP\Manipulator\TokenFinder\Result
      */
     public function getResultFromContainer($container, $start, $end)
     {
@@ -51,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * Returns tokens-array from fixture-file
      *
      * @param string $filename
-     * @return PHP\Manipulator\TokenContainer
+     * @return \PHP\Manipulator\TokenContainer
      */
     public function getContainerFromFixture($filename)
     {
@@ -63,7 +63,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * Compares if two Tokens Match
      *
      * @param integer $expectedToken
-     * @param PHP\Manipulator\Token $actualToken
+     * @param \PHP\Manipulator\Token $actualToken
      * @param boolean $strict
      */
     public function assertCount($expectedCount, $element, $message = '')
@@ -82,8 +82,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two Tokens Match
      *
-     * @param PHP\Manipulator\Token $expectedToken
-     * @param PHP\Manipulator\Token $actualToken
+     * @param \PHP\Manipulator\Token $expectedToken
+     * @param \PHP\Manipulator\Token $actualToken
      * @param boolean $strict
      */
     public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
@@ -103,8 +103,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two TokenContainer tokens match
      *
-     * @param PHP\Manipulator\TokenContainer $expectedTokens
-     * @param PHP\Manipulator\TokenContainer $actualTokens
+     * @param \PHP\Manipulator\TokenContainer $expectedTokens
+     * @param \PHP\Manipulator\TokenContainer $actualTokens
      * @param string $message
      */
     public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')

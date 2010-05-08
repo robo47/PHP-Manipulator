@@ -20,7 +20,7 @@ extends Action
     /**
      * Remove unneded ?> from the file-end
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
@@ -55,7 +55,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isNotAllowedTag(Token $token)

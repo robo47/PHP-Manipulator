@@ -19,7 +19,7 @@ extends Action
     /**
      * Run Action
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function run(TokenContainer $container, $params = null)
     {
@@ -66,7 +66,7 @@ extends Action
     }
 
     /**
-     * @param Result $result
+     * @param \PHP\Manipulator\TokenFinder\Result $result
      */
     protected function _checkAndAddPublic(Result $result)
     {
@@ -81,7 +81,7 @@ extends Action
     }
 
     /**
-     * @param Result $result
+     * @param \PHP\Manipulator\TokenFinder\Result $result
      * @param array $tokentype
      * @return boolean
      */

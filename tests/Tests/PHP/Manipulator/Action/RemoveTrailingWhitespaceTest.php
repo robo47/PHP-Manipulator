@@ -53,8 +53,8 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
      * @covers \PHP\Manipulator\Action\RemoveTrailingWhitespace::run
      * @dataProvider actionProvider
      * @param array $options
-     * @param TokenContainer $input
-     * @param TokenContainer $expectedTokens
+     * @param \PHP\Manipulator\TokenContainer $input
+     * @param \PHP\Manipulator\TokenContainer $expectedTokens
      */
     public function testAction($options, $input, $expectedTokens)
     {

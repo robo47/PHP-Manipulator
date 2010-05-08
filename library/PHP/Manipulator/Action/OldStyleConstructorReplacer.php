@@ -25,7 +25,7 @@ extends Action
     /**
      * Run Action
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      */
     public function run(TokenContainer $container, $params = null)
     {
@@ -71,7 +71,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _checkLevel(Token $token)
     {

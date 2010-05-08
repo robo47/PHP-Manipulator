@@ -49,7 +49,7 @@ extends Action
     /**
      * Make all Constants uppercase
      *
-     * @param PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
     public function run(TokenContainer $container, $params = null)
@@ -100,7 +100,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @var boolean
      */
     protected function _isConstant(Token $token)
@@ -111,7 +111,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @var boolean
      */
     protected function _isFollowedByDoubleColon(Token $token)
@@ -121,7 +121,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @var boolean
      */
     protected function _isFollowedByOpeningBrace(Token $token)
@@ -131,7 +131,7 @@ extends Action
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @var boolean
      */
     protected function _isNotAMethodCall(Token $token)
@@ -143,7 +143,7 @@ extends Action
     /**
      * Checks the current token and sets internal flags to true or false
      *
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     protected function _checkCurrentToken(Token $token)
     {

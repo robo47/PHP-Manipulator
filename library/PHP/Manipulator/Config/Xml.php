@@ -31,10 +31,10 @@ class Xml extends Config
     /**
      * Get error message
      *
-     * @param libXMLError $error
+     * @param \LibXMLError $error
      * @return string
      */
-    protected function _errorMessage($error)
+    protected function _errorMessage(LibXMLError $error = null)
     {
         $message = '';
         if ($error instanceof \LibXMLError) {
@@ -52,7 +52,7 @@ class Xml extends Config
     /**
      * Parses Options out of the DOMDocument
      *
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      */
     protected function _parseOptions(\DOMDocument $dom)
     {
@@ -72,7 +72,7 @@ class Xml extends Config
     /**
      * Parse Actions-Options out of the DOMNode
      *
-     * @param DOMNode $options
+     * @param \DOMNode $options
      * @return array
      */
     protected function _parseActionOptions(\DOMNode $options)
@@ -141,7 +141,7 @@ class Xml extends Config
     /**
      * Parses Actions out of the DOMDocument
      *
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      */
     protected function _parseActions(\DOMDocument $dom)
     {
@@ -186,7 +186,7 @@ class Xml extends Config
     /**
      * Parses Files out of the DOMDocument
      *
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      */
     protected function _parseFiles(\DOMDocument $dom)
     {
@@ -223,8 +223,8 @@ class Xml extends Config
     /**
      * Parse iterator
      *
-     * @param DOMNode $node
-     * @return Iterator|null
+     * @param \DOMNode $node
+     * @return \Iterator|null
      */
     protected function _parseIterator(\DOMNode $node)
     {

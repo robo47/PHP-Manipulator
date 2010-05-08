@@ -145,7 +145,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @param array|integer $type
      * @return boolean
      */
@@ -167,7 +167,7 @@ abstract class AHelper
 
     /**
      *
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isColon(Token $token)
@@ -179,7 +179,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      */
     public function isComma(Token $token)
     {
@@ -190,7 +190,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isClosingBrace(Token $token)
@@ -202,7 +202,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isOpeningBrace(Token $token)
@@ -214,7 +214,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isClosingCurlyBrace(Token $token)
@@ -226,7 +226,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isOpeningCurlyBrace(Token $token)
@@ -238,7 +238,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isSemicolon(Token $token)
@@ -250,7 +250,7 @@ abstract class AHelper
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     public function isQuestionMark(Token $token)

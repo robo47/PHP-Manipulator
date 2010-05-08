@@ -71,7 +71,7 @@ extends TokenConstraint
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isOperatorWithToken(Token $token)
@@ -80,7 +80,7 @@ extends TokenConstraint
     }
 
     /**
-     * @param Token $token
+     * @param \PHP\Manipulator\Token $token
      * @return boolean
      */
     protected function _isOperatorWithoutToken(Token $token)
