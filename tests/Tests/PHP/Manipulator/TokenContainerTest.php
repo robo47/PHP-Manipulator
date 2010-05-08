@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 
 /**
  * @group TokenContainer
- * @todo create methods for setting up a default test container + method for returning the tokens
  */
 class TokenContainerTest extends \Tests\TestCase
 {

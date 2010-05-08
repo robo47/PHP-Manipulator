@@ -8,7 +8,6 @@ abstract class Action
 {
 
     /**
-     *
      * @var PHP\Manipulator\Cli
      */
     protected $_cli;
@@ -20,11 +19,9 @@ abstract class Action
     public function __construct(Cli $cli)
     {
         $this->_cli = $cli;
-        // @todo init options from input
     }
 
     /**
-     *
      * @return \PHP\Manipulator\Cli
      */
     public function getCli()

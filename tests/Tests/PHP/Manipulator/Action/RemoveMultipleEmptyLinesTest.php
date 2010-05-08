@@ -20,8 +20,7 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
     {
         $action = new RemoveMultipleEmptyLines();
         $this->assertEquals(2, $action->getOption('maxEmptyLines'), 'Default value for maxEmptyLines is wrong');
-        $this->assertEquals("\n", $action->getOption('defaultBreak'), 'Default value for defaultBreak is wrong');
-        $this->assertCount(2, $action->getOptions());
+        $this->assertCount(1, $action->getOptions());
     }
 
     /**

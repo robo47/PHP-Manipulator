@@ -5,7 +5,6 @@ namespace PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-// @todo method for deleting a token and seeking to the next (reInit) ?
 class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
 
@@ -50,7 +49,6 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     {
         $this->_init();
         $this->_pos = 0;
-        // @todo test!
         if (null !== $token) {
             $this->seekToToken($token);
         }

@@ -9,6 +9,7 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group Action
  * @group Action\RemoveTrailingWhitespace
+ * @todo test with removeEmptyLinesAtFileEnd = false / true
  */
 class RemoveTrailingWhitespaceTest extends \Tests\TestCase
 {
@@ -20,8 +21,7 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
     {
         $action = new RemoveTrailingWhitespace();
         $this->assertTrue($action->getOption('removeEmptyLinesAtFileEnd'), 'Default Value for removeEmptyLinesAtFileEnd is wrong');
-        $this->assertEquals("\n", $action->getOption('defaultBreak'), 'Default Value for defaultBreak is wrong');
-        $this->assertCount(2, $action->getOptions());
+        $this->assertCount(1, $action->getOptions());
     }
 
     /**

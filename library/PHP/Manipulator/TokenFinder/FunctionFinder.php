@@ -5,14 +5,29 @@ namespace PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\Token;
 
-// @todo refactor find into some more functions
 // @todo test with anon-functions
-// @todo instead of $params use $options
+// @todo instead of $params use options
 class FunctionFinder
 extends TokenFinder
 {
+
+    /**
+     * @var boolean
+     */
+    protected $_inside = false;
+
+    /**
+     * @var integer
+     */
+    protected $_level = 0;
+
+    /**
+     * @var boolean
+     */
+    protected $_end = false;
 
     /**
      * Finds tokens
@@ -32,84 +47,113 @@ extends TokenFinder
         $iterator->seekToToken($token);
 
         if ($this->_includeMethodProperties($params) && !$this->_includePhpDoc($params)) {
-            // travel reverse as long as there is only whitespace and stuff
-            $iterator->previous();
-            while ($iterator->valid()) {
-                if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
-                    $iterator->next();
-                    while ($iterator->valid()) {
-                        if (!$this->isType($iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
-                            $iterator->next();
-                        } else {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                $iterator->previous();
-            }
-            // didn't find anything
-            if (!$iterator->valid()) {
-                $iterator->seekToToken($token);
-            }
+            $this->_seekToMethodProperties($iterator);
         }
 
         if ($this->_includePhpDoc($params)) {
-            // travel reverse as long as there is only whitespace and stuff
-            $iterator->previous();
-            while ($iterator->valid()) {
-                if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
-                    $iterator->next();
-                    while ($iterator->valid()) {
-                        if (!$this->isType($iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
-                            $iterator->next();
-                        } else {
-                            break;
-                        }
-                    }
-                    break;
-                }
-                $iterator->previous();
-            }
-            // didn't find anything
-            if (!$iterator->valid()) {
-                $iterator->seekToToken($token);
-            }
+            $this->_seekToPhpdoc($iterator, $params);
         }
+        $this->_inside = false;
+        $this->_level = 0;
+        $this->_end = false;
 
         $result = new Result();
-        $inside = false;
-        $level = 0;
-        while ($iterator->valid()) {
-            $token = $iterator->current();
-            $result->addToken($token);
+        while ($iterator->valid() && false === $this->_end) {
+            $result->addToken($iterator->current());
 
-            if ($this->isOpeningCurlyBrace( $token)) {
-                $inside = true;
-                $level++;
-            }
-
-            if ($this->isClosingCurlyBrace( $token)) {
-                $level--;
-            }
-
-            // abstract methods or interface-methods
-            if (false === $inside && $this->isSemicolon( $token)) {
-                break;
-            }
-
-            // last curly-brace closed
-            if (true === $inside && $level === 0) {
-                break;
-            }
+            $this->_checkLevel($iterator);
+            $this->_checkBreak($iterator);
 
             $iterator->next();
         }
         return $result;
     }
 
+    protected function _checkBreak(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        // abstract methods or interface-methods
+        if (false === $this->_inside && $this->isSemicolon($token)) {
+            $this->_end = true;
+        }
+        // last curly-brace closed
+        if (true === $this->_inside && $this->_level === 0) {
+            $this->_end = true;
+        }
+    }
+
     /**
-     *
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _checkLevel(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        if ($this->isOpeningCurlyBrace( $token)) {
+            $this->_inside = true;
+            $this->_level++;
+        }
+
+        if ($this->isClosingCurlyBrace( $token)) {
+            $this->_level--;
+        }
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _seekToMethodProperties(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        $iterator->previous();
+        while ($iterator->valid()) {
+            if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                $iterator->next();
+                while ($iterator->valid()) {
+                    if (!$this->isType($iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
+                        $iterator->next();
+                    } else {
+                        break;
+                    }
+                }
+                break;
+            }
+            $iterator->previous();
+        }
+        // didn't find anything
+        if (!$iterator->valid()) {
+            $iterator->seekToToken($token);
+        }
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _seekToPhpdoc(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        // travel reverse as long as there is only whitespace and stuff
+        $iterator->previous();
+        while ($iterator->valid()) {
+            if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+                $iterator->next();
+                while ($iterator->valid()) {
+                    if (!$this->isType($iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
+                        $iterator->next();
+                    } else {
+                        break;
+                    }
+                }
+                break;
+            }
+            $iterator->previous();
+        }
+        // didn't find anything
+        if (!$iterator->valid()) {
+            $iterator->seekToToken($token);
+        }
+    }
+
+    /**
      * @param array|null $params
      * @return boolean
      */

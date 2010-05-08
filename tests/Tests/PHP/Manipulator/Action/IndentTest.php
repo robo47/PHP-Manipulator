@@ -18,7 +18,6 @@ use PHP\Manipulator\TokenContainer;
  */
 class IndentTest extends \Tests\TestCase
 {
-
     /**
      * @covers \PHP\Manipulator\Action\Indent::init
      */

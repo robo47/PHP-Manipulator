@@ -6,7 +6,6 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-// @todo don't use getNext/getPreviousToken anymore
 // @todo make configureable via options instead params ? or ... move into ContainerManipulators or something like that
 class SetWhitespaceBeforeToken
 extends SetWhitespaceAfterToken

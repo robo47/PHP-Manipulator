@@ -316,8 +316,6 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
-
-
     /**
      * Insert Token Before
      *
