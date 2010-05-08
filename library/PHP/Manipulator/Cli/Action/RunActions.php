@@ -10,6 +10,20 @@ use PHP\Manipulator\FileContainer;
 
 class RunActions extends Action
 {
+    /**
+     * @param string $configFile 
+     * @return \PHP\Manipulator\Config\Xml
+     */
+    protected function _getConfig($configFile)
+    {
+        try {
+            // @todo make extension dynamic via cli ?
+            return Config::factory('xml', $configFile, true);
+        } catch (\Exception $e) {
+            throw new \Exception('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
+        }
+    }
+
     public function run()
     {
         $input = $this->getCli()->getConsoleInput();
@@ -17,14 +31,7 @@ class RunActions extends Action
 
         $configFile = $input->getOption('config')->value;
 
-        try {
-            // @todo make dynamic via cli/
-            $config = Config::factory('xml', $configFile, true);
-        } catch (\Exception $e) {
-            $output->outputLine('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
-            return;
-        }
-        /* @var $config PHP\Manipulator\Config\Xml */
+        $config = $this->_getConfig($configFile);
 
         $files = $config->getFiles();
         $actions = $config->getActions();
@@ -54,10 +61,9 @@ class RunActions extends Action
         $progress->options->progressChar = '#';
         $progress->options->formatString = '[%bar%]  %act% / %max%';
 
-        // @todo timings!
+        // @todo timings in debug-mode ?
         // Perform actions
         echo 'Processing ' . $filesCount . ' files and ' . $actionsCount . ' actions' . PHP_EOL;
-        $i = 0;
         foreach ($files as $file) {
             //echo 'File: ' . $file . PHP_EOL;
             $container = new FileContainer($file);
