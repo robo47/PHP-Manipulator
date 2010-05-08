@@ -226,21 +226,8 @@ extends Action
     {
         $iterator = $this->_container->getReverseIterator();
         $iterator->seekToToken($caseToken);
-        $iterator->previous();
-        while ($iterator->valid()) {
-            $token = $iterator->current();
-            if ($this->isType($token, T_BREAK)) {
-                return true;
-            } else {
-                // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->isType($token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT) ||
-                        $this->isSemicolon( $token))) {
-                    return false;
-                }
-            }
-            $iterator->next();
-        }
-        return false;
+        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+        return $this->isPrecededByTokenType($iterator, T_BREAK);
     }
 
     /**
@@ -270,20 +257,8 @@ extends Action
     {
         $iterator = $this->_container->getIterator();
         $iterator->seekToToken($this->_findNextColonToken($caseToken));
-        $iterator->next();
-        while ($iterator->valid()) {
-            $token = $iterator->current();
-            if ($this->isType($token, array(T_CASE, T_DEFAULT))) {
-                return true;
-            } else {
-                // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
-                if (!$this->isType($token, array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
-                    return false;
-                }
-            }
-            $iterator->next();
-        }
-        return false;
+        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+        return $this->isFollowedByTokenType($iterator, array(T_DEFAULT,T_CASE));
     }
 
     /**
