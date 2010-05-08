@@ -34,6 +34,7 @@ abstract class AHelper
             $message = 'constraint is not instance of \PHP\Manipulator\TokenConstraint';
             throw new \Exception($message);
         }
+
         /* @var $constraint \PHP\Manipulator\TokenConstraint */
         return $constraint->evaluate($token, $params);
     }
@@ -54,6 +55,7 @@ abstract class AHelper
             $message = 'constraint is not instance of \PHP\Manipulator\ContainerConstraint';
             throw new \Exception($message);
         }
+
         /* @var $constraint \PHP\Manipulator\ContainerConstraint */
         return $constraint->evaluate($container, $params);
     }
@@ -74,6 +76,7 @@ abstract class AHelper
             $message = 'manipulator is not instance of \PHP\Manipulator\TokenManipulator';
             throw new \Exception($message);
         }
+
         /* @var $manipulator \PHP\Manipulator\TokenManipulator */
         $manipulator->manipulate($token, $params);
     }
@@ -178,7 +181,6 @@ abstract class AHelper
     }
 
     /**
-     *
      * @param Token $token
      */
     public function isComma(Token $token)
@@ -188,7 +190,7 @@ abstract class AHelper
         }
         return false;
     }
-    
+
     /**
      * @param Token $token
      * @return boolean
@@ -236,7 +238,7 @@ abstract class AHelper
         }
         return false;
     }
-    
+
     /**
      * @param Token $token
      * @return boolean
@@ -286,8 +288,6 @@ abstract class AHelper
         return $result;
     }
 
-
-
     /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @param integer $followedByType
@@ -312,5 +312,4 @@ abstract class AHelper
         $iterator->seekToToken($token);
         return $result;
     }
-
 }

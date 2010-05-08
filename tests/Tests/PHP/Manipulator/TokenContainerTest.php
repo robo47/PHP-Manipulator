@@ -548,7 +548,6 @@ class TokenContainerTest extends \Tests\TestCase
 
     /**
      * @covers \PHP\Manipulator\TokenContainer::setArray
-     * @covers \PHP\Manipulator\TokenContainer::getContainer
      */
     public function testGetContainersetArray()
     {
