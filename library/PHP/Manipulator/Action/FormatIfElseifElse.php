@@ -341,7 +341,7 @@ extends Action
             $this->_removeNextToken($token, $iterator);
         }
 
-        if (T_IF !== $token->getType()) {
+        if (!$this->isType($token, T_IF)) {
             if (!$this->_isPrecededByWhitespace($token, $iterator) &&
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_addWhitespaceTokenBefore($token, $iterator);
@@ -362,14 +362,7 @@ extends Action
      */
     protected function _isFollowedByWhitespace(Token $token, Iterator $iterator)
     {
-        // @todo Use isFollowedBy because of possible whitespace and stuff
-        $iterator->next();
-        $newToken = $iterator->current();
-        $iterator->previous();
-        if ($this->isType($newToken, T_WHITESPACE)) {
-            return true;
-        }
-        return false;
+        return $this->isFollowedByTokenType($iterator, T_WHITESPACE);
     }
 
     /**
@@ -379,14 +372,7 @@ extends Action
      */
     protected function _isPrecededByWhitespace(Token $token, Iterator $iterator)
     {
-        // @todo Use isPrecededBy because of possible whitespace and stuff
-        $iterator->previous();
-        $newToken = $iterator->current();
-        $iterator->next();
-        if ($this->isType($newToken, T_WHITESPACE)) {
-            return true;
-        }
-        return false;
+        return $this->isPrecededByTokenType($iterator, T_WHITESPACE);
     }
 
     /**
@@ -422,6 +408,7 @@ extends Action
         };
         $breakTokens = array_filter($breakTokens, $filterCallback);
         $result = false;
+
         while ($iterator->valid()) {
             $iterator->previous();
             $current = $iterator->current();
