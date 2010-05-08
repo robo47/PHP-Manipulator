@@ -117,6 +117,7 @@ extends Action
      */
     protected function _isFollowedByDoubleColon(Token $token)
     {
+        // @todo Use isFollowedBy because of possible whitespace and stuff
         $next = $this->_next;
         return (null !== $next && $this->isType($next, T_DOUBLE_COLON));
     }
@@ -127,6 +128,7 @@ extends Action
      */
     protected function _isFollowedByOpeningBrace(Token $token)
     {
+        // @todo Use isFollowedBy because of possible whitespace and stuff
         $next = $this->_next;
         return (null !== $next && $this->isOpeningBrace($next));
     }
