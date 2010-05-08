@@ -4,7 +4,6 @@ namespace Tests\Constraint;
 
 use Tests\Constraint\Count;
 
-// @todo test faile-message and stuff
 class CountTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -53,6 +52,12 @@ class CountTest extends \PHPUnit_Framework_TestCase
     {
         $count = new Count($expected);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        try {
+            $count->fail($other, '');
+            $this->fail('No exception thrown');
+        } catch(\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals('Count of ' . count($other) . ' does not match expected count of ' . $expected, $e->getMessage());
+        }
     }
 
     /**
@@ -102,6 +107,12 @@ class CountTest extends \PHPUnit_Framework_TestCase
     {
         $count = new Count($expected);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        try {
+            $count->fail($other, '');
+            $this->fail('No exception thrown');
+        } catch(\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals('Count of ' . count($other) . ' does not match expected count of ' . $expected, $e->getMessage());
+        }
     }
 
     /**
@@ -151,6 +162,12 @@ class CountTest extends \PHPUnit_Framework_TestCase
     {
         $count = new Count($expected);
         $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        try {
+            $count->fail($other, '');
+            $this->fail('No exception thrown');
+        } catch(\PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals('Count of ' . iterator_count($other) . ' does not match expected count of ' . $expected, $e->getMessage());
+        }
     }
 
     /**
@@ -206,7 +223,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
             $this->fail('no exception thrown');
             //$this->assertEquals(, );
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            $this->assertEquals('Count of 3 does not match exptected count of 0', $e->getMessage());
+            $this->assertEquals('Count of 3 does not match expected count of 0', $e->getMessage());
         }
     }
 }
