@@ -2,3 +2,5 @@ _priv
 nbproject
 build
 tests/tmp
+symfony
+library/Symfony

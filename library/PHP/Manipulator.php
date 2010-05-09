@@ -5,7 +5,7 @@ namespace PHP;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Action;
 
-// @todo Should be the class used by apps not using the CLI
+// @todo Should be the class used by apps not using the CLI ... really needed ?
 class Manipulator
 {
     /**
