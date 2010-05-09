@@ -1,35 +1,44 @@
 <?php
 
-namespace PHP\Manipulator\Cli\Action;
+namespace PHP\Manipulator\Cli\Command;
 
-use PHP\Manipulator\Cli\Action;
 use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\FileContainer;
+use Symfony\Components\Console\Input\InputInterface;
+use Symfony\Components\Console\Output\OutputInterface;
+use Symfony\Components\Console\Command\Command;
+use Symfony\Components\Console\Input\InputArgument;
 
-class ShowTokens extends Action
+class ShowTokens extends Command
 {
-
-    public function run()
+    protected function configure()
     {
-        $output = $this->getCli()->getConsoleOutput();
-        $file = $this->getCli()->getConsoleInput()->getOption('showtokens')->value;
-        $file = realpath($file);
+        $this->setName('showTokens');
+        $this->setDescription('Shows the tokens of a file');
+        $this->setHelp('Shows you the tokens of a file');
+        $def = array(
+            new InputArgument('file', InputArgument::REQUIRED, 'The file to show tokens for')
+        );
+        $this->setDefinition($def);
+    }
+
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $fileArg = $input->getArgument('file');
+        $file = realpath($fileArg);
         if (!\file_exists($file) || !\is_readable($file) || !\is_file($file)) {
-            throw new \Exception('Unable to open file: ' . $file);
+            throw new \Exception('Unable to open file: ' . $fileArg);
         }
 
-        $code = \file_get_contents($file);
-        $container = new TokenContainer($code);
+        $container = new FileContainer($file);
 
         $size = filesize($file);
 
-        $output->outputLine('Filesize: ' . $size . 'bytes');
-        $output->outputLine('Filesize: ' . $size . 'bytes');
-
-        echo 'Tokens: ' . count($container) . PHP_EOL . PHP_EOL;
+        $output->write('Filesize: ' . $size . 'bytes' . PHP_EOL);
+        $output->write('Tokens: ' . count($container) . PHP_EOL . PHP_EOL);
 
         foreach ($container as $number => $token) {
-            echo str_pad($number . ') ', 4, ' ') . $this->printToken($token) . PHP_EOL;
+            $output->write(str_pad($number . ') ', 4, ' ') . $this->printToken($token) . PHP_EOL);
         }
     }
 

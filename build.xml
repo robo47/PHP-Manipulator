@@ -7,6 +7,7 @@
         <delete dir="${basedir}/tests/build"    failonerror="false" />
         <delete dir="${basedir}/tests/tmp"      failonerror="false" />
         <delete dir="${basedir}/website/api"    failonerror="false" />
+        <antcall target="cleanLibs" />
     </target>
 
     <!-- Prepare -->
@@ -15,6 +16,27 @@
         <mkdir dir="${basedir}/build/docs" />
         <mkdir dir="${basedir}/build/reports" />
         <mkdir dir="${basedir}/tests/tmp" />
+        <antcall target="copyLibs" />
+    </target>
+
+    <!-- load properties based on hostname -->
+    <!-- Setup for CI Hudson - mails.blub-blub.net -->
+    <!-- Setup for local - baafoo -->
+    <target name="loadProperties">
+        <exec executable="hostname" outputproperty="host.name"/>
+        <property file="${basedir}/properties/${host.name}.properties" />
+    </target>
+
+    <!-- Removes Libs -->
+    <target name="cleanLibs">
+        <delete dir ="library/Symfony" failonerror="false" />
+    </target>
+
+    <!-- Copies Libs -->
+    <target name="copyLibs" depends="loadProperties">
+        <copy todir="library/Symfony" >
+            <fileset dir="${env.local.libPath}symfony/${env.local.libVersion.Symfony}/src/Symfony" />
+        </copy>
     </target>
 
     <!-- Run php lint check on lib, tests and fixtures -->

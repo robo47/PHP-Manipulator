@@ -11,15 +11,6 @@ use PHP\Manipulator\Autoloader;
  */
 class AutoloaderTest extends \Tests\TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Autoloader::__construct
-     */
-    public function testConstructorRequiresEzcBaseClass()
-    {
-        $this->markTestIncomplete('Currently no idea how to test this since the loader is used for the unittests');
-    }
-
     /**
      * @covers \PHP\Manipulator\Autoloader::autoload
      * @covers \PHP\Manipulator\Autoloader::<protected>
@@ -56,16 +47,5 @@ class AutoloaderTest extends \Tests\TestCase
         $this->assertEquals(1, (count($autoloadersAfter) - count($autoloadersBefore)));
         // check it is an instance of \PHP\Manipulator\Autoloader
         $this->assertType('\PHP\Manipulator\Autoloader', $autoloadersAfter[count($autoloadersBefore)][0]);
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Autoloader::autoload
-     */
-    public function testAutoloaderworksWithezComponentsClasses()
-    {
-        $autoloader = new \PHP\Manipulator\Autoloader();
-        $this->assertFalse(class_exists('ezcConsoleDialogViewer', false));
-        $autoloader->autoload('ezcConsoleDialogViewer');
-        $this->assertTrue(class_exists('ezcConsoleDialogViewer', false));
     }
 }

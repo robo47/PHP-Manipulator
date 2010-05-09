@@ -22,7 +22,7 @@
     </filter>
     <logging>
         <log type="coverage-html"
-             target="./tmp/report"
+             target="./tmp/testsreport"
              charset="UTF-8"
              yui="true"
              highlight="false"

@@ -1,36 +1,26 @@
 <?php
 
-namespace Tests\PHP\Manipulator\Cli\Action;
+namespace PHP\Manipulator\Cli\Command;
 
-use PHP\Manipulator\Cli;
-use PHP\Manipulator\Cli\Action\License;
+use PHP\Manipulator;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use Symfony\Components\Console\Input\InputInterface;
+use Symfony\Components\Console\Output\OutputInterface;
+use Symfony\Components\Console\Command\Command;
 
-/**
- * @group Cli
- * @group Cli\Action
- * @group Cli\Action\License
- */
-class LicenseTest extends \Tests\TestCase
+class License extends Command
 {
-    public function setUp()
+    protected function configure()
     {
-        ob_start();
-    }
-    public function tearDown()
-    {
-        ob_end_clean();
+        $this->setName('license');
+        $this->setDescription('Show license information');
+        $this->setHelp('Shows the license information');
     }
 
-    /**
-     * @covers \PHP\Manipulator\Cli\Action\License::run
-     */
-    public function testRun()
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $cli = new Cli();
-        $action = new License($cli);
-        $action->run();
-        $output = \ob_get_contents();
-        $this->assertEquals('New BSD License' . PHP_EOL .
+        $output->write('New BSD License' . PHP_EOL .
             PHP_EOL .
             'Copyright (c) 2010, Benjamin Steininger (Robo47)' . PHP_EOL .
             'All rights reserved.' . PHP_EOL .
@@ -57,22 +47,30 @@ class LicenseTest extends \Tests\TestCase
             'INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN' . PHP_EOL .
             'CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)' . PHP_EOL .
             'ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF' . PHP_EOL .
-            'THE POSSIBILITY OF SUCH DAMAGE.' . PHP_EOL, $output);
+            'THE POSSIBILITY OF SUCH DAMAGE.' . PHP_EOL);
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Action\License::getConsoleOption
+     *
+     * @return array
      */
-    public function testGetConsoleOption()
+    public function getConsoleOption()
     {
-        $cli = new Cli();
-        $action = new License($cli);
-        $consoleOptions = $action->getConsoleOption();
-
-        $this->assertType('array', $consoleOptions);
-        $this->assertCount(1, $consoleOptions);
-
-        $this->assertType('\ezcConsoleOption', $consoleOptions[0]);
-        $this->markTestIncomplete('Test Values and stuff');
+        return array (
+            new \ezcConsoleOption(
+                'l',
+                'license',
+                \ezcConsoleInput::TYPE_NONE,
+                null,
+                false,
+                'Shows the licese',
+                '',
+                array(),
+                array(),
+                true,
+                false,
+                true
+            )
+        );
     }
 }

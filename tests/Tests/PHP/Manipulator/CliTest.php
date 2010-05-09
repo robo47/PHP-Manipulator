@@ -14,58 +14,11 @@ class CliTest extends \Tests\TestCase
 {
     public function setUp()
     {
-        \ob_start();
+        ob_start();
     }
     public function tearDown()
     {
-        \ob_end_clean();
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::__construct
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::getParams
-     */
-    public function testConstructorSavesParams()
-    {
-        $params = array(
-            'foo',
-            'baa'
-        );
-        $cli = new Cli($params);
-        $this->assertEquals($params, $cli->getParams());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::getConsoleInput
-     */
-    public function testConstructorInitsConsoleInput()
-    {
-        $cli = new Cli();
-        $this->assertType('ezcConsoleInput', $cli->getConsoleInput());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::getConsoleOutput
-     */
-    public function testConstructorInitsConsoleOutput()
-    {
-        $cli = new Cli();
-        $this->assertType('ezcConsoleOutput', $cli->getConsoleOutput());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::getHeader
-     */
-    public function testGetHeader()
-    {
-        $cli = new Cli();
-        $this->assertEquals(
-            'PHP Manipulator ' . Manipulator::VERSION . PHP_EOL,
-            $cli->getHeader()
-        );
+        ob_end_clean();
     }
 
     /**
@@ -75,51 +28,6 @@ class CliTest extends \Tests\TestCase
     {
         $cli = new Cli();
         $this->assertType('float', $cli->getStartTime());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::getAction
-     */
-    public function testGetAction()
-    {
-        $cli = new Cli();
-        $action = $cli->getAction('ShowTokens');
-        $this->assertType('\PHP\Manipulator\Cli\Action', $action);
-        $this->assertSame($cli, $action->getCli());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::setConsoleInput
-     */
-    public function testSetConsoleInput()
-    {
-        $cli = new Cli();
-        $consoleInput = new \ezcConsoleInput();
-        $cli->setConsoleInput($consoleInput);
-        $this->assertSame($consoleInput, $cli->getConsoleInput());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::setConsoleOutput
-     */
-    public function testSetConsoleOutput()
-    {
-        $cli = new Cli();
-        $consoleOutput = new \ezcConsoleOutput();
-        $cli->setConsoleOutput($consoleOutput);
-        $this->assertSame($consoleOutput, $cli->getConsoleOutput());
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::getConsoleOptions
-     */
-    public function testGetConsoleOptions()
-    {
-        $cli = new Cli();
-        $cli->getConsoleOptions();
     }
 
     /**
