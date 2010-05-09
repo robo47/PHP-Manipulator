@@ -113,13 +113,21 @@ class FormatIfElseifElseTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'input9.php'),
             $this->getContainerFromFixture($path . 'output9.php'),
         );
-
+// @todo implement + test this code
 //        #10 Test breaking works with nested if
 //        $data[] = array(
 //            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => true),
 //            $this->getContainerFromFixture($path . 'input10.php'),
 //            $this->getContainerFromFixture($path . 'output10.php'),
 //        );
+
+
+        #11 Test breaking works
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input11.php'),
+            $this->getContainerFromFixture($path . 'output11.php'),
+        );
 
         return $data;
     }

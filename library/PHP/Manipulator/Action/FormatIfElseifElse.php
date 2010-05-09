@@ -218,23 +218,44 @@ extends Action
     }
 
     /**
+     * @return Closure
+     */
+    protected function _anonContainsNewline()
+    {
+        return function(Token $token) {
+            $constraint = new \PHP\Manipulator\TokenConstraint\ContainsNewline();
+            return $constraint->evaluate($token);
+        };
+    }
+
+    protected function _isFollowedByWhitespaceContainingBreak(Token $token, Iterator $iterator)
+    {
+        if ($this->_isFollowedByTokenMatching($iterator, $this->_anonContainsNewline())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param \PHP\Manipulator\Token $token
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @return boolean
      */
     protected function _shouldInsertBreakAfterCurrentOpeningCurlyBrace(Token $token, Iterator $iterator)
     {
-        // @todo check if there is already a break ?!?!
         if (true === $this->getOption('breakAfterCurlyBraceOfIf') &&
-            $this->_isOpeningBraceAfterType($token, T_IF, $iterator)) {
+            $this->_isOpeningBraceAfterType($token, T_IF, $iterator) &&
+            !$this->_isFollowedByWhitespaceContainingBreak($token, $iterator)) {
             return true;
         }
         if (true === $this->getOption('breakAfterCurlyBraceOfElseif') &&
-            $this->_isOpeningBraceAfterType($token, T_ELSEIF, $iterator)) {
+            $this->_isOpeningBraceAfterType($token, T_ELSEIF, $iterator) &&
+            !$this->_isFollowedByWhitespaceContainingBreak($token, $iterator)) {
             return true;
         }
         if (true === $this->getOption('breakAfterCurlyBraceOfElse') &&
-            $this->_isOpeningBraceAfterType($token, T_ELSE, $iterator)) {
+            $this->_isOpeningBraceAfterType($token, T_ELSE, $iterator) &&
+            !$this->_isFollowedByWhitespaceContainingBreak($token, $iterator)) {
             return true;
         }
         return false;
@@ -410,7 +431,13 @@ extends Action
         $result = false;
 
         while ($iterator->valid()) {
+            
             $iterator->previous();
+            if ($iterator->valid() === false) {
+                $result = false;
+                break;
+            }
+
             $current = $iterator->current();
             if($this->isType($current, $breakTokens)) {
                 $result = false;
@@ -421,6 +448,31 @@ extends Action
                 break;
             }
             $iterator->previous();
+        }
+        $iterator->seekToToken($token);
+        return $result;
+    }
+
+        /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param string $followValue
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    protected function _isFollowedByTokenMatching(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        $token = $iterator->current();
+        $result = false;
+        $iterator->next();
+        while($iterator->valid()) {
+            if ($closure($iterator->current())) {
+                $result = true;
+                break;
+            }
+            if (!$this->isType($iterator->current(), $allowedTypes)) {
+                break;
+            }
+            $iterator->next();
         }
         $iterator->seekToToken($token);
         return $result;
