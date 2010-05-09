@@ -16,6 +16,7 @@ class RunActionsTest extends \Tests\TestCase
     {
         ob_start();
     }
+
     public function tearDown()
     {
         ob_end_clean();
@@ -27,9 +28,8 @@ class RunActionsTest extends \Tests\TestCase
     public function testRun()
     {
         $this->markTestIncomplete('not implemented yet');
-        $cli = new Cli();
-        $action = new RunActions($cli);
-        $action->run();
+        $command = new RunActions();
+        $command->run(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
         $output = ob_get_contents();
         $this->assertEquals('', $output);
     }

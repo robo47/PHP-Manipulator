@@ -219,7 +219,7 @@ extends Action
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     protected function _anonContainsNewline()
     {

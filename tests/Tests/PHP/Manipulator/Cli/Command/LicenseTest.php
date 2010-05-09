@@ -29,8 +29,8 @@ class LicenseTest extends \Tests\TestCase
      */
     public function testRun()
     {
-        $action = new License();
-        $action->run(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
+        $command = new License();
+        $command->run(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
         $output = ob_get_contents();
         $this->assertEquals('New BSD License' . PHP_EOL .
             PHP_EOL .

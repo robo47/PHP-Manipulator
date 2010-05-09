@@ -193,7 +193,7 @@ class ManipulatorTest extends \Tests\TestCase
      */
     public function testAddFilesWithIteratorAndGetFiles()
     {
-        $iterator = \File_Iterator_Factory::getFileIterator(BASE_PATH . '/library/');
+        $iterator = \File_Iterator_Factory::getFileIterator(TESTS_PATH . '/Foo/');
 
         $manipulator = new Manipulator();
         $manipulator->addFiles($iterator);
