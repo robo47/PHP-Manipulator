@@ -41,8 +41,8 @@ class ShowTokens extends Action
     {
         $value = \str_replace(' ', '.', $value);
         $value = \str_replace("\t", '\t', $value);
-        $value = \str_replace("\r", '\r' . "\r", $value);
-        $value = \str_replace("\n", '\n' . "\n", $value);
+        $value = \str_replace("\r", '\r', $value);
+        $value = \str_replace("\n", '\n', $value);
 
         return \str_replace('', '', $value);
     }
