@@ -24,7 +24,7 @@ extends Action
             $token = $iterator->current();
             if ($this->isType($token, T_WHITESPACE)) {
                 $container->removeToken($token);
-            } else if($this->isType($token, T_INLINE_HTML)) {
+            } else if ($this->isType($token, T_INLINE_HTML)) {
                 if ($this->evaluateConstraint('ContainsOnlyWhitespace', $token)) {
                     $container->removeToken($token);
                 } else {

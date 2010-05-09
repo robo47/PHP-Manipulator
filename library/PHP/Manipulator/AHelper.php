@@ -310,7 +310,7 @@ abstract class AHelper
         $iterator->seekToToken($token);
         return $result;
     }
-    
+
     /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @param string $followValue

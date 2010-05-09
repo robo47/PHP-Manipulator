@@ -124,7 +124,6 @@ class ReverseIteratorTest extends \Tests\TestCase
     }
 
 
-
     /**
      * @covers \PHP\Manipulator\TokenContainer\ReverseIterator::reInit
      */

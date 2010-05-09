@@ -383,7 +383,6 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertEquals(0, $container->getOffsetByToken($token1));
         $this->assertEquals(1, $container->getOffsetByToken($token2));
         $this->assertEquals(2, $container->getOffsetByToken($token3));
-        
     }
 
     /**

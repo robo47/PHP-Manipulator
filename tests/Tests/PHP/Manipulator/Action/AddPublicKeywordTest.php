@@ -49,7 +49,6 @@ class AddPublicKeywordTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
         );
-        
         #3 Test it not adds public to anonymous functions
         $data[] = array(
             array(),

@@ -147,15 +147,15 @@ extends Action
      */
     protected function _checkCurrentToken(Token $token)
     {
-        if($this->isType($token, T_CONST)) {
+        if ($this->isType($token, T_CONST)) {
             $this->_isConstant = true;
-        } else if($this->isType($token, T_USE)) {
+        } else if ($this->isType($token, T_USE)) {
             $this->_isUse = true;
-        } else if($this->isType($token, T_NAMESPACE)) {
+        } else if ($this->isType($token, T_NAMESPACE)) {
             $this->_isNamespace = true;
-        } else if($this->isType($token, T_CLASS)) {
+        } else if ($this->isType($token, T_CLASS)) {
             $this->_isClassDeclaration = true;
-        } else if($this->isType($token, T_FUNCTION)) {
+        } else if ($this->isType($token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
         }
 

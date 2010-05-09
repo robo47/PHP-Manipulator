@@ -39,7 +39,6 @@ extends Action
             }
             if ($this->isClosingCurlyBrace($token)) {
                 $level--;
-                
                 if ($classLevel === $level && true === $insideClassOrInterface) {
                     $insideClassOrInterface = false;
                     $classLevel = null;

@@ -82,7 +82,7 @@ extends Action
         if ($this->isClosingCurlyBrace( $token)) {
             $this->_level--;
             if (!$this->_classStack->isEmpty() &&
-                 $this->_level === $this->_classStack[count($this->_classStack) -1]) {
+                $this->_level === $this->_classStack[count($this->_classStack) -1]) {
                 $this->_classStack->pop();
             }
         }

@@ -42,7 +42,7 @@ extends Action
                 $noOtherTokens = true;
             }
 
-            if(null !== $lastElse && !$this->_isAllowedTokenInsideEmptyElse($token)) {
+            if (null !== $lastElse && !$this->_isAllowedTokenInsideEmptyElse($token)) {
                 $noOtherTokens = false;
             }
 
@@ -70,10 +70,10 @@ extends Action
      */
     protected function _isEndElse(Token $token)
     {
-        if($this->isClosingCurlyBrace( $token)) {
+        if ($this->isClosingCurlyBrace( $token)) {
             return true;
         }
-        if($this->isType($token, T_ENDIF)) {
+        if ($this->isType($token, T_ENDIF)) {
             return true;
         }
         return false;
@@ -85,10 +85,10 @@ extends Action
      */
     protected function _isAllowedTokenInsideEmptyElse(Token $token)
     {
-        if($this->isColon( $token) ||
-           $this->isType($token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
-           $this->isClosingCurlyBrace( $token) ||
-           $this->isOpeningCurlyBrace( $token)) {
+        if ($this->isColon( $token) ||
+            $this->isType($token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
+            $this->isClosingCurlyBrace( $token) ||
+            $this->isOpeningCurlyBrace( $token)) {
             return true;
         }
         // check for ignored comments

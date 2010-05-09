@@ -19,14 +19,14 @@ class FormatCastsTest extends \Tests\TestCase
     public function testConstructorDefaults()
     {
         $searchedTokens = array(
-                    T_INT_CAST => '(int)',
-                    T_BOOL_CAST => '(bool)',
-                    T_DOUBLE_CAST => '(double)',
-                    T_OBJECT_CAST => '(object)',
-                    T_STRING_CAST => '(string)',
-                    T_UNSET_CAST => '(unset)',
-                    T_ARRAY_CAST => '(array)',
-                );
+            T_INT_CAST => '(int)',
+            T_BOOL_CAST => '(bool)',
+            T_DOUBLE_CAST => '(double)',
+            T_OBJECT_CAST => '(object)',
+            T_STRING_CAST => '(string)',
+            T_UNSET_CAST => '(unset)',
+            T_ARRAY_CAST => '(array)',
+        );
         $action = new FormatCasts();
         $this->assertEquals($searchedTokens, $action->getOption('searchedTokens'));
         $this->assertCount(1, $action->getOptions());

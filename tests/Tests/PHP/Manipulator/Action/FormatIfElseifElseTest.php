@@ -30,8 +30,8 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertTrue($action->getOption('breakAfterCurlyBraceOfElse'), 'Default value for breakAfterCurlyBraceOfElse is wrong');
         $this->assertTrue($action->getOption('breakAfterCurlyBraceOfElseif'), 'Default value for breakAfterCurlyBraceOfElseif is wrong');
 
-//        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElse'), 'Default value for breakBeforeCurlyBraceOfElse is wrong');
-//        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElseif'), 'Default value for breakBeforeCurlyBraceOfElseif is wrong');
+        //        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElse'), 'Default value for breakBeforeCurlyBraceOfElse is wrong');
+        //        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElseif'), 'Default value for breakBeforeCurlyBraceOfElseif is wrong');
 
         $this->assertCount(9, $action->getOptions());
     }
@@ -113,13 +113,13 @@ class FormatIfElseifElseTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'input9.php'),
             $this->getContainerFromFixture($path . 'output9.php'),
         );
-// @todo implement + test this code
-//        #10 Test breaking works with nested if
-//        $data[] = array(
-//            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => true),
-//            $this->getContainerFromFixture($path . 'input10.php'),
-//            $this->getContainerFromFixture($path . 'output10.php'),
-//        );
+        // @todo implement + test this code
+        //        #10 Test breaking works with nested if
+        //        $data[] = array(
+        //            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => true),
+        //            $this->getContainerFromFixture($path . 'input10.php'),
+        //            $this->getContainerFromFixture($path . 'output10.php'),
+        //        );
 
 
         #11 Test breaking works

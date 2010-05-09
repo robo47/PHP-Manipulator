@@ -11,7 +11,7 @@ use PHP\Manipulator\FileContainer;
 class RunActions extends Action
 {
     /**
-     * @param string $configFile 
+     * @param string $configFile
      * @return \PHP\Manipulator\Config\Xml
      */
     protected function _getConfig($configFile)
