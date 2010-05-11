@@ -4,6 +4,8 @@ namespace PHP\Manipulator;
 
 use PHP\Manipulator;
 use Symfony\Components\Console\Application;
+use Symfony\Components\Finder\Finder;
+
 
 class Cli extends Application
 {
@@ -33,7 +35,8 @@ class Cli extends Application
         DIRECTORY_SEPARATOR . 'Cli' .
         DIRECTORY_SEPARATOR . 'Command' .
         DIRECTORY_SEPARATOR;
-        $fileIterator = \File_Iterator_Factory::getFileIterator($path, '.php');
+        $finder = new Finder();
+        $fileIterator = $finder->files()->name('*.php')->in($path);
 
         foreach ($fileIterator as $file) {
             /* @var $file SplFileInfo */

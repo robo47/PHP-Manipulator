@@ -3,6 +3,7 @@
 namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
+use Symfony\Components\Finder\Finder;
 
 class NonAbstract extends Config
 {
@@ -98,9 +99,10 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(0, $config->getFiles());
 
-        $iterator = \File_Iterator_Factory::getFileIterator(\getcwd() . '/_fixtures/Config/testDir0', '.php');
+        $finder = new Finder();
+        $iterator = $finder->files()->name('*.php')->in(\getcwd() . '/_fixtures/Config/testDir0');
 
-        $fluent = $config->addIterator($iterator);
+        $fluent = $config->addIterator($iterator->getIterator());
 
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');

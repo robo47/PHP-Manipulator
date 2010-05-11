@@ -3,6 +3,7 @@
 namespace Tests\PHP;
 
 use PHP\Manipulator;
+use Symfony\Components\Finder\Finder;
 
 /**
  * @group Manipulator
@@ -193,14 +194,13 @@ class ManipulatorTest extends \Tests\TestCase
      */
     public function testAddFilesWithIteratorAndGetFiles()
     {
-        $iterator = \File_Iterator_Factory::getFileIterator(TESTS_PATH . '/Foo/');
+        $finder = new Finder();
+        $iterator = $finder->files()->in(TESTS_PATH . '/Foo/');
 
         $manipulator = new Manipulator();
-        $manipulator->addFiles($iterator);
+        $manipulator->addFiles($iterator->getIterator());
 
         $this->assertCount(\iterator_count($iterator), $manipulator->getFiles());
-
-        $iteratorArray = \iterator_to_array($iterator);
 
         foreach ($iterator as $file) {
             $this->assertContains($file->__toString(), $manipulator->getFiles());

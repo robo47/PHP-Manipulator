@@ -2,6 +2,8 @@
 
 namespace PHP\Manipulator;
 
+use Symfony\Components\Finder\Finder;
+
 abstract class Config
 {
 
@@ -155,10 +157,8 @@ abstract class Config
             throw new \Exception('Unable to open path: ' . $path);
         }
         $suffix = $this->_getOption('fileSuffix');
-        $files = \File_Iterator_Factory::getFileIterator($realpath, $suffix);
-
-        // @todo fix for bug!! when not doing it, first file is added two times
-        \iterator_count($files);
+        $finder = new Finder();
+        $files = $finder->files()->name('*' . $suffix)->in($realpath);
 
         foreach ($files as $file) {
             $this->addFile((string) $file);
@@ -175,9 +175,6 @@ abstract class Config
      */
     public function addIterator(\Iterator $iterator)
     {
-        // @todo fix for bug!! when not doing it, first file is added two times
-        \iterator_count($iterator);
-
         foreach ($iterator as $file) {
             if ($file instanceof \SplFileInfo) {
                 $file = (string) $file;

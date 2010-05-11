@@ -28,7 +28,6 @@
         <iterator>
             <path>./_fixtures/Config/testDir3</path>
             <suffix>.php</suffix>
-            <exclude>./_fixtures/Config/testDir3/Foo.php</exclude>
         </iterator>
     </files>
 </config>

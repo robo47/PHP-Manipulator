@@ -68,10 +68,14 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Baafoo.php', $files);
         $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Baa.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Blub.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Baa.phtml', $files);
 
         $this->assertContains(\getcwd() . '/_fixtures/Config/testDir3/Baa.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir3/Foo.php', $files);
 
-        $this->assertCount(5, $files);
+        $this->assertCount(9, $files);
     }
 
     /**

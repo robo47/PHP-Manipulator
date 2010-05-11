@@ -4,6 +4,7 @@ namespace PHP\Manipulator\Config;
 
 use PHP\Manipulator\Config;
 use PHP\Manipulator\Config\Xml;
+use Symfony\Components\Finder\Finder;
 
 class Xml extends Config
 {
@@ -228,26 +229,20 @@ class Xml extends Config
      */
     protected function _parseIterator(\DOMNode $node)
     {
-        $paths = array();
-        $prefixes = array();
-        $suffixes = array();
-        $exclude = array();
+        $finder = new Finder();
         foreach ($node->childNodes as $option) {
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $nodeName = strtolower($option->nodeName);
                 $value = $option->nodeValue;
                 switch ($nodeName) {
                     case 'prefix':
-                        $prefixes[] = $value;
+                        $finder->name($value .'*');
                         break;
                     case 'suffix':
-                        $suffixes[] = $value;
+                        $finder->name('*' . $value);
                         break;
                     case 'path':
-                        $paths[] = $value;
-                        break;
-                    case 'exclude':
-                        $exclude[] = $value;
+                        $finder->in($value);
                         break;
                     default:
                         // ignore
@@ -255,10 +250,6 @@ class Xml extends Config
                 }
             }
         }
-        $iterator = null;
-        if (!empty($paths)) {
-            $iterator = \File_Iterator_Factory::getFileIterator($paths, $suffixes, $prefixes, $exclude);
-        }
-        return $iterator;
+        return $iterator = $finder->files()->getIterator();
     }
 }
