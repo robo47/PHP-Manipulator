@@ -34,7 +34,7 @@ class ShowTokens extends Command
 
         $size = filesize($file);
 
-        $output->write('Filesize: ' . $size . 'bytes' . PHP_EOL);
+        $output->write('Filesize: ' . $size . ' bytes' . PHP_EOL);
         $output->write('Tokens: ' . count($container) . PHP_EOL . PHP_EOL);
 
         foreach ($container as $number => $token) {

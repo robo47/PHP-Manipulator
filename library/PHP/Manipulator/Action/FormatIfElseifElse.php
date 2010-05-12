@@ -218,23 +218,15 @@ extends Action
         }
     }
 
-    /**
-     * @return \Closure
-     */
-    protected function _anonContainsNewline()
-    {
-        return function(Token $token) {
-            $constraint = new \PHP\Manipulator\TokenConstraint\ContainsNewline();
-            return $constraint->evaluate($token);
-        };
-    }
-
     protected function _isFollowedByWhitespaceContainingBreak(Token $token, Iterator $iterator)
     {
-        if ($this->_isFollowedByTokenMatching($iterator, $this->_anonContainsNewline())) {
-            return true;
-        }
-        return false;
+        return $this->isFollowedByTokenMatchedByClosure(
+            $iterator,
+            function(Token $token) {
+                $constraint = new \PHP\Manipulator\TokenConstraint\ContainsNewline();
+                return $constraint->evaluate($token);
+            }
+            );
     }
 
     /**
@@ -448,31 +440,6 @@ extends Action
                 break;
             }
             $iterator->previous();
-        }
-        $iterator->seekToToken($token);
-        return $result;
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param string $followValue
-     * @param array $allowedTypes
-     * @return boolean
-     */
-    protected function _isFollowedByTokenMatching(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
-        $token = $iterator->current();
-        $result = false;
-        $iterator->next();
-        while($iterator->valid()) {
-            if ($closure($iterator->current())) {
-                $result = true;
-                break;
-            }
-            if (!$this->isType($iterator->current(), $allowedTypes)) {
-                break;
-            }
-            $iterator->next();
         }
         $iterator->seekToToken($token);
         return $result;

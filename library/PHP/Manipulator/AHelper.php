@@ -262,18 +262,103 @@ abstract class AHelper
     }
 
     /**
+     * @param integer|null $type
+     * @return \Closure
+     */
+    protected function _getTokenTypeClosure($type)
+    {
+        $helper = $this;
+        return function(Token $token) use ($helper, $type) {
+            return $helper->isType($token, $type);
+        };
+    }
+
+    /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param integer $followedByType
+     * @param integer|array $type
      * @param array $allowedTypes
      * @return boolean
      */
-    public function isFollowedByTokenType(Iterator $iterator, $followedByType, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isFollowedByTokenType(Iterator $iterator, $type, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+
+        return $this->isFollowedByTokenMatchedByClosure(
+            $iterator,
+            $this->_getTokenTypeClosure($type),
+            $allowedTypes
+        );
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param integer|array $type
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    public function isPrecededByTokenType(Iterator $iterator, $type, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        return $this->isPrecededByTokenMatchedByClosure(
+            $iterator,
+            $this->_getTokenTypeClosure($type),
+            $allowedTypes
+        );
+    }
+
+    /**
+     * @param integer|null $type
+     * @return \Closure
+     */
+    protected function _getTokenValueClosure($value)
+    {
+        return function(Token $token) use ($value) {
+            return ($token->getValue() === $value);
+        };
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param string $value
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    public function isFollowedByTokenValue(Iterator $iterator, $value, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        return $this->isFollowedByTokenMatchedByClosure(
+            $iterator,
+            $this->_getTokenValueClosure($value),
+            $allowedTypes
+        );
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param string $value
+     * @param array $allowedTypes
+     * @return boolean
+     */
+    public function isPrecededByTokenValue(Iterator $iterator, $value, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    {
+        return $this->isPrecededByTokenMatchedByClosure(
+            $iterator,
+            $this->_getTokenValueClosure($value),
+            $allowedTypes
+        );
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param \Closure $closure
+     * @param array $allowedTypes
+     * @return boolean
+     * @todo ugly name
+     */
+    public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         $token = $iterator->current();
         $result = false;
         $iterator->next();
         while($iterator->valid()) {
-            if ($this->isType($iterator->current(), $followedByType)) {
+            if ($closure($iterator->current())) {
                 $result = true;
                 break;
             }
@@ -288,67 +373,18 @@ abstract class AHelper
 
     /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param integer $followedByType
+     * @param \Closure $closure
      * @param array $allowedTypes
      * @return boolean
+     * @todo ugly name
      */
-    public function isPrecededByTokenType(Iterator $iterator, $followedByType, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         $token = $iterator->current();
         $result = false;
         $iterator->previous();
         while($iterator->valid()) {
-            if ($this->isType($iterator->current(), $followedByType)) {
-                $result = true;
-                break;
-            }
-            if (!$this->isType($iterator->current(), $allowedTypes)) {
-                break;
-            }
-            $iterator->previous();
-        }
-        $iterator->seekToToken($token);
-        return $result;
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param string $followValue
-     * @param array $allowedTypes
-     * @return boolean
-     */
-    public function isFollowedByTokenValue(Iterator $iterator, $followValue, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
-        $token = $iterator->current();
-        $result = false;
-        $iterator->next();
-        while($iterator->valid()) {
-            if ($iterator->current()->getValue() ===  $followValue) {
-                $result = true;
-                break;
-            }
-            if (!$this->isType($iterator->current(), $allowedTypes)) {
-                break;
-            }
-            $iterator->next();
-        }
-        $iterator->seekToToken($token);
-        return $result;
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param string $followValue
-     * @param array $allowedTypes
-     * @return boolean
-     */
-    public function isPrecededByTokenValue(Iterator $iterator, $followValue, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
-        $token = $iterator->current();
-        $result = false;
-        $iterator->previous();
-        while($iterator->valid()) {
-            if ($iterator->current()->getValue() ===  $followValue) {
+            if ($closure($iterator->current())) {
                 $result = true;
                 break;
             }
