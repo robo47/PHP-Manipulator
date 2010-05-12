@@ -88,7 +88,7 @@ abstract class AHelper
      * @param mixed $params
      * @param boolean $autoPrefix
      */
-    public function manipulateContainer($action, TokenContainer $container, $params = null, $autoPrefix = true)
+    public function runAction($action, TokenContainer $container, $params = null, $autoPrefix = true)
     {
         $action = $this->getClassInstance($action, 'PHP\Manipulator\Action\\', $autoPrefix);
 

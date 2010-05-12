@@ -129,12 +129,12 @@ extends Action
             'tokens' => $operatorTokens,
             'whitespace' => $this->getOption('afterOperator'),
         );
-        $this->manipulateContainer('SetWhitespaceAfterToken', $container, $params);
+        $this->runAction('SetWhitespaceAfterToken', $container, $params);
 
         $params = array(
             'tokens' => $operatorTokens,
             'whitespace' => $this->getOption('beforeOperator'),
         );
-        $this->manipulateContainer('SetWhitespaceBeforeToken', $container, $params);
+        $this->runAction('SetWhitespaceBeforeToken', $container, $params);
     }
 }

@@ -102,14 +102,14 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\AHelper::manipulateContainer
+     * @covers \PHP\Manipulator\AHelper::runAction
      */
-    public function testManipulateContainerManipulatesContainer()
+    public function testrunActionManipulatesContainer()
     {
         \Tests\Mock\ActionMock::$called = false;
         $abstractHelper = new NonAbstractHelper();
 
-        $abstractHelper->manipulateContainer(
+        $abstractHelper->runAction(
             '\Tests\Mock\ActionMock',
             new TokenContainer(),
             null,
@@ -210,7 +210,7 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\AHelper::manipulateContainer
+     * @covers \PHP\Manipulator\AHelper::runAction
      */
     public function testManipulateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
@@ -219,7 +219,7 @@ class AHelperTest extends \Tests\TestCase
         $manipulator = new \stdClass();
 
         try {
-            $abstractHelper->manipulateContainer($manipulator, $container);
+            $abstractHelper->runAction($manipulator, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals('manipulator is not instance of \PHP\Manipulator\Action', $e->getMessage(), 'Wrong exception message');

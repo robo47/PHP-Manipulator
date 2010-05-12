@@ -50,7 +50,7 @@ extends Action
         }
         $container->retokenize();
         if (true === $stripWhitespaceFromEnd) {
-            $this->manipulateContainer('RemoveWhitespaceFromEnd', $container);
+            $this->runAction('RemoveWhitespaceFromEnd', $container);
         }
     }
 

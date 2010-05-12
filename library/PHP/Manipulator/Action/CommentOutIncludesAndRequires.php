@@ -35,7 +35,7 @@ extends Action
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
                 $result = $this->findTokens('IncludeAndRequire', $start, $container);
-                $this->manipulateContainer(
+                $this->runAction(
                     'CreateMultilineCommentFromTokenToToken',
                     $container,
                     array(
