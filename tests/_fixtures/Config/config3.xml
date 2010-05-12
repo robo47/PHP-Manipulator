@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <options>
+        <includepath>/baa/foo</includepath>
+    </options>
+    <classloaders>
+        <classloader namespace="Foo" path="/tmp/" />
+        <classloader namespace="Baa" path="/src/" />
+    </classloaders>
+</config>

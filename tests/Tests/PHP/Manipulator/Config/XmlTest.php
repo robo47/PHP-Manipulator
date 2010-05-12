@@ -30,9 +30,10 @@ class XmlTest extends \Tests\TestCase
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.phtml', $options['fileSuffix']);
         $this->assertArrayHasKey('defaultNewline', $options);
-        $this->assertEquals("\n", $options['defaultNewline']);
 
         $this->assertCount(4, $options);
+        
+        $this->assertEquals("\n", $options['defaultNewline']);
 
         $actions = $config->getActions();
         $this->assertType('array', $actions);
@@ -125,5 +126,23 @@ class XmlTest extends \Tests\TestCase
         $this->assertEquals("\n\r\n\r", $action->getOption('linebreaks'));
 
         $this->assertCount(10, $action->getOptions());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseClassLoaders
+     * @covers \PHP\Manipulator\Config\Xml::_getAttributesAsArray
+     */
+    public function testClassLoadersAreRead()
+    {
+        $config = $this->getXmlConfig(3);
+
+        $classLoaders = $config->getClassLoaders();
+
+        $this->assertArrayHasKey('Foo', $classLoaders);
+        $this->assertEquals('/tmp/', $classLoaders['Foo']);
+        $this->assertArrayHasKey('Baa', $classLoaders);
+        $this->assertEquals('/src/', $classLoaders['Baa']);
+
+        $this->assertCount(2, $config->getClassLoaders());
     }
 }

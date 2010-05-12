@@ -25,6 +25,7 @@ class Xml extends Config
         }
         \libxml_use_internal_errors($old);
         $this->_parseOptions($dom);
+        $this->_parseClassLoaders($dom);
         $this->_parseActions($dom);
         $this->_parseFiles($dom);
     }
@@ -251,5 +252,39 @@ class Xml extends Config
             }
         }
         return $iterator = $finder->files()->getIterator();
+    }
+
+    /**
+     * @param DOMDocument $dom
+     */
+    protected function _parseClassLoaders(\DOMDocument $dom)
+    {
+        $xpath = new \DOMXpath($dom);
+        $list = $xpath->query('//config/classloaders/classloader');
+        /* @var $list DOMNodeList */
+        foreach ($list as $classLoader) {
+            /* @var $classLoader DOMNode*/
+            if (strtolower($classLoader->tagName) === 'classloader') {
+                $attributes = $this->_getAttributesAsArray($classLoader);
+                if (isset($attributes['namespace'], $attributes['path'])) {
+                    $this->addClassLoader($attributes['namespace'], $attributes['path']);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse array from attributes (key = name, value = value)
+     *
+     * @param \DOMNode $node
+     * @return array
+     */
+    protected function _getAttributesAsArray(\DOMNode $node)
+    {
+        $attributes = array();
+        foreach ($node->attributes as $attribute) {
+            $attributes[$attribute->name] = $attribute->value;
+        }
+        return $attributes;
     }
 }

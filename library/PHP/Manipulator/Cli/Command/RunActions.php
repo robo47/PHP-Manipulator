@@ -11,6 +11,7 @@ use Symfony\Components\Console\Output\OutputInterface;
 use Symfony\Components\Console\Command\Command;
 use Symfony\Components\Console\Input\InputOption;
 use Symfony\Components\Console\Output\Output;
+use Symfony\Foundation\UniversalClassLoader;
 
 class RunActions extends Command
 {
@@ -24,12 +25,17 @@ class RunActions extends Command
         $this->setDefinition($def);
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
         $configFile = $input->getOption('config');
 
         $config = $this->_getConfig($configFile);
+
+        $this->_setupLoader($config);
 
         $files = $config->getFiles();
         $actions = $config->getActions();
@@ -75,5 +81,25 @@ class RunActions extends Command
         } catch (\Exception $e) {
             throw new \Exception('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * @param Config $config
+     */
+    protected function _setupLoader(Config $config)
+    {
+        $loaders = spl_autoload_functions();
+        $universalLoader = null;
+        foreach($loaders as $loader) {
+            if ($loader instanceof UniversalClassLoader) {
+                $universalLoader = $loader;
+                break;
+            }
+        }
+        if (null === $universalLoader) {
+            $loader = new UniversalClassLoader();
+        }
+
+        $loader->registerNamespaces($config->getClassLoaders());
     }
 }

@@ -29,6 +29,13 @@ abstract class Config
     protected $_files = array();
 
     /**
+     * Classloaders
+     *
+     * @var array
+     */
+    protected $_classLoaders = array();
+
+    /**
      * @param mixed $config
      */
     public function __construct($data)
@@ -233,5 +240,22 @@ abstract class Config
     {
         $this->_options[$name] = $value;
         return $this;
+    }
+    
+    /**
+     * @param string $name
+     * @param string $path 
+     */
+    public function addClassLoader($namespace, $path)
+    {
+        $this->_classLoaders[$namespace] = $path;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClassLoaders()
+    {
+        return $this->_classLoaders;
     }
 }

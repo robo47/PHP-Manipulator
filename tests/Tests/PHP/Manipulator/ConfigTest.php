@@ -36,8 +36,7 @@ class ConfigTest extends \Tests\TestCase
         $config = $this->getConfig();
 
         $options = $config->getOptions();
-
-        $this->assertCount(4, $options);
+       
 
         $this->assertArrayHasKey('actionPrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Action\\', $options['actionPrefix']);
@@ -50,6 +49,8 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertArrayHasKey('defaultNewline', $options);
         $this->assertEquals("\n", $options['defaultNewline']);
+
+        $this->assertCount(4, $options);
     }
 
     /**
@@ -353,5 +354,25 @@ class ConfigTest extends \Tests\TestCase
         $config = Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '_fixtures/' . $file, true);
         $this->assertType('\Tests\PHP\Manipulator\Config\NonAbstract', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config::factory
+     */
+    public function testAddClassLoadersGetClassLoaders()
+    {
+        $config = $this->getConfig();
+        $this->assertCount(0, $config->getClassLoaders());
+        $config->addClassLoader('baa', 'foo');
+        $config->addClassLoader('foo', 'baa');
+
+        $classLoaders = $config->getClassLoaders();
+
+        $this->assertArrayHasKey('baa', $classLoaders);
+        $this->assertEquals('foo', $classLoaders['baa']);
+        $this->assertArrayHasKey('foo', $classLoaders);
+        $this->assertEquals('baa', $classLoaders['foo']);
+
+        $this->assertCount(2, $classLoaders);
     }
 }
