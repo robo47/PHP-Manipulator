@@ -2,6 +2,7 @@
 namespace Tests;
 
 use PHP\Manipulator\Autoloader;
+use Symfony\Foundation\UniversalClassLoader;
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -17,6 +18,12 @@ if(!defined('BASE_PATH')) {
     set_include_path(implode($paths, PATH_SEPARATOR));
 }
 
-// Register autoloader
-require_once 'PHP/Manipulator/Autoloader.php';
-Autoloader::register();
+require_once 'Symfony/Foundation/UniversalClassLoader.php';
+
+$classLoader = new UniversalClassLoader();
+$classLoader->registerNamespace('Symfony', BASE_PATH . '/library/');
+$classLoader->registerNamespace('PHP', BASE_PATH . '/library/');
+$classLoader->registerNamespace('Tests', TESTS_PATH . '/');
+$classLoader->registerNamespace('Baa', TESTS_PATH . '/');
+$classLoader->registerNamespace('Foo', TESTS_PATH . '/');
+$classLoader->register();
