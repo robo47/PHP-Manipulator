@@ -9,7 +9,6 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group TokenContainer
  * @group TokenContainer\Iterator
- * @todo test Iterator works if first element has not pos = 0
  * @todo test fluent Interfaces!
  */
 class IteratorTest extends \Tests\TestCase
