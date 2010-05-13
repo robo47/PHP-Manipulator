@@ -195,18 +195,17 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function getPreviousToken(Token $token)
     {
         $iterator = $this->getIterator();
-        while ($iterator->valid()) {
-            if ($iterator->current() === $token) {
-                $iterator->previous();
-                if ($iterator->valid()) {
-                    return $iterator->current();
-                } else {
-                    return null;
-                }
+        try {
+            $iterator->seekToToken($token);
+            $iterator->previous();
+            if ($iterator->valid()) {
+                return $iterator->current();
+            } else {
+                return null;
             }
-            $iterator->next();
+        } catch(\Exception $e) {
+            return null;
         }
-        return null;
     }
 
     /**
@@ -216,18 +215,17 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function getNextToken(Token $token)
     {
         $iterator = $this->getIterator();
-        while ($iterator->valid()) {
-            if ($iterator->current() === $token) {
-                $iterator->next();
-                if ($iterator->valid()) {
-                    return $iterator->current();
-                } else {
-                    return null;
-                }
-            }
+        try {
+            $iterator->seekToToken($token);
             $iterator->next();
+            if ($iterator->valid()) {
+                return $iterator->current();
+            } else {
+                return null;
+            }
+        } catch(\Exception $e) {
+            return null;
         }
-        return null;
     }
 
     /**
@@ -266,17 +264,13 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getOffsetByToken(Token $token)
     {
-        $tokenOffset = null;
         foreach ($this->_container as $offset => $element) {
             if ($element === $token) {
-                $tokenOffset = $offset;
+                return $offset;
             }
         }
-        if (null === $tokenOffset) {
-            $message = "Token '$token' does not exist in this container";
-            throw new \Exception($message);
-        }
-        return $tokenOffset;
+        $message = "Token '$token' does not exist in this container";
+        throw new \Exception($message);
     }
 
     /**

@@ -61,7 +61,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      */
     protected function _getContainerKeyForPosition($position)
     {
-        if (array_key_exists($position, $this->_keys)) {
+        if (isset($this->_keys[$position])) {
             return $this->_keys[$position];
         } else {
             return false;
@@ -131,7 +131,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      */
     protected function _isValidPosition($position)
     {
-        if (array_key_exists($position, $this->_keys)) {
+        if (isset($this->_keys[$position])) {
             return true;
         } else {
             return false;
