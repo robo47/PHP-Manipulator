@@ -145,4 +145,18 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertCount(2, $config->getClassLoaders());
     }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_errorMessage
+     * @covers \PHP\Manipulator\Config\Xml::_initConfig
+     */
+    public function testLoadingDefectXmlThrowsException()
+    {
+        try {
+            $config = $this->getXmlConfig(4);
+            $this->fail('No exception thrown');
+        } catch(\Exception $e) {
+            $this->assertContains('Unable to parse data: ', $e->getMessage());
+        }
+    }
 }

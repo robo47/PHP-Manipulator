@@ -36,7 +36,7 @@ class Xml extends Config
      * @param \LibXMLError $error
      * @return string
      */
-    protected function _errorMessage(LibXMLError $error = null)
+    protected function _errorMessage(\LibXMLError $error = null)
     {
         $message = '';
         if ($error instanceof \LibXMLError) {
@@ -177,8 +177,6 @@ class Xml extends Config
                                 $this->addAction($name->value, $prefix, $options);
                             }
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -213,9 +211,6 @@ class Xml extends Config
                                 $this->addIterator($iterator);
                             }
                             break;
-                        default:
-                            // ignore
-                        break;
                     }
                 }
             }
@@ -245,9 +240,6 @@ class Xml extends Config
                     case 'path':
                         $finder->in($value);
                         break;
-                    default:
-                        // ignore
-                    break;
                 }
             }
         }
