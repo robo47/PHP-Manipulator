@@ -20,7 +20,7 @@ class RunActions extends Command
         $this->setName('runActions');
         $this->setDescription('Runs actions from config an runs them');
         $def = array(
-            new InputOption('--config', null, InputOption::PARAMETER_REQUIRED, 'the config used')
+            new InputOption('--config', null, InputOption::PARAMETER_OPTIONAL, 'the config used', 'phpmanipulator.xml')
         );
         $this->setDefinition($def);
     }
