@@ -157,7 +157,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * @param \PHP\Manipulator\Token $value
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    public function insertAtOffset($offset, $value)
+    public function insertAtOffset($offset, Token $value)
     {
         $position = $this->_getPositionForOffset($offset);
         $this->_insertAtPosition($position, $value);
@@ -171,7 +171,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * @param \PHP\Manipulator\Token $value
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      */
-    protected function _insertAtPosition($position, $value)
+    protected function _insertAtPosition($position, Token $value)
     {
         $this->_checkValueType($value);
 
