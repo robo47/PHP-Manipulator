@@ -13,7 +13,7 @@ class NonAbstractAction extends Action
     {
         $this->init = true;
     }
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
     }
 }
@@ -36,18 +36,13 @@ class ActionTest extends \Tests\TestCase
         /* @var $runMethod ReflectionMethod */
         $this->assertTrue($runMethod->isAbstract());
         $this->assertSame('run', $runMethod->getName(), 'Method has wrong name');
-        $this->assertSame(2, $runMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
+        $this->assertSame(1, $runMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
         $parameters = $runMethod->getParameters();
         $containerParameter = $parameters[0];
         /* @var $containerParameter ReflectionParameter */
         $this->assertSame('container', $containerParameter->getName(), 'Parameter has wrong name');
         $this->assertEquals('PHP\Manipulator\TokenContainer', $containerParameter->getClass()->getName(), 'Parameter is not a PHP\Manipulator\TokenContainer');
         $this->assertFalse($containerParameter->isOptional(), 'Parameter is optional');
-
-        $paramsParameter = $parameters[1];
-        /* @var $paramsParameter ReflectionParameter */
-        $this->assertSame('params', $paramsParameter->getName(), 'Parameter has wrong name');
-        $this->assertTrue($paramsParameter->isOptional(), 'Parameter is optional');
     }
 
     /**

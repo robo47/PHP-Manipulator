@@ -21,7 +21,7 @@ extends AHelper
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $container
      */
-    abstract public function run(TokenContainer $container, $params = null);
+    abstract public function run(TokenContainer $container);
 
     /**
      * @param array $options

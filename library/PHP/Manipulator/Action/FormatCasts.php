@@ -33,16 +33,10 @@ extends Action
      * @param \PHP\Manipulator\TokenContainer $container
      * @param array $params
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
-
         $searchedTokens = $this->getOption('searchedTokens');
-
-        // array_merge() won't work with integer-keys!
-        foreach ($params as $cast => $value) {
-            $searchedTokens[$cast] = $value;
-        }
 
         while ($iterator->valid()) {
             $token = $iterator->current();

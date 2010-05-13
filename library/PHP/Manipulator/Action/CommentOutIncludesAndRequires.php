@@ -21,7 +21,7 @@ extends Action
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $tokens = $this->_searchStartTokens($container);
         $this->_handleTokens($container, $tokens);

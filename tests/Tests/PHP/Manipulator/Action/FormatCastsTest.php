@@ -45,13 +45,15 @@ class FormatCastsTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'input0.php'),
             $this->getContainerFromFixture($path . 'output0.php'),
             array(
-                T_INT_CAST => '(iNt)',
-                T_BOOL_CAST => '(bOoL)',
-                T_DOUBLE_CAST => '(dOuBlE)',
-                T_OBJECT_CAST => '(oBjEcT)',
-                T_STRING_CAST => '(sTrInG)',
-                T_UNSET_CAST => '(uNsEt)',
-                T_ARRAY_CAST => '(aRrAy)',
+                'searchedTokens' => array(
+                    T_INT_CAST => '(iNt)',
+                    T_BOOL_CAST => '(bOoL)',
+                    T_DOUBLE_CAST => '(dOuBlE)',
+                    T_OBJECT_CAST => '(oBjEcT)',
+                    T_STRING_CAST => '(sTrInG)',
+                    T_UNSET_CAST => '(uNsEt)',
+                    T_ARRAY_CAST => '(aRrAy)',
+                )
             ),
             true
         );
@@ -72,10 +74,10 @@ class FormatCastsTest extends \Tests\TestCase
      * @covers \PHP\Manipulator\Action\FormatCasts::run
      * @covers \PHP\Manipulator\Action\FormatCasts::<protected>
      */
-    public function testManipulate($container, $expectedContainer, $params, $strict)
+    public function testManipulate($container, $expectedContainer, $options, $strict)
     {
-        $manipulator = new FormatCasts();
-        $manipulator->run($container, $params);
+        $manipulator = new FormatCasts($options);
+        $manipulator->run($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 }

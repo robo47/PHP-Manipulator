@@ -27,7 +27,7 @@ extends Action
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
         $this->_classStack = new \SplStack();

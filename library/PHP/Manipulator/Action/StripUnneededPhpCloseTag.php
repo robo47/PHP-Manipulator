@@ -23,7 +23,7 @@ extends Action
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $stripWhitespaceFromEnd = $this->getOption('stripWhitespaceFromEnd');
 

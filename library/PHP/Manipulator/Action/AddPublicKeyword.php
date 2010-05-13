@@ -21,7 +21,7 @@ extends Action
      *
      * @param \PHP\Manipulator\TokenContainer $container
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $this->_container = $container;
         $iterator = $container->getIterator();

@@ -81,7 +81,7 @@ extends Action
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container)
     {
         $this->reset();
         $this->_switchStack = new \SplStack();
