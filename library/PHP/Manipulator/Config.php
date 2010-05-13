@@ -241,10 +241,9 @@ abstract class Config
         $this->_options[$name] = $value;
         return $this;
     }
-    
     /**
      * @param string $name
-     * @param string $path 
+     * @param string $path
      */
     public function addClassLoader($namespace, $path)
     {

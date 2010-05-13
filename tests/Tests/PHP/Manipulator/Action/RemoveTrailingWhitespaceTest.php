@@ -9,7 +9,6 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group Action
  * @group Action\RemoveTrailingWhitespace
- * @todo test with removeEmptyLinesAtFileEnd = false / true
  */
 class RemoveTrailingWhitespaceTest extends \Tests\TestCase
 {

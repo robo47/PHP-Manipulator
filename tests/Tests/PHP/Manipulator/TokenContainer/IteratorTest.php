@@ -9,7 +9,6 @@ use PHP\Manipulator\TokenContainer;
 /**
  * @group TokenContainer
  * @group TokenContainer\Iterator
- * @todo test fluent Interfaces!
  */
 class IteratorTest extends \Tests\TestCase
 {

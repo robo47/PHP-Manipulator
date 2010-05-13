@@ -13,7 +13,6 @@ use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenManipulator;
 
 // @todo better name ?
-// @todo extend helper-methods to use config ?
 abstract class AHelper
 {
 
@@ -269,7 +268,7 @@ abstract class AHelper
     {
         $helper = $this;
         return function(Token $token) use ($helper, $type) {
-            return $helper->isType($token, $type);
+                return $helper->isType($token, $type);
         };
     }
 
@@ -311,7 +310,7 @@ abstract class AHelper
     protected function _getTokenValueClosure($value)
     {
         return function(Token $token) use ($value) {
-            return ($token->getValue() === $value);
+                return ($token->getValue() === $value);
         };
     }
 

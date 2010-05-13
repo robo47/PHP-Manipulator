@@ -219,7 +219,7 @@ extends Action
     {
         $iterator = $this->_container->getReverseIterator();
         $iterator->seekToToken($caseToken);
-        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML (important for alternate syntax ?)
         return $this->isPrecededByTokenType($iterator, T_BREAK);
     }
 
@@ -250,7 +250,7 @@ extends Action
     {
         $iterator = $this->_container->getIterator();
         $iterator->seekToToken($this->_findNextColonToken($caseToken));
-        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML
+        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML (important for alternate syntax ?)
         return $this->isFollowedByTokenType($iterator, array(T_DEFAULT,T_CASE));
     }
 
