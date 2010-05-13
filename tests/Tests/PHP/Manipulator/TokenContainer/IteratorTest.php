@@ -313,4 +313,16 @@ class IteratorTest extends \Tests\TestCase
         $iterator->reInit($container[5]);
         $this->assertSame($iterator->current(), $container[5]);
     }
+
+    public function testFluentInterfaces()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = $container->getIterator();
+        $fluent = $iterator->seek(2);
+        $this->assertSame($iterator, $fluent);
+        $fluent = $iterator->seekToToken($container[2]);
+        $this->assertSame($iterator, $fluent);
+        $fluent = $iterator->reInit($container[2]);
+        $this->assertSame($iterator, $fluent);
+    }
 }
