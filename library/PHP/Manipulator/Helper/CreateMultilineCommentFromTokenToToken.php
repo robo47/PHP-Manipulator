@@ -1,15 +1,14 @@
 <?php
 
-namespace PHP\Manipulator\Action;
+namespace PHP\Manipulator\Helper;
 
-use PHP\Manipulator\Action;
+use PHP\Manipulator\AHelper;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenConstraint\IsMultilineComment;
 
-// @todo not really fits as action as long as it has params which are tokens
 class CreateMultilineCommentFromTokenToToken
-extends Action
+extends AHelper
 {
 
     /**

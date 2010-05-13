@@ -3,6 +3,9 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
+
+use PHP\Manipulator\Helper\SetWhitespaceAfterToken;
+use PHP\Manipulator\Helper\SetWhitespaceBeforeToken;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
@@ -129,12 +132,14 @@ extends Action
             'tokens' => $operatorTokens,
             'whitespace' => $this->getOption('afterOperator'),
         );
-        $this->runAction('SetWhitespaceAfterToken', $container, $params);
+        $setWhitespaceAfterToken = new SetWhitespaceAfterToken();
+        $setWhitespaceAfterToken->run($container, $params);
 
         $params = array(
             'tokens' => $operatorTokens,
             'whitespace' => $this->getOption('beforeOperator'),
         );
-        $this->runAction('SetWhitespaceBeforeToken', $container, $params);
+        $setWhitespaceBeforeToken = new SetWhitespaceBeforeToken();
+        $setWhitespaceBeforeToken->run($container, $params);
     }
 }

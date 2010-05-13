@@ -4,6 +4,7 @@ namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken;
 
 class CommentOutIncludesAndRequires
 extends Action
@@ -35,8 +36,8 @@ extends Action
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
                 $result = $this->findTokens('IncludeAndRequire', $start, $container);
-                $this->runAction(
-                    'CreateMultilineCommentFromTokenToToken',
+                $commentOut = new CreateMultilineCommentFromTokenToToken();
+                $commentOut->run(
                     $container,
                     array(
                         'from' => $result->getFirstToken(),

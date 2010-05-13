@@ -1,26 +1,17 @@
 <?php
 
-namespace Tests\PHP\Manipulator\Action;
+namespace Tests\PHP\Manipulator\Helper;
 
-use PHP\Manipulator\Action\SetWhitespaceBeforeToken;
+use PHP\Manipulator\Helper\SetWhitespaceBeforeToken;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Action
- * @group Action\SetWhitespaceBeforeToken
+ * @group Helper
+ * @group Helper\SetWhitespaceBeforeToken
  */
 class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\SetWhitespaceBeforeToken::init
-     */
-    public function testConstructorDefaults()
-    {
-        $action = new SetWhitespaceBeforeToken();
-        $this->assertCount(0, $action->getOptions());
-    }
 
     /**
      * @return array
@@ -30,7 +21,7 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
         $data = array();
 
         $data = array();
-        $path = '/Action/SetWhitespaceBeforeToken/';
+        $path = '/Helper/SetWhitespaceBeforeToken/';
 
         #0
         $data[] = array(
@@ -70,7 +61,7 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\SetWhitespaceBeforeToken
+     * @covers \PHP\Manipulator\Helper\SetWhitespaceBeforeToken
      */
     public function testManipulate($container, $expectedContainer, $params, $strict)
     {

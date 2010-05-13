@@ -1,14 +1,13 @@
 <?php
 
-namespace PHP\Manipulator\Action;
+namespace PHP\Manipulator\Helper;
 
-use PHP\Manipulator\Action;
+use PHP\Manipulator\AHelper;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-// @todo make configureable via options instead params ? or ... move into ContainerManipulators or something like that
 class SetWhitespaceAfterToken
-extends Action
+extends AHelper
 {
 
     /**
