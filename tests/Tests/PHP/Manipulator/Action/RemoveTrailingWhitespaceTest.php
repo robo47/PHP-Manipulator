@@ -46,6 +46,13 @@ class RemoveTrailingWhitespaceTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output1.php'),
         );
 
+        #2
+        $data[] = array(
+            array('removeEmptyLinesAtFileEnd' => false),
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
+        );
+
         return $data;
     }
 
