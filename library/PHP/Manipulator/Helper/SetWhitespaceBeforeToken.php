@@ -5,19 +5,26 @@ namespace PHP\Manipulator\Helper;
 use PHP\Manipulator\AHelper;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\Iterator;
 
 class SetWhitespaceBeforeToken
 extends SetWhitespaceAfterToken
 {
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param \PHP\Manipulator\Token $token
-     * @return \PHP\Manipulator\Token
+     * @param Iterator $iterator
      */
-    public function getTargetToken(TokenContainer $container, Token $token)
+    protected function _moveIteratorToTargetToken(Iterator $iterator)
     {
-        return $container->getPreviousToken($token);
+        $iterator->previous();
+    }
+
+    /**
+     * @param Iterator $iterator
+     */
+    protected function _moveIteratorBackFromTagetToken(Iterator $iterator)
+    {
+        $iterator->next();
     }
 
     /**
@@ -25,8 +32,8 @@ extends SetWhitespaceAfterToken
      * @param \PHP\Manipulator\Token $targetToken
      * @param \PHP\Manipulator\Token $newToken
      */
-    public function insertToken(TokenContainer $container, Token $targetToken, Token $newToken)
+    protected function _insertToken(Token $newToken, Iterator $iterator)
     {
-        $container->insertTokenAfter($targetToken, $newToken);
+        $this->_container->insertTokenAfter($iterator->current(), $newToken);
     }
 }
