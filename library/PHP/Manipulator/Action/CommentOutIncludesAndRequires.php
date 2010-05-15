@@ -35,7 +35,11 @@ extends Action
     {
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
-                $result = $this->findTokens('IncludeAndRequire', $start, $container);
+                $result = $this->findTokens(
+                    'IncludeAndRequire',
+                    $start,
+                    $container
+                );
                 $commentOut = new CreateMultilineCommentFromTokenToToken();
                 $commentOut->run(
                     $container,

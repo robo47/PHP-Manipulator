@@ -1,0 +1,1455 @@
+
+FILE: ...obo47/NetBeansProjects/PHP_Manipulator/tests/Tests/Constraint/Count.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...7/NetBeansProjects/PHP_Manipulator/tests/Tests/Constraint/CountTest.php
+--------------------------------------------------------------------------------
+FOUND 5 ERROR(S) AND 4 WARNING(S) AFFECTING 9 LINE(S)
+--------------------------------------------------------------------------------
+  51 | WARNING | Line exceeds 80 characters; contains 84 characters
+  59 | ERROR   | Line exceeds maximum limit of 120 characters; contains 130
+     |         | characters
+ 106 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 114 | ERROR   | Line exceeds maximum limit of 120 characters; contains 130
+     |         | characters
+ 161 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 169 | ERROR   | Line exceeds maximum limit of 120 characters; contains 139
+     |         | characters
+ 191 | ERROR   | Line exceeds maximum limit of 120 characters; contains 147
+     |         | characters
+ 206 | ERROR   | Line exceeds maximum limit of 120 characters; contains 151
+     |         | characters
+ 226 | WARNING | Line exceeds 80 characters; contains 99 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...etBeansProjects/PHP_Manipulator/tests/Tests/Constraint/ResultsMatch.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 76 | WARNING | The method parameter $description is never used
+ 76 | WARNING | The method parameter $not is never used
+ 76 | WARNING | The method parameter $description is never used
+ 76 | WARNING | The method parameter $not is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...ansProjects/PHP_Manipulator/tests/Tests/Constraint/ResultsMatchTest.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 41 WARNING(S) AFFECTING 19 LINE(S)
+--------------------------------------------------------------------------------
+  20 | WARNING | Variable "t1" contains numbers but this is discouraged
+  21 | WARNING | Variable "t2" contains numbers but this is discouraged
+  22 | WARNING | Variable "t3" contains numbers but this is discouraged
+  26 | WARNING | Variable "t1" contains numbers but this is discouraged
+  26 | WARNING | Variable "t2" contains numbers but this is discouraged
+  26 | WARNING | Variable "t3" contains numbers but this is discouraged
+  27 | WARNING | Variable "t1" contains numbers but this is discouraged
+  27 | WARNING | Variable "t2" contains numbers but this is discouraged
+  27 | WARNING | Variable "t3" contains numbers but this is discouraged
+  40 | WARNING | Variable "t1" contains numbers but this is discouraged
+  40 | WARNING | Variable "t2" contains numbers but this is discouraged
+  41 | WARNING | Variable "t1" contains numbers but this is discouraged
+  41 | WARNING | Variable "t2" contains numbers but this is discouraged
+  41 | WARNING | Variable "t3" contains numbers but this is discouraged
+  47 | WARNING | Variable "t1" contains numbers but this is discouraged
+  47 | WARNING | Variable "t2" contains numbers but this is discouraged
+  47 | WARNING | Variable "t3" contains numbers but this is discouraged
+  47 | WARNING | Variable "t2" contains numbers but this is discouraged
+  48 | WARNING | Variable "t1" contains numbers but this is discouraged
+  48 | WARNING | Variable "t2" contains numbers but this is discouraged
+  48 | WARNING | Variable "t3" contains numbers but this is discouraged
+  54 | WARNING | Variable "t1" contains numbers but this is discouraged
+  54 | WARNING | Variable "t2" contains numbers but this is discouraged
+  54 | WARNING | Variable "t2" contains numbers but this is discouraged
+  55 | WARNING | Variable "t1" contains numbers but this is discouraged
+  55 | WARNING | Variable "t2" contains numbers but this is discouraged
+  55 | WARNING | Variable "t3" contains numbers but this is discouraged
+  61 | WARNING | Variable "t1" contains numbers but this is discouraged
+  61 | WARNING | Variable "t2" contains numbers but this is discouraged
+  61 | WARNING | Variable "t3" contains numbers but this is discouraged
+  62 | WARNING | Variable "t1" contains numbers but this is discouraged
+  62 | WARNING | Variable "t2" contains numbers but this is discouraged
+  62 | WARNING | Variable "t3" contains numbers but this is discouraged
+  68 | WARNING | Variable "t3" contains numbers but this is discouraged
+  68 | WARNING | Variable "t2" contains numbers but this is discouraged
+  68 | WARNING | Variable "t1" contains numbers but this is discouraged
+  69 | WARNING | Variable "t1" contains numbers but this is discouraged
+  69 | WARNING | Variable "t2" contains numbers but this is discouraged
+  69 | WARNING | Variable "t3" contains numbers but this is discouraged
+  79 | WARNING | Line exceeds 80 characters; contains 82 characters
+  82 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 103 | ERROR   | Line exceeds maximum limit of 120 characters; contains 182
+     |         | characters
+ 118 | ERROR   | Line exceeds maximum limit of 120 characters; contains 179
+     |         | characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...Projects/PHP_Manipulator/tests/Tests/Constraint/TokenContainerMatch.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...ects/PHP_Manipulator/tests/Tests/Constraint/TokenContainerMatchTest.php
+--------------------------------------------------------------------------------
+FOUND 3 ERROR(S) AND 8 WARNING(S) AFFECTING 11 LINE(S)
+--------------------------------------------------------------------------------
+   9 | WARNING | Comment refers to a TODO task "test faile-message and stuff"
+  10 | WARNING | Comment refers to a TODO task "more tests and check diffs!"
+  55 | WARNING | Variable "c1" contains numbers but this is discouraged
+  61 | WARNING | Variable "c1" contains numbers but this is discouraged
+  71 | WARNING | Line exceeds 80 characters; contains 98 characters
+  83 | WARNING | Line exceeds 80 characters; contains 92 characters
+  95 | ERROR   | Line exceeds maximum limit of 120 characters; contains 184
+     |         | characters
+ 105 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 108 | ERROR   | Line exceeds maximum limit of 120 characters; contains 161
+     |         | characters
+ 117 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 122 | ERROR   | Line exceeds maximum limit of 120 characters; contains 181
+     |         | characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...NetBeansProjects/PHP_Manipulator/tests/Tests/Constraint/TokensMatch.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 8 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 63 | WARNING | Line exceeds 80 characters; contains 102 characters
+ 69 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 76 | WARNING | Line exceeds 80 characters; contains 111 characters
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+ 91 | WARNING | The method parameter $description is never used
+ 91 | WARNING | The method parameter $not is never used
+ 93 | ERROR   | A cast statement must not be followed by a space
+ 93 | ERROR   | A cast statement must not be followed by a space
+ 93 | WARNING | Line exceeds 80 characters; contains 103 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...eansProjects/PHP_Manipulator/tests/Tests/Constraint/TokensMatchTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+  9 | WARNING | Comment refers to a TODO task "test faile-message and stuff"
+ 68 | WARNING | Line exceeds 80 characters; contains 90 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/Mock/ActionMock.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | The method parameter $container is never used
+ 22 | WARNING | The method parameter $params is never used
+ 22 | WARNING | The method parameter $container is never used
+ 22 | WARNING | The method parameter $params is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...nsProjects/PHP_Manipulator/tests/Tests/Mock/ContainerConstraintMock.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | The method parameter $container is never used
+ 22 | WARNING | The method parameter $params is never used
+ 22 | WARNING | The method parameter $container is never used
+ 22 | WARNING | The method parameter $params is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...tBeansProjects/PHP_Manipulator/tests/Tests/Mock/TokenConstraintMock.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | The method parameter $token is never used
+ 22 | WARNING | The method parameter $params is never used
+ 22 | WARNING | The method parameter $token is never used
+ 22 | WARNING | The method parameter $params is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...7/NetBeansProjects/PHP_Manipulator/tests/Tests/Mock/TokenFinderMock.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 7 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 36 | WARNING | The method parameter $token is never used
+ 36 | WARNING | The method parameter $container is never used
+ 36 | WARNING | The method parameter $params is never used
+ 36 | WARNING | The method parameter $token is never used
+ 36 | WARNING | The method parameter $container is never used
+ 36 | WARNING | The method parameter $params is never used
+ 36 | WARNING | Line exceeds 80 characters; contains 81 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...BeansProjects/PHP_Manipulator/tests/Tests/Mock/TokenManipulatorMock.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | WARNING | The method parameter $token is never used
+ 21 | WARNING | The method parameter $params is never used
+ 21 | WARNING | The method parameter $token is never used
+ 21 | WARNING | The method parameter $params is never used
+--------------------------------------------------------------------------------
+
+
+FILE: ...ansProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/AHelperTest.php
+--------------------------------------------------------------------------------
+FOUND 5 ERROR(S) AND 24 WARNING(S) AFFECTING 28 LINE(S)
+--------------------------------------------------------------------------------
+  24 | WARNING | Line exceeds 80 characters; contains 115 characters
+  24 | WARNING | Comment refers to a TODO task "test isFollowedBy/PrecededBy
+     |         | with array of values [not supported yet] and types [supported
+     |         | but not tested"
+  25 | WARNING | Comment refers to a TODO task "test
+     |         | isFollowed/PrecededByMatchedByClosure"
+  45 | WARNING | Line exceeds 80 characters; contains 84 characters
+  46 | WARNING | Line exceeds 80 characters; contains 86 characters
+  56 | WARNING | Line exceeds 80 characters; contains 84 characters
+  57 | WARNING | Line exceeds 80 characters; contains 86 characters
+  92 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 165 | WARNING | Line exceeds 80 characters; contains 92 characters
+ 175 | ERROR   | Line exceeds maximum limit of 120 characters; contains 143
+     |         | characters
+ 193 | ERROR   | Line exceeds maximum limit of 120 characters; contains 135
+     |         | characters
+ 200 | WARNING | Line exceeds 80 characters; contains 102 characters
+ 207 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 210 | ERROR   | Line exceeds maximum limit of 120 characters; contains 147
+     |         | characters
+ 217 | WARNING | Line exceeds 80 characters; contains 104 characters
+ 227 | ERROR   | Line exceeds maximum limit of 120 characters; contains 135
+     |         | characters
+ 234 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 244 | ERROR   | Line exceeds maximum limit of 120 characters; contains 145
+     |         | characters
+ 371 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 417 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 463 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 508 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 553 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 592 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 637 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 670 | WARNING | Line exceeds 80 characters; contains 106 characters
+ 713 | WARNING | Line exceeds 80 characters; contains 106 characters
+ 756 | WARNING | Line exceeds 80 characters; contains 107 characters
+ 799 | WARNING | Line exceeds 80 characters; contains 98 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...Manipulator/tests/Tests/PHP/Manipulator/Action/AddPublicKeywordTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 46 | WARNING | Line exceeds 80 characters; contains 110 characters
+ 77 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...anipulator/tests/Tests/PHP/Manipulator/Action/AsptagsToLongTagsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 67 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...anipulator/tests/Tests/PHP/Manipulator/Action/ChangeLineEndingsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 5 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | Line exceeds 80 characters; contains 103 characters
+ 34 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 35 | WARNING | Line exceeds 80 characters; contains 117 characters
+ 36 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 92 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...r/tests/Tests/PHP/Manipulator/Action/ChangeQuotesToSingleQuotesTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 71 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ests/Tests/PHP/Manipulator/Action/CommentOutIncludesAndRequiresTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 3 WARNING(S) AFFECTING 3 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | Line exceeds 80 characters; contains 111 characters
+ 60 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 67 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...anipulator/tests/Tests/PHP/Manipulator/Action/ElseAndIfToElseIfTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 50 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...anipulator/tests/Tests/PHP/Manipulator/Action/ElseIfToElseAndIfTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 50 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../PHP_Manipulator/tests/Tests/PHP/Manipulator/Action/FormatCastsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 3 WARNING(S) AFFECTING 3 LINE(S)
+--------------------------------------------------------------------------------
+ 31 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 77 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 81 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...nipulator/tests/Tests/PHP/Manipulator/Action/FormatIfElseifElseTest.php
+--------------------------------------------------------------------------------
+FOUND 16 ERROR(S) AND 10 WARNING(S) AFFECTING 26 LINE(S)
+--------------------------------------------------------------------------------
+  21 | WARNING | Line exceeds 80 characters; contains 105 characters
+  22 | WARNING | Line exceeds 80 characters; contains 113 characters
+  23 | WARNING | Line exceeds 80 characters; contains 109 characters
+  25 | WARNING | Line exceeds 80 characters; contains 107 characters
+  26 | WARNING | Line exceeds 80 characters; contains 115 characters
+  27 | WARNING | Line exceeds 80 characters; contains 111 characters
+  29 | ERROR   | Line exceeds maximum limit of 120 characters; contains 129
+     |         | characters
+  30 | ERROR   | Line exceeds maximum limit of 120 characters; contains 133
+     |         | characters
+  31 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+  33 | ERROR   | Line exceeds maximum limit of 120 characters; contains 145
+     |         | characters
+  34 | ERROR   | Line exceeds maximum limit of 120 characters; contains 149
+     |         | characters
+  49 | ERROR   | Line exceeds maximum limit of 120 characters; contains 208
+     |         | characters
+  54 | WARNING | Line exceeds 80 characters; contains 102 characters
+  56 | ERROR   | Line exceeds maximum limit of 120 characters; contains 208
+     |         | characters
+  61 | WARNING | Line exceeds 80 characters; contains 88 characters
+  63 | ERROR   | Line exceeds maximum limit of 120 characters; contains 209
+     |         | characters
+  70 | ERROR   | Line exceeds maximum limit of 120 characters; contains 237
+     |         | characters
+  77 | ERROR   | Line exceeds maximum limit of 120 characters; contains 237
+     |         | characters
+  84 | ERROR   | Line exceeds maximum limit of 120 characters; contains 239
+     |         | characters
+  91 | ERROR   | Line exceeds maximum limit of 120 characters; contains 241
+     |         | characters
+  98 | ERROR   | Line exceeds maximum limit of 120 characters; contains 240
+     |         | characters
+ 105 | ERROR   | Line exceeds maximum limit of 120 characters; contains 243
+     |         | characters
+ 112 | ERROR   | Line exceeds maximum limit of 120 characters; contains 181
+     |         | characters
+ 117 | WARNING | Comment refers to a TODO task "implement + test this code"
+ 120 | ERROR   | Line exceeds maximum limit of 120 characters; contains 190
+     |         | characters
+ 143 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Action/FormatOperatorsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 5 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | Line exceeds 80 characters; contains 118 characters
+ 23 | WARNING | Line exceeds 80 characters; contains 116 characters
+ 25 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 26 | WARNING | Line exceeds 80 characters; contains 97 characters
+ 66 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...jects/PHP_Manipulator/tests/Tests/PHP/Manipulator/Action/IndentTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 9 WARNING(S) AFFECTING 10 LINE(S)
+--------------------------------------------------------------------------------
+  13 | WARNING | Comment refers to a TODO task "more tests with tabs instead of
+     |         | spaces"
+  14 | WARNING | Comment refers to a TODO task "test initial Indention"
+  15 | WARNING | Comment refers to a TODO task "test indentionWidth"
+  16 | WARNING | Comment refers to a TODO task "test tabWidth"
+  17 | WARNING | Comment refers to a TODO task "test indention works if we
+     |         | place the curly braces on the following line"
+  27 | WARNING | Line exceeds 80 characters; contains 99 characters
+  28 | WARNING | Line exceeds 80 characters; contains 102 characters
+  29 | WARNING | Line exceeds 80 characters; contains 114 characters
+  30 | ERROR   | Line exceeds maximum limit of 120 characters; contains 128
+     |         | characters
+ 222 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../tests/Tests/PHP/Manipulator/Action/OldStyleConstructorReplacerTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 64 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...P_Manipulator/tests/Tests/PHP/Manipulator/Action/RemoveCommentsTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 6 WARNING(S) AFFECTING 7 LINE(S)
+--------------------------------------------------------------------------------
+  22 | WARNING | Line exceeds 80 characters; contains 115 characters
+  23 | ERROR   | Line exceeds maximum limit of 120 characters; contains 125
+     |         | characters
+  44 | WARNING | Line exceeds 80 characters; contains 82 characters
+  72 | WARNING | Line exceeds 80 characters; contains 82 characters
+  93 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 101 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 123 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Action/RemoveEmptyElseTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | WARNING | Line exceeds 80 characters; contains 110 characters
+ 86 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...r/tests/Tests/PHP/Manipulator/Action/RemoveErrorControlOperatorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 50 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...or/tests/Tests/PHP/Manipulator/Action/RemoveIncludesAndRequiresTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | WARNING | Line exceeds 80 characters; contains 111 characters
+ 65 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Action/RemoveIndentionTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 62 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/Action/RemoveMultipleEmptyLinesTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | WARNING | Line exceeds 80 characters; contains 112 characters
+ 67 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/Action/RemoveTrailingWhitespaceTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 1 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 22 | ERROR   | Line exceeds maximum limit of 120 characters; contains 131
+    |         | characters
+ 69 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Action/RemoveTypehintsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 72 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ator/tests/Tests/PHP/Manipulator/Action/RemoveWhitespaceFromEndTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 58 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../Manipulator/Action/ReplaceBooleanOperatorsWithLogicalOperatorsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 7 WARNING(S) AFFECTING 7 LINE(S)
+--------------------------------------------------------------------------------
+ 17 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 22 | WARNING | Line exceeds 80 characters; contains 100 characters
+ 23 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 24 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 75 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 76 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 83 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../Manipulator/Action/ReplaceLogicalOperatorsWithBooleanOperatorsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 6 WARNING(S) AFFECTING 6 LINE(S)
+--------------------------------------------------------------------------------
+ 17 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 22 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 23 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 67 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 68 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 75 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...pulator/tests/Tests/PHP/Manipulator/Action/ReplaceVarWithPublicTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 49 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ipulator/tests/Tests/PHP/Manipulator/Action/ShorttagsToLongTagsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 68 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../PHP_Manipulator/tests/Tests/PHP/Manipulator/Action/StripNonPhpTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 59 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 91 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...cts/PHP_Manipulator/tests/Tests/PHP/Manipulator/Action/StripPhpTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 60 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 92 | WARNING | Line exceeds 80 characters; contains 89 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/Action/StripUnneededPhpCloseTagTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 2 WARNING(S) AFFECTING 3 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | ERROR   | Line exceeds maximum limit of 120 characters; contains 126
+    |         | characters
+ 88 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 92 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...nipulator/tests/Tests/PHP/Manipulator/Action/UppercaseConstantsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+  67 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 113 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...eansProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/ActionTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 9 WARNING(S) AFFECTING 10 LINE(S)
+--------------------------------------------------------------------------------
+  38 | WARNING | Line exceeds 80 characters; contains 81 characters
+  39 | WARNING | Line exceeds 80 characters; contains 107 characters
+  43 | WARNING | Line exceeds 80 characters; contains 99 characters
+  44 | ERROR   | Line exceeds maximum limit of 120 characters; contains 159
+     |         | characters
+  45 | WARNING | Line exceeds 80 characters; contains 87 characters
+  54 | WARNING | Line exceeds 80 characters; contains 92 characters
+  88 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 105 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 117 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 131 | WARNING | Line exceeds 80 characters; contains 103 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...sProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/ActionsetTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 4 WARNING(S) AFFECTING 4 LINE(S)
+--------------------------------------------------------------------------------
+ 23 | WARNING | Line exceeds 80 characters; contains 114 characters
+ 27 | WARNING | Line exceeds 80 characters; contains 109 characters
+ 31 | WARNING | Line exceeds 80 characters; contains 92 characters
+ 32 | WARNING | Line exceeds 80 characters; contains 112 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...PHP_Manipulator/tests/Tests/PHP/Manipulator/Cli/Command/LicenseTest.php
+--------------------------------------------------------------------------------
+FOUND 3 ERROR(S) AND 20 WARNING(S) AFFECTING 22 LINE(S)
+--------------------------------------------------------------------------------
+ 33 | WARNING | Line exceeds 80 characters; contains 92 characters
+ 35 | ERROR   | Opening parenthesis of a multi-line function call must be the
+    |         | last content on the line
+ 40 | WARNING | Line exceeds 80 characters; contains 92 characters
+ 41 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 43 | WARNING | Line exceeds 80 characters; contains 102 characters
+ 44 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 45 | WARNING | Line exceeds 80 characters; contains 97 characters
+ 46 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 47 | WARNING | Line exceeds 80 characters; contains 100 characters
+ 48 | WARNING | Line exceeds 80 characters; contains 105 characters
+ 49 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 52 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 53 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 54 | WARNING | Line exceeds 80 characters; contains 100 characters
+ 55 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 56 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 57 | WARNING | Line exceeds 80 characters; contains 94 characters
+ 58 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 59 | WARNING | Line exceeds 80 characters; contains 97 characters
+ 60 | WARNING | Line exceeds 80 characters; contains 97 characters
+ 61 | WARNING | Line exceeds 80 characters; contains 96 characters
+ 62 | ERROR   | Multi-line function call not indented correctly; expected 8
+    |         | spaces but found 12
+ 62 | ERROR   | Closing parenthesis of a multi-line function call must be on a
+    |         | line by itself
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Cli/Command/RunActionsTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 32 | WARNING | Line exceeds 80 characters; contains 92 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Cli/Command/ShowTokensTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 32 | WARNING | Line exceeds 80 characters; contains 92 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ects/PHP_Manipulator/tests/Tests/PHP/Manipulator/Config/NonAbstract.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 7 | WARNING | Duplicate class name "NonAbstract" found; first defined in
+   |         | /home/robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/ConfigTest.php
+   |         | on line 8
+--------------------------------------------------------------------------------
+
+
+FILE: ...Projects/PHP_Manipulator/tests/Tests/PHP/Manipulator/Config/XmlTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 10 WARNING(S) AFFECTING 11 LINE(S)
+--------------------------------------------------------------------------------
+  29 | WARNING | Line exceeds 80 characters; contains 81 characters
+  67 | WARNING | Line exceeds 80 characters; contains 91 characters
+  68 | WARNING | Line exceeds 80 characters; contains 91 characters
+  70 | WARNING | Line exceeds 80 characters; contains 91 characters
+  71 | WARNING | Line exceeds 80 characters; contains 88 characters
+  72 | WARNING | Line exceeds 80 characters; contains 88 characters
+  73 | WARNING | Line exceeds 80 characters; contains 89 characters
+  74 | WARNING | Line exceeds 80 characters; contains 90 characters
+  76 | WARNING | Line exceeds 80 characters; contains 88 characters
+  77 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 114 | ERROR   | A cast statement must not be followed by a space
+--------------------------------------------------------------------------------
+
+
+FILE: ...eansProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/ConfigTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 25 WARNING(S) AFFECTING 26 LINE(S)
+--------------------------------------------------------------------------------
+  25 | WARNING | Comment refers to a TODO task "array-support for the
+     |         | file-suffixes ?"
+  42 | WARNING | Line exceeds 80 characters; contains 83 characters
+  45 | WARNING | Line exceeds 80 characters; contains 89 characters
+  68 | WARNING | Line exceeds 80 characters; contains 81 characters
+  70 | WARNING | Line exceeds 80 characters; contains 82 characters
+  86 | WARNING | Line exceeds 80 characters; contains 81 characters
+  88 | WARNING | Line exceeds 80 characters; contains 101 characters
+  89 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 104 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 109 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 111 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 112 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 129 | WARNING | Line exceeds 80 characters; contains 120 characters
+ 148 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 173 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 175 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 203 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 220 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 224 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 250 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 267 | WARNING | Line exceeds 80 characters; contains 113 characters
+ 271 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 301 | ERROR   | Line exceeds maximum limit of 120 characters; contains 124
+     |         | characters
+ 315 | WARNING | Line exceeds 80 characters; contains 119 characters
+ 333 | WARNING | Line exceeds 80 characters; contains 107 characters
+ 354 | WARNING | Line exceeds 80 characters; contains 107 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...PHP_Manipulator/tests/Tests/PHP/Manipulator/ContainerConstraintTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 8 WARNING(S) AFFECTING 9 LINE(S)
+--------------------------------------------------------------------------------
+ 18 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 20 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 24 | WARNING | Line exceeds 80 characters; contains 112 characters
+ 29 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 30 | ERROR   | Line exceeds maximum limit of 120 characters; contains 155
+    |         | characters
+ 31 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 35 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 36 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 37 | WARNING | Line exceeds 80 characters; contains 91 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...jects/PHP_Manipulator/tests/Tests/PHP/Manipulator/FileContainerTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | WARNING | Line exceeds 80 characters; contains 104 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...s/PHP/Manipulator/Helper/CreateMultilineCommentFromTokenToTokenTest.php
+--------------------------------------------------------------------------------
+FOUND 3 ERROR(S) AND 17 WARNING(S) AFFECTING 20 LINE(S)
+--------------------------------------------------------------------------------
+  52 | WARNING | Line exceeds 80 characters; contains 82 characters
+  53 | WARNING | Line exceeds 80 characters; contains 90 characters
+  55 | WARNING | Line exceeds 80 characters; contains 84 characters
+  59 | WARNING | Line exceeds 80 characters; contains 82 characters
+  63 | WARNING | Line exceeds 80 characters; contains 82 characters
+  75 | ERROR   | Line exceeds maximum limit of 120 characters; contains 121
+     |         | characters
+  80 | WARNING | Line exceeds 80 characters; contains 82 characters
+  92 | WARNING | Line exceeds 80 characters; contains 113 characters
+  97 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 109 | WARNING | Line exceeds 80 characters; contains 111 characters
+ 114 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 126 | ERROR   | Line exceeds maximum limit of 120 characters; contains 132
+     |         | characters
+ 131 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 143 | ERROR   | Line exceeds maximum limit of 120 characters; contains 130
+     |         | characters
+ 148 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 160 | WARNING | Line exceeds 80 characters; contains 112 characters
+ 165 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 177 | WARNING | Line exceeds 80 characters; contains 118 characters
+ 182 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 194 | WARNING | Line exceeds 80 characters; contains 120 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ..._Manipulator/tests/Tests/PHP/Manipulator/Helper/NewlineDetectorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 3 WARNING(S) AFFECTING 3 LINE(S)
+--------------------------------------------------------------------------------
+  80 | WARNING | Line exceeds 80 characters; contains 86 characters
+  96 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 130 | WARNING | Line exceeds 80 characters; contains 94 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ator/tests/Tests/PHP/Manipulator/Helper/SetWhitespaceAfterTokenTest.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 11 WARNING(S) AFFECTING 13 LINE(S)
+--------------------------------------------------------------------------------
+  27 | WARNING | Line exceeds 80 characters; contains 83 characters
+  38 | WARNING | Line exceeds 80 characters; contains 83 characters
+  49 | WARNING | Line exceeds 80 characters; contains 83 characters
+  60 | WARNING | Line exceeds 80 characters; contains 83 characters
+  76 | WARNING | Line exceeds 80 characters; contains 84 characters
+  80 | WARNING | Line exceeds 80 characters; contains 82 characters
+  96 | WARNING | Line exceeds 80 characters; contains 119 characters
+ 113 | WARNING | Line exceeds 80 characters; contains 115 characters
+ 129 | ERROR   | Line exceeds maximum limit of 120 characters; contains 121
+     |         | characters
+ 134 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 137 | WARNING | Line exceeds 80 characters; contains 96 characters
+ 140 | WARNING | Line exceeds 80 characters; contains 114 characters
+ 146 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/Helper/SetWhitespaceBeforeTokenTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 5 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 28 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 39 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 50 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 66 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 70 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...r/tests/Tests/PHP/Manipulator/TokenConstraint/BeginsWithNewlineTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 63 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/TokenConstraint/ContainsNewlineTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 57 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ts/Tests/PHP/Manipulator/TokenConstraint/ContainsOnlyWhitespaceTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 45 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/TokenConstraint/EndsWithNewlineTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 87 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...lator/tests/Tests/PHP/Manipulator/TokenConstraint/IsDoublequoteTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 57 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ts/Tests/PHP/Manipulator/TokenConstraint/IsErrorControlOperatorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 57 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../tests/Tests/PHP/Manipulator/TokenConstraint/IsMultilineCommentTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 82 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ipulator/tests/Tests/PHP/Manipulator/TokenConstraint/IsOperatorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 101 | WARNING | Line exceeds 80 characters; contains 90 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tor/tests/Tests/PHP/Manipulator/TokenConstraint/IsSingleNewlineTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 93 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...tests/Tests/PHP/Manipulator/TokenConstraint/IsSinglelineCommentTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 1 WARNING(S) AFFECTING 1 LINE(S)
+--------------------------------------------------------------------------------
+ 87 | WARNING | Line exceeds 80 characters; contains 82 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...cts/PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenConstraintTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 7 WARNING(S) AFFECTING 8 LINE(S)
+--------------------------------------------------------------------------------
+ 20 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 24 | WARNING | Line exceeds 80 characters; contains 112 characters
+ 29 | WARNING | Line exceeds 80 characters; contains 91 characters
+ 30 | ERROR   | Line exceeds maximum limit of 120 characters; contains 146
+    |         | characters
+ 31 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 35 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 36 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 37 | WARNING | Line exceeds 80 characters; contains 91 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...Manipulator/tests/Tests/PHP/Manipulator/TokenContainer/IteratorTest.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 5 WARNING(S) AFFECTING 7 LINE(S)
+--------------------------------------------------------------------------------
+  21 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 180 | ERROR   | Expected "foreach (...) {\n"; found "foreach(...) {\n"
+ 191 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 200 | ERROR   | Line exceeds maximum limit of 120 characters; contains 125
+     |         | characters
+ 233 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 252 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 269 | WARNING | Line exceeds 80 characters; contains 99 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ator/tests/Tests/PHP/Manipulator/TokenContainer/ReverseIteratorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 21 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 22 | WARNING | Line exceeds 80 characters; contains 96 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ects/PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenContainerTest.php
+--------------------------------------------------------------------------------
+FOUND 13 ERROR(S) AND 214 WARNING(S) AFFECTING 176 LINE(S)
+--------------------------------------------------------------------------------
+  20 | WARNING | Line exceeds 80 characters; contains 108 characters
+  21 | WARNING | Line exceeds 80 characters; contains 104 characters
+  22 | WARNING | Line exceeds 80 characters; contains 120 characters
+  32 | WARNING | Line exceeds 80 characters; contains 83 characters
+  81 | ERROR   | Line exceeds maximum limit of 120 characters; contains 136
+     |         | characters
+ 113 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 122 | WARNING | Line exceeds 80 characters; contains 106 characters
+ 136 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 143 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 149 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 173 | ERROR   | Line exceeds maximum limit of 120 characters; contains 126
+     |         | characters
+ 189 | ERROR   | Line exceeds maximum limit of 120 characters; contains 126
+     |         | characters
+ 205 | ERROR   | Line exceeds maximum limit of 120 characters; contains 126
+     |         | characters
+ 221 | ERROR   | Line exceeds maximum limit of 120 characters; contains 126
+     |         | characters
+ 255 | WARNING | Line exceeds 80 characters; contains 106 characters
+ 293 | ERROR   | Line exceeds maximum limit of 120 characters; contains 128
+     |         | characters
+ 330 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 331 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 332 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 333 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 334 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 334 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 335 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 335 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 337 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 338 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 339 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 347 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 348 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 349 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 350 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 351 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 351 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 352 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 352 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 356 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 356 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 360 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 361 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 362 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 363 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 371 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 372 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 373 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 374 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 375 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 375 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 379 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 379 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 383 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 384 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 385 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 394 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 395 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 396 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 397 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 400 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 400 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 403 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 403 | ERROR   | Line exceeds maximum limit of 120 characters; contains 122
+     |         | characters
+ 413 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 414 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 415 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 416 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 419 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 419 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 422 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 422 | ERROR   | Line exceeds maximum limit of 120 characters; contains 122
+     |         | characters
+ 431 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 432 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 433 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 434 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 435 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 435 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 436 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 436 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 436 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 440 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 441 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 442 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 443 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 451 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 452 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 453 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 454 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 455 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 456 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 456 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 456 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 456 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 456 | WARNING | Line exceeds 80 characters; contains 82 characters
+ 460 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 461 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 462 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 463 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 471 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 472 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 473 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 474 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 475 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 475 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 475 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 477 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 478 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 479 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 488 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 489 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 490 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 491 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 492 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 495 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 495 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 495 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 498 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 498 | ERROR   | Line exceeds maximum limit of 120 characters; contains 122
+     |         | characters
+ 508 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 509 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 510 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 515 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 518 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 521 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 530 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 531 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 532 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 535 | ERROR   | A cast statement must not be followed by a space
+ 537 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 538 | ERROR   | A cast statement must not be followed by a space
+ 540 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 541 | ERROR   | A cast statement must not be followed by a space
+ 543 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 544 | ERROR   | A cast statement must not be followed by a space
+ 552 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 553 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 554 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 557 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 558 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 559 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 564 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 565 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 566 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 593 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 601 | WARNING | Variable "token0" contains numbers but this is discouraged
+ 602 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 603 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 604 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 605 | WARNING | Variable "token0" contains numbers but this is discouraged
+ 605 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 605 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 605 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 605 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 609 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 617 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 618 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 619 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 622 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 623 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 624 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 626 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 626 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 631 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 631 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 632 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 632 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 633 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 633 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 641 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 642 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 643 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 646 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 647 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 648 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 650 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 655 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 655 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 656 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 656 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 657 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 657 | WARNING | Line exceeds 80 characters; contains 91 characters
+ 665 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 666 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 667 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 668 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 671 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 672 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 673 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 675 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 675 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 675 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 676 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 676 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 676 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 677 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 677 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 678 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 678 | WARNING | Line exceeds 80 characters; contains 101 characters
+ 686 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 687 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 688 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 689 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 692 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 693 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 694 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 696 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 696 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 696 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 697 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 697 | WARNING | Variable "token3" contains numbers but this is discouraged
+ 697 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 698 | WARNING | Variable "token1" contains numbers but this is discouraged
+ 698 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 699 | WARNING | Variable "token4" contains numbers but this is discouraged
+ 699 | WARNING | Line exceeds 80 characters; contains 105 characters
+ 703 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 707 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 708 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 709 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 710 | WARNING | Variable "t4" contains numbers but this is discouraged
+ 711 | WARNING | Variable "t5" contains numbers but this is discouraged
+ 712 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 712 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 712 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 712 | WARNING | Variable "t4" contains numbers but this is discouraged
+ 712 | WARNING | Variable "t5" contains numbers but this is discouraged
+ 714 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 714 | WARNING | Variable "t4" contains numbers but this is discouraged
+ 717 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 718 | WARNING | Variable "t5" contains numbers but this is discouraged
+--------------------------------------------------------------------------------
+
+
+FILE: ...lator/tests/Tests/PHP/Manipulator/TokenFinder/IncludeAndRequireTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 4 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 31 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 39 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 47 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 55 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 86 | ERROR   | Line exceeds maximum limit of 120 characters; contains 159
+    |         | characters
+--------------------------------------------------------------------------------
+
+
+FILE: .../PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenFinder/ResultTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 30 WARNING(S) AFFECTING 24 LINE(S)
+--------------------------------------------------------------------------------
+  33 | WARNING | Variable "token2" contains numbers but this is discouraged
+  42 | WARNING | Variable "token2" contains numbers but this is discouraged
+  44 | WARNING | Variable "token2" contains numbers but this is discouraged
+  53 | WARNING | Variable "token2" contains numbers but this is discouraged
+  56 | WARNING | Variable "token2" contains numbers but this is discouraged
+  63 | WARNING | Variable "token2" contains numbers but this is discouraged
+  72 | WARNING | Variable "token2" contains numbers but this is discouraged
+  75 | WARNING | Variable "token2" contains numbers but this is discouraged
+  96 | WARNING | Variable "token2" contains numbers but this is discouraged
+  99 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 101 | WARNING | Variable "token2" contains numbers but this is discouraged
+ 114 | WARNING | Line exceeds 80 characters; contains 96 characters
+ 128 | WARNING | Line exceeds 80 characters; contains 96 characters
+ 161 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 162 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 163 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 164 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 164 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 164 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 185 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 186 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 187 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 188 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 188 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 188 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 193 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 194 | WARNING | Variable "t3" contains numbers but this is discouraged
+ 196 | WARNING | Variable "t1" contains numbers but this is discouraged
+ 196 | WARNING | Variable "t2" contains numbers but this is discouraged
+ 196 | WARNING | Variable "t3" contains numbers but this is discouraged
+--------------------------------------------------------------------------------
+
+
+FILE: ...rojects/PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenFinderTest.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 10 WARNING(S) AFFECTING 12 LINE(S)
+--------------------------------------------------------------------------------
+ 20 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 24 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 25 | WARNING | Line exceeds 80 characters; contains 108 characters
+ 30 | WARNING | Line exceeds 80 characters; contains 91 characters
+ 31 | ERROR   | Line exceeds maximum limit of 120 characters; contains 146
+    |         | characters
+ 32 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 36 | WARNING | Line exceeds 80 characters; contains 95 characters
+ 37 | ERROR   | Line exceeds maximum limit of 120 characters; contains 155
+    |         | characters
+ 38 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 42 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 43 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 44 | WARNING | Line exceeds 80 characters; contains 91 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...s/Tests/PHP/Manipulator/TokenManipulator/IndentMultilineCommentTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 6 WARNING(S) AFFECTING 6 LINE(S)
+--------------------------------------------------------------------------------
+ 26 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 34 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 42 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 50 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 60 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 62 | WARNING | Line exceeds 80 characters; contains 85 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...s/Tests/PHP/Manipulator/TokenManipulator/RemoveCommentIndentionTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 2 WARNING(S) AFFECTING 2 LINE(S)
+--------------------------------------------------------------------------------
+ 24 | WARNING | Line exceeds 80 characters; contains 84 characters
+ 41 | WARNING | Line exceeds 80 characters; contains 83 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...ts/PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenManipulatorTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 7 WARNING(S) AFFECTING 8 LINE(S)
+--------------------------------------------------------------------------------
+ 20 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 24 | WARNING | Line exceeds 80 characters; contains 112 characters
+ 29 | WARNING | Line exceeds 80 characters; contains 91 characters
+ 30 | ERROR   | Line exceeds maximum limit of 120 characters; contains 146
+    |         | characters
+ 31 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 35 | WARNING | Line exceeds 80 characters; contains 93 characters
+ 36 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 37 | WARNING | Line exceeds 80 characters; contains 91 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...BeansProjects/PHP_Manipulator/tests/Tests/PHP/Manipulator/TokenTest.php
+--------------------------------------------------------------------------------
+FOUND 1 ERROR(S) AND 11 WARNING(S) AFFECTING 12 LINE(S)
+--------------------------------------------------------------------------------
+  98 | WARNING | Line exceeds 80 characters; contains 86 characters
+  99 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 110 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 113 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 117 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 129 | WARNING | Line exceeds 80 characters; contains 83 characters
+ 130 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 131 | WARNING | Line exceeds 80 characters; contains 100 characters
+ 132 | WARNING | Line exceeds 80 characters; contains 105 characters
+ 148 | WARNING | Line exceeds 80 characters; contains 96 characters
+ 212 | ERROR   | A cast statement must not be followed by a space
+ 280 | WARNING | Line exceeds 80 characters; contains 97 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...47/NetBeansProjects/PHP_Manipulator/tests/Tests/PHP/ManipulatorTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 5 WARNING(S) AFFECTING 5 LINE(S)
+--------------------------------------------------------------------------------
+ 168 | WARNING | Line exceeds 80 characters; contains 100 characters
+ 177 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 184 | WARNING | Line exceeds 80 characters; contains 97 characters
+ 203 | WARNING | Line exceeds 80 characters; contains 81 characters
+ 206 | WARNING | Line exceeds 80 characters; contains 81 characters
+--------------------------------------------------------------------------------
+
+
+FILE: /home/robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/TestCase.php
+--------------------------------------------------------------------------------
+FOUND 2 ERROR(S) AND 6 WARNING(S) AFFECTING 8 LINE(S)
+--------------------------------------------------------------------------------
+  89 | WARNING | Line exceeds 80 characters; contains 98 characters
+ 110 | WARNING | Line exceeds 80 characters; contains 109 characters
+ 129 | WARNING | Line exceeds 80 characters; contains 91 characters
+ 147 | ERROR   | A cast statement must not be followed by a space
+ 148 | WARNING | Line exceeds 80 characters; contains 89 characters
+ 157 | ERROR   | A cast statement must not be followed by a space
+ 158 | WARNING | Line exceeds 80 characters; contains 99 characters
+ 168 | WARNING | Line exceeds 80 characters; contains 87 characters
+--------------------------------------------------------------------------------
+
+
+FILE: ...me/robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/TestCaseTest.php
+--------------------------------------------------------------------------------
+FOUND 0 ERROR(S) AND 17 WARNING(S) AFFECTING 13 LINE(S)
+--------------------------------------------------------------------------------
+  24 | WARNING | Line exceeds 80 characters; contains 97 characters
+  38 | WARNING | Line exceeds 80 characters; contains 89 characters
+  48 | WARNING | Variable "t1" contains numbers but this is discouraged
+  49 | WARNING | Variable "t2" contains numbers but this is discouraged
+  50 | WARNING | Variable "t3" contains numbers but this is discouraged
+  51 | WARNING | Variable "t4" contains numbers but this is discouraged
+  52 | WARNING | Variable "t5" contains numbers but this is discouraged
+  53 | WARNING | Variable "t1" contains numbers but this is discouraged
+  53 | WARNING | Variable "t2" contains numbers but this is discouraged
+  53 | WARNING | Variable "t3" contains numbers but this is discouraged
+  53 | WARNING | Variable "t4" contains numbers but this is discouraged
+  53 | WARNING | Variable "t5" contains numbers but this is discouraged
+  56 | WARNING | Variable "t2" contains numbers but this is discouraged
+  57 | WARNING | Variable "t3" contains numbers but this is discouraged
+  58 | WARNING | Variable "t4" contains numbers but this is discouraged
+ 103 | WARNING | Line exceeds 80 characters; contains 111 characters
+ 112 | WARNING | Line exceeds 80 characters; contains 111 characters
+--------------------------------------------------------------------------------
+
+
+FILE: /home/robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/Util.php
+--------------------------------------------------------------------------------
+FOUND 6 ERROR(S) AND 13 WARNING(S) AFFECTING 13 LINE(S)
+--------------------------------------------------------------------------------
+  61 | ERROR   | A cast statement must not be followed by a space
+  61 | WARNING | Line exceeds 80 characters; contains 90 characters
+  64 | ERROR   | A cast statement must not be followed by a space
+  64 | WARNING | Line exceeds 80 characters; contains 86 characters
+  68 | WARNING | Line exceeds 80 characters; contains 95 characters
+  91 | WARNING | Line exceeds 80 characters; contains 105 characters
+  93 | WARNING | Line exceeds 80 characters; contains 103 characters
+ 121 | WARNING | The method parameter $add is never used
+ 121 | WARNING | The method parameter $add is never used
+ 129 | ERROR   | A cast statement must not be followed by a space
+ 151 | WARNING | Line exceeds 80 characters; contains 87 characters
+ 165 | ERROR   | A cast statement must not be followed by a space
+ 165 | WARNING | Line exceeds 80 characters; contains 90 characters
+ 168 | ERROR   | A cast statement must not be followed by a space
+ 168 | WARNING | Line exceeds 80 characters; contains 86 characters
+ 174 | ERROR   | A cast statement must not be followed by a space
+ 174 | WARNING | Line exceeds 80 characters; contains 88 characters
+ 190 | WARNING | Line exceeds 80 characters; contains 110 characters
+ 192 | WARNING | Line exceeds 80 characters; contains 105 characters
+--------------------------------------------------------------------------------
+
+
+FILE: /home/robo47/NetBeansProjects/PHP_Manipulator/tests/Tests/UtilTest.php
+--------------------------------------------------------------------------------
+FOUND 26 ERROR(S) AND 6 WARNING(S) AFFECTING 32 LINE(S)
+--------------------------------------------------------------------------------
+ 114 | WARNING | Line exceeds 80 characters; contains 85 characters
+ 148 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 150 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 151 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 152 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 153 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 154 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 156 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 157 | WARNING | Line exceeds 80 characters; contains 120 characters
+ 165 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 167 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 168 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 169 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 170 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 171 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 173 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 175 | WARNING | Line exceeds 80 characters; contains 120 characters
+ 183 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 185 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 186 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 187 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 188 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 189 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 191 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 193 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 195 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 197 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 199 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 201 | ERROR   | Line exceeds maximum limit of 120 characters; contains 137
+     |         | characters
+ 203 | WARNING | Line exceeds 80 characters; contains 120 characters
+ 214 | WARNING | Line exceeds 80 characters; contains 102 characters
+ 216 | WARNING | Line exceeds 80 characters; contains 87 characters
+--------------------------------------------------------------------------------
+

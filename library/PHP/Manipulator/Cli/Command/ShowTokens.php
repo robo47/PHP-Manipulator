@@ -65,28 +65,4 @@ class ShowTokens extends Command
         $value = $this->transformTokenValue($token->getValue());
         return $name . ' | ' . $value;
     }
-
-    /**
-     *
-     * @return array
-     */
-    public function getConsoleOption()
-    {
-        return array (
-            new \ezcConsoleOption(
-                'sh',
-                'showtokens',
-                \ezcConsoleInput::TYPE_STRING,
-                null,
-                false,
-                'Prints out the Tokens of a file',
-                '-- LONG --',
-                array(),
-                array(),
-                true,
-                false,
-                true
-            )
-        );
-    }
 }

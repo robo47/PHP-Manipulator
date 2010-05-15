@@ -55,7 +55,12 @@ extends Action
             if (true === $insideClassOrInterface && false === $insideMethod) {
                 if ($this->isType($token, T_FUNCTION)) {
                     $insideMethod = true;
-                    $result = $this->findTokens('FunctionFinder', $token, $container, array('includeMethodProperties' => true));
+                    $result = $this->findTokens(
+                        'FunctionFinder',
+                        $token,
+                        $container,
+                        array('includeMethodProperties' => true)
+                    );
                     $this->_checkAndAddPublic($result);
                 }
             }
@@ -69,7 +74,8 @@ extends Action
      */
     protected function _checkAndAddPublic(Result $result)
     {
-        if (!$this->_checkResultContainsTokenType($result, array(T_PUBLIC, T_PRIVATE, T_PROTECTED))) {
+        $tokens = array(T_PUBLIC, T_PRIVATE, T_PROTECTED);
+        if (!$this->_resultContainsTokenType($result, $tokens)) {
             $previous = $this->_container->getPreviousToken($result->getFirstToken());
             $publicToken = new Token('public', T_PUBLIC);
             $whitespaceToken = new Token(' ', T_WHITESPACE);
@@ -84,7 +90,7 @@ extends Action
      * @param array $tokentype
      * @return boolean
      */
-    protected function _checkResultContainsTokenType(Result $result, array $tokentypes)
+    protected function _resultContainsTokenType(Result $result, array $tokentypes)
     {
         foreach ($result->getTokens() as $token) {
             if ($this->isType($token, $tokentypes)) {

@@ -18,10 +18,9 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $params = null)
     {
-        $result = false;
         if (null === $token->getType() && '@' === $token->getValue()) {
-            $result = true;
+            return true;
         }
-        return $result;
+        return false;
     }
 }

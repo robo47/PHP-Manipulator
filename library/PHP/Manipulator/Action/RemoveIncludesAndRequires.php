@@ -17,7 +17,11 @@ extends CommentOutIncludesAndRequires
     {
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
-                $result = $this->findTokens('IncludeAndRequire', $start, $container);
+                $result = $this->findTokens(
+                    'IncludeAndRequire',
+                    $start,
+                    $container
+                );
                 $tokens = $result->getTokens();
                 foreach ($tokens as $token) {
                     if ($container->contains($token)) {

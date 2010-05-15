@@ -110,7 +110,8 @@ abstract class Config
         if (isset($this->_options[$name])) {
             return $this->_options[$name];
         }
-        throw new \Exception('something which should not happen, just happened ... world is shutting down');
+        $message = 'something which should not happen, just happened ... world is shutting down';
+        throw new \Exception($message);
     }
 
     /**

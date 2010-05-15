@@ -22,8 +22,10 @@ extends TokenFinder
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->isType($token, array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE))) {
-            throw new \Exception('Start-token is not one of T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE');
+        $allowedTokens = array(T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE);
+        if (!$this->isType($token, $allowedTokens)) {
+            $message = 'Start-token is not one of T_INCLUDE, T_INCLUDE_ONCE, T_REQUIRE, T_REQUIRE_ONCE';
+            throw new \Exception($message);
         }
         $result = new Result();
         $iterator = $container->getIterator();

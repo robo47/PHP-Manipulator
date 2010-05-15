@@ -44,6 +44,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      *
      * @param \PHP\Manipulator\Token $token
      * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
+     * @todo renamte to "update" and "updateAndSeekTo"
      */
     public function reInit(Token $token = null)
     {

@@ -26,9 +26,10 @@ extends Action
 
         $open = false;
         $this->_deleteList = array();
+        $allowedTokens = array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO);
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO))) {
+            if ($this->isType($token, $allowedTokens)) {
                 $open = true;
             }
             if ($this->_shoudDelete($open)) {

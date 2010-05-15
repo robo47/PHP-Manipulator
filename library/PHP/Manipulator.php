@@ -93,7 +93,6 @@ class Manipulator
     }
 
     /**
-     *
      * @return \PHP_Manipulator *Provides Fluent Interface*
      */
     public function removeAllActions()
@@ -103,7 +102,6 @@ class Manipulator
     }
 
     /**
-     *
      * @param string $classname
      * @return \PHP_Manipulator *Provides Fluent Interface*
      */
@@ -136,7 +134,6 @@ class Manipulator
     }
 
     /**
-     *
      * @param string $file
      */
     public function addFile($file)
@@ -146,7 +143,6 @@ class Manipulator
     }
 
     /**
-     *
      * @return array
      */
     public function getFiles()
@@ -154,9 +150,6 @@ class Manipulator
         return $this->_files;
     }
 
-    /**
-     *
-     */
     public function removeAllFiles()
     {
         $this->_files = array();

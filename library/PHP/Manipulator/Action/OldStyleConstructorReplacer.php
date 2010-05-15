@@ -20,6 +20,9 @@ extends Action
      */
     protected $_classStack = null;
 
+    /**
+     * @var integer
+     */
     protected $_maxLevel = 0;
 
     /**
@@ -60,7 +63,9 @@ extends Action
                             }
                             break;
                         }
-                        $this->_checkStack();
+                        if ($this->_classStack->isEmpty()) {
+                            break;
+                        }
                         $iterator->next();
                     }
                 }
@@ -87,12 +92,5 @@ extends Action
             }
         }
 
-    }
-
-    protected function _checkStack()
-    {
-        if ($this->_classStack->isEmpty()) {
-            break;
-        }
     }
 }

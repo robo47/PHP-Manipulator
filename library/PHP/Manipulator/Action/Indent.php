@@ -99,7 +99,9 @@ extends Action
             $this->_useIndentionCheck($token);
             $this->_switchIndentionCheck($token);
 
-            if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous) && !$this->_isWhitespaceWithBreak($token)) {
+            if (null !== $previous && 
+                $this->evaluateConstraint('IsSinglelineComment', $previous) &&
+                !$this->_isWhitespaceWithBreak($token)) {
                 $newToken = new Token('', T_WHITESPACE);
                 $this->_indentWhitespace($newToken);
                 $container->insertTokenAfter($previous, $newToken);
@@ -113,7 +115,9 @@ extends Action
                 $nextToken = $iterator->current();
                 $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
                 $this->_indentWhitespace($token);
-                if ($this->isClosingCurlyBrace( $nextToken) && true === $this->_insideSwitch && true === $this->_insideCase) {
+                if ($this->isClosingCurlyBrace( $nextToken) && 
+                    true === $this->_insideSwitch &&
+                    true === $this->_insideCase) {
                     if ($this->_isSwitchClosingCurlyBrace($nextToken)) {
                         $this->_removeLastIndention($token);
                     }
@@ -200,7 +204,8 @@ extends Action
         }
 
         // only indent if case/default is not directly followed by case/default
-        if ($this->isType($token, array(T_CASE, T_DEFAULT)) && !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
+        if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
+            !$this->_caseIsDirectlyFollowedByAnotherCase($token)) {
             if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
                 true === $this->_insideCase &&
                 !$this->_isCasePreceededByBreak($token)) {

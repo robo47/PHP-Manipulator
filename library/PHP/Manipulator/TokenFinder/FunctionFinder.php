@@ -44,7 +44,8 @@ extends TokenFinder
         $iterator = $container->getIterator();
         $iterator->seekToToken($token);
 
-        if ($this->_includeMethodProperties($params) && !$this->_includePhpDoc($params)) {
+        if ($this->_includeMethodProperties($params) &&
+            !$this->_includePhpDoc($params)) {
             $this->_seekToMethodProperties($iterator);
         }
 

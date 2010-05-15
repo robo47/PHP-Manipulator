@@ -27,7 +27,11 @@ abstract class AHelper
      */
     public function evaluateConstraint($constraint, Token $token, $params = null, $autoPrefix = true)
     {
-        $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\TokenConstraint\\', $autoPrefix);
+        $constraint = $this->getClassInstance(
+            $constraint,
+            'PHP\Manipulator\TokenConstraint\\',
+            $autoPrefix
+        );
         if (!$constraint instanceof TokenConstraint) {
             $message = 'constraint is not instance of \PHP\Manipulator\TokenConstraint';
             throw new \Exception($message);
@@ -48,7 +52,11 @@ abstract class AHelper
      */
     public function evaluateContainerConstraint($constraint, TokenContainer $container, $params = null, $autoPrefix = true)
     {
-        $constraint = $this->getClassInstance($constraint, 'PHP\Manipulator\ContainerConstraint\\', $autoPrefix);
+        $constraint = $this->getClassInstance(
+            $constraint,
+                'PHP\Manipulator\ContainerConstraint\\',
+                $autoPrefix
+            );
         if (!$constraint instanceof ContainerConstraint) {
             $message = 'constraint is not instance of \PHP\Manipulator\ContainerConstraint';
             throw new \Exception($message);
@@ -68,7 +76,11 @@ abstract class AHelper
      */
     public function manipulateToken($manipulator, Token $token, $params = null, $autoPrefix = true)
     {
-        $manipulator = $this->getClassInstance($manipulator, 'PHP\Manipulator\TokenManipulator\\', $autoPrefix);
+        $manipulator = $this->getClassInstance(
+            $manipulator,
+            'PHP\Manipulator\TokenManipulator\\',
+            $autoPrefix
+        );
 
         if (!$manipulator instanceof TokenManipulator) {
             $message = 'manipulator is not instance of \PHP\Manipulator\TokenManipulator';
@@ -89,7 +101,11 @@ abstract class AHelper
      */
     public function runAction($action, TokenContainer $container, $params = null, $autoPrefix = true)
     {
-        $action = $this->getClassInstance($action, 'PHP\Manipulator\Action\\', $autoPrefix);
+        $action = $this->getClassInstance(
+            $action,
+            'PHP\Manipulator\Action\\',
+            $autoPrefix
+        );
 
         if (!$action instanceof Action) {
             $message = 'manipulator is not instance of \PHP\Manipulator\Action';
@@ -112,7 +128,11 @@ abstract class AHelper
      */
     public function findTokens($finder, Token $token, TokenContainer $container, $params = null, $autoPrefix = true)
     {
-        $finder = $this->getClassInstance($finder, 'PHP\Manipulator\TokenFinder\\', $autoPrefix);
+        $finder = $this->getClassInstance(
+            $finder,
+            'PHP\Manipulator\TokenFinder\\',
+            $autoPrefix
+        );
 
         if (!$finder instanceof TokenFinder) {
             $message = 'finder is not instance of \PHP\Manipulator\TokenFinder';
@@ -278,7 +298,8 @@ abstract class AHelper
      * @param array $allowedTypes
      * @return boolean
      */
-    public function isFollowedByTokenType(Iterator $iterator, $type, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isFollowedByTokenType(Iterator $iterator, $type,
+                                          array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
 
         return $this->isFollowedByTokenMatchedByClosure(
@@ -294,7 +315,8 @@ abstract class AHelper
      * @param array $allowedTypes
      * @return boolean
      */
-    public function isPrecededByTokenType(Iterator $iterator, $type, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isPrecededByTokenType(Iterator $iterator, $type,
+                                          array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
@@ -320,7 +342,8 @@ abstract class AHelper
      * @param array $allowedTypes
      * @return boolean
      */
-    public function isFollowedByTokenValue(Iterator $iterator, $value, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isFollowedByTokenValue(Iterator $iterator, $value,
+                                           array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
@@ -335,7 +358,8 @@ abstract class AHelper
      * @param array $allowedTypes
      * @return boolean
      */
-    public function isPrecededByTokenValue(Iterator $iterator, $value, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isPrecededByTokenValue(Iterator $iterator, $value,
+                                           array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
@@ -351,7 +375,8 @@ abstract class AHelper
      * @return boolean
      * @todo ugly name
      */
-    public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
+                                                      array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         $token = $iterator->current();
         $result = false;
@@ -377,7 +402,8 @@ abstract class AHelper
      * @return boolean
      * @todo ugly name
      */
-    public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure, array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+    public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
+                                                      array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         $token = $iterator->current();
         $result = false;

@@ -18,17 +18,14 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $param = null)
     {
-        $isMultilineComment = false;
         if ($token->getType() === T_COMMENT) {
             $value = $token->getValue();
-            if (strlen($value) > 2) {
-                if (substr($value, 0, 2) === '/*') {
-                    $isMultilineComment = true;
-                }
+            if (strlen($value) > 2 && substr($value, 0, 2) === '/*') {
+                return true;
             }
         } else if ($token->getType() === T_DOC_COMMENT) {
-            $isMultilineComment = true;
+            return true;
         }
-        return $isMultilineComment;
+        return false;
     }
 }

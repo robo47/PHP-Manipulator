@@ -5,6 +5,7 @@ namespace Tests\PHP\Manipulator;
 use PHP\Manipulator\Config;
 use Symfony\Components\Finder\Finder;
 
+// @todo move into \Baa or \Foo-namespace ? ... ?
 class NonAbstract extends Config
 {
 
@@ -22,7 +23,6 @@ class NonAbstract extends Config
 
 /**
  * @group Config
- * @todo array-support for the file-suffixes ?
  */
 class ConfigTest extends \Tests\TestCase
 {
@@ -37,13 +37,13 @@ class ConfigTest extends \Tests\TestCase
 
         $options = $config->getOptions();
        
-
         $this->assertArrayHasKey('actionPrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Action\\', $options['actionPrefix']);
 
         $this->assertArrayHasKey('actionsetPrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Actionset\\', $options['actionsetPrefix']);
 
+        // @todo rename fileSuffix to something more describing, since it allows regular expressions for files
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.php', $options['fileSuffix']);
 

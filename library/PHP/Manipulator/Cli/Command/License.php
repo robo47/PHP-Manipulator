@@ -49,28 +49,4 @@ class License extends Command
             'ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF' . PHP_EOL .
             'THE POSSIBILITY OF SUCH DAMAGE.' . PHP_EOL);
     }
-
-    /**
-     *
-     * @return array
-     */
-    public function getConsoleOption()
-    {
-        return array (
-            new \ezcConsoleOption(
-                'l',
-                'license',
-                \ezcConsoleInput::TYPE_NONE,
-                null,
-                false,
-                'Shows the licese',
-                '',
-                array(),
-                array(),
-                true,
-                false,
-                true
-            )
-        );
-    }
 }

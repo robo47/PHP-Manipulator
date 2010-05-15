@@ -60,6 +60,7 @@ extends Action
      */
     protected function _isNotAllowedTag(Token $token)
     {
-        return $this->isType($token, array(T_WHITESPACE, T_CLOSE_TAG)) || $this->evaluateConstraint('ContainsOnlyWhitespace', $token);
+        return $this->isType($token, array(T_WHITESPACE, T_CLOSE_TAG)) ||
+               $this->evaluateConstraint('ContainsOnlyWhitespace', $token);
     }
 }

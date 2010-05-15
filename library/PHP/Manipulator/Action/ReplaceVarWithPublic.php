@@ -23,8 +23,8 @@ extends Action
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->isType($token, T_VAR)) {
-                $token->setType(T_PUBLIC);
-                $token->setValue('public');
+                $token->setType(T_PUBLIC)
+                      ->setValue('public');
             }
             $iterator->next();
         }

@@ -22,13 +22,15 @@ extends Action
         $waitingForIf = false;
         $replaceTokens = array();
 
+        $allowedTypes = array(T_IF, T_ELSE, T_WHITESPACE);
+
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->isType($token, T_ELSE)) {
                 $waitingForIf = true;
                 $replaceTokens = array();
             }
-            if (true === $waitingForIf && !$this->isType($token, array(T_IF, T_ELSE, T_WHITESPACE))) {
+            if (true === $waitingForIf && !$this->isType($token, $allowedTypes)) {
                 $waitingForIf = false;
             } else {
                 $replaceTokens[] = $token;

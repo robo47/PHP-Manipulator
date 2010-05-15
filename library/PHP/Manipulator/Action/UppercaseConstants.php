@@ -5,8 +5,8 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\Iterator;
 
-// @todo Extend to support whitespace-comments after some tokens
 class UppercaseConstants
 extends Action
 {
@@ -63,7 +63,7 @@ extends Action
 
             $this->_checkCurrentToken($token);
 
-            if ($this->_isConstant($token)) {
+            if ($this->_isConstant($iterator)) {
                 $token->setValue(strtoupper($token->getValue()));
             }
             $this->_setNext($iterator);
@@ -103,32 +103,15 @@ extends Action
      * @param \PHP\Manipulator\Token $token
      * @var boolean
      */
-    protected function _isConstant(Token $token)
+    protected function _isConstant(Iterator $iterator)
     {
-        return $this->isType($token, T_STRING) &&
+        return $this->isType($iterator->current(), T_STRING) &&
         ( (true === $this->_isConstant) ||
-            ($this->_notInsideClassFunctionMethodUseOrNamespace() && !$this->_isFollowedByDoubleColon($token) && !$this->_isFollowedByOpeningBrace($token)));
+            ($this->_notInsideClassFunctionMethodUseOrNamespace() && 
+             !$this->isFollowedByTokenValue($iterator, '::') &&
+             !$this->isFollowedByTokenValue($iterator, '(')));
     }
 
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @var boolean
-     */
-    protected function _isFollowedByDoubleColon(Token $token)
-    {
-        $iterator = $this->_container->getIterator()->seekToToken($token);
-        return $this->isFollowedByTokenValue($iterator, '::');
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @var boolean
-     */
-    protected function _isFollowedByOpeningBrace(Token $token)
-    {
-        $iterator = $this->_container->getIterator()->seekToToken($token);
-        return $this->isFollowedByTokenValue($iterator, '(');
-    }
 
     /**
      * @param \PHP\Manipulator\Token $token
@@ -157,18 +140,14 @@ extends Action
             $this->_isClassDeclaration = true;
         } else if ($this->isType($token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
-        }
-
-        if ($this->isSemicolon( $token)) {
+        } if ($this->isSemicolon( $token)) {
             if (true === $this->_isConstant) {
                 $this->_isConstant = false;
             }
             if (true === $this->_isUse) {
                 $this->_isUse = false;
             }
-        }
-
-        if ($this->isOpeningBrace($token)) {
+        } else if ($this->isOpeningBrace($token)) {
             if (true === $this->_isClassDeclaration) {
                 $this->_isClassDeclaration = false;
             }
@@ -177,7 +156,8 @@ extends Action
             }
         }
 
-        if (true === $this->_isNamespace && ($this->isSemicolon($token) || $this->isClosingCurlyBrace($token))) {
+        if (true === $this->_isNamespace &&
+            ($this->isSemicolon($token) || $this->isClosingCurlyBrace($token))) {
             $this->_isNamespace = false;
         }
     }
