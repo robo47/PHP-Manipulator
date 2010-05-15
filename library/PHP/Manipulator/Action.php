@@ -4,7 +4,7 @@ namespace PHP\Manipulator;
 
 use PHP\Manipulator\AHelper;
 
-// @todo Create IActionset
+// @todo Create IAction whenapi is stable
 abstract class Action
 extends AHelper
 {

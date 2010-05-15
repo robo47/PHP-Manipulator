@@ -145,6 +145,7 @@ class Indent extends Action
      */
     protected function _removeLastIndention(Token $token)
     {
+        // @todo ugly hack: only works if indention === 4 tabs
         $token->setValue(substr($token->getValue(), 0, -4));
     }
 
@@ -391,5 +392,4 @@ class Indent extends Action
         $additionalSpaces = $spaceLength % $tabWidth;
         return str_repeat("\t", $tabCount) . str_repeat(' ', $additionalSpaces);
     }
-
 }

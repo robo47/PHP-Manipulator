@@ -12,7 +12,7 @@ use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenManipulator;
 
-// @todo better name ?
+// @todo ugly name
 abstract class AHelper
 {
 

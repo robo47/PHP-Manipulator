@@ -76,7 +76,6 @@ class RunActions extends Command
     protected function _getConfig($configFile)
     {
         try {
-            // @todo make extension dynamic via cli ?
             return Config::factory('xml', $configFile, true);
         } catch (\Exception $e) {
             throw new \Exception('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());

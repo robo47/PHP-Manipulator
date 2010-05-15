@@ -4,7 +4,7 @@ namespace PHP\Manipulator;
 
 use PHP\Manipulator\TokenContainer;
 
-// @todo Create IActionset
+// @todo Create IActionset when api is stable
 abstract class Actionset
 {
 
