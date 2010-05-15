@@ -60,26 +60,35 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
         }
         $expectedToken = $this->_expectedToken;
 
-        $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getValue());
-        if (!$equalValueConstraint->evaluate($other->getValue())) {
+        $equal = $this->_getEqualsConstraint($expectedToken->getValue());
+        if (!$equal->evaluate($other->getValue())) {
             $this->_difference = 'values';
             return false;
         }
 
-        $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getType());
-        if (!$equalValueConstraint->evaluate($other->getType())) {
+        $equal = $this->_getEqualsConstraint($expectedToken->getType());
+        if (!$equal->evaluate($other->getType())) {
             $this->_difference = 'types';
             return false;
         }
 
         if (true === $this->_strict) {
-            $equalValueConstraint = new \PHPUnit_Framework_Constraint_IsEqual($expectedToken->getLinenumber());
-            if (!$equalValueConstraint->evaluate($other->getLinenumber())) {
+            $equal = $this->_getEqualsConstraint($expectedToken->getLinenumber());
+            if (!$equal->evaluate($other->getLinenumber())) {
                 $this->_difference = 'linenumber';
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * @param mixed $value
+     * @return \PHPUnit_Framework_Constraint_IsEqual
+     */
+    protected function _getEqualsConstraint($value)
+    {
+        return new \PHPUnit_Framework_Constraint_IsEqual($value);
     }
 
     /**
@@ -90,7 +99,11 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
      */
     protected function failureDescription($other, $description, $not)
     {
-        $message = PHP_EOL . \PHPUnit_Util_Diff::diff((string) $this->_expectedToken, (string) $other);
+        $message = PHP_EOL;
+        $message .= \PHPUnit_Util_Diff::diff(
+            (string) $this->_expectedToken,
+            (string) $other
+        );
         $difference = $this->_difference;
         return 'Tokens are different: [' . $difference . ']' . $message;
     }

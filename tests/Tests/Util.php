@@ -171,7 +171,7 @@ class Util
             $values[] = array(
                 'actual' => $actual,
                 'expected' => $expected,
-                'missmatch' => (bool) ($actualIterator->current() === $expectedIterator)
+                'missmatch' => (bool) ($actualIterator->current() !== $expectedIterator->current())
             );
 
             if (strlen($actual) > $longest) {
@@ -195,7 +195,7 @@ class Util
         $i = 0;
         foreach ($values as $val) {
             if (true === $val['missmatch']) {
-                $comparision .= '####### NEXT IS DIFFERENT ## ' . PHP_EOL;
+                $comparision .= '####### NEXT IS DIFFERENT ##' . PHP_EOL;
             }
             $comparision .= str_pad($i . ') ', 4, ' ');
             $comparision .= str_pad($val['expected'], $longest + 2, ' ');
