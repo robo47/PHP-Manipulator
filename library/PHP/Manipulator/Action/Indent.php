@@ -279,8 +279,7 @@ extends Action
      */
     protected function _checkInsideString(Token $token)
     {
-        // @todo isQuote-Constraint ?
-        if (null === $token->getType() && $token->getValue() === '"') {
+        if ($this->evaluateConstraint('IsDoublequote', $token)) {
             $this->_insideString = !$this->_insideString;
         }
     }
