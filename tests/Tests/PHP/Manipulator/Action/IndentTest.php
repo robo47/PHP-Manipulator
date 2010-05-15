@@ -201,7 +201,14 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output22.php'),
         );
 
-        #19 Test with Tab
+        #23 if / else / elseif / endif (Alternate Syntax)
+        $data[] = array(
+            array(),
+            $this->getContainerFromFixture($path . 'input23.php'),
+            $this->getContainerFromFixture($path . 'output23.php'),
+        );
+
+        #24 Test with Tab
         $data[] = array(
             array('useSpaces' => false),
             new TokenContainer("<?php\nfunction foo(\$baa) {\necho \$foo;\n}"),
