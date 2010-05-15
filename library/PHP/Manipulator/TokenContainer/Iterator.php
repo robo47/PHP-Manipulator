@@ -173,4 +173,35 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         }
         return $this;
     }
+
+    /**
+     * Returns null of no next token exists
+     *
+     * @return \PHP\Manipulator\Token
+     */
+    public function getNext()
+    {
+        $next = null;
+        $this->next();
+        if ($this->valid()) {
+            $next = $this->current();
+        }
+        $this->previous();
+        return $next;
+    }
+
+    /**
+     * Returns null of no previous token exists
+     * @return \PHP\Manipulator\Token
+     */
+    public function getPrevious()
+    {
+        $previous = null;
+        $this->previous();
+        if ($this->valid()) {
+            $previous = $this->current();
+        }
+        $this->next();
+        return $previous;
+    }
 }

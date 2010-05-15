@@ -324,4 +324,70 @@ class IteratorTest extends \Tests\TestCase
         $fluent = $iterator->reInit($container[2]);
         $this->assertSame($iterator, $fluent);
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::getNext
+     */
+    public function testGetNext()
+    {
+        $t1 = Token::factory('Token1');
+        $t2 = Token::factory('Token2');
+        $container = new TokenContainer(array($t1,$t2));
+
+        $iterator = $container->getIterator();
+
+        $next = $iterator->getNext();
+
+        $this->assertSame($t2, $next);
+        $this->assertSame($t1, $iterator->current());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::getNext
+     */
+    public function testGetNextReturnsNullIfThereIsNoNextToken()
+    {
+        $t1 = Token::factory('Token1');
+        $container = new TokenContainer(array($t1));
+
+        $iterator = $container->getIterator();
+
+        $next = $iterator->getNext();
+
+        $this->assertNull($next);
+        $this->assertSame($t1, $iterator->current());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::getPrevious
+     */
+    public function testGetPrevious()
+    {
+        $t1 = Token::factory('Token1');
+        $t2 = Token::factory('Token2');
+        $container = new TokenContainer(array($t1,$t2));
+
+        $iterator = $container->getIterator();
+        $iterator->seekToToken($t2);
+        $previous = $iterator->getPrevious();
+
+        $this->assertSame($t1, $previous);
+        $this->assertSame($t2, $iterator->current());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::getPrevious
+     */
+    public function testGetPreviousReturnsNullIfThereIsNoNextToken()
+    {
+        $t1 = Token::factory('Token1');
+        $container = new TokenContainer(array($t1));
+
+        $iterator = $container->getIterator();
+
+        $previous = $iterator->getPrevious();
+
+        $this->assertNull($previous);
+        $this->assertSame($t1, $iterator->current());
+    }
 }
