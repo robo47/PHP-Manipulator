@@ -22,12 +22,12 @@
         <file>./_fixtures/Config/testDir1/Baafoo.php</file>
         <iterator>
             <path>./_fixtures/Config/testDir2</path>
-            <suffix>.php</suffix>
-            <prefix>Baa</prefix>
+            <name>*.php</name>
+            <name>Baa*</name>
         </iterator>
         <iterator>
             <path>./_fixtures/Config/testDir3</path>
-            <suffix>.php</suffix>
+            <name>*.php</name>
         </iterator>
     </files>
 </config>

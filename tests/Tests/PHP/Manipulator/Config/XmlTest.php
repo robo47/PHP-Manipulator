@@ -146,6 +146,24 @@ class XmlTest extends \Tests\TestCase
         $this->assertCount(2, $config->getClassLoaders());
     }
 
+
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseClassLoaders
+     * @covers \PHP\Manipulator\Config\Xml::_getAttributesAsArray
+     */
+    public function testIteratorWithNameAndNotName()
+    {
+        $config = $this->getXmlConfig(5);
+
+        $files = $config->getFiles();
+
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
+        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir2/Blub.php', $files);
+
+        $this->assertCount(2, $files);
+    }
+
     /**
      * @covers \PHP\Manipulator\Config\Xml::_errorMessage
      * @covers \PHP\Manipulator\Config\Xml::_initConfig

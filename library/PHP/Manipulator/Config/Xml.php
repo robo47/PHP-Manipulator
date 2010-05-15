@@ -222,20 +222,22 @@ class Xml extends Config
      *
      * @param \DOMNode $node
      * @return \Iterator|null
+     * @todo support for other options of Finder (exclude, depth, size, ... )
      */
     protected function _parseIterator(\DOMNode $node)
     {
         $finder = new Finder();
+        $finder->files();
         foreach ($node->childNodes as $option) {
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $nodeName = strtolower($option->nodeName);
                 $value = $option->nodeValue;
                 switch ($nodeName) {
-                    case 'prefix':
-                        $finder->name($value .'*');
+                    case 'name':
+                        $finder->name($value);
                         break;
-                    case 'suffix':
-                        $finder->name('*' . $value);
+                    case 'notname':
+                        $finder->notName($value);
                         break;
                     case 'path':
                         $finder->in($value);
@@ -243,7 +245,7 @@ class Xml extends Config
                 }
             }
         }
-        return $iterator = $finder->files()->getIterator();
+        return $finder->files()->getIterator();
     }
 
     /**

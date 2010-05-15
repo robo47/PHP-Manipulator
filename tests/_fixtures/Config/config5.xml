@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <files>
+        <iterator>
+            <path>./_fixtures/Config/testDir2</path>
+            <notname>Baa*</notname>
+            <name>*.php</name>
+        </iterator>
+    </files>
+</config>
