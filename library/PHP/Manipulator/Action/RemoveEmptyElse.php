@@ -54,9 +54,7 @@ extends Action
                     $end = $container->getPreviousToken($end);
                 }
                 $container->removeTokensFromTo($start, $end);
-
-                $iterator = $container->getIterator();
-                $iterator->seekToToken($previous);
+                $iterator->reInit($previous);
                 $lastElse = null;
             }
             $iterator->next();
@@ -85,7 +83,7 @@ extends Action
      */
     protected function _isAllowedTokenInsideEmptyElse(Token $token)
     {
-        if ($this->isColon( $token) ||
+        if ($this->isColon($token) ||
             $this->isType($token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
             $this->isClosingCurlyBrace( $token) ||
             $this->isOpeningCurlyBrace( $token)) {
