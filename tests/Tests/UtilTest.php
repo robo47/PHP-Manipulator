@@ -5,6 +5,7 @@ namespace Tests;
 use Tests\Util;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder\Result;
 
 /**
  * @group Util
@@ -218,10 +219,62 @@ class UtilTest extends \Tests\TestCase
     }
 
     /**
+     * @return array
+     */
+    public function resultsCompareProvider()
+    {
+        $data = array();
+
+        $t1 = new Token('blub');
+        $t2 = new Token('bla');
+
+        # 0
+        $data[] = array(
+            Result::factory(array($t1)),
+            Result::factory(array($t1)),
+            '                       expected (1)                    |                     actual(1)                     ' . PHP_EOL .
+            PHP_EOL .
+            '0)  [SIMPLE]                    |    4 | NULL | blub   | [SIMPLE]                    |    4 | NULL | blub  ' . PHP_EOL,
+        );
+
+        # 1
+        $data[] = array(
+            Result::factory(array()),
+            Result::factory(array($t1)),
+            '                       expected (0)                    |                     actual(1)                     ' . PHP_EOL . PHP_EOL .
+            '####### NEXT IS DIFFERENT ##' . PHP_EOL .
+            '0)                                                     | [SIMPLE]                    |    4 | NULL | blub  ' . PHP_EOL,
+        );
+
+        # 2
+        $data[] = array(
+            Result::factory(array($t1)),
+            Result::factory(array()),
+            '                       expected (1)                    |                     actual(0)                     ' . PHP_EOL . PHP_EOL .
+            '####### NEXT IS DIFFERENT ##' . PHP_EOL .
+            '0)  [SIMPLE]                    |    4 | NULL | blub   |                                                   ' . PHP_EOL,
+        );
+
+        # 3
+        $data[] = array(
+            Result::factory(array($t1)),
+            Result::factory(array($t1, $t2)),
+            '                       expected (1)                    |                     actual(2)                     ' . PHP_EOL . 
+            PHP_EOL .
+            '0)  [SIMPLE]                    |    4 | NULL | blub   | [SIMPLE]                    |    4 | NULL | blub  ' . PHP_EOL . 
+            '####### NEXT IS DIFFERENT ##' . PHP_EOL .
+            '1)                                                     | [SIMPLE]                    |    3 | NULL | bla   '. PHP_EOL,
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider resultsCompareProvider
      * @covers \Tests\Util::compareResults
      */
-    public function testCompareResults()
+    public function testCompareResults($expectedResult, $actualResult, $compareString)
     {
-        $this->markTestIncomplete('not implemented yet');
+        $this->assertSame($compareString, Util::compareResults($expectedResult, $actualResult));
     }
 }

@@ -3,9 +3,20 @@
 namespace Tests\Constraint;
 
 use Tests\Constraint\Count;
+use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenContainer;
 
+// @todo Test with non-countable iterator
 class CountTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @covers Tests\Constraint\Count::__construct
+     */
+    public function testConstruct()
+    {
+        $count = new Count(5);
+    }
 
     /**
      * @return array
@@ -47,6 +58,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider arrayProvider
+     * @covers \Tests\Constraint\Count::evaluate
+     * @covers \Tests\Constraint\Count::<protected>
      */
     public function testCountWithArray($other, $expected, $expectedEvaluationResult)
     {

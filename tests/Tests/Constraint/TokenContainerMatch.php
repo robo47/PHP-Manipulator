@@ -96,7 +96,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
             $this->_strict
         );
 
-        $message = 'Tokens are different: [length]' . PHP_EOL .
+        $message = 'Tokens are different:' . PHP_EOL .
         PHP_EOL . $containerDiff;
 
         return $message;

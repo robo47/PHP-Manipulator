@@ -11,6 +11,14 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * @covers \Tests\Constraint\ResultsMatch::__construct
+     */
+    public function testConstruct()
+    {
+        $resultsMatch = new ResultsMatch(new Result());
+    }
+
+    /**
      * @return array
      */
     public function resultsProvider()

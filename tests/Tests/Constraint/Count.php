@@ -75,11 +75,9 @@ class Count extends \PHPUnit_Framework_Constraint
         if ($other instanceof \Countable ||
             is_array($other)) {
             return count($other);
-        }
-        if ($other instanceof \Iterator) {
+        } else if ($other instanceof \Iterator) {
             return \iterator_count($other);
         }
-        throw new \Exception('This should not happen! :)');
     }
 
     /**
