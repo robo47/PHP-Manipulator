@@ -154,7 +154,10 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
      */
     public function seekToToken(Token $token)
     {
-        $key =$this->_container->getOffsetByToken($token);
+        if ($this->valid() && $this->current() === $token) {
+            return $this;
+        }
+        $key = $this->_container->getOffsetByToken($token);
         $this->seek($key);
         return $this;
     }
