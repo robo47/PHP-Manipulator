@@ -165,6 +165,7 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailAndFailureDescriptionWithDifferentTypes()
     {
+
         $expected = new Token('blub', null, '4');
         $other = new Token('blub', T_WHITESPACE, '4');
         $tokenMatch = new TokensMatch($expected, true);
@@ -175,6 +176,7 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
             (string) $other
         );
         $message = 'Tokens are different: [types]' . $message;
+
 
         try {
             $tokenMatch->fail($other, '');
@@ -207,5 +209,4 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($message, $e->getMessage());
         }
     }
-
 }
