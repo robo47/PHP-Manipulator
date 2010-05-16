@@ -18,4 +18,15 @@ class ClosureFactory
             return $helper->isType($token, $allowedTypes);
         };
     }
+
+    /**
+     * @param string
+     * @return \Closure
+     */
+    public static function getHasValueClosure($value)
+    {
+        return function(Token $token) use ($value) {
+            return ($token->getValue() === $value);
+        };
+    }
 }
