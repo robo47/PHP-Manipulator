@@ -22,12 +22,12 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
      */
     public function evaluate($other)
     {
-        try {
-            $reflection = new \ReflectionFunction($other);
-        } catch (\ReflectionException $e) {
-            $this->_cause = 'Variable is no Closure';
+        if (!$other instanceof \Closure) {
+             $this->_cause = 'Variable is no Closure';
             return false;
         }
+
+        $reflection = new \ReflectionFunction($other);
 
         $requiredParameters = new \PHPUnit_Framework_Constraint_IsEqual(1);
         if (false === $requiredParameters->evaluate($reflection->getNumberOfRequiredParameters())) {

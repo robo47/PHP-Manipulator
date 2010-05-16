@@ -6,6 +6,10 @@ use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Token;
 use Tests\Constraint\TokensMatch;
 
+function foo(Token $blub) {
+
+}
+
 class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -48,9 +52,15 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        #0
+        #4
         $data[] = array(
             '',
+            false
+        );
+
+        #5
+        $data[] = array(
+            'foo',
             false
         );
 
