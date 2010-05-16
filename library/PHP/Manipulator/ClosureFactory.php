@@ -8,25 +8,27 @@ use PHP\Manipulator\Token;
 class ClosureFactory
 {
     /**
-     * @param string|array
+     * @param $types string|array
      * @return \Closure
      */
-    public static function getIsTypeClosure($allowedTypes)
+    public static function getIsTypeClosure($types)
     {
-        return function(Token $token) use ($allowedTypes) {
+        return function(Token $token) use ($types) {
             $helper = new AHelper();
-            return $helper->isType($token, $allowedTypes);
+            return $helper->isType($token, $types);
         };
     }
 
     /**
-     * @param string
+     *
+     * @param string|array $values
      * @return \Closure
      */
-    public static function getHasValueClosure($value)
+    public static function getHasValueClosure($values)
     {
-        return function(Token $token) use ($value) {
-            return ($token->getValue() === $value);
+        return function(Token $token) use ($values) {
+            $helper = new AHelper();
+            return $helper->hasValue($token, $values);
         };
     }
 }
