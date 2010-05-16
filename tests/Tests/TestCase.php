@@ -11,6 +11,7 @@ use Tests\Constraint\Count;
 use Tests\Constraint\ResultsMatch;
 use Tests\Constraint\TokenContainerMatch;
 use Tests\Constraint\TokensMatch;
+use Tests\Constraint\ValidTokenMatchingClosure;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -95,6 +96,28 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         self::assertThat(
             $actualToken,
+            $constraint,
+            $message
+        );
+    }
+
+
+
+    /**
+     * Compares if two Tokens Match
+     *
+     * @param \PHP\Manipulator\Token $expectedToken
+     * @param \PHP\Manipulator\Token $actualToken
+     * @param boolean $strict
+     */
+    public function assertValidTokenMatchingClosure($closure, $message = '')
+    {
+        $constraint = new ValidTokenMatchingClosure(
+            $closure
+        );
+
+        self::assertThat(
+            $closure,
             $constraint,
             $message
         );
