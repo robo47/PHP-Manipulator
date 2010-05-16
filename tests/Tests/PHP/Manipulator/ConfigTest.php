@@ -4,22 +4,7 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
 use Symfony\Components\Finder\Finder;
-
-// @todo move into \Baa or \Foo-namespace ? ... ?
-class NonAbstract extends Config
-{
-
-    public $data;
-    protected function _initConfig($data)
-    {
-        $this->data = $data;
-    }
-    public function setOption($option, $value)
-    {
-        $this->_options[$option] = $value;
-    }
-}
-
+use Tests\Mock\ConfigMock;
 
 /**
  * @group Config
@@ -328,10 +313,10 @@ class ConfigTest extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\Config::factory
      */
-    public function testFactoryWithNonAbstractFromCode()
+    public function testFactoryWithConfigMockFromCode()
     {
-        $config = Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '<config></config>', false);
-        $this->assertType('\Tests\PHP\Manipulator\Config\NonAbstract', $config);
+        $config = Config::factory('\Tests\Mock\ConfigMock', '<config></config>', false);
+        $this->assertType('\Tests\Mock\ConfigMock', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
@@ -348,11 +333,11 @@ class ConfigTest extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\Config::factory
      */
-    public function testFactoryWithNonAbstractFromFile()
+    public function testFactoryWithConfigMockFromFile()
     {
         $file = 'Config/config0.xml';
-        $config = Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '_fixtures/' . $file, true);
-        $this->assertType('\Tests\PHP\Manipulator\Config\NonAbstract', $config);
+        $config = Config::factory('\Tests\Mock\ConfigMock', '_fixtures/' . $file, true);
+        $this->assertType('\Tests\Mock\ConfigMock', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 

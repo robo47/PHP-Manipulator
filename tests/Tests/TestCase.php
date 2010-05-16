@@ -188,7 +188,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getConfig()
     {
-        return Config::factory('\Tests\PHP\Manipulator\Config\NonAbstract', '', false);
+        return Config::factory('\Tests\Mock\ConfigMock', '', false);
     }
 
     /**

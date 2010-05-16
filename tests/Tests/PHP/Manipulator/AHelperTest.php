@@ -7,18 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\ClosureFactory;
 
-class NonAbstractHelper extends AHelper
-{
 
-    public $init = false;
-    public function init()
-    {
-        $this->init = true;
-    }
-    public function run(TokenContainer $container)
-    {
-    }
-}
 
 /**
  * @group AHelper
@@ -41,7 +30,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testGetClassInstanceWithAutoPrefix()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $instance = $abstractHelper->getClassInstance('Dummy1', '\Baa\Foo\\', true);
         $this->assertTrue(class_exists('\Baa\Foo\Dummy1', false), 'Class not loaded');
         $this->assertType('\Baa\Foo\Dummy1', $instance, 'Wrong type');
@@ -52,7 +41,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testGetClassInstanceWithoutAutoPrefix()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $instance = $abstractHelper->getClassInstance('\Baa\Foo\Dummy2', '', false);
         $this->assertTrue(class_exists('\Baa\Foo\Dummy2', false), 'Class not loaded');
         $this->assertType('\Baa\Foo\Dummy2', $instance, 'Wrong type');
@@ -64,7 +53,7 @@ class AHelperTest extends \Tests\TestCase
     public function testGetClassInstanceWithDirectClass()
     {
         $class = new \Baa\Foo\Dummy2();
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $instance = $abstractHelper->getClassInstance($class, '', false);
         $this->assertSame($class, $instance);
     }
@@ -75,7 +64,7 @@ class AHelperTest extends \Tests\TestCase
     public function testEvaluateTokenConstraintEvaluatesTokenConstraint()
     {
         \Tests\Mock\TokenConstraintMock::$return = false;
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $result = $abstractHelper->evaluateConstraint(
             '\Tests\Mock\TokenConstraintMock',
@@ -92,7 +81,7 @@ class AHelperTest extends \Tests\TestCase
     public function testEvaluateContainerConstraintEvaluatesContainerConstraint()
     {
         \Tests\Mock\ContainerConstraintMock::$return = false;
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $container = new TokenContainer();
         $result = $abstractHelper->evaluateContainerConstraint(
             '\Tests\Mock\ContainerConstraintMock',
@@ -109,7 +98,7 @@ class AHelperTest extends \Tests\TestCase
     public function testrunActionManipulatesContainer()
     {
         \Tests\Mock\ActionMock::$called = false;
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
 
         $abstractHelper->runAction(
             '\Tests\Mock\ActionMock',
@@ -127,7 +116,7 @@ class AHelperTest extends \Tests\TestCase
     public function testManipulateTokenManipulatesToken()
     {
         \Tests\Mock\TokenManipulatorMock::$called = false;
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
 
         $abstractHelper->manipulateToken(
             '\Tests\Mock\TokenManipulatorMock',
@@ -148,7 +137,7 @@ class AHelperTest extends \Tests\TestCase
         $finder = new \Tests\Mock\TokenFinderMock($expectedResult);
         $token = new Token('Foo');
         $container = new TokenContainer();
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
 
         $actualResult = $abstractHelper->findTokens(
             $finder,
@@ -164,7 +153,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testEvaluateConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $constraint = new \stdClass();
 
@@ -181,7 +170,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testFindTokensThrowsExceptionIfFinderIstNotValidFinder()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $container = new TokenContainer();
         $constraint = new \stdClass();
@@ -199,7 +188,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testEvaluateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $container = new TokenContainer();
         $constraint = new \stdClass();
 
@@ -216,7 +205,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $container = new TokenContainer();
         $manipulator = new \stdClass();
 
@@ -233,7 +222,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateTokenThrowsExceptionIfConstraintIstNotValidConstraint()
     {
-        $abstractHelper = new NonAbstractHelper();
+        $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $manipulator = new \stdClass();
 
@@ -279,7 +268,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsColon($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isColon($token), 'Wrong result');
     }
 
@@ -317,7 +306,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsComma($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isComma($token), 'Wrong result');
     }
 
@@ -367,7 +356,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsType($token, $param, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isType($token, $param), 'Wrong result');
     }
 
@@ -413,7 +402,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsClosingBrace($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isClosingBrace($token), 'Wrong result');
     }
 
@@ -459,7 +448,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsClosingCurlyBrace($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isClosingCurlyBrace($token), 'Wrong result');
     }
 
@@ -504,7 +493,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsOpeningBrace($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isOpeningBrace($token), 'Wrong result');
     }
 
@@ -549,7 +538,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsOpeningCurlyBrace($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isOpeningCurlyBrace($token), 'Wrong result');
     }
 
@@ -588,7 +577,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsSemicolon($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isSemicolon($token), 'Wrong result');
     }
 
@@ -633,7 +622,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsQuestionMark($token, $result)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $this->assertSame($result, $ahelper->isQuestionMark($token), 'Wrong result');
     }
 
@@ -669,7 +658,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsFollowedByTokenType($iterator, $followedByType, $allowedTokens, $expectedResult)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $startToken = $iterator->current();
         $result = $ahelper->isFollowedByTokenType(
             $iterator,
@@ -712,7 +701,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsPrecededByTokenType($iterator, $followedByType, $allowedTokens, $expectedResult)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $startToken = $iterator->current();
         $result = $ahelper->isPrecededByTokenType(
             $iterator,
@@ -755,7 +744,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsFollowedByTokenValue($iterator, $followedByType, $allowedTokens, $expectedResult)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $startToken = $iterator->current();
         $result = $ahelper->isFollowedByTokenValue(
             $iterator,
@@ -798,7 +787,7 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testIsPrecededByTokenValue($iterator, $value, $allowedTokens, $expectedResult)
     {
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $startToken = $iterator->current();
         $result = $ahelper->isPrecededByTokenValue(
             $iterator,
@@ -855,7 +844,7 @@ class AHelperTest extends \Tests\TestCase
     public function testIsPreceded($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
     {
         $startToken = $iterator->current();
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $actualResult = $ahelper->isPreceded($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
 
         $this->assertSame($expectedFound, $actualFound, 'Found wrong token');
@@ -909,7 +898,7 @@ class AHelperTest extends \Tests\TestCase
     public function testIsFollowed($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
     {
         $startToken = $iterator->current();
-        $ahelper = new NonAbstractHelper();
+        $ahelper = new AHelper();
         $actualResult = $ahelper->isFollowed($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
 
         $this->assertSame($expectedFound, $actualFound, 'Found wrong token');

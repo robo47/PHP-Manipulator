@@ -4,19 +4,7 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
-
-class NonAbstractAction extends Action
-{
-
-    public $init = false;
-    public function init()
-    {
-        $this->init = true;
-    }
-    public function run(TokenContainer $container)
-    {
-    }
-}
+use Tests\Mock\ActionMock;
 
 /**
  * @group Action
@@ -50,7 +38,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testDefaultConstructor()
     {
-        $abstractHelper = new NonAbstractAction();
+        $abstractHelper = new ActionMock();
         $this->assertEquals(array(), $abstractHelper->getOptions(), 'options don\'t match');
     }
 
@@ -60,7 +48,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testConstructorCallsInit()
     {
-        $abstractHelper = new NonAbstractAction();
+        $abstractHelper = new ActionMock();
         $this->assertTrue($abstractHelper->init, 'init is not true');
     }
 
@@ -84,7 +72,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testConstructorSetsOptions($options)
     {
-        $abstractHelper = new NonAbstractAction($options);
+        $abstractHelper = new ActionMock($options);
         $this->assertEquals($options, $abstractHelper->getOptions(), 'options don\'t match');
     }
 
@@ -98,7 +86,7 @@ class ActionTest extends \Tests\TestCase
             'baa' => 'foo',
             'blub' => 'bla',
         );
-        $abstractHelper = new NonAbstractAction(array('foo' => 'bla'));
+        $abstractHelper = new ActionMock(array('foo' => 'bla'));
         $fluent = $abstractHelper->addOptions($options);
         $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
 
@@ -111,7 +99,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testSetOptionAndGetOption()
     {
-        $abstractHelper = new NonAbstractAction();
+        $abstractHelper = new ActionMock();
         $fluent = $abstractHelper->setOption('baa', 'foo');
         $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
         $this->assertEquals('foo', $abstractHelper->getOption('baa'), 'Wrong value');
@@ -123,7 +111,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testGetOptionThrowsExceptionOnNonExistingOption()
     {
-        $abstractHelper = new NonAbstractAction();
+        $abstractHelper = new ActionMock();
         try {
             $abstractHelper->getOption('foo');
             $this->fail('Expected exception not thrown');
@@ -137,7 +125,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testHasOption()
     {
-        $abstractHelper = new NonAbstractAction(array('foo' => 'bla'));
+        $abstractHelper = new ActionMock(array('foo' => 'bla'));
         $this->assertTrue($abstractHelper->hasOption('foo'));
         $this->assertFalse($abstractHelper->hasOption('blub'));
     }

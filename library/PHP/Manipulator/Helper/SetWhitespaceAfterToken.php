@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
 
- // @todo rewrite using Iterator
 class SetWhitespaceAfterToken
 extends AHelper
 {
