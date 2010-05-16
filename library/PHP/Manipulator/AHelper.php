@@ -163,6 +163,28 @@ class AHelper
         return new $classname;
     }
 
+
+    /**
+     * @param Token $token
+     * @param string|array $value
+     * @return boolean
+     */
+    public function hasValue(Token $token, $value)
+    {
+        if (is_array($value)) {
+            foreach ($value as $tokenValue) {
+                if ($token->getValue() === $tokenValue) {
+                    return true;
+                }
+            }
+        } else {
+            if ($token->getValue() === $value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @param \PHP\Manipulator\Token $token
      * @param array|integer $type

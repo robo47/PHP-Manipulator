@@ -364,6 +364,56 @@ class AHelperTest extends \Tests\TestCase
     /**
      * @return array
      */
+    public function hasValueProvider()
+    {
+        $data = array();
+
+        #0
+        $data[] = array(
+            Token::factory(array(T_COMMENT, 'foo')),
+            'foo',
+            true
+        );
+
+        #1
+        $data[] = array(
+            Token::factory(array(T_COMMENT, 'foo')),
+            'baa',
+            false
+        );
+
+        #2
+        $data[] = array(
+            Token::factory(array(T_COMMENT, 'foo')),
+            array('baa', 'foo', 'blub'),
+            true
+        );
+
+        #3
+        $data[] = array(
+            Token::factory(array(T_COMMENT, 'foo')),
+            array('baa', 'blub', 'blubber'),
+            false
+        );
+
+
+        return $data;
+    }
+
+
+    /**
+     * @dataProvider hasValueProvider
+     * @covers \PHP\Manipulator\AHelper::hasValue
+     */
+    public function testHasValue($token, $value, $result)
+    {
+        $ahelper = new AHelper();
+        $this->assertSame($result, $ahelper->hasValue($token, $value), 'Wrong result');
+    }
+
+    /**
+     * @return array
+     */
     public function isClosingBraceProvider()
     {
         $data = array();
