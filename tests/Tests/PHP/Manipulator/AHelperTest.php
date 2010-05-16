@@ -5,6 +5,7 @@ namespace Tests\PHP\Manipulator;
 use PHP\Manipulator\AHelper;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\ClosureFactory;
 
 class NonAbstractHelper extends AHelper
 {
@@ -808,14 +809,6 @@ class AHelperTest extends \Tests\TestCase
         $this->assertSame($startToken, $iterator->current());
     }
 
-    public function closureTypeMatchFactory($types)
-    {
-        return function(Token $token) use ($types) {
-            $helper = new NonAbstractHelper();
-            return $helper->isType($token, $types);
-        };
-    }
-
     /**
      * @return array
      */
@@ -828,8 +821,8 @@ class AHelperTest extends \Tests\TestCase
         #0
         $data[] = array(
             $container->getIterator()->seekToToken($container[25]),
-            $this->closureTypeMatchFactory(array(T_ELSE)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            ClosureFactory::getIsTypeClosure(array(T_ELSE)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
             $container[21],
             true
         );
@@ -837,8 +830,8 @@ class AHelperTest extends \Tests\TestCase
         #1
         $data[] = array(
             $container->getIterator()->seekToToken($container[25]),
-            $this->closureTypeMatchFactory(array(T_ELSE)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            ClosureFactory::getIsTypeClosure(array(T_ELSE)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
             null,
             false
         );
@@ -846,8 +839,8 @@ class AHelperTest extends \Tests\TestCase
         #2
         $data[] = array(
             $container->getIterator()->seekToToken($container[25]),
-            $this->closureTypeMatchFactory(array(T_FOR)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            ClosureFactory::getIsTypeClosure(array(T_FOR)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
             null,
             false
         );
@@ -882,8 +875,8 @@ class AHelperTest extends \Tests\TestCase
         #0
         $data[] = array(
             $container->getIterator()->seekToToken($container[21]),
-            $this->closureTypeMatchFactory(array(T_ECHO)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            ClosureFactory::getIsTypeClosure(array(T_ECHO)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
             $container[25],
             true
         );
@@ -891,8 +884,8 @@ class AHelperTest extends \Tests\TestCase
         #1
         $data[] = array(
             $container->getIterator()->seekToToken($container[21]),
-            $this->closureTypeMatchFactory(array(T_ECHO)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            ClosureFactory::getIsTypeClosure(array(T_ECHO)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
             null,
             false
         );
@@ -900,8 +893,8 @@ class AHelperTest extends \Tests\TestCase
         #2
         $data[] = array(
             $container->getIterator()->seekToToken($container[25]),
-            $this->closureTypeMatchFactory(array(T_FOR)),
-            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            ClosureFactory::getIsTypeClosure(array(T_FOR)),
+            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
             null,
             false
         );

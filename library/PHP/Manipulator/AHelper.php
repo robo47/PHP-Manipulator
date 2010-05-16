@@ -281,18 +281,6 @@ class AHelper
     }
 
     /**
-     * @param integer|null $type
-     * @return \Closure
-     */
-    protected function _getTokenTypeClosure($type)
-    {
-        $helper = $this;
-        return function(Token $token) use ($helper, $type) {
-                return $helper->isType($token, $type);
-        };
-    }
-
-    /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      * @param integer|array $type
      * @param array $allowedTypes
@@ -304,7 +292,7 @@ class AHelper
 
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
-            $this->_getTokenTypeClosure($type),
+            ClosureFactory::getIsTypeClosure($type),
             $allowedTypes
         );
     }
@@ -320,20 +308,9 @@ class AHelper
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
-            $this->_getTokenTypeClosure($type),
+            ClosureFactory::getIsTypeClosure($type),
             $allowedTypes
         );
-    }
-
-    /**
-     * @param integer|null $type
-     * @return \Closure
-     */
-    protected function _getTokenValueClosure($value)
-    {
-        return function(Token $token) use ($value) {
-                return ($token->getValue() === $value);
-        };
     }
 
     /**
@@ -347,7 +324,7 @@ class AHelper
     {
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
-            $this->_getTokenValueClosure($value),
+            ClosureFactory::getHasValueClosure($value),
             $allowedTypes
         );
     }
@@ -363,7 +340,7 @@ class AHelper
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
-            $this->_getTokenValueClosure($value),
+            ClosureFactory::getHasValueClosure($value),
             $allowedTypes
         );
     }
@@ -378,21 +355,11 @@ class AHelper
     public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
                                                       array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
-        $token = $iterator->current();
-        $result = false;
-        $iterator->next();
-        while($iterator->valid()) {
-            if ($closure($iterator->current())) {
-                $result = true;
-                break;
-            }
-            if (!$this->isType($iterator->current(), $allowedTypes)) {
-                break;
-            }
-            $iterator->next();
-        }
-        $iterator->seekToToken($token);
-        return $result;
+        return $this->isFollowed(
+            $iterator,
+            $closure,
+            ClosureFactory::getIsTypeClosure($allowedTypes)
+        );
     }
 
     /**
@@ -405,21 +372,11 @@ class AHelper
     public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
                                                       array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
-        $token = $iterator->current();
-        $result = false;
-        $iterator->previous();
-        while($iterator->valid()) {
-            if ($closure($iterator->current())) {
-                $result = true;
-                break;
-            }
-            if (!$this->isType($iterator->current(), $allowedTypes)) {
-                break;
-            }
-            $iterator->previous();
-        }
-        $iterator->seekToToken($token);
-        return $result;
+        return $this->isPreceded(
+            $iterator,
+            $closure,
+            ClosureFactory::getIsTypeClosure($allowedTypes)
+        );
     }
 
     /**
