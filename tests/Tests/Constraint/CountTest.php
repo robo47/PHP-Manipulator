@@ -6,7 +6,6 @@ use Tests\Constraint\Count;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\TokenContainer;
 
-// @todo Test with non-countable iterator
 class CountTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -142,27 +141,33 @@ class CountTest extends \PHPUnit_Framework_TestCase
             true
         );
 
-        # 1
+        #1
         $data[] = array(
             new \ArrayIterator(array()),
             1,
             false
         );
 
-        # 2
+        #2
         $data[] = array(
             new \ArrayIterator(array(1, 2, 3, 4, 5)),
             5,
             true
         );
 
-        # 3
+        #3
         $data[] = array(
             new \ArrayIterator(array(1, 2, 3, 4, 5)),
             6,
             false
         );
 
+        #4
+        $data[] = array(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(TESTS_PATH . '/Baa/Autoloader/')),
+            4,
+            true
+        );
         return $data;
     }
 
