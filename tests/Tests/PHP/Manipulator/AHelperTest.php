@@ -33,7 +33,6 @@ class AHelperTest extends \Tests\TestCase
     public function testAbstractClassAndMethods()
     {
         $reflection = new \ReflectionClass('PHP\Manipulator\AHelper');
-        $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
     }
 
     /**
@@ -807,5 +806,121 @@ class AHelperTest extends \Tests\TestCase
         );
         $this->assertSame($expectedResult, $result);
         $this->assertSame($startToken, $iterator->current());
+    }
+
+    public function closureTypeMatchFactory($types)
+    {
+        return function(Token $token) use ($types) {
+            $helper = new NonAbstractHelper();
+            return $helper->isType($token, $types);
+        };
+    }
+
+    /**
+     * @return array
+     */
+    public function isPrecededProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isPreceded/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        #0
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            $this->closureTypeMatchFactory(array(T_ELSE)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            $container[21],
+            true
+        );
+
+        #1
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            $this->closureTypeMatchFactory(array(T_ELSE)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            null,
+            false
+        );
+
+        #2
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            $this->closureTypeMatchFactory(array(T_FOR)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            null,
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isPrecededProvider
+     * @covers \PHP\Manipulator\AHelper::isPreceded
+     */
+    public function testIsPreceded($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
+    {
+        $startToken = $iterator->current();
+        $ahelper = new NonAbstractHelper();
+        $actualResult = $ahelper->isPreceded($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
+
+        $this->assertSame($expectedFound, $actualFound, 'Found wrong token');
+        $this->assertSame($expectedResult, $actualResult, 'Found wrong token');
+        $this->assertSame($startToken, $iterator->current(), 'Iterator is not seeked to where it started');
+    }
+
+    /**
+     * @return array
+     */
+    public function isFollowedProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isFollowed/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        #0
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            $this->closureTypeMatchFactory(array(T_ECHO)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            $container[25],
+            true
+        );
+
+        #1
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            $this->closureTypeMatchFactory(array(T_ECHO)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            null,
+            false
+        );
+
+        #2
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            $this->closureTypeMatchFactory(array(T_FOR)),
+            $this->closureTypeMatchFactory(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            null,
+            false
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isFollowedProvider
+     * @covers \PHP\Manipulator\AHelper::isFollowed
+     */
+    public function testIsFollowed($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
+    {
+        $startToken = $iterator->current();
+        $ahelper = new NonAbstractHelper();
+        $actualResult = $ahelper->isFollowed($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
+
+        $this->assertSame($expectedFound, $actualFound, 'Found wrong token');
+        $this->assertSame($expectedResult, $actualResult, 'Found wrong token');
+        $this->assertSame($startToken, $iterator->current(), 'Iterator is not seeked to where it started');
     }
 }

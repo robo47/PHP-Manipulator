@@ -13,7 +13,7 @@ use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenManipulator;
 
 // @todo ugly name
-abstract class AHelper
+class AHelper
 {
 
     /**
@@ -418,6 +418,66 @@ abstract class AHelper
             }
             $iterator->previous();
         }
+        $iterator->seekToToken($token);
+        return $result;
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param \Closure $isSearchedToken
+     * @param \Closure $isAllowedToken
+     * @param \PHP\Manipulator\Token $found
+     * @return boolean
+     */
+    public function isPreceded(Iterator $iterator, \Closure $isSearchedToken, \Closure $isAllowedToken, Token &$found = null)
+    {
+        $token = $iterator->current();
+        $result = false;
+        $iterator->previous();
+
+        while($iterator->valid()) {
+            $currentToken = $iterator->current();
+            if ($isSearchedToken($currentToken)) {
+                $found = $currentToken;
+                $result = true;
+                break;
+            }
+            if (!$isAllowedToken($currentToken)) {
+                break;
+            }
+            $iterator->previous();
+        }
+
+        $iterator->seekToToken($token);
+        return $result;
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param \Closure $isSearchedToken
+     * @param \Closure $isAllowedToken
+     * @param \PHP\Manipulator\Token $found
+     * @return boolean
+     */
+    public function isFollowed(Iterator $iterator, \Closure $isSearchedToken, \Closure $isAllowedToken, Token &$found = null)
+    {
+        $token = $iterator->current();
+        $result = false;
+        $iterator->next();
+
+        while($iterator->valid()) {
+            $currentToken = $iterator->current();
+            if ($isSearchedToken($currentToken)) {
+                $found = $currentToken;
+                $result = true;
+                break;
+            }
+            if (!$isAllowedToken($currentToken)) {
+                break;
+            }
+            $iterator->next();
+        }
+
         $iterator->seekToToken($token);
         return $result;
     }
