@@ -37,6 +37,6 @@ class RemoveTrailingWhitespace extends Action
             $code = rtrim($code);
         }
 
-        $container->reInitFromCode($code);
+        $container->updateFromCode($code);
     }
 }

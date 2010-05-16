@@ -28,7 +28,6 @@ class ConfigTest extends \Tests\TestCase
         $this->assertArrayHasKey('actionsetPrefix', $options);
         $this->assertEquals('\PHP\Manipulator\Actionset\\', $options['actionsetPrefix']);
 
-        // @todo rename fileSuffix to something more describing, since it allows regular expressions for files
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.php', $options['fileSuffix']);
 

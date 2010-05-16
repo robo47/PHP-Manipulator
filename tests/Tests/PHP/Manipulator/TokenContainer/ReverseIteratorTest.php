@@ -125,9 +125,9 @@ class ReverseIteratorTest extends \Tests\TestCase
 
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator::reInit
+     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator::update
      */
-    public function testReInit()
+    public function testUpdate()
     {
         $container = $this->getTestContainerWithHoles();
         $iterator = new ReverseIterator($container);
@@ -137,7 +137,7 @@ class ReverseIteratorTest extends \Tests\TestCase
         $container[] = new Token('Foo', null);
 
         $this->assertCount(count($container)-1, $iterator);
-        $iterator->reInit();
+        $iterator->update();
         $this->assertCount(count($container), $iterator);
     }
 }

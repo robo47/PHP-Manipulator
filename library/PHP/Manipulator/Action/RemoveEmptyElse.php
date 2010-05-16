@@ -54,7 +54,7 @@ extends Action
                     $end = $container->getPreviousToken($end);
                 }
                 $container->removeTokensFromTo($start, $end);
-                $iterator->reInit($previous);
+                $iterator->update($previous);
                 $lastElse = null;
             }
             $iterator->next();

@@ -79,7 +79,7 @@ extends AHelper
         }
         $this->_moveIteratorBackFromTagetToken($iterator);
         if (true === $containerChanger) {
-            $iterator->reInit($iterator->current());
+            $iterator->update($iterator->current());
         }
     }
 

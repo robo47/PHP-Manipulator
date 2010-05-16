@@ -381,7 +381,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      * @todo name is ugly
      */
-    public function reInitFromCode($code)
+    public function updateFromCode($code)
     {
         $this->_container = $this->_createTokensFromCode($code);
         return $this;
@@ -394,7 +394,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function retokenize()
     {
-        $this->reInitFromCode($this->toString());
+        $this->updateFromCode($this->toString());
         return $this;
     }
 

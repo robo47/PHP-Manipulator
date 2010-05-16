@@ -26,6 +26,16 @@ class IteratorTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::getContainer
+     */
+    public function testGetContainer()
+    {
+        $container = $this->getTestContainerWithHoles();
+        $iterator = new Iterator($container);
+        $this->assertSame($container, $iterator->getContainer());
+    }
+
+    /**
      * @return \PHP\Manipulator\TokenContainer
      */
     public function getTestContainerWithHoles()
@@ -271,9 +281,9 @@ class IteratorTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::update
      */
-    public function testReInit()
+    public function testUpdate()
     {
         $container = $this->getTestContainerWithHoles();
         $iterator = new Iterator($container);
@@ -283,33 +293,33 @@ class IteratorTest extends \Tests\TestCase
         $container[] = new Token('Foo', null);
 
         $this->assertCount(count($container)-1, $iterator);
-        $iterator->reInit();
+        $iterator->update();
         $this->assertCount(count($container), $iterator);
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::update
      */
-    public function testReInitWithoutSeek()
+    public function testUpdateWithoutSeek()
     {
         $container = $this->getTestContainerWithHoles();
         $iterator = new Iterator($container);
         $iterator->seekToToken($container[5]);
         $this->assertSame($iterator->current(), $container[5]);
-        $iterator->reInit();
+        $iterator->update();
         $this->assertSame($iterator->current(), $container[0]);
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer\Iterator::reInit
+     * @covers \PHP\Manipulator\TokenContainer\Iterator::update
      */
-    public function testReInitWithSeek()
+    public function testUpdateWithSeek()
     {
         $container = $this->getTestContainerWithHoles();
         $iterator = new Iterator($container);
         $iterator->seekToToken($container[5]);
         $this->assertSame($iterator->current(), $container[5]);
-        $iterator->reInit($container[5]);
+        $iterator->update($container[5]);
         $this->assertSame($iterator->current(), $container[5]);
     }
 
@@ -321,7 +331,7 @@ class IteratorTest extends \Tests\TestCase
         $this->assertSame($iterator, $fluent);
         $fluent = $iterator->seekToToken($container[2]);
         $this->assertSame($iterator, $fluent);
-        $fluent = $iterator->reInit($container[2]);
+        $fluent = $iterator->update($container[2]);
         $this->assertSame($iterator, $fluent);
     }
 

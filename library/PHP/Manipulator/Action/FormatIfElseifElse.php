@@ -149,7 +149,7 @@ extends Action
     //            $whitespaceToken = new Token("\n", T_WHITESPACE);
     //            $this->_container->insertTokenBefore($token, $whitespaceToken);
     //        }
-    //        $iterator->reInit($token);
+    //        $iterator->update($token);
     //    }
 
     //    /**
@@ -174,7 +174,7 @@ extends Action
     //            }
     //            $iterator->next();
     //        }
-    //        $iterator->reInit($token);
+    //        $iterator->update($token);
     //        return $result;
     //    }
 
@@ -216,7 +216,7 @@ extends Action
         if ($this->_shouldInsertBreakAfterCurrentOpeningCurlyBrace($iterator)) {
             $newToken = new Token("\n", T_WHITESPACE);
             $this->_container->insertTokenAfter($token, $newToken);
-            $iterator->reInit();
+            $iterator->update();
             $iterator->seekToToken($token);
         }
     }
@@ -268,7 +268,7 @@ extends Action
         $token = $iterator->current();
         $iterator->next();
         $this->_container->removeToken($iterator->current());
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**
@@ -279,7 +279,7 @@ extends Action
         $token = $iterator->current();
         $iterator->previous();
         $this->_container->removeToken($iterator->current());
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**
@@ -305,7 +305,7 @@ extends Action
         $token = $iterator->current();
         $whitespaceToken = new Token(' ', null);
         $this->_container->insertTokenAfter($token, $whitespaceToken);
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**
@@ -316,7 +316,7 @@ extends Action
         $token = $iterator->current();
         $whitespaceToken = new Token(' ', null);
         $this->_container->insertTokenBefore($token, $whitespaceToken);
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**
@@ -327,7 +327,7 @@ extends Action
         $token = $iterator->current();
         $iterator->next();
         $iterator->current()->setValue(' ');
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**
@@ -338,7 +338,7 @@ extends Action
         $token = $iterator->current();
         $iterator->previous();
         $iterator->current()->setValue(' ');
-        $iterator->reInit($token);
+        $iterator->update($token);
     }
 
     /**

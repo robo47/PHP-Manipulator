@@ -719,13 +719,13 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer::reInitFromCode
+     * @covers \PHP\Manipulator\TokenContainer::updateFromCode
      */
-    public function testReInitFromCode()
+    public function testUpdateFromCode()
     {
         $container = new TokenContainer();
         $this->assertCount(0, $container, 'Count missmatch');
-        $container->reInitFromCode('<?php echo $foo; ?>');
+        $container->updateFromCode('<?php echo $foo; ?>');
         $this->assertCount(7, $container, 'Count missmatch');
     }
 }
