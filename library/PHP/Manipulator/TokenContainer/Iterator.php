@@ -40,8 +40,9 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
     }
 
     /**
-     * Reinits the Iterator from the container and resets it's position;
+     * Updates the Iterator from the container and seeks to the given token
      *
+     * @todo name only expresses one job the method does ... updateAndSeekTo ? or drop seek-support ?
      * @param \PHP\Manipulator\Token $token
      * @return \PHP\Manipulator\TokenContainer\Iterator *Provides Fluent Interface*
      */

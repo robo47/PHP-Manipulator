@@ -11,7 +11,6 @@ use PHP\Manipulator\ClosureFactory;
 
 /**
  * @group AHelper
- * @todo test isFollowedBy/PrecededBy with array of values [not supported yet] and types [supported but not tested]
  * @todo test isFollowed/PrecededByMatchedByClosure
  */
 class AHelperTest extends \Tests\TestCase
