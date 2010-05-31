@@ -24,7 +24,7 @@
              highLowerBound="70" />
     </logging>
     <testsuites>
-        <testsuite name="PHP_Manipulator Test Suite">
+        <testsuite name="PHP\Manipulator Test Suite">
             <directory>./Tests/PHP/</directory>
         </testsuite>
     </testsuites>

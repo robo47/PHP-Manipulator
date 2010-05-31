@@ -228,7 +228,6 @@ class Xml extends Config
      *
      * @param \DOMNode $node
      * @return \Iterator|null
-     * @todo support for other options of Finder (exclude, depth, size, ... )
      */
     protected function _parseIterator(DOMNode $node)
     {

@@ -30,7 +30,7 @@
              highLowerBound="70" />
     </logging>
     <testsuites>
-        <testsuite name="PHP_Manipulator Tests-Test Suite">
+        <testsuite name="PHP\Manipulator Tests-Test Suite">
             <directory suffix="Test.php">./Tests/Constraint/</directory>
             <directory suffix="Test.php">./Tests/Mock/</directory>
             <file>./Tests/UtilTest.php</file>
