@@ -43,7 +43,6 @@ class Manipulator
     }
 
     /**
-     *
      * @param \PHP\Manipulator\Action $action
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
@@ -54,9 +53,8 @@ class Manipulator
     }
 
     /**
-     *
      * @param array $actions
-     * @return \PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function addActions(array $actions)
     {
@@ -67,8 +65,6 @@ class Manipulator
     }
 
     /**
-     * Remove Action
-     *
      * @param \PHP\Manipulator\Action $removeAction
      * @return \PHP\Manipulator *Provides Fluent Interface*
      */
@@ -83,8 +79,6 @@ class Manipulator
     }
 
     /**
-     * Get Actions
-     *
      * @return array
      */
     public function getActions()
@@ -93,7 +87,7 @@ class Manipulator
     }
 
     /**
-     * @return \PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function removeAllActions()
     {
@@ -103,7 +97,7 @@ class Manipulator
 
     /**
      * @param string $classname
-     * @return \PHP_Manipulator *Provides Fluent Interface*
+     * @return \PHP\Manipulator *Provides Fluent Interface*
      */
     public function removeActionByClassname($classname)
     {
@@ -150,6 +144,9 @@ class Manipulator
         return $this->_files;
     }
 
+    /**
+     * @return \PHP\Manipulator *Provides Fluent Interface*
+     */
     public function removeAllFiles()
     {
         $this->_files = array();

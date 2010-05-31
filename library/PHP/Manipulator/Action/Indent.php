@@ -145,7 +145,7 @@ class Indent extends Action
      */
     protected function _removeLastIndention(Token $token)
     {
-        // @todo ugly hack: only works if indention === 4 tabs
+        // @todo ugly hack: only works if indention === 4 and spaces used!
         $token->setValue(substr($token->getValue(), 0, -4));
     }
 
