@@ -48,12 +48,12 @@ class ShowTokens extends Command
      */
     public function transformTokenValue($value)
     {
-        $value = \str_replace(' ', '.', $value);
-        $value = \str_replace("\t", '\t', $value);
-        $value = \str_replace("\r", '\r', $value);
-        $value = \str_replace("\n", '\n', $value);
+        $value = str_replace(' ', '.', $value);
+        $value = str_replace("\t", '\t', $value);
+        $value = str_replace("\r", '\r', $value);
+        $value = str_replace("\n", '\n', $value);
 
-        return \str_replace('', '', $value);
+        return str_replace('', '', $value);
     }
 
     /**
@@ -61,7 +61,7 @@ class ShowTokens extends Command
      */
     public function printToken(Token $token)
     {
-        $name = \str_pad($token->getTokenName(), 28, ' ');
+        $name = str_pad($token->getTokenName(), 28, ' ');
         $value = $this->transformTokenValue($token->getValue());
         return $name . ' | ' . $value;
     }
