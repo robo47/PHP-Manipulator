@@ -2,9 +2,16 @@
 
 namespace PHP\Manipulator\Config;
 
-use PHP\Manipulator\Config;
-use PHP\Manipulator\Config\Xml;
+use PHP\Manipulator\Config,
+    PHP\Manipulator\Config\Xml;
 use Symfony\Components\Finder\Finder;
+use DOMNode,
+    DOMAttr,
+    DOMDocument,
+    DOMXpath,
+    LibXMLError;
+use Exception;
+
 
 class Xml extends Config
 {
@@ -16,14 +23,14 @@ class Xml extends Config
      */
     protected function _initConfig($data)
     {
-        $dom = new \DOMDocument();
-        $old = \libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $old = libxml_use_internal_errors(true);
         $loaded = @$dom->loadXML($data);
         if (!$loaded) {
-            $error = $this->_errorMessage(\libxml_get_last_error());
-            throw new \Exception('Unable to parse data: ' . PHP_EOL . $error);
+            $error = $this->_errorMessage(libxml_get_last_error());
+            throw new Exception('Unable to parse data: ' . PHP_EOL . $error);
         }
-        \libxml_use_internal_errors($old);
+        libxml_use_internal_errors($old);
         $this->_parseOptions($dom);
         $this->_parseClassLoaders($dom);
         $this->_parseActions($dom);
@@ -36,11 +43,11 @@ class Xml extends Config
      * @param \LibXMLError $error
      * @return string
      */
-    protected function _errorMessage(\LibXMLError $error = null)
+    protected function _errorMessage(LibXMLError $error = null)
     {
         $message = '';
-        if ($error instanceof \LibXMLError) {
-            /* @var $error libXMLError */
+        if ($error instanceof LibXMLError) {
+            /* @var $error LibXMLError */
             $message .= 'Level: ' . $error->level . PHP_EOL;
             $message .= 'Code: ' . $error->code . PHP_EOL;
             $message .= 'Column: ' . $error->column . PHP_EOL;
@@ -56,9 +63,9 @@ class Xml extends Config
      *
      * @param \DOMDocument $dom
      */
-    protected function _parseOptions(\DOMDocument $dom)
+    protected function _parseOptions(DOMDocument $dom)
     {
-        $xpath = new \DOMXpath($dom);
+        $xpath = new DOMXpath($dom);
         $list = $xpath->query('//config/options');
         foreach ($list as $node) {
             /* @var $node DOMNode*/
@@ -77,7 +84,7 @@ class Xml extends Config
      * @param \DOMNode $options
      * @return array
      */
-    protected function _parseActionOptions(\DOMNode $options)
+    protected function _parseActionOptions(DOMNode $options)
     {
         $actionOptions = array();
         foreach ($options->childNodes as $option) {
@@ -98,7 +105,6 @@ class Xml extends Config
     }
 
     /**
-     *
      * @param string $type
      * @param string $value
      * @return mixed
@@ -134,7 +140,7 @@ class Xml extends Config
                 $value = (float) $value;
                 break;
             default:
-                throw new \Exception('unknown cast-type: ' . $type);
+                throw new Exception('unknown cast-type: ' . $type);
                 break;
         }
         return $value;
@@ -145,35 +151,35 @@ class Xml extends Config
      *
      * @param \DOMDocument $dom
      */
-    protected function _parseActions(\DOMDocument $dom)
+    protected function _parseActions(DOMDocument $dom)
     {
-        $xpath = new \DOMXpath($dom);
+        $xpath = new DOMXpath($dom);
         $list = $xpath->query('//config/actions');
         foreach ($list as $node) {
-            /* @var $node DOMNode*/
+            /* @var $node \DOMNode*/
             foreach ($node->childNodes as $option) {
-                /* @var $option DOMNode*/
+                /* @var $option \DOMNode*/
                 if ($option->nodeType === XML_ELEMENT_NODE) {
                     $nodeName = strtolower($option->nodeName);
                     switch ($nodeName) {
                         case 'actionset':
                             $prefix = $option->attributes->getNamedItem('prefix');
-                            if ($prefix instanceof \DOMAttr) {
+                            if ($prefix instanceof DOMAttr) {
                                 $prefix = $prefix->value;
                             }
                             $name = $option->attributes->getNamedItem('name');
-                            if ($name instanceof \DOMAttr) {
+                            if ($name instanceof DOMAttr) {
                                 $this->addActionset($name->value, $prefix);
                             }
                             break;
                         case 'action':
                             $options = $this->_parseActionOptions($option);
                             $prefix = $option->attributes->getNamedItem('prefix');
-                            if ($prefix instanceof \DOMAttr) {
+                            if ($prefix instanceof DOMAttr) {
                                 $prefix = $prefix->value;
                             }
                             $name = $option->attributes->getNamedItem('name');
-                            if ($name instanceof \DOMAttr) {
+                            if ($name instanceof DOMAttr) {
                                 $this->addAction($name->value, $prefix, $options);
                             }
                             break;
@@ -188,14 +194,14 @@ class Xml extends Config
      *
      * @param \DOMDocument $dom
      */
-    protected function _parseFiles(\DOMDocument $dom)
+    protected function _parseFiles(DOMDocument $dom)
     {
-        $xpath = new \DOMXpath($dom);
+        $xpath = new DOMXpath($dom);
         $list = $xpath->query('//config/files');
         foreach ($list as $node) {
-            /* @var $node DOMNode*/
+            /* @var $node \DOMNode*/
             foreach ($node->childNodes as $option) {
-                /* @var $options DOMNode*/
+                /* @var $options \DOMNode*/
                 if ($option->nodeType === XML_ELEMENT_NODE) {
                     $nodeName = strtolower($option->nodeName);
                     switch ($nodeName) {
@@ -224,10 +230,11 @@ class Xml extends Config
      * @return \Iterator|null
      * @todo support for other options of Finder (exclude, depth, size, ... )
      */
-    protected function _parseIterator(\DOMNode $node)
+    protected function _parseIterator(DOMNode $node)
     {
         $finder = new Finder();
         $finder->files();
+        
         foreach ($node->childNodes as $option) {
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $nodeName = strtolower($option->nodeName);
@@ -242,18 +249,40 @@ class Xml extends Config
                     case 'path':
                         $finder->in($value);
                         break;
+                    // @todo test
+                    case 'size':
+                        $finder->size($size);
+                        break;
+                    // @todo test
+                    case 'followsymlinks':
+                        if ((bool)$value === true) {
+                            $finder->followLinks();
+                        }
+                        break;
+                    // @todo test
+                    case 'mindepth':
+                        $finder->minDepth($value);
+                        break;
+                    // @todo test
+                    case 'maxdepth':
+                        $finder->maxDepth($value);
+                        break;
+                    // @todo test
+                    case 'exclude':
+                        $finder->exclude($value);
+                        break;
                 }
             }
         }
-        return $finder->files()->getIterator();
+        return $finder->getIterator();
     }
 
     /**
-     * @param DOMDocument $dom
+     * @param \DOMDocument $dom
      */
-    protected function _parseClassLoaders(\DOMDocument $dom)
+    protected function _parseClassLoaders(DOMDocument $dom)
     {
-        $xpath = new \DOMXpath($dom);
+        $xpath = new DOMXpath($dom);
         $list = $xpath->query('//config/classloaders/classloader');
         /* @var $list DOMNodeList */
         foreach ($list as $classLoader) {
@@ -273,7 +302,7 @@ class Xml extends Config
      * @param \DOMNode $node
      * @return array
      */
-    protected function _getAttributesAsArray(\DOMNode $node)
+    protected function _getAttributesAsArray(DOMNode $node)
     {
         $attributes = array();
         foreach ($node->attributes as $attribute) {
