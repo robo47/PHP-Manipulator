@@ -25,6 +25,9 @@ extends Action
                 )
             );
         }
+        if (!$this->hasOption('whitespaceBehindCasts')) {
+            $this->setOption('whitespaceBehindCasts', '');
+        }
     }
 
     /**
@@ -37,13 +40,24 @@ extends Action
     {
         $iterator = $container->getIterator();
         $searchedTokens = $this->getOption('searchedTokens');
+        $whitespace = $this->getOption('whitespaceBehindCasts');
 
         while ($iterator->valid()) {
             $token = $iterator->current();
             if ($this->isType($token, array_keys($searchedTokens))) {
                 $token->setValue($searchedTokens[$token->getType()]);
+                $next = $iterator->getNext();
+                if ($this->isType($next, T_WHITESPACE)) {
+                    if ($next->getValue() != $whitespace) {
+                        $next->setValue($this->getOption('whitespaceBehindCasts'));
+                    }
+                } elseif (!empty($whitespace)) {
+                    $container->insertTokenAfter($token, new Token($whitespace, T_WHITESPACE));
+                    $iterator->update($token);
+                }
             }
             $iterator->next();
         }
+        $container->retokenize();
     }
 }

@@ -29,7 +29,8 @@ class FormatCastsTest extends \Tests\TestCase
         );
         $action = new FormatCasts();
         $this->assertEquals($searchedTokens, $action->getOption('searchedTokens'));
-        $this->assertCount(1, $action->getOptions());
+        $this->assertEquals('', $action->getOption('whitespaceBehindCasts'));
+        $this->assertCount(2, $action->getOptions());
     }
 
     /**
@@ -64,6 +65,22 @@ class FormatCastsTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output1.php'),
             array(),
             true
+        );
+
+        #2 Test whitespace is created if wanted
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
+            array('whitespaceBehindCasts' => ' '),
+            false
+        );
+
+        #3 Test whitespace gets removed if not wanted
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input3.php'),
+            $this->getContainerFromFixture($path . 'output3.php'),
+            array('whitespaceBehindCasts' => ''),
+            false
         );
 
         return $data;
