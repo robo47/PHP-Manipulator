@@ -32,6 +32,7 @@ class AHelper
             'PHP\\Manipulator\\TokenConstraint\\',
             $autoPrefix
         );
+
         if (!$constraint instanceof TokenConstraint) {
             $message = 'constraint is not instance of PHP\\Manipulator\\TokenConstraint';
             throw new \Exception($message);
@@ -54,9 +55,10 @@ class AHelper
     {
         $constraint = $this->getClassInstance(
             $constraint,
-                'PHP\\Manipulator\\ContainerConstraint\\',
-                $autoPrefix
-            );
+            'PHP\\Manipulator\\ContainerConstraint\\',
+            $autoPrefix
+        );
+
         if (!$constraint instanceof ContainerConstraint) {
             $message = 'constraint is not instance of PHP\\Manipulator\\ContainerConstraint';
             throw new \Exception($message);

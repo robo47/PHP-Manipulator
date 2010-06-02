@@ -164,10 +164,13 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
         #4
         $data[] = array(
-            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(TESTS_PATH . '/Baa/Autoloader/')),
-            4,
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(TESTS_PATH . '/Baa/Autoloader/', \RecursiveDirectoryIterator::SKIP_DOTS)),
+            2,
             true
         );
+
+
+
         return $data;
     }
 

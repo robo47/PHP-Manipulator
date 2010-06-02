@@ -14,7 +14,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Tests\Constraint\TokensMatch::__construct
+     * @covers \Tests\Constraint\ValidTokenMatchingClosure::__construct
      */
     public function testConstruct()
     {
