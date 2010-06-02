@@ -77,10 +77,10 @@ class ConfigTest extends \Tests\TestCase
         $config = $this->getConfig();
 
         try {
-            $config->addFile(\getcwd() . 'TestHelper.phpx');
+            $config->addFile(\getcwd() . '/TestHelper.phpx');
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('File /home/robo47/NetBeansProjects/PHP_Manipulator/testsTestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('File ' . \getcwd() . 'TestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
         }
     }
 
