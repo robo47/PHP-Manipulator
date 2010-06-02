@@ -180,7 +180,9 @@ abstract class Config
     }
 
     /**
-     * Add directory
+     * Add an iterator
+     *
+     * All it needs to do is return a string or SplFileInfo-object on current()
      *
      * @param string $path
      * @return \PHP\Manipulator\Config *Provides Fluent Interface*
@@ -188,10 +190,8 @@ abstract class Config
     public function addIterator(\Iterator $iterator)
     {
         foreach ($iterator as $file) {
-            if ($file instanceof \SplFileInfo) {
-                $file = (string) $file;
-            }
-            $this->addFile((string) $file);
+            // cast to string for \SplFileInfo
+            $this->addFile((string)$file);
         }
 
         return $this;
