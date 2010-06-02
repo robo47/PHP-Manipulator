@@ -23,13 +23,13 @@ class RunActionsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Command\RunActions::run
+     * @covers \PHP\Manipulator\Cli\Command\RunActions::execute
      */
-    public function testRun()
+    public function testExecute()
     {
         $this->markTestIncomplete('not implemented yet');
         $command = new RunActions();
-        $command->run(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
+        $command->execute(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
         $output = ob_get_contents();
         $this->assertEquals('', $output);
     }

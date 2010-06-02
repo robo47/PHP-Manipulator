@@ -25,12 +25,12 @@ class LicenseTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Command\License::run
+     * @covers \PHP\Manipulator\Cli\Command\License::execute
      */
-    public function testRun()
+    public function testExecute()
     {
         $command = new License();
-        $command->run(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
+        $command->execute(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
         $output = ob_get_contents();
         $this->assertEquals('New BSD License' . PHP_EOL .
             PHP_EOL .
