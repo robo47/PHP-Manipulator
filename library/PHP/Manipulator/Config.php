@@ -95,7 +95,11 @@ abstract class Config
      */
     public function addFile($file)
     {
-        $this->_files[] = realpath($file);
+        $realPath = realpath($file);
+        if (false === $realPath) {
+            throw new \Exception('File ' . $file . ' not found');
+        }
+        $this->_files[] = $realPath;
         return $this;
     }
 

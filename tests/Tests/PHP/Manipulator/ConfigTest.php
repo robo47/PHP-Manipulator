@@ -55,6 +55,36 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\Config::addFile
+     */
+    public function testAddFileThrowsExceptionIfFileNotExists()
+    {
+        $config = $this->getConfig();
+
+        try {
+            $config->addFile('TestHelper.phpx');
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('File TestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config::addFile
+     */
+    public function testAddFileThrowsExceptionIfFileNotExistsWithAbsolutePath()
+    {
+        $config = $this->getConfig();
+
+        try {
+            $config->addFile(\getcwd() . 'TestHelper.phpx');
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('File /home/robo47/NetBeansProjects/PHP_Manipulator/testsTestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
      * @covers \PHP\Manipulator\Config::addDirectory
      * @covers \PHP\Manipulator\Config::getFiles
      * @covers \PHP\Manipulator\Config::<protected>
