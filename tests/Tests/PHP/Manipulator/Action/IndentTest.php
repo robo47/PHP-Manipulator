@@ -172,7 +172,6 @@ class IndentTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output18.php'),
         );
 
-
         #19 wrong indention for default
         $data[] = array(
             array(),

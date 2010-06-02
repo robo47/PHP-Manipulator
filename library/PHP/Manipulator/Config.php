@@ -46,8 +46,8 @@ abstract class Config
 
     protected function _initDefaultOptions()
     {
-        $this->_options['actionPrefix'] = '\PHP\Manipulator\Action\\';
-        $this->_options['actionsetPrefix'] = '\PHP\Manipulator\Actionset\\';
+        $this->_options['actionPrefix'] = 'PHP\\Manipulator\\Action\\';
+        $this->_options['actionsetPrefix'] = 'PHP\\Manipulator\\Actionset\\';
         $this->_options['fileSuffix'] = '.php';
         $this->_options['defaultNewline'] = "\n";
     }
@@ -211,7 +211,7 @@ abstract class Config
         }
         switch (strtolower($type)) {
             case 'xml':
-                $type = '\PHP\Manipulator\Config\Xml';
+                $type = 'PHP\\Manipulator\\Config\\Xml';
                 break;
             default:
                 break;

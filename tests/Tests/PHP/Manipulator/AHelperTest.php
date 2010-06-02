@@ -30,9 +30,9 @@ class AHelperTest extends \Tests\TestCase
     public function testGetClassInstanceWithAutoPrefix()
     {
         $abstractHelper = new AHelper();
-        $instance = $abstractHelper->getClassInstance('Dummy1', '\Baa\Foo\\', true);
-        $this->assertTrue(class_exists('\Baa\Foo\Dummy1', false), 'Class not loaded');
-        $this->assertType('\Baa\Foo\Dummy1', $instance, 'Wrong type');
+        $instance = $abstractHelper->getClassInstance('Dummy1', 'Baa\\Foo\\', true);
+        $this->assertTrue(class_exists('Baa\\Foo\\Dummy1', false), 'Class not loaded');
+        $this->assertType('Baa\\Foo\\Dummy1', $instance, 'Wrong type');
     }
 
     /**
@@ -41,9 +41,9 @@ class AHelperTest extends \Tests\TestCase
     public function testGetClassInstanceWithoutAutoPrefix()
     {
         $abstractHelper = new AHelper();
-        $instance = $abstractHelper->getClassInstance('\Baa\Foo\Dummy2', '', false);
-        $this->assertTrue(class_exists('\Baa\Foo\Dummy2', false), 'Class not loaded');
-        $this->assertType('\Baa\Foo\Dummy2', $instance, 'Wrong type');
+        $instance = $abstractHelper->getClassInstance('Baa\\Foo\\Dummy2', '', false);
+        $this->assertTrue(class_exists('Baa\\Foo\\Dummy2', false), 'Class not loaded');
+        $this->assertType('Baa\\Foo\\Dummy2', $instance, 'Wrong type');
     }
 
     /**
@@ -66,7 +66,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $result = $abstractHelper->evaluateConstraint(
-            '\Tests\Mock\TokenConstraintMock',
+            'Tests\\Mock\\TokenConstraintMock',
             $token,
             null,
             false
@@ -83,7 +83,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
         $container = new TokenContainer();
         $result = $abstractHelper->evaluateContainerConstraint(
-            '\Tests\Mock\ContainerConstraintMock',
+            'Tests\\Mock\\ContainerConstraintMock',
             $container,
             null,
             false
@@ -100,7 +100,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
 
         $abstractHelper->runAction(
-            '\Tests\Mock\ActionMock',
+            'Tests\\Mock\\ActionMock',
             new TokenContainer(),
             null,
             false
@@ -118,7 +118,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
 
         $abstractHelper->manipulateToken(
-            '\Tests\Mock\TokenManipulatorMock',
+            'Tests\\Mock\\TokenManipulatorMock',
             Token::factory(array(T_WHITESPACE, "\n")),
             null,
             false
@@ -160,7 +160,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->evaluateConstraint($constraint, $token);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of \PHP\Manipulator\TokenConstraint', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('constraint is not instance of PHP\\Manipulator\\TokenConstraint', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -178,7 +178,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->findTokens($constraint, $token, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('finder is not instance of \PHP\Manipulator\TokenFinder', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('finder is not instance of PHP\\Manipulator\\TokenFinder', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -195,7 +195,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->evaluateContainerConstraint($constraint, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of \PHP\Manipulator\ContainerConstraint', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('constraint is not instance of PHP\\Manipulator\\ContainerConstraint', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -212,7 +212,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->runAction($manipulator, $container);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\Action', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('manipulator is not instance of PHP\\Manipulator\\Action', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -229,7 +229,7 @@ class AHelperTest extends \Tests\TestCase
             $abstractHelper->manipulateToken($manipulator, $token);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of \PHP\Manipulator\TokenManipulator', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('manipulator is not instance of PHP\Manipulator\TokenManipulator', $e->getMessage(), 'Wrong exception message');
         }
     }
 

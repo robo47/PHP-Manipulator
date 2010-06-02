@@ -165,7 +165,7 @@ class ManipulatorTest extends \Tests\TestCase
 
         );
         $manipulator = new Manipulator($addActions);
-        $fluent = $manipulator->removeActionByClassname('PHP\Manipulator\Action\ChangeLineEndings');
+        $fluent = $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\ChangeLineEndings');
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
         $actions = $manipulator->getActions();
@@ -174,14 +174,14 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($addActions[0], $actions, 'Action1 not found');
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeActionByClassname('\PHP\Manipulator\Action\RemoveComments');
+        $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\RemoveComments');
 
         $actions = $manipulator->getActions();
 
         $this->assertCount(1, $actions, 'Wrong actions count');
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeActionByClassname('PHP\Manipulator\Action\RemoveTrailingWhitespace');
+        $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\RemoveTrailingWhitespace');
 
         $actions = $manipulator->getActions();
 

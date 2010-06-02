@@ -23,10 +23,10 @@ class ConfigTest extends \Tests\TestCase
         $options = $config->getOptions();
        
         $this->assertArrayHasKey('actionPrefix', $options);
-        $this->assertEquals('\PHP\Manipulator\Action\\', $options['actionPrefix']);
+        $this->assertEquals('PHP\\Manipulator\\Action\\', $options['actionPrefix']);
 
         $this->assertArrayHasKey('actionsetPrefix', $options);
-        $this->assertEquals('\PHP\Manipulator\Actionset\\', $options['actionsetPrefix']);
+        $this->assertEquals('PHP\\Manipulator\\Actionset\\', $options['actionsetPrefix']);
 
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.php', $options['fileSuffix']);
@@ -152,8 +152,8 @@ class ConfigTest extends \Tests\TestCase
     public function testAddActionset()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
-        $config->setOption('actionsetPrefix', '\Baa\Foo\Actionset\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
+        $config->setOption('actionsetPrefix', 'Baa\\Foo\\Actionset\\');
 
         $this->assertCount(0, $config->getActions());
 
@@ -164,8 +164,8 @@ class ConfigTest extends \Tests\TestCase
 
         $actions = $config->getActions();
 
-        $this->assertType('\Baa\Foo\Action\ThirdAction', $actions[0]);
-        $this->assertType('\Baa\Foo\Action\FourthAction', $actions[1]);
+        $this->assertType('Baa\\Foo\\Action\\ThirdAction', $actions[0]);
+        $this->assertType('Baa\\Foo\\Action\\FourthAction', $actions[1]);
 
         $this->assertEquals('bla', $actions[0]->getOption('blub'));
         $this->assertEquals('blub', $actions[1]->getOption('bla'));
@@ -179,20 +179,20 @@ class ConfigTest extends \Tests\TestCase
     public function testAddActionsetWithPrefix()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
-        $config->setOption('actionsetPrefix', '\Baa\Foo\Actionset\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
+        $config->setOption('actionsetPrefix', 'Baa\\Foo\\Actionset\\');
 
         $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addActionset('FirstActionset', '\Foo\Baa\Actionset\\');
+        $fluent = $config->addActionset('FirstActionset', 'Foo\\Baa\\Actionset\\');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(2, $config->getActions());
 
         $actions = $config->getActions();
 
-        $this->assertType('\Foo\Baa\Action\ThirdAction', $actions[0]);
-        $this->assertType('\Foo\Baa\Action\FourthAction', $actions[1]);
+        $this->assertType('Foo\\Baa\\Action\\ThirdAction', $actions[0]);
+        $this->assertType('Foo\\Baa\\Action\\FourthAction', $actions[1]);
 
         $this->assertEquals('bla', $actions[0]->getOption('blub'));
         $this->assertEquals('blub', $actions[1]->getOption('bla'));
@@ -206,7 +206,7 @@ class ConfigTest extends \Tests\TestCase
     public function testAddAction()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
 
         $this->assertCount(0, $config->getActions());
 
@@ -216,7 +216,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
+        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
     }
 
     /**
@@ -227,7 +227,7 @@ class ConfigTest extends \Tests\TestCase
     public function testAddActionWithOptions()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
 
         $this->assertCount(0, $config->getActions());
 
@@ -237,7 +237,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
+        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
 
         $action = $actions[0];
         /* @var $action \Baa\Foo\Action\FirstAction */
@@ -253,17 +253,17 @@ class ConfigTest extends \Tests\TestCase
     public function testAddActionWithPrefix()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
 
         $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addAction('FirstAction', '\Foo\Baa\Action\\');
+        $fluent = $config->addAction('FirstAction', 'Foo\\Baa\\Action\\');
 
         $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('\Foo\Baa\Action\FirstAction', $actions[0]);
+        $this->assertType('Foo\\Baa\\Action\\FirstAction', $actions[0]);
     }
 
     /**
@@ -274,17 +274,17 @@ class ConfigTest extends \Tests\TestCase
     public function testAddActionWithPrefixAndOptions()
     {
         $config = $this->getConfig();
-        $config->setOption('actionPrefix', '\Baa\Foo\Action\\');
+        $config->setOption('actionPrefix', 'Baa\\Foo\\Action\\');
 
         $this->assertCount(0, $config->getActions());
 
-        $fluent = $config->addAction('FirstAction', '\Foo\Baa\Action\\', array('baa' => 'foo', 'blub' => 'bla'));
+        $fluent = $config->addAction('FirstAction', 'Foo\\Baa\\Action\\', array('baa' => 'foo', 'blub' => 'bla'));
 
         $actions = $config->getActions();
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('\Foo\Baa\Action\FirstAction', $actions[0]);
+        $this->assertType('Foo\\Baa\\Action\\FirstAction', $actions[0]);
 
         $action = $actions[0];
         /* @var $action \Foo\Baa\Action\FirstAction */
@@ -336,7 +336,7 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithXmlFromCode()
     {
         $config = Config::factory('xml', '<config></config>', false);
-        $this->assertType('\PHP\Manipulator\Config\Xml', $config);
+        $this->assertType('PHP\\Manipulator\\Config\\Xml', $config);
     }
 
     /**
@@ -344,8 +344,8 @@ class ConfigTest extends \Tests\TestCase
      */
     public function testFactoryWithConfigMockFromCode()
     {
-        $config = Config::factory('\Tests\Mock\ConfigMock', '<config></config>', false);
-        $this->assertType('\Tests\Mock\ConfigMock', $config);
+        $config = Config::factory('Tests\\Mock\\ConfigMock', '<config></config>', false);
+        $this->assertType('Tests\\Mock\\ConfigMock', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
@@ -356,7 +356,7 @@ class ConfigTest extends \Tests\TestCase
     {
         $file = 'Config/config0.xml';
         $config = Config::factory('xml', '_fixtures/' . $file, true);
-        $this->assertType('\PHP\Manipulator\Config\Xml', $config);
+        $this->assertType('PHP\Manipulator\Config\Xml', $config);
     }
 
     /**
@@ -366,7 +366,7 @@ class ConfigTest extends \Tests\TestCase
     {
         $file = 'Config/config0.xml';
         $config = Config::factory('\Tests\Mock\ConfigMock', '_fixtures/' . $file, true);
-        $this->assertType('\Tests\Mock\ConfigMock', $config);
+        $this->assertType('Tests\Mock\ConfigMock', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 

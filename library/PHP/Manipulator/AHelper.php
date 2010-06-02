@@ -29,11 +29,11 @@ class AHelper
     {
         $constraint = $this->getClassInstance(
             $constraint,
-            'PHP\Manipulator\TokenConstraint\\',
+            'PHP\\Manipulator\\TokenConstraint\\',
             $autoPrefix
         );
         if (!$constraint instanceof TokenConstraint) {
-            $message = 'constraint is not instance of \PHP\Manipulator\TokenConstraint';
+            $message = 'constraint is not instance of PHP\\Manipulator\\TokenConstraint';
             throw new \Exception($message);
         }
 
@@ -54,11 +54,11 @@ class AHelper
     {
         $constraint = $this->getClassInstance(
             $constraint,
-                'PHP\Manipulator\ContainerConstraint\\',
+                'PHP\\Manipulator\\ContainerConstraint\\',
                 $autoPrefix
             );
         if (!$constraint instanceof ContainerConstraint) {
-            $message = 'constraint is not instance of \PHP\Manipulator\ContainerConstraint';
+            $message = 'constraint is not instance of PHP\\Manipulator\\ContainerConstraint';
             throw new \Exception($message);
         }
 
@@ -78,12 +78,12 @@ class AHelper
     {
         $manipulator = $this->getClassInstance(
             $manipulator,
-            'PHP\Manipulator\TokenManipulator\\',
+            'PHP\\Manipulator\\TokenManipulator\\',
             $autoPrefix
         );
 
         if (!$manipulator instanceof TokenManipulator) {
-            $message = 'manipulator is not instance of \PHP\Manipulator\TokenManipulator';
+            $message = 'manipulator is not instance of PHP\\Manipulator\\TokenManipulator';
             throw new \Exception($message);
         }
 
@@ -103,12 +103,12 @@ class AHelper
     {
         $action = $this->getClassInstance(
             $action,
-            'PHP\Manipulator\Action\\',
+            'PHP\\Manipulator\\Action\\',
             $autoPrefix
         );
 
         if (!$action instanceof Action) {
-            $message = 'manipulator is not instance of \PHP\Manipulator\Action';
+            $message = 'manipulator is not instance of PHP\\Manipulator\\Action';
             throw new \Exception($message);
         }
 
@@ -130,12 +130,12 @@ class AHelper
     {
         $finder = $this->getClassInstance(
             $finder,
-            'PHP\Manipulator\TokenFinder\\',
+            'PHP\\Manipulator\\TokenFinder\\',
             $autoPrefix
         );
 
         if (!$finder instanceof TokenFinder) {
-            $message = 'finder is not instance of \PHP\Manipulator\TokenFinder';
+            $message = 'finder is not instance of PHP\\Manipulator\\TokenFinder';
             throw new \Exception($message);
         }
 

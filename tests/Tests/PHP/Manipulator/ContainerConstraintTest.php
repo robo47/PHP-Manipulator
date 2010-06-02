@@ -15,9 +15,9 @@ class ContainerConstraintTest extends \Tests\TestCase
      */
     public function testContainer()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\ContainerConstraint');
+        $reflection = new \ReflectionClass('PHP\\Manipulator\\ContainerConstraint');
         $this->assertTrue($reflection->isAbstract(), 'Class is not abstract');
-        $this->assertTrue($reflection->isSubclassOf('\PHP\Manipulator\AHelper'));
+        $this->assertTrue($reflection->isSubclassOf('PHP\\Manipulator\\AHelper'));
 
         $evaluateMethod = $reflection->getMethod('evaluate');
         /* @var $evaluateMethod ReflectionMethod */
@@ -27,7 +27,7 @@ class ContainerConstraintTest extends \Tests\TestCase
         $tokenParameter = $parameters[0];
         /* @var $tokenParameter ReflectionParameter */
         $this->assertSame('container', $tokenParameter->getName(), 'Parameter has wrong name');
-        $this->assertEquals('PHP\Manipulator\TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP\Manipulator\TokenContainer');
+        $this->assertEquals('PHP\\Manipulator\\TokenContainer', $tokenParameter->getClass()->getName(), 'Parameter is not a PHP\\Manipulator\\TokenContainer');
         $this->assertFalse($tokenParameter->isOptional(), 'Parameter is optional');
 
         $paramsParameter = $parameters[1];

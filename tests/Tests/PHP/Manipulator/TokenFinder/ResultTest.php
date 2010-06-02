@@ -173,7 +173,7 @@ extends \Tests\TestCase
     public function testFactoryWithEmptyArray()
     {
         $result = Result::factory(array());
-        $this->assertType('\PHP\Manipulator\TokenFinder\Result', $result);
+        $this->assertType('PHP\\Manipulator\\TokenFinder\\Result', $result);
         $this->assertTrue($result->isEmpty());
     }
 
@@ -186,7 +186,7 @@ extends \Tests\TestCase
         $t2 = new Token('baa');
         $t3 = new Token('blub');
         $result = Result::factory(array($t1, $t2, $t3));
-        $this->assertType('\PHP\Manipulator\TokenFinder\Result', $result);
+        $this->assertType('PHP\\Manipulator\\TokenFinder\\Result', $result);
         $this->assertFalse($result->isEmpty());
         $this->assertCount(3, $result);
 

@@ -24,9 +24,9 @@ class XmlTest extends \Tests\TestCase
         $this->assertType('array', $options);
 
         $this->assertArrayHasKey('actionPrefix', $options);
-        $this->assertEquals('\Baa\Foo\Action\\', $options['actionPrefix']);
+        $this->assertEquals('Baa\\Foo\\Action\\', $options['actionPrefix']);
         $this->assertArrayHasKey('actionsetPrefix', $options);
-        $this->assertEquals('\Baa\Foo\Actionset\\', $options['actionsetPrefix']);
+        $this->assertEquals('Baa\Foo\Actionset\\', $options['actionsetPrefix']);
         $this->assertArrayHasKey('fileSuffix', $options);
         $this->assertEquals('.phtml', $options['fileSuffix']);
         $this->assertArrayHasKey('defaultNewline', $options);
@@ -38,25 +38,25 @@ class XmlTest extends \Tests\TestCase
         $actions = $config->getActions();
         $this->assertType('array', $actions);
 
-        $this->assertType('\Baa\Foo\Action\FirstAction', $actions[0]);
+        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
 
         $this->assertEquals('foo', $actions[0]->getOption('baa'));
 
-        $this->assertType('\Foo\Baa\Action\SecondAction', $actions[1]);
+        $this->assertType('Foo\\Baa\\Action\\SecondAction', $actions[1]);
         $this->assertEquals('baa', $actions[1]->getOption('foo'));
         $this->assertTrue($actions[1]->getOption('someTrueBoolean'));
         $this->assertFalse($actions[1]->getOption('someFalseBoolean'));
 
-        $this->assertType('\Baa\Foo\Action\ThirdAction', $actions[2]);
+        $this->assertType('Baa\\Foo\\Action\\ThirdAction', $actions[2]);
         $this->assertEquals('bla', $actions[2]->getOption('blub'));
 
-        $this->assertType('\Baa\Foo\Action\FourthAction', $actions[3]);
+        $this->assertType('Baa\\Foo\\Action\\FourthAction', $actions[3]);
         $this->assertEquals('blub', $actions[3]->getOption('bla'));
 
-        $this->assertType('\Foo\Baa\Action\FifthAction', $actions[4]);
+        $this->assertType('Foo\\Baa\\Action\\FifthAction', $actions[4]);
         $this->assertEquals('foo', $actions[4]->getOption('baa'));
 
-        $this->assertType('\Foo\Baa\Action\SixthsAction', $actions[5]);
+        $this->assertType('Foo\\Baa\\Action\\SixthsAction', $actions[5]);
         $this->assertEquals('baa', $actions[5]->getOption('foo'));
 
         $this->assertCount(6, $actions);
@@ -92,7 +92,7 @@ class XmlTest extends \Tests\TestCase
 
         $action = $actions[0];
 
-        $this->assertType('\Baa\Foo\Action\FirstAction', $action);
+        $this->assertType('Baa\\Foo\\Action\\FirstAction', $action);
         /* @var $action \PHP\Manipulator\Action */
 
         $this->assertType('integer', $action->getOption('integerOne'));

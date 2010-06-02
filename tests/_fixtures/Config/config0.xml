@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <options>
-        <actionPrefix>\Baa\Foo\Action\</actionPrefix>
-        <actionsetPrefix>\Baa\Foo\Actionset\</actionsetPrefix>
+        <actionPrefix>Baa\Foo\Action\</actionPrefix>
+        <actionsetPrefix>Baa\Foo\Actionset\</actionsetPrefix>
         <fileSuffix>.phtml</fileSuffix>
     </options>
     <actions>
         <action name="FirstAction">
             <option name="baa" value="foo" />
         </action>
-        <action prefix="\Foo\Baa\Action\" name="SecondAction">
+        <action prefix="Foo\Baa\Action\" name="SecondAction">
             <option name="foo" value="baa" />
             <option name="someTrueBoolean" value="1" cast="bool" />
             <option name="someFalseBoolean" value="0" cast="bool" />
         </action>
         <actionset name="FirstActionset" />
-        <actionset prefix="\Foo\Baa\Actionset\" name="SecondActionset" />
+        <actionset prefix="Foo\Baa\Actionset\" name="SecondActionset" />
     </actions>
     <files>
         <directory>./_fixtures/Config/testDir0</directory>
