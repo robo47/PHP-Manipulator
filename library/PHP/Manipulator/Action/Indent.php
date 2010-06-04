@@ -65,7 +65,7 @@ class Indent extends Action
     /**
      * Since Actions can be used multiple times, they need to reset themself each time they are used!
      */
-    protected function reset()
+    protected function _reset()
     {
         $this->_insideUse = false;
         $this->_insideCase = false;
@@ -82,7 +82,7 @@ class Indent extends Action
      */
     public function run(TokenContainer $container)
     {
-        $this->reset();
+        $this->_reset();
         $this->_container = $container;
 
         $removeIndention = new RemoveIndention();
