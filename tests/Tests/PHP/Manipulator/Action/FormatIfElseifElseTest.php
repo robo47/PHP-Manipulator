@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
+ * @todo CurlyBrace-Indention ?
  * @group Action\FormatIfElseifElse
  */
 class FormatIfElseifElseTest extends \Tests\TestCase
@@ -30,10 +31,10 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertTrue($action->getOption('breakAfterCurlyBraceOfElse'), 'Default value for breakAfterCurlyBraceOfElse is wrong');
         $this->assertTrue($action->getOption('breakAfterCurlyBraceOfElseif'), 'Default value for breakAfterCurlyBraceOfElseif is wrong');
 
-        //        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElse'), 'Default value for breakBeforeCurlyBraceOfElse is wrong');
-        //        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElseif'), 'Default value for breakBeforeCurlyBraceOfElseif is wrong');
+        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElse'), 'Default value for breakBeforeCurlyBraceOfElse is wrong');
+        $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElseif'), 'Default value for breakBeforeCurlyBraceOfElseif is wrong');
 
-        $this->assertCount(9, $action->getOptions());
+        $this->assertCount(11, $action->getOptions());
     }
 
     /**
@@ -46,81 +47,80 @@ class FormatIfElseifElseTest extends \Tests\TestCase
 
         #0 Test space after if is inserted
         $data[] = array(
-            array('spaceAfterIf' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterIf' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input0.php'),
             $this->getContainerFromFixture($path . 'output0.php'),
         );
 
         #1Test if there is whitespace after if, it is replaced with one space if true === spaceAfterIf
         $data[] = array(
-            array('spaceAfterIf' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterIf' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input1.php'),
             $this->getContainerFromFixture($path . 'output1.php'),
         );
 
         #2 Test if there is whitespace after if, it is deleted if false === spaceAfterIf
         $data[] = array(
-            array('spaceAfterIf' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterIf' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
         );
 
         #3 Test SpaceAfter And BeforeElse without existing space
         $data[] = array(
-            array('spaceAfterElse' => true, 'spaceBeforeElse' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElse' => true, 'spaceBeforeElse' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input3.php'),
             $this->getContainerFromFixture($path . 'output3.php'),
         );
 
         #4 Test true SpaceAfter And BeforeElse with too much existing space
         $data[] = array(
-            array('spaceAfterElse' => true, 'spaceBeforeElse' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElse' => true, 'spaceBeforeElse' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input4.php'),
             $this->getContainerFromFixture($path . 'output4.php'),
         );
 
         #5 Test false SpaceAfter And BeforeElse with existing space
         $data[] = array(
-            array('spaceAfterElse' => false, 'spaceBeforeElse' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElse' => false, 'spaceBeforeElse' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input5.php'),
             $this->getContainerFromFixture($path . 'output5.php'),
         );
 
         #6 Test SpaceAfter And BeforeElse without existing space
         $data[] = array(
-            array('spaceAfterElseif' => true, 'spaceBeforeElseif' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElseif' => true, 'spaceBeforeElseif' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input6.php'),
             $this->getContainerFromFixture($path . 'output6.php'),
         );
 
         #7 Test true SpaceAfter And BeforeElse with too much existing space
         $data[] = array(
-            array('spaceAfterElseif' => true, 'spaceAfterElseif' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElseif' => true, 'spaceAfterElseif' => true, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input7.php'),
             $this->getContainerFromFixture($path . 'output7.php'),
         );
 
         #8 Test false SpaceAfter And BeforeElse with existing space
         $data[] = array(
-            array('spaceAfterElseif' => false, 'spaceBeforeElseif' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('spaceAfterElseif' => false, 'spaceBeforeElseif' => false, 'breakAfterCurlyBraceOfIf' => false, 'breakAfterCurlyBraceOfElse' => false, 'breakAfterCurlyBraceOfElseif' => false, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input8.php'),
             $this->getContainerFromFixture($path . 'output8.php'),
         );
 
         #9 Test breaking works
         $data[] = array(
-            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => false),
+            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElse' => false, 'breakBeforeCurlyBraceOfElseif' => false),
             $this->getContainerFromFixture($path . 'input9.php'),
             $this->getContainerFromFixture($path . 'output9.php'),
         );
 
-        // @todo implement + test this code
-        //        #10 Test breaking works with nested if
-        //        $data[] = array(
-        //            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => true),
-        //            $this->getContainerFromFixture($path . 'input10.php'),
-        //            $this->getContainerFromFixture($path . 'output10.php'),
-        //        );
+        #10 Test breaking works with nested if
+        $data[] = array(
+            array('breakAfterCurlyBraceOfIf' => true, 'breakAfterCurlyBraceOfElse' => true, 'breakAfterCurlyBraceOfElseif' => true, 'breakBeforeCurlyBraceOfElseAndElseIf' => true),
+            $this->getContainerFromFixture($path . 'input10.php'),
+            $this->getContainerFromFixture($path . 'output10.php'),
+        );
 
         #11 Test breaking works
         $data[] = array(
@@ -133,6 +133,11 @@ class FormatIfElseifElseTest extends \Tests\TestCase
     }
 
     /**
+     *
+     * @param array $options
+     * @param \PHP\Manipulator\TokenContainer $input
+     * @param \PHP\Manipuatlor\TokenContainer $expectedTokens
+     *
      * @covers \PHP\Manipulator\Action\FormatIfElseifElse
      * @dataProvider actionProvider
      */
@@ -140,6 +145,7 @@ class FormatIfElseifElseTest extends \Tests\TestCase
     {
         $action = new FormatIfElseifElse($options);
         $action->run($input);
+        //var_dump($input->__toString());exit(4);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

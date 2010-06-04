@@ -68,12 +68,12 @@ extends Action
             $this->setOption('breakAfterCurlyBraceOfElseif', true);
         }
 
-        //        if (!$this->hasOption('breakBeforeCurlyBraceOfElse')) {
-        //            $this->setOption('breakBeforeCurlyBraceOfElse', true);
-        //        }
-        //        if (!$this->hasOption('breakBeforeCurlyBraceOfElseif')) {
-        //            $this->setOption('breakBeforeCurlyBraceOfElseif', true);
-        //        }
+        if (!$this->hasOption('breakBeforeCurlyBraceOfElse')) {
+            $this->setOption('breakBeforeCurlyBraceOfElse', true);
+        }
+        if (!$this->hasOption('breakBeforeCurlyBraceOfElseif')) {
+            $this->setOption('breakBeforeCurlyBraceOfElseif', true);
+        }
     }
 
     /**
@@ -119,9 +119,11 @@ extends Action
                     }
                 }
 
-                //                if (true === $this->getOption('breakBeforeCurlyBraceOfElse') && $this->_isFollowedByElseOrElseIf($token, $iterator)) {
-                //                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($token, $iterator);
-                //                }
+                if (true === $this->getOption('breakBeforeCurlyBraceOfElse') && $this->isFollowedByTokenType($iterator, T_ELSE)) {
+                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($iterator);
+                } else if (true === $this->getOption('breakBeforeCurlyBraceOfElseif') && $this->isFollowedByTokenType($iterator, T_ELSEIF)) {
+                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($iterator);
+                }
 
                 if ($this->_stackHasLevelMatchingItem($this->_ifStack)) {
                     $this->_ifStack->pop();
@@ -138,45 +140,25 @@ extends Action
         $container->retokenize();
     }
 
-    //    /**
-    //     * @param \PHP\Manipulator\Token $token
-    //     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-    //     */
-    //    protected function _addLineBreakBeforeCurlyBraceIfNotPresent(Token $token, Iterator $iterator)
-    //    {
-    //        $iterator->previous();
-    //        if (!$this->isType($token, T_WHITESPACE) || $this->evaluateConstraint('ContainsNewline', $token)) {
-    //            $whitespaceToken = new Token("\n", T_WHITESPACE);
-    //            $this->_container->insertTokenBefore($token, $whitespaceToken);
-    //        }
-    //        $iterator->update($token);
-    //    }
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _addLineBreakBeforeCurlyBraceIfNotPresent(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        $iterator->previous();
+        $currentToken = $iterator->current();
+        if (!$this->isType($currentToken, T_WHITESPACE)) {
+            // @todo use container default linebreak ? fallback to \n
+            $whitespaceToken = new Token("\n", T_WHITESPACE);
+            $this->_container->insertTokenBefore($token, $whitespaceToken);
+        } elseif (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
+            $currentToken->setValue($currentToken->getValue() . "\n");
+        }
+        $iterator->update($token);
+    }
 
-    //    /**
-    //     * @param \PHP\Manipulator\Token $token
-    //     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-    //     * @return boolean
-    //     */
-    //    protected function _isFollowedByElseOrElseIf(Token $token, Iterator $iterator)
-    //    {
-    //        $result = false;
-    //        $iterator->next();
-    //        while ($iterator->valid()) {
-    //
-    //            $current = $iterator->current();
-    //            if($this->isType($current, array(T_ELSE, T_ELSEIF))) {
-    //                $result = true;
-    //                break;
-    //            }
-    //            if(!$this->isType($current, array(T_WHITESPACE, T_COMMENT))) {
-    //                $result = false;
-    //                break;
-    //            }
-    //            $iterator->next();
-    //        }
-    //        $iterator->update($token);
-    //        return $result;
-    //    }
+
 
     /**
      * @return boolean
