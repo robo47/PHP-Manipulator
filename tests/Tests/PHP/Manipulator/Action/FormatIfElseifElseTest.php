@@ -7,7 +7,6 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @todo CurlyBrace-Indention ?
  * @group Action\FormatIfElseifElse
  */
 class FormatIfElseifElseTest extends \Tests\TestCase
@@ -34,7 +33,14 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElse'), 'Default value for breakBeforeCurlyBraceOfElse is wrong');
         $this->assertTrue($action->getOption('breakBeforeCurlyBraceOfElseif'), 'Default value for breakBeforeCurlyBraceOfElseif is wrong');
 
-        $this->assertCount(11, $action->getOptions());
+        $this->assertFalse($action->getOption('breakAfterIf'), 'Default value for breakAfterIf is wrong');
+        $this->assertFalse($action->getOption('breakAfterElse'), 'Default value for breakAfterElse is wrong');
+        $this->assertFalse($action->getOption('breakAfterElseif'), 'Default value for breakAfterElseif is wrong');
+
+        $this->assertFalse($action->getOption('breakBeforeElse'), 'Default value for breakBeforeElse is wrong');
+        $this->assertFalse($action->getOption('breakBeforeElseif'), 'Default value for breakBeforeElseif is wrong');
+
+        $this->assertCount(16, $action->getOptions());
     }
 
     /**
@@ -129,11 +135,17 @@ class FormatIfElseifElseTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output11.php'),
         );
 
+        #12 Test breaks after/before if/else/elseif so that opening-braces are on the next line and else/elseif stand in an extra line
+        $data[] = array(
+            array('breakBeforeCurlyBraceOfElse' => true, 'breakBeforeCurlyBraceOfElseif' => true, 'breakAfterIf' => true, 'breakAfterElse' => true, 'breakAfterElseif' => true, 'spaceBeforeElseif' => false, 'spaceBeforeElse' => false, 'breakBeforeElse' => true, 'breakBeforeElseif' => true, 'spaceAfterElse' => false),
+            $this->getContainerFromFixture($path . 'input12.php'),
+            $this->getContainerFromFixture($path . 'output12.php'),
+        );
+
         return $data;
     }
 
     /**
-     *
      * @param array $options
      * @param \PHP\Manipulator\TokenContainer $input
      * @param \PHP\Manipuatlor\TokenContainer $expectedTokens
@@ -145,7 +157,6 @@ class FormatIfElseifElseTest extends \Tests\TestCase
     {
         $action = new FormatIfElseifElse($options);
         $action->run($input);
-        //var_dump($input->__toString());exit(4);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
 }

@@ -37,6 +37,9 @@ extends Action
      */
     protected $_level = 0;
 
+    /**
+     * @todo so many options are great but there needs to be an easy way to express what you want too!
+     */
     public function init()
     {
         if (!$this->hasOption('spaceAfterIf')) {
@@ -74,6 +77,34 @@ extends Action
         if (!$this->hasOption('breakBeforeCurlyBraceOfElseif')) {
             $this->setOption('breakBeforeCurlyBraceOfElseif', true);
         }
+
+        if (!$this->hasOption('breakAfterIf')) {
+            $this->setOption('breakAfterIf', false);
+        }
+        if (!$this->hasOption('breakAfterElse')) {
+            $this->setOption('breakAfterElse', false);
+        }
+        if (!$this->hasOption('breakAfterElseif')) {
+            $this->setOption('breakAfterElseif', false);
+        }
+
+        if (!$this->hasOption('breakBeforeElse')) {
+            $this->setOption('breakBeforeElse', false);
+        }
+        if (!$this->hasOption('breakBeforeElseif')) {
+            $this->setOption('breakBeforeElseif', false);
+        }
+    }
+
+    /**
+     * Reset all internal variables on each run
+     */
+    protected function _reset()
+    {
+        $this->_ifStack = new \SplStack();
+        $this->_elseStack = new \SplStack();
+        $this->_elseifStack = new \SplStack();
+        $this->_level = 0;
     }
 
     /**
@@ -85,10 +116,7 @@ extends Action
     {
         $this->_container = $container;
         $iterator = $container->getIterator();
-        $this->_ifStack = new \SplStack();
-        $this->_elseStack = new \SplStack();
-        $this->_elseifStack = new \SplStack();
-        $this->_level = 0;
+        $this->_reset();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
@@ -108,21 +136,40 @@ extends Action
             if ($this->isOpeningCurlyBrace($token)) {
                 $this->_level++;
                 $this->_applyBreaksAfterCurlyBraces($iterator);
+
+                if (true === $this->getOption('breakAfterIf') && $this->_stackHasLevelMatchingItem($this->_ifStack) - 1 ) {
+                    $this->_addLineBreakBeforeCurrentToken($iterator);
+                }
+                if (true === $this->getOption('breakAfterElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack) - 1 ) {
+                    $this->_addLineBreakBeforeCurrentToken($iterator);
+                }
+                if (true === $this->getOption('breakAfterElse') && $this->_stackHasLevelMatchingItem($this->_elseStack) - 1 ) {
+                    $this->_addLineBreakBeforeCurrentToken($iterator);
+                }
             }
 
             if ($this->isClosingCurlyBrace($token)) {
                 $this->_level--;
                 if (!$this->isPrecededByTokenType($iterator, T_WHITESPACE)) {
                     if ($this->_shouldInsertBreakBeforeCurrentCurlyBrace()) {
+                        // @todo use container default linebreak ? fallback to \n
                         $newToken = new Token("\n", T_WHITESPACE);
                         $this->_container->insertTokenBefore($token, $newToken);
+                        // @todo should update container -> creating and inserting new token into new function
                     }
                 }
 
                 if (true === $this->getOption('breakBeforeCurlyBraceOfElse') && $this->isFollowedByTokenType($iterator, T_ELSE)) {
-                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($iterator);
-                } else if (true === $this->getOption('breakBeforeCurlyBraceOfElseif') && $this->isFollowedByTokenType($iterator, T_ELSEIF)) {
-                    $this->_addLineBreakBeforeCurlyBraceIfNotPresent($iterator);
+                    $this->_addLineBreakBeforeCurrentToken($iterator);
+                }
+                if (true === $this->getOption('breakBeforeCurlyBraceOfElseif') && $this->isFollowedByTokenType($iterator, T_ELSEIF)) {
+                    $this->_addLineBreakBeforeCurrentToken($iterator);
+                }
+                if (true === $this->getOption('breakBeforeElse') && $this->isFollowedByTokenType($iterator, T_ELSE)) {
+                    $this->_addLineBreakAfterCurrentToken($iterator);
+                }
+                if (true === $this->getOption('breakBeforeElseif') && $this->isFollowedByTokenType($iterator, T_ELSEIF)) {
+                    $this->_addLineBreakAfterCurrentToken($iterator);
                 }
 
                 if ($this->_stackHasLevelMatchingItem($this->_ifStack)) {
@@ -143,7 +190,7 @@ extends Action
     /**
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
-    protected function _addLineBreakBeforeCurlyBraceIfNotPresent(Iterator $iterator)
+    protected function _addLineBreakBeforeCurrentToken(Iterator $iterator)
     {
         $token = $iterator->current();
         $iterator->previous();
@@ -155,10 +202,27 @@ extends Action
         } elseif (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
             $currentToken->setValue($currentToken->getValue() . "\n");
         }
+
         $iterator->update($token);
     }
 
-
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _addLineBreakAfterCurrentToken(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        $iterator->next();
+        $currentToken = $iterator->current();
+        if (!$this->isType($currentToken, T_WHITESPACE)) {
+            // @todo use container default linebreak ? fallback to \n
+            $whitespaceToken = new Token("\n", T_WHITESPACE);
+            $this->_container->insertTokenBefore($currentToken, $whitespaceToken);
+        } else {
+            $currentToken->setValue("\n");
+        }
+        $iterator->update($token);
+    }
 
     /**
      * @return boolean
@@ -196,6 +260,7 @@ extends Action
     {
         $token = $iterator->current();
         if ($this->_shouldInsertBreakAfterCurrentOpeningCurlyBrace($iterator)) {
+            // @todo use container default linebreak ? fallback to \n
             $newToken = new Token("\n", T_WHITESPACE);
             $this->_container->insertTokenAfter($token, $newToken);
             $iterator->update();
@@ -329,7 +394,7 @@ extends Action
     protected function _format(Iterator $iterator)
     {
         $token = $iterator->current();
-        $type = ucfirst($token->getValue());
+        $type = ucfirst(strtolower(substr($token->getTokenName(),2)));
 
         if (!$this->isFollowedByTokenType($iterator, T_WHITESPACE) &&
             true === $this->getOption('spaceAfter' . $type)) {
@@ -342,7 +407,8 @@ extends Action
             $this->_removeNextToken($iterator);
         }
 
-        if (!$this->isType($token, T_IF)) {
+        // If it is not an if, and should not break before else
+        if (!$this->isType($token, T_IF) && false === $this->getOption('breakBeforeElse')) {
             if (!$this->isPrecededByTokenType($iterator, T_WHITESPACE) &&
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_addWhitespaceTokenBefore($iterator);
@@ -350,7 +416,7 @@ extends Action
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_setPreviousTokenValueToOneSpace($iterator);
             } else if (false === $this->getOption('spaceBefore' . $type) &&
-                $this->isPrecededByTokenType($iterator, T_WHITESPACE)) {
+                $this->isPrecededByTokenType($iterator, T_WHITESPACE) ) {
                 $this->_removePreviousToken($iterator);
             }
         }
