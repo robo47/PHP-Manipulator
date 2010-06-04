@@ -15,6 +15,7 @@ use PHP\Manipulator\TokenContainer;
  * @todo test indentionWidth
  * @todo test tabWidth
  * @todo test indention works if we place the curly braces on the following line
+ * @todo CurlyBrace-Indention ? indenting curly-braces with an extra value (2 spaces ... ? )
  */
 class IndentTest extends \Tests\TestCase
 {
