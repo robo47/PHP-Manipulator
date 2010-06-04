@@ -462,4 +462,81 @@ class AHelper
         $iterator->seekToToken($token);
         return $result;
     }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @return \PHP\Manipulator\Token
+     */
+    public function getMatchingBrace(Iterator $iterator)
+    {
+        $token = $iterator->current();
+        $brace = $token->getValue();
+
+        $searchForward = true;
+        $incrementBrace = '';
+        $decrementBrace = '';
+        switch($brace) {
+            case '[':
+                $incrementBrace = '[';
+                $decrementBrace = ']';
+                break;
+            case ']':
+                $incrementBrace = ']';
+                $decrementBrace = '[';
+                $searchForward = false;
+                break;
+            case '(':
+                $incrementBrace = '(';
+                $decrementBrace = ')';
+                break;
+            case ')':
+                $searchForward = false;
+                $incrementBrace = ')';
+                $decrementBrace = '(';
+                break;
+            case '{':
+                $incrementBrace = '{';
+                $decrementBrace = '}';
+                break;
+            case '}':
+                $incrementBrace = '}';
+                $decrementBrace = '{';
+                $searchForward = false;
+                break;
+            default:
+                $message = 'Token is no brace like (,),{,},[ or ]';
+                throw new \Exception($message);
+        }
+
+
+        $level = 1;
+        $this->_nextToken($iterator, $searchForward);
+        $foundToken = null;
+        while($iterator->valid()) {
+            $currentToken = $iterator->current();
+            if (null === $currentToken->getType()) {
+                if ($currentToken->getValue() === $incrementBrace) {
+                    $level++;
+                } else if ($currentToken->getValue() === $decrementBrace) {
+                    $level--;
+                }
+            }
+            if ($level === 0) {
+                $foundToken = $currentToken;
+                break;
+            }
+            $this->_nextToken($iterator, $searchForward);
+        }
+        $iterator->update($token);
+        return $foundToken;
+    }
+
+    protected function _nextToken(Iterator $iterator, $forward = true)
+    {
+        if ($forward) {
+            $iterator->next();
+        } else {
+            $iterator->previous();
+        }
+    }
 }

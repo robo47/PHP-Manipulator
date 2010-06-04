@@ -954,4 +954,106 @@ class AHelperTest extends \Tests\TestCase
         $this->assertSame($expectedResult, $actualResult, 'Found wrong token');
         $this->assertSame($startToken, $iterator->current(), 'Iterator is not seeked to where it started');
     }
+
+    /**
+     * @return array
+     */
+    public function getMatchingBraceProvider()
+    {
+        $data = array();
+        $path = '/AHelper/getMatchingBrace/';
+        $container0 = $this->getContainerFromFixture($path . 'input0.php');
+        $container1 = $this->getContainerFromFixture($path . 'input1.php');
+        $container2 = $this->getContainerFromFixture($path . 'input2.php');
+
+        #0 forwards normal brace
+        $data[] = array(
+            $container0->getIterator()->seekToToken($container0[3]),
+            $container0[9]
+        );
+
+        #1 backwards normal brace
+        $data[] = array(
+            $container0->getIterator()->seekToToken($container0[9]),
+            $container0[3]
+        );
+
+        #2 forwards curly brace
+        $data[] = array(
+            $container1->getIterator()->seekToToken($container1[7]),
+            $container1[29]
+        );
+
+        #3 backwards curly brace
+        $data[] = array(
+            $container1->getIterator()->seekToToken($container1[7]),
+            $container1[29]
+        );
+
+        #4 forwards square bracket
+        $data[] = array(
+            $container2->getIterator()->seekToToken($container2[2]),
+            $container2[13]
+        );
+
+        #5 backwards square bracket
+        $data[] = array(
+            $container2->getIterator()->seekToToken($container2[13]),
+            $container2[2]
+        );
+
+        return $data;
+    }
+
+    /**
+     * @param  \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param  \PHP\Manipulator\Token $token
+     *
+     * @dataProvider getMatchingBraceProvider
+     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
+     */
+     
+    public function testGetMatchingBrace($iterator, $token)
+    {
+        $ahelper = new AHelper();
+        $start = $iterator->current();
+        $matchingBrace = $ahelper->getMatchingBrace($iterator);
+        $this->assertTrue($iterator->valid(), 'Iterator is not valid');
+        $this->assertSame($start, $iterator->current(), 'Iterator is not at starting-position');
+        $this->assertSame($token, $matchingBrace);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
+     */
+    public function testGetMatchingBraceWithoutAMatchingBrace()
+    {
+        $container = $this->getContainerFromFixture('/AHelper/getMatchingBrace/input0.php');
+        $iterator = $container->getIterator()->seekToToken($container[3]);
+        $container[9]->setValue('blub');
+
+        $ahelper = new AHelper();
+
+        $this->assertTrue($iterator->valid(), 'Iterator is not valid');
+        $this->assertSame($container[3], $iterator->current(), 'Iterator is not at starting-position');
+        $this->assertNull($ahelper->getMatchingBrace($iterator));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
+     */
+    public function testGetMatchingBraceThrowsExceptionIfIteratorIsNotAtABrace()
+    {
+        $container = $this->getContainerFromFixture('/AHelper/getMatchingBrace/input0.php');
+        $iterator = $container->getIterator()->seekToToken($container[2]);
+
+        $ahelper = new AHelper();
+
+        try {
+            $ahelper->getMatchingBrace($iterator);
+            $this->fail('Expected Exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Token is no brace like (,),{,},[ or ]', $e->getMessage(), 'Wrong exception message');
+        }
+    }
 }
