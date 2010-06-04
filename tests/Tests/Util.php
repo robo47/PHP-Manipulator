@@ -127,8 +127,8 @@ class Util
             $typeName = $token->getTokenName();
         }
         $length = (string) mb_strlen($value, 'utf-8');
-        $search = array("\n\r", "\n", "\r", "\t", " ");
-        $replace = array("\\n\\r", "\\n", "\\r", "\\t", ".");
+        $search = array("\n\r", "\n", "\r", "\t", ' ');
+        $replace = array('\\n\\\\r', '\\n', '\\r', '\\t', '.');
 
         $value = str_replace($search, $replace, $value);
 
