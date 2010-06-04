@@ -145,8 +145,8 @@ class Indent extends Action
      */
     protected function _removeLastIndention(Token $token)
     {
-        // @todo ugly hack: only works if indention === 4 and spaces used!
-        $token->setValue(substr($token->getValue(), 0, -4));
+        $length = mb_strlen($this->getIndention(1));
+        $token->setValue(substr($token->getValue(), 0, -$length));
     }
 
     /**
