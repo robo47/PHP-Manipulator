@@ -6,9 +6,8 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\ClosureFactory;
 
-// @todo support break directly before and after elseif/else (brace on the next line) ...
-// @todo spaces inside if/elseif's expression if ( $foo == $baa ) or if ($foo == $baa)
 class FormatIfElseifElse
 extends Action
 {
@@ -94,6 +93,20 @@ extends Action
         if (!$this->hasOption('breakBeforeElseif')) {
             $this->setOption('breakBeforeElseif', false);
         }
+
+        if (!$this->hasOption('spaceBeforeIfExpression')) {
+            $this->setOption('spaceBeforeIfExpression', '');
+        }
+        if (!$this->hasOption('spaceAfterIfExpression')) {
+            $this->setOption('spaceAfterIfExpression', '');
+        }
+
+        if (!$this->hasOption('spaceBeforeElseifExpression')) {
+            $this->setOption('spaceBeforeElseifExpression', '');
+        }
+        if (!$this->hasOption('spaceAfterElseifExpression')) {
+            $this->setOption('spaceAfterElseifExpression', '');
+        }
     }
 
     /**
@@ -124,10 +137,12 @@ extends Action
             if ($this->isType($token, (T_IF))) {
                 $this->_ifStack->push($this->_level);
                 $this->_format($iterator);
+                $this->_handleSpaceBeforeAndAfterExpressions($iterator);
             }
             if ($this->isType($token, (T_ELSEIF))) {
                 $this->_elseifStack->push($this->_level);
                 $this->_format($iterator);
+                $this->_handleSpaceBeforeAndAfterExpressions($iterator);
             }
             if ($this->isType($token, (T_ELSE))) {
                 $this->_elseStack->push($this->_level);
@@ -185,6 +200,47 @@ extends Action
             $iterator->next();
         }
         $container->retokenize();
+    }
+
+    /**
+     *
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     */
+    protected function _handleSpaceBeforeAndAfterExpressions(Iterator $iterator)
+    {
+        $start = $iterator->current();
+        // Adding spaces for expressions
+        $openingBrace = $this->getNextMatchingToken($iterator, ClosureFactory::getTypeAndValueClosure(null, '('));
+        if (null !== $openingBrace) {
+            $iterator->seekToToken($openingBrace);
+            $iterator->next();
+            $foundToken = $iterator->current();
+            if ($this->isType($foundToken, T_WHITESPACE)) {
+                $foundToken->setValue($this->getOption('spaceBeforeIfExpression'));
+            } else {
+                $whitespaceToken = new Token($this->getOption('spaceBeforeIfExpression'), T_WHITESPACE);
+                $this->_container->insertTokenBefore($foundToken, $whitespaceToken);
+            }
+            $iterator->update($openingBrace);
+
+            // insert space before expression
+            $closingBrace = $this->getMatchingBrace($iterator);
+            if (null !== $closingBrace)  {
+                $iterator->seekToToken($closingBrace);
+                $iterator->previous();
+                $foundToken = $iterator->current();
+                if ($this->isType($foundToken, T_WHITESPACE)) {
+                    $foundToken->setValue($this->getOption('spaceAfterIfExpression'));
+                } else {
+                    $whitespaceToken = new Token($this->getOption('spaceAfterIfExpression'), T_WHITESPACE);
+                    $this->_container->insertTokenAfter($foundToken, $whitespaceToken);
+                }
+            } else {
+                throw new \Exception('fuck something went wrong');
+            }
+            // insert space after expression
+            $iterator->update($start);
+        }
     }
 
     /**

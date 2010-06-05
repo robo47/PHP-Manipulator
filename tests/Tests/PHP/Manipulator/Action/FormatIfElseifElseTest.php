@@ -40,7 +40,13 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertFalse($action->getOption('breakBeforeElse'), 'Default value for breakBeforeElse is wrong');
         $this->assertFalse($action->getOption('breakBeforeElseif'), 'Default value for breakBeforeElseif is wrong');
 
-        $this->assertCount(16, $action->getOptions());
+        $this->assertEquals('', $action->getOption('spaceBeforeIfExpression'), 'Default value for spaceBeforeIfExpression is wrong');
+        $this->assertEquals('', $action->getOption('spaceAfterIfExpression'), 'Default value for spaceAfterIfExpression is wrong');
+
+        $this->assertEquals('', $action->getOption('spaceBeforeElseifExpression'), 'Default value for spaceBeforeElseifExpression is wrong');
+        $this->assertEquals('', $action->getOption('spaceAfterElseifExpression'), 'Default value for spaceAfterElseifExpression is wrong');
+
+        $this->assertCount(20, $action->getOptions());
     }
 
     /**
@@ -140,6 +146,13 @@ class FormatIfElseifElseTest extends \Tests\TestCase
             array('breakBeforeCurlyBraceOfElse' => true, 'breakBeforeCurlyBraceOfElseif' => true, 'breakAfterIf' => true, 'breakAfterElse' => true, 'breakAfterElseif' => true, 'spaceBeforeElseif' => false, 'spaceBeforeElse' => false, 'breakBeforeElse' => true, 'breakBeforeElseif' => true, 'spaceAfterElse' => false),
             $this->getContainerFromFixture($path . 'input12.php'),
             $this->getContainerFromFixture($path . 'output12.php'),
+        );
+
+        #13 Spaces for Expressions
+        $data[] = array(
+            array('spaceBeforeIfExpression' => ' ', 'spaceBeforeElseifExpression' => ' ', 'spaceAfterIfExpression' => ' ', 'spaceAfterElseifExpression' => ' '),
+            $this->getContainerFromFixture($path . 'input13.php'),
+            $this->getContainerFromFixture($path . 'output13.php'),
         );
 
         return $data;
