@@ -508,7 +508,6 @@ class AHelper
                 throw new \Exception($message);
         }
 
-
         $level = 1;
         $this->_nextToken($iterator, $searchForward);
         $foundToken = null;

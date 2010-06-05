@@ -57,4 +57,17 @@ class ClosureFactoryTest extends \Tests\TestCase
         $this->assertFalse($closure(new Token('blub', T_STRING)));
         $this->assertFalse($closure(new Token('bla', T_STRING)));
     }
+
+    /**
+     * @covers PHP\Manipulator\ClosureFactory::getTypeAndValueClosure
+     */
+    public function testGetTypeAndValueClosure()
+    {
+        $closure = ClosureFactory::getTypeAndValueClosure(T_WHITESPACE, 'foo');
+        $this->assertValidTokenMatchingClosure($closure);
+        $this->assertFalse($closure(new Token('  ', T_WHITESPACE)));
+        $this->assertTrue($closure(new Token('foo', T_WHITESPACE)));
+        $this->assertFalse($closure(new Token('blub', T_STRING)));
+        $this->assertFalse($closure(new Token('foo', T_STRING)));
+    }
 }

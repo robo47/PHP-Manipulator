@@ -8,7 +8,9 @@ use PHP\Manipulator\Token;
 class ClosureFactory
 {
     /**
-     * @param $types string|array
+     * Returns a Closure matching a Token by Type
+     *
+     * @param $types integer|array
      * @return \Closure
      */
     public static function getIsTypeClosure($types)
@@ -20,6 +22,7 @@ class ClosureFactory
     }
 
     /**
+     * Returns a Closure matching a Token by Value
      *
      * @param string|array $values
      * @return \Closure
@@ -29,6 +32,23 @@ class ClosureFactory
         return function(Token $token) use ($values) {
             $helper = new AHelper();
             return $helper->hasValue($token, $values);
+        };
+    }
+
+    /**
+     * Returns a Closure matching a Token by Type and Value
+     *
+     * @param integer|null $type
+     * @param string $value
+     * @return boolean
+     */
+    public static function getTypeAndValueClosure($type, $value)
+    {
+        return function(Token $token) use ($value, $type) {
+            if ($value === $token->getValue() && $type == $token->getType()) {
+                return true;
+            }
+            return false;
         };
     }
 }
