@@ -531,6 +531,10 @@ class AHelper
         return $foundToken;
     }
 
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param boolean $forward
+     */
     protected function _nextToken(Iterator $iterator, $forward = true)
     {
         if ($forward) {
@@ -538,5 +542,28 @@ class AHelper
         } else {
             $iterator->previous();
         }
+    }
+
+    /**
+     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param \Closure $closure
+     * @return \PHP\Manipulator\Token
+     */
+    public function getNextMatchingToken(Iterator $iterator, \Closure $closure)
+    {
+        $token = $iterator->current();
+
+        $foundToken = null;
+        while($iterator->valid()) {
+            $currentToken = $iterator->current();
+
+            if ($closure($currentToken)) {
+                $foundToken = $currentToken;
+                break;
+            }
+            $iterator->next();
+        }
+        $iterator->update($token);
+        return $foundToken;
     }
 }

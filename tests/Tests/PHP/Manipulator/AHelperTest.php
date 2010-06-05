@@ -1012,7 +1012,6 @@ class AHelperTest extends \Tests\TestCase
      * @dataProvider getMatchingBraceProvider
      * @covers \PHP\Manipulator\AHelper::getMatchingBrace
      */
-     
     public function testGetMatchingBrace($iterator, $token)
     {
         $ahelper = new AHelper();
@@ -1055,5 +1054,63 @@ class AHelperTest extends \Tests\TestCase
         } catch (\Exception $e) {
             $this->assertEquals('Token is no brace like (,),{,},[ or ]', $e->getMessage(), 'Wrong exception message');
         }
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getNextMatchingTokenProvider()
+    {
+        $data = array();
+        $path = '/AHelper/getNextMatchingToken/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        #0 Finding a Token
+        $data[] = array(
+            $container->getIterator(),
+            function (Token $token) {
+                if (null === $token->getType() && ')' === $token->getValue()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            $container[6]
+        );
+
+        #1 Not finding a Token
+        $data[] = array(
+            $container->getIterator(),
+            function (Token $token) {
+                if (null === $token->getType() && '$' === $token->getValue()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            null
+        );
+
+        return $data;
+    }
+
+    /**
+     * @param  \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param  \Closure $closure
+     * @param  \PHP\Manipulator\Token $token
+     *
+     * @dataProvider getNextMatchingTokenProvider
+     * @covers \PHP\Manipulator\AHelper::getNextMatchingToken
+     */
+    public function testGetNextMatchingToken($iterator, $closure, $token)
+    {
+        $ahelper = new AHelper();
+        $start = $iterator->current();
+
+        $matchingToken = $ahelper->getNextMatchingToken($iterator, $closure);
+        $this->assertTrue($iterator->valid(), 'Iterator is not valid');
+        $this->assertSame($start, $iterator->current(), 'Iterator is not at starting-position');
+        $this->assertSame($token, $matchingToken);
     }
 }
