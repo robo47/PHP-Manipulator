@@ -7,6 +7,7 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\ClosureFactory;
+use PHP\Manipulator\Helper\NewlineDetector;
 
 class FormatIfElseifElse
 extends Action
@@ -35,6 +36,11 @@ extends Action
      * @var integer
      */
     protected $_level = 0;
+
+    /**
+     * @var string
+     */
+    protected $_defaultLineBreak = "\n";
 
     /**
      * @todo so many options are great but there needs to be an easy way to express what you want too!
@@ -128,6 +134,10 @@ extends Action
     public function run(TokenContainer $container)
     {
         $this->_container = $container;
+
+        $helper = new NewlineDetector();
+        $this->_defaultLineBreak = $helper->getNewlineFromContainer($container);
+
         $iterator = $container->getIterator();
         $this->_reset();
 
@@ -167,10 +177,9 @@ extends Action
                 $this->_level--;
                 if (!$this->isPrecededByTokenType($iterator, T_WHITESPACE)) {
                     if ($this->_shouldInsertBreakBeforeCurrentCurlyBrace()) {
-                        // @todo use container default linebreak ? fallback to \n
-                        $newToken = new Token("\n", T_WHITESPACE);
+                        $newToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
                         $this->_container->insertTokenBefore($token, $newToken);
-                        // @todo should update container -> creating and inserting new token into new function
+                        $iterator->update($token);
                     }
                 }
 
@@ -203,7 +212,6 @@ extends Action
     }
 
     /**
-     *
      * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
      */
     protected function _handleSpaceBeforeAndAfterExpressions(Iterator $iterator)
@@ -252,11 +260,10 @@ extends Action
         $iterator->previous();
         $currentToken = $iterator->current();
         if (!$this->isType($currentToken, T_WHITESPACE)) {
-            // @todo use container default linebreak ? fallback to \n
-            $whitespaceToken = new Token("\n", T_WHITESPACE);
+            $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
             $this->_container->insertTokenBefore($token, $whitespaceToken);
         } elseif (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
-            $currentToken->setValue($currentToken->getValue() . "\n");
+            $currentToken->setValue($currentToken->getValue() . $this->_defaultLineBreak);
         }
 
         $iterator->update($token);
@@ -271,11 +278,10 @@ extends Action
         $iterator->next();
         $currentToken = $iterator->current();
         if (!$this->isType($currentToken, T_WHITESPACE)) {
-            // @todo use container default linebreak ? fallback to \n
-            $whitespaceToken = new Token("\n", T_WHITESPACE);
+            $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
             $this->_container->insertTokenBefore($currentToken, $whitespaceToken);
         } else {
-            $currentToken->setValue("\n");
+            $currentToken->setValue($this->_defaultLineBreak);
         }
         $iterator->update($token);
     }
@@ -316,8 +322,7 @@ extends Action
     {
         $token = $iterator->current();
         if ($this->_shouldInsertBreakAfterCurrentOpeningCurlyBrace($iterator)) {
-            // @todo use container default linebreak ? fallback to \n
-            $newToken = new Token("\n", T_WHITESPACE);
+            $newToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
             $this->_container->insertTokenAfter($token, $newToken);
             $iterator->update();
             $iterator->seekToToken($token);
