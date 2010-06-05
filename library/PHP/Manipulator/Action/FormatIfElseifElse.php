@@ -43,7 +43,7 @@ extends Action
     protected $_defaultLineBreak = "\n";
 
     /**
-     * @todo so many options are great but there needs to be an easy way to express what you want too!
+     * @todo so many options are great but there needs to be an easy way to express what you want to do!
      */
     public function init()
     {
