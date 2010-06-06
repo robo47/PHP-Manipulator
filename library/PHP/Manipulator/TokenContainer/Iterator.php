@@ -5,6 +5,7 @@ namespace PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
+// @todo think about optimizing seek/seekToToken by having a "seek forward" and "seek backwards" flag ?
 class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
 

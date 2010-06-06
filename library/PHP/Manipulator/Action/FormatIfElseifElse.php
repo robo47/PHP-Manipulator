@@ -9,6 +9,7 @@ use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\ClosureFactory;
 use PHP\Manipulator\Helper\NewlineDetector;
 
+// @todo should only apply breaks before/after curly-braces if they are part of an if/else ?!?
 class FormatIfElseifElse
 extends Action
 {

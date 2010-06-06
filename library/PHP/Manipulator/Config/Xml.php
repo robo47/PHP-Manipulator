@@ -141,7 +141,6 @@ class Xml extends Config
                 break;
             default:
                 throw new Exception('unknown cast-type: ' . $type);
-                break;
         }
         return $value;
     }

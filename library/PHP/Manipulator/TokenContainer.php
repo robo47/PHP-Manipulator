@@ -376,7 +376,6 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     *
      * @param string $code
      * @return \PHP\Manipulator\TokenContainer *Provides Fluent Interface*
      * @todo name is ugly
