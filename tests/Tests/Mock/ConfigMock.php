@@ -20,7 +20,6 @@ class ConfigMock extends Config
     }
 
     /**
-     *
      * @param mixed $option
      * @param mixed $value
      */

@@ -11,7 +11,6 @@ class Count extends \PHPUnit_Framework_Constraint
     protected $_expectedCount = null;
 
     /**
-     *
      * @param integer $expected
      * @param boolean $strict
      */
@@ -66,7 +65,6 @@ class Count extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     *
      * @param mixed $other
      * @return boolean
      */

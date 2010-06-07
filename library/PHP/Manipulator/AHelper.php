@@ -209,7 +209,6 @@ class AHelper
     }
 
     /**
-     *
      * @param \PHP\Manipulator\Token $token
      * @return boolean
      */

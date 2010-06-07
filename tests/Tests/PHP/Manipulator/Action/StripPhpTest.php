@@ -48,7 +48,6 @@ class StripPhpTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\StripPhp::run
      * @dataProvider actionProvider
      */

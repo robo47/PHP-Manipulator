@@ -51,7 +51,6 @@ class RemoveIndentionTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\RemoveIndention::run
      * @dataProvider actionProvider
      */

@@ -21,7 +21,6 @@ class Token
     protected $_type = null;
 
     /**
-     *
      * @param string $value
      * @param integer $type
      * @param integer $linenumber

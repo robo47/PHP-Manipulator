@@ -192,7 +192,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @param integer $number
      * @return \PHP\Manipulator\Config\Xml
      */

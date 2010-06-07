@@ -29,7 +29,6 @@ class FormatOperatorsTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @return array
      */
     public function actionProvider()

@@ -26,7 +26,6 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     protected $_difference = '';
 
     /**
-     *
      * @param \PHP\Manipulator\Token $expected
      * @param boolean $strict
      */
@@ -49,7 +48,6 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     *
      * @param \PHP\Manipulator\Token $other
      * @return boolean
      */

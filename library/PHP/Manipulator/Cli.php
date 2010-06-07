@@ -16,7 +16,6 @@ class Cli extends Application
     protected $_start = - 1;
 
     /**
-     *
      * @param array $params
      */
     public function __construct()

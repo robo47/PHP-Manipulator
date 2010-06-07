@@ -103,7 +103,6 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     *
      * @return string
      */
     public function toString()

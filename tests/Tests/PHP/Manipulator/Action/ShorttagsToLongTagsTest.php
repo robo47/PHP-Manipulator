@@ -23,7 +23,6 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @return array
      */
     public function actionProvider()

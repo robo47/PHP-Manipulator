@@ -17,7 +17,6 @@ extends TokenFinder
     public $result = null;
 
     /**
-     *
      * @param \PHP\Manipulator\TokenFinder\Result $result
      */
     public function __construct(Result $result = null)

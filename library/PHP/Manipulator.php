@@ -33,7 +33,6 @@ class Manipulator
     protected $_files = array();
 
     /**
-     *
      * @param array $actions
      */
     public function __construct(array $actions = array(), $files = null)

@@ -24,7 +24,6 @@ class ChangeLineEndingsTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @return array
      */
     public function actionProvider()
@@ -81,7 +80,6 @@ class ChangeLineEndingsTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\ChangeLineEndings::run
      * @dataProvider actionProvider
      */

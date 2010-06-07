@@ -23,7 +23,6 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     protected $_cause = '';
 
     /**
-     *
      * @param \PHP\Manipulator\Tokenfinder\Result $expected
      */
     public function __construct($expected)
@@ -38,7 +37,6 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     }
 
     /**
-     *
      * @param \PHP\Manipulator\Tokenfinder\Result $other
      * @return boolean
      */

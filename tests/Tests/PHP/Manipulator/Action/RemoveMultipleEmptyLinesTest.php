@@ -56,7 +56,6 @@ class RemoveMultipleEmptyLinesTest extends \Tests\TestCase
     }
 
     /**
-     *
      * @covers \PHP\Manipulator\Action\RemoveMultipleEmptyLines::run
      * @dataProvider actionProvider
      */
