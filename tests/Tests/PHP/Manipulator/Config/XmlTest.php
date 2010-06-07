@@ -32,7 +32,7 @@ class XmlTest extends \Tests\TestCase
         $this->assertArrayHasKey('defaultNewline', $options);
 
         $this->assertCount(4, $options);
-        
+
         $this->assertEquals("\n", $options['defaultNewline']);
 
         $actions = $config->getActions();
@@ -145,7 +145,6 @@ class XmlTest extends \Tests\TestCase
 
         $this->assertCount(2, $config->getClassLoaders());
     }
-
 
 
     /**

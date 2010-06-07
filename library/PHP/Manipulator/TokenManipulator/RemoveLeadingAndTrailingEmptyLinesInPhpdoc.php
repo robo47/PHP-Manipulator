@@ -41,7 +41,7 @@ extends TokenManipulator
         $iter->next();
         $keys = array();
         while($iter->valid()) {
-            if(preg_match('~^([\n\r\t\* ]+)$~', $iter->current())) {
+            if (preg_match('~^([\n\r\t\* ]+)$~', $iter->current())) {
                 $keys[] = $iter->key();
             } else {
                 break;

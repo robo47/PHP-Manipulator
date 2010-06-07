@@ -51,7 +51,7 @@ extends Action
                     if ($next->getValue() != $whitespace) {
                         $next->setValue($this->getOption('whitespaceBehindCasts'));
                     }
-                } elseif (!empty($whitespace)) {
+                } else if (!empty($whitespace)) {
                     $container->insertTokenAfter($token, new Token($whitespace, T_WHITESPACE));
                     $iterator->update($token);
                 }

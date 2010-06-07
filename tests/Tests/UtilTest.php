@@ -259,9 +259,9 @@ class UtilTest extends \Tests\TestCase
         $data[] = array(
             Result::factory(array($t1)),
             Result::factory(array($t1, $t2)),
-            '                       expected (1)                    |                     actual(2)                     ' . PHP_EOL . 
+            '                       expected (1)                    |                     actual(2)                     ' . PHP_EOL .
             PHP_EOL .
-            '0)  [SIMPLE]                    |    4 | NULL | blub   | [SIMPLE]                    |    4 | NULL | blub  ' . PHP_EOL . 
+            '0)  [SIMPLE]                    |    4 | NULL | blub   | [SIMPLE]                    |    4 | NULL | blub  ' . PHP_EOL .
             '####### NEXT IS DIFFERENT ##' . PHP_EOL .
             '1)                                                     | [SIMPLE]                    |    3 | NULL | bla   '. PHP_EOL,
         );

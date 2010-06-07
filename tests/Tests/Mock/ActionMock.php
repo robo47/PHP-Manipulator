@@ -14,7 +14,7 @@ extends Action
      * @var boolean
      */
     public static $called = true;
-    
+
     /**
      * @var boolean
      */

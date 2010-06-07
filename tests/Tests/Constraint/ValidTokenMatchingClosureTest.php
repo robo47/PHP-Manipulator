@@ -33,7 +33,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
             function(Token $token) { },
             true
         );
-            
+
         #1
         $data[] = array(
             function(Result $token) { },

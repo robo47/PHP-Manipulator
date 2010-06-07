@@ -107,7 +107,7 @@ extends Action
     {
         return $this->isType($iterator->current(), T_STRING) &&
         ( (true === $this->_isConstant) ||
-            ($this->_notInsideClassFunctionMethodUseOrNamespace() && 
+            ($this->_notInsideClassFunctionMethodUseOrNamespace() &&
              !$this->isFollowedByTokenValue($iterator, '::') &&
              !$this->isFollowedByTokenValue($iterator, '(')));
     }

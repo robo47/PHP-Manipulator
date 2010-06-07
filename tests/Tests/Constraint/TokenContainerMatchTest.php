@@ -140,7 +140,6 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
     }
 
 
-
     /**
      * @covers \Tests\Constraint\TokenContainerMatch::failureDescription
      */

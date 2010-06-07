@@ -163,13 +163,13 @@ extends Action
                 $this->_level++;
                 $this->_applyBreaksAfterCurlyBraces($iterator);
 
-                if (true === $this->getOption('breakAfterIf') && $this->_stackHasLevelMatchingItem($this->_ifStack) - 1 ) {
+                if (true === $this->getOption('breakAfterIf') && $this->_stackHasLevelMatchingItem($this->_ifStack) - 1) {
                     $this->_addLineBreakBeforeCurrentToken($iterator);
                 }
-                if (true === $this->getOption('breakAfterElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack) - 1 ) {
+                if (true === $this->getOption('breakAfterElseif') && $this->_stackHasLevelMatchingItem($this->_elseifStack) - 1) {
                     $this->_addLineBreakBeforeCurrentToken($iterator);
                 }
-                if (true === $this->getOption('breakAfterElse') && $this->_stackHasLevelMatchingItem($this->_elseStack) - 1 ) {
+                if (true === $this->getOption('breakAfterElse') && $this->_stackHasLevelMatchingItem($this->_elseStack) - 1) {
                     $this->_addLineBreakBeforeCurrentToken($iterator);
                 }
             }
@@ -263,7 +263,7 @@ extends Action
         if (!$this->isType($currentToken, T_WHITESPACE)) {
             $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
             $this->_container->insertTokenBefore($token, $whitespaceToken);
-        } elseif (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
+        } else if (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
             $currentToken->setValue($currentToken->getValue() . $this->_defaultLineBreak);
         }
 
@@ -478,7 +478,7 @@ extends Action
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_setPreviousTokenValueToOneSpace($iterator);
             } else if (false === $this->getOption('spaceBefore' . $type) &&
-                $this->isPrecededByTokenType($iterator, T_WHITESPACE) ) {
+                $this->isPrecededByTokenType($iterator, T_WHITESPACE)) {
                 $this->_removePreviousToken($iterator);
             }
         }

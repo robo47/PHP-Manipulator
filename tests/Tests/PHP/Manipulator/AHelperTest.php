@@ -8,7 +8,6 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\ClosureFactory;
 
 
-
 /**
  * @group AHelper
  * @todo test isFollowed/PrecededByMatchedByClosure

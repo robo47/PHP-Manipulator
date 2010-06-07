@@ -21,7 +21,7 @@ class ConfigTest extends \Tests\TestCase
         $config = $this->getConfig();
 
         $options = $config->getOptions();
-       
+
         $this->assertArrayHasKey('actionPrefix', $options);
         $this->assertEquals('PHP\\Manipulator\\Action\\', $options['actionPrefix']);
 

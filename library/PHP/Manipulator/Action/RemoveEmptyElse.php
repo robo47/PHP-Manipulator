@@ -91,7 +91,7 @@ extends Action
         }
         // check for ignored comments
         if (true === $this->getOption('ignoreComments') &&
-            $this->isType($token, array(T_COMMENT, T_DOC_COMMENT)) ) {
+            $this->isType($token, array(T_COMMENT, T_DOC_COMMENT))) {
             return true;
         }
         return false;

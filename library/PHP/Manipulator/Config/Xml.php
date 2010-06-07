@@ -232,7 +232,7 @@ class Xml extends Config
     {
         $finder = new Finder();
         $finder->files();
-        
+
         foreach ($node->childNodes as $option) {
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $nodeName = strtolower($option->nodeName);
