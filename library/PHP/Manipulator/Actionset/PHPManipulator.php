@@ -10,6 +10,8 @@ use PHP\Manipulator\Action\ElseIfToElseAndIf;
 use PHP\Manipulator\Action\StripUnneededPhpCloseTag;
 use PHP\Manipulator\Action\RemoveTrailingWhitespace;
 use PHP\Manipulator\Action\FormatIfElseifElse;
+use PHP\Manipulator\Action\FormatSwitch;
+use PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
 
 class PHPManipulator extends Actionset
 {
@@ -48,18 +50,30 @@ class PHPManipulator extends Actionset
             'spaceBeforeElse' => true,
             'breakAfterCurlyBraceOfIf' => true,
             'breakAfterCurlyBraceOfElse' => true,
-            'breakAfterCurlyBraceOfElseif' => true
+            'breakAfterCurlyBraceOfElseif' => true,
+            'spaceBeforeIfExpression' => false,
+            'spaceAfterIfExpression' => false,
+            'spaceBeforeElseifExpression' => false,
+            'spaceAfterElseifExpression' => false,
+        );
+
+        $formatSwitchOptions = array(
+            'spaceAfterSwitch' => true,
+            'spaceAfterSwitchVariable' => true,
+            'breakBeforeCurlyBrace' => false,
         );
 
         $actions = array();
 
-        $actions[] = new ChangeLineEndings($changelineEndingsOptions);
+        $actions[] = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc();
         $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
         $actions[] = new StripUnneededPhpCloseTag();
         $actions[] = new ElseIfToElseAndIf();
         $actions[] = new FormatIfElseifElse($formatIfElseifElseOptions);
+        $actions[] = new FormatSwitch($formatSwitchOptions);
         $actions[] = new Indent($indentOptions);
         $actions[] = new RemoveTrailingWhitespace($removeTrailingWhitespaceOptions);
+        $actions[] = new ChangeLineEndings($changelineEndingsOptions);
 
         return $actions;
     }
