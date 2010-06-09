@@ -5,7 +5,16 @@ ini_set('display_errors', 1);
 
 
 if ($_SERVER['argc'] < 3) {
-    echo 'wrong argument count (less than 3)';
+    echo 'wrong argument count (less than 3)' . PHP_EOL;
+    echo 'syntax: helper.php type name [fixture count]' . PHP_EOL . PHP_EOL;
+    echo 'type can be:' . PHP_EOL;
+    echo '  tf - TokenFinder' . PHP_EOL;
+    echo '  cc - ContainerConstraint' . PHP_EOL;
+    echo '  a  - Action' . PHP_EOL;
+    echo '  tc - TokenConstraint' . PHP_EOL;
+    echo '  tm - TokenManipulator' . PHP_EOL . PHP_EOL;
+    echo 'name is the name the class should have' . PHP_EOL . PHP_EOL;
+    echo 'fixture count only applies to tokenFinder, ContainerConstraints and Actions and is the number of empty fixture-files which should be created' . PHP_EOL;
     exit(2);
 }
 $typeName = '';
