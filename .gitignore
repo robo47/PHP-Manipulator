@@ -2,4 +2,6 @@ _priv
 nbproject
 build
 tests/tmp
-library/Symfony
+Symfony
+catalog.xml
+package.xml

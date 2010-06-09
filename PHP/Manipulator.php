@@ -11,12 +11,12 @@ class Manipulator
     /**
      * Version number
      */
-    const VERSION = '@version@';
+    const VERSION = '@pear_package_version@';
 
     /**
      * Git commit-hash
      */
-    const GITHASH = '@githash@';
+    const GITHASH = '@pear_package_git_hash@';
 
     /**
      * Array with used actions

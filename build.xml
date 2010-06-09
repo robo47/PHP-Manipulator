@@ -29,12 +29,12 @@
 
     <!-- Removes Libs -->
     <target name="cleanLibs">
-        <delete dir ="library/Symfony" failonerror="false" />
+        <delete dir ="Symfony" failonerror="false" />
     </target>
 
     <!-- Copies Libs -->
     <target name="copyLibs" depends="loadProperties">
-        <copy todir="library/Symfony" >
+        <copy todir="Symfony" >
             <fileset dir="${env.local.libPath}symfony/${env.local.libVersion.Symfony}/src/Symfony" />
         </copy>
     </target>
@@ -45,7 +45,7 @@
             <apply executable   = "php"
                    failonerror  = "true">
                 <arg value="-nl" />
-                <fileset dir="library/PHP">
+                <fileset dir="PHP">
                     <include name="**/*.php" />
                 </fileset>
             </apply>
@@ -65,7 +65,7 @@
         <exec dir="${basedir}"
             executable="phpcpd"
             failonerror="true">
-            <arg line="--log-pmd &quot;${basedir}/build/logs/pmd.xml&quot; &quot;${basedir}/library/PHP&quot;"/>
+            <arg line="--log-pmd &quot;${basedir}/build/logs/pmd.xml&quot; &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
 
@@ -74,7 +74,7 @@
         <exec dir="${basedir}"
             executable="pdepend"
             failonerror="true">
-            <arg line="--jdepend-xml=&quot;${basedir}/build/logs/jdepend.xml&quot; &quot;${basedir}/library/PHP&quot;"/>
+            <arg line="--jdepend-xml=&quot;${basedir}/build/logs/jdepend.xml&quot; &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
 
@@ -84,7 +84,7 @@
             executable="phpcs"
             output="${basedir}/build/logs/checkstyle.xml"
             failonerror="false">
-            <arg line="--report=checkstyle --standard=robo47 &quot;${basedir}/library/PHP&quot;"/>
+            <arg line="--report=checkstyle --standard=robo47 &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
 
@@ -116,9 +116,51 @@
         <mkdir dir="${basedir}/build/reports/phpcb" />
         <exec executable="phpcb" dir="${basedir}/build/reports/phpcb/">
             <arg line="--log &quot;${basedir}/build/logs/&quot;
-        --source &quot;${basedir}/library/PHP/&quot;
+        --source &quot;${basedir}/PHP/&quot;
         --output &quot;${basedir}/build/reports/phpcb/&quot;" />
         </exec>
+    </target>
+    
+    <!-- Create pear package -->
+    <!-- @todo think about using PHING which has a pear package version 2 task -->
+    <target name="package">
+        
+        <tstamp>
+            <format property="pear_package_date" pattern="yyyy-MM-dd"/>
+        </tstamp>
+        <tstamp>
+            <format property="pear_package_time" pattern="HH:mm:ss"/>
+        </tstamp>
+        <mkdir dir="build/package/PHP"/>
+
+        <copy todir="build/package/PHP/" >
+            <fileset dir="${basedir}/PHP/" />
+        </copy>
+
+        <copy tofile="build/package/phpmanipulator.php" file="phpmanipulator.php" />
+
+        <exec command="git rev-list --max-count=1 HEAD" outputproperty="pear_package_git_hash" />
+
+        <replace token="@pear_package_version@" value="${packageversion}" dir="build/package/PHP/">
+            <include name="build/package/PHP/*.php" />
+        </replace>
+
+        <replace token="@pear_package_git_hash@" value="${pear_package_git_hash}" dir="build/package/PHP/">
+            <include name="build/package/PHP/*.php" />
+        </replace>
+
+        <copy file="package.xml.dist" tofile="build/package/package.xml" overwrite="true" />
+
+        <replace file="build/package/package.xml" token="@pear_package_version@" value="${packageversion}" />
+        <replace file="build/package/package.xml" token="@pear_package_date@" value="${pear_package_date}" />
+        <replace file="build/package/package.xml" token="@pear_package_time@" value="${pear_package_time}" />
+        <replace file="build/package/package.xml" token="@pear_package_git_hash@" value="${pear_package_git_hash}" />
+
+        <exec executable="pear" dir="${basedir}/build/package/">
+            <arg line="package" />
+        </exec>
+
+        <copy tofile="PHP_Manipulator-${packageversion}.tgz" file="build/package/PHP_Manipulator-${packageversion}.tgz" />
     </target>
 
     <!-- Run Sloccount -->
@@ -128,7 +170,7 @@
               dir="${basedir}"
               output="${basedir}/build/logs/sloccount.sc"
               failonerror="true">
-            <arg line="--duplicates --wide --details --addlangall --datadir &quot;${basedir}/build/logs/sloccount/&quot; &quot;${basedir}/library/PHP/&quot;"/>
+            <arg line="--duplicates --wide --details --addlangall --datadir &quot;${basedir}/build/logs/sloccount/&quot; &quot;${basedir}/PHP/&quot;"/>
         </exec>
     </target>
 

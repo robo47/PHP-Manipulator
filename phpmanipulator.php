@@ -16,8 +16,8 @@ set_include_path(implode($pathes, PATH_SEPARATOR));
 // Autoloader
 require_once 'Symfony/Foundation/UniversalClassLoader.php';
 $classLoader = new UniversalClassLoader();
-$classLoader->registerNamespace('Symfony', BASE_PATH . '/library/');
-$classLoader->registerNamespace('PHP', BASE_PATH . '/library/');
+$classLoader->registerNamespace('Symfony', BASE_PATH . '/');
+$classLoader->registerNamespace('PHP', BASE_PATH . '/');
 $classLoader->register();
 
 // Cli

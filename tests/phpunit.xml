@@ -11,7 +11,7 @@
     bootstrap="TestHelper.php">
     <filter>
         <whitelist>
-            <directory suffix=".php">../library/PHP/</directory>
+            <directory suffix=".php">../PHP/</directory>
         </whitelist>
     </filter>
     <logging>
