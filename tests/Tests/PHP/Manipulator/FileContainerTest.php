@@ -2,7 +2,7 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\FileContainer;
 use PHP\Manipulator\Token;
 
 /**
@@ -11,6 +11,18 @@ use PHP\Manipulator\Token;
  */
 class FileContainerTest extends \Tests\TestCase
 {
+
+    public function setUp()
+    {
+        file_put_contents(TESTS_PATH . 'tmp/test.php', '<?php echo $foo; ?>');
+    }
+
+    public function tearDown()
+    {
+        @unlink(TESTS_PATH . 'tmp/test.php');
+        @unlink(TESTS_PATH . 'tmp/test2.php');
+    }
+
 
     /**
      * @covers \PHP\Manipulator\FileContainer
@@ -34,7 +46,12 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testConstructThrowsExceptionIfFileNotExists()
     {
-        $this->markTestIncomplete('not implemented yet');
+        try {
+            $container = new FileContainer('/path/to/not/existingFile');
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Unable to open file for reading: /path/to/not/existingFile', $e->getMessage(), 'Wrong exception message');
+        }
     }
 
     /**
@@ -42,7 +59,12 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testConstructThrowsExceptionIfFileIsNoFile()
     {
-        $this->markTestIncomplete('not implemented yet');
+        try {
+            $container = new FileContainer(__DIR__);
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Unable to open file for reading: ' . __DIR__, $e->getMessage(), 'Wrong exception message');
+        }
     }
 
     /**
@@ -50,7 +72,11 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testSave()
     {
-        $this->markTestIncomplete('not implemented yet');
+        $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
+        $container->removeTokens($container->toArray());
+        $container[] = new Token('<foo>', T_INLINE_HTML);
+        $container->save();
+        $this->assertEquals('<foo>', file_get_contents(TESTS_PATH . 'tmp/test.php'));
     }
 
     /**
@@ -58,7 +84,13 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testSaveTo()
     {
-        $this->markTestIncomplete('not implemented yet');
+        $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
+        $container->removeTokens($container->toArray());
+        $container[] = new Token('<foo>', T_INLINE_HTML);
+        $container->saveTo(TESTS_PATH . 'tmp/test2.php');
+
+        $this->assertFileExists(TESTS_PATH . 'tmp/test2.php');
+        $this->assertEquals('<foo>', file_get_contents(TESTS_PATH . 'tmp/test2.php'));
     }
 
     /**
@@ -74,6 +106,12 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testSaveToThrowsExceptionIfFileIsNotWriteable()
     {
-        $this->markTestIncomplete('not implemented yet');
+        $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
+        try {
+            $container->saveTo(TESTS_PATH . 'tmp/foo/test.php');
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Unable to open file for writing: ' . TESTS_PATH . 'tmp/foo/test.php', $e->getMessage(), 'Wrong exception message');
+        }
     }
 }

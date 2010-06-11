@@ -20,9 +20,9 @@ class FileContainer extends TokenContainer
     {
         $this->_file = $file;
         if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
-            throw new Exception('Unable to open file for reading: ' . $file);
+            throw new \Exception('Unable to open file for reading: ' . $file);
         }
-        parent::__construct(\file_get_contents($file));
+        parent::__construct(file_get_contents($file));
     }
 
     /**
@@ -41,8 +41,9 @@ class FileContainer extends TokenContainer
      */
     public function saveTo($file)
     {
+        @touch($file);
         if (!is_writeable($file)) {
-            throw new Exception('Unable to open file for writing: ' . $file);
+            throw new \Exception('Unable to open file for writing: ' . $file);
         }
         file_put_contents($file, $this->toString());
     }
