@@ -51,7 +51,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $config->getFiles());
-        $this->assertContains(\getcwd() . '/TestHelper.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/TestHelper.php', $config->getFiles());
     }
 
     /**
@@ -77,10 +77,10 @@ class ConfigTest extends \Tests\TestCase
         $config = $this->getConfig();
 
         try {
-            $config->addFile(\getcwd() . '/TestHelper.phpx');
+            $config->addFile(getcwd() . '/TestHelper.phpx');
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals('File ' . \getcwd() . '/TestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('File ' . getcwd() . '/TestHelper.phpx not found', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -99,8 +99,8 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(2, $config->getFiles());
-        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
-        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
     }
 
     /**
@@ -115,15 +115,15 @@ class ConfigTest extends \Tests\TestCase
         $this->assertCount(0, $config->getFiles());
 
         $finder = new Finder();
-        $iterator = $finder->files()->name('*.php')->in(\getcwd() . '/_fixtures/Config/testDir0');
+        $iterator = $finder->files()->name('*.php')->in(getcwd() . '/_fixtures/Config/testDir0');
 
         $fluent = $config->addIterator($iterator->getIterator());
 
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
 
-        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
-        $this->assertContains(\getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
 
         $this->assertCount(2, $config->getFiles());
     }
