@@ -45,3 +45,8 @@ $classLoader->registerNamespace('Tests', TESTS_PATH . '/');
 $classLoader->registerNamespace('Baa', TESTS_PATH . '/');
 $classLoader->registerNamespace('Foo', TESTS_PATH . '/');
 $classLoader->register();
+
+if (!file_exists(TESTS_PATH . '/tmp'))
+{
+    mkdir(TESTS_PATH . '/tmp');
+}

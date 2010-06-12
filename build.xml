@@ -4,9 +4,9 @@
     <!-- Clean Project -->
     <target name="clean">
         <delete dir="${basedir}/build"          failonerror="false" />
-        <delete dir="${basedir}/tests/build"    failonerror="false" />
         <delete dir="${basedir}/tests/tmp"      failonerror="false" />
         <delete dir="${basedir}/website/api"    failonerror="false" />
+        <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
     <!-- Prepare -->
@@ -98,24 +98,32 @@
         --output &quot;${basedir}/build/reports/phpcb/&quot;" />
         </exec>
     </target>
-    
+
     <!-- Create pear package -->
-    <!-- @todo think about using PHING which has a pear package version 2 task -->
     <target name="package">
-        
+
         <tstamp>
             <format property="pear_package_date" pattern="yyyy-MM-dd"/>
         </tstamp>
         <tstamp>
             <format property="pear_package_time" pattern="HH:mm:ss"/>
         </tstamp>
+
         <mkdir dir="build/package/PHP"/>
+        <mkdir dir="build/package/tests"/>
 
         <copy todir="build/package/PHP/" >
             <fileset dir="${basedir}/PHP/" />
         </copy>
 
-        <copy tofile="build/package/phpmanipulator.php" file="phpmanipulator.php" />
+        <copy todir="build/package/tests/" >
+            <fileset dir="${basedir}/tests/" />
+        </copy>
+
+        <copy file="phpmanipulator.php" tofile="build/package/phpmanipulator.php" />
+        <copy file="LICENSE" tofile="build/package/LICENSE" />
+        <copy file="README" tofile="build/package/README" />
+        <copy file="TODO" tofile="build/package/TODO" />
 
         <exec command="git rev-list --max-count=1 HEAD" outputproperty="pear_package_git_hash" />
 
@@ -127,18 +135,35 @@
             <include name="**/*.php" />
         </replace>
 
-        <copy file="package.xml.dist" tofile="build/package/package.xml" overwrite="true" />
-
-        <replace file="build/package/package.xml" token="@pear_package_version@" value="${packageversion}" />
-        <replace file="build/package/package.xml" token="@pear_package_date@" value="${pear_package_date}" />
-        <replace file="build/package/package.xml" token="@pear_package_time@" value="${pear_package_time}" />
-        <replace file="build/package/package.xml" token="@pear_package_git_hash@" value="${pear_package_git_hash}" />
-
+        <exec executable="${basedir}/create_pear_package_xml.php" dir="${basedir}">
+            <arg line="${packageversion}" />
+            <arg line="alpha" />
+            <arg line="./build/package/" />
+            <arg line="./package.xml.dist" />
+        </exec>
         <exec executable="pear" dir="${basedir}/build/package/">
             <arg line="package" />
         </exec>
 
-        <copy tofile="PHP_Manipulator-${packageversion}.tgz" file="build/package/PHP_Manipulator-${packageversion}.tgz" />
+        <antcall target="testpackage" />
+
+        <copy file="build/package/PHP_Manipulator-${packageversion}.tgz" tofile="PHP_Manipulator-${packageversion}.tgz" />
+    </target>
+
+    <!-- Test created PEAR-Package -->
+    <target name="testpackage">
+        <mkdir dir="build/test/" />
+
+        <untar compression="gzip" src="build/package/PHP_Manipulator-${packageversion}.tgz" dest="build/test/" />
+
+        <!-- run unittests -->
+        <exec dir="${basedir}/build/test/"
+            executable="pear"
+            failonerror="true">
+            <arg line="run-tests -r -u ./PHP_Manipulator-${packageversion}/tests"/>
+        </exec>
+
+        <!-- @todo Test the package contains the right files ? -->
     </target>
 
     <!-- Run Sloccount -->
