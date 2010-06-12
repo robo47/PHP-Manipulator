@@ -28,7 +28,11 @@
 first test release
     </notes>
     <contents>
+        <!-- @todo AUTOMATE creating this part!!! -->
         <dir baseinstalldir="/" name="/">
+            <file name="LICENSE" role="doc" />
+            <file name="README" role="doc" />
+            <file name="TODO" role="doc" />
             <file baseinstalldir="/" name="phpmanipulator.php" role="script">
                 <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
             </file>
@@ -146,20 +150,5 @@ first test release
         </filelist>
     </phprelease>
     <changelog>
-        <release>
-            <version>
-                <release>0.0.1</release>
-                <api>0.0.1</api>
-            </version>
-            <stability>
-                <release>alpha</release>
-                <api>alpha</api>
-            </stability>
-            <date>2010-06-09</date>
-            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
-            <notes>
-first test release
-            </notes>
-        </release>
     </changelog>
 </package>

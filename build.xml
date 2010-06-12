@@ -7,7 +7,6 @@
         <delete dir="${basedir}/tests/build"    failonerror="false" />
         <delete dir="${basedir}/tests/tmp"      failonerror="false" />
         <delete dir="${basedir}/website/api"    failonerror="false" />
-        <antcall target="cleanLibs" />
     </target>
 
     <!-- Prepare -->
@@ -16,27 +15,6 @@
         <mkdir dir="${basedir}/build/docs" />
         <mkdir dir="${basedir}/build/reports" />
         <mkdir dir="${basedir}/tests/tmp" />
-        <antcall target="copyLibs" />
-    </target>
-
-    <!-- load properties based on hostname -->
-    <!-- Setup for CI Hudson - mails.blub-blub.net -->
-    <!-- Setup for local - baafoo -->
-    <target name="loadProperties">
-        <exec executable="hostname" outputproperty="host.name"/>
-        <property file="${basedir}/properties/${host.name}.properties" />
-    </target>
-
-    <!-- Removes Libs -->
-    <target name="cleanLibs">
-        <delete dir ="Symfony" failonerror="false" />
-    </target>
-
-    <!-- Copies Libs -->
-    <target name="copyLibs" depends="loadProperties">
-        <copy todir="Symfony" >
-            <fileset dir="${env.local.libPath}symfony/${env.local.libVersion.Symfony}/src/Symfony" />
-        </copy>
     </target>
 
     <!-- Run php lint check on lib, tests and fixtures -->
@@ -142,11 +120,11 @@
         <exec command="git rev-list --max-count=1 HEAD" outputproperty="pear_package_git_hash" />
 
         <replace token="@pear_package_version@" value="${packageversion}" dir="build/package/PHP/">
-            <include name="build/package/PHP/*.php" />
+            <include name="**/*.php" />
         </replace>
 
         <replace token="@pear_package_git_hash@" value="${pear_package_git_hash}" dir="build/package/PHP/">
-            <include name="build/package/PHP/*.php" />
+            <include name="**/*.php" />
         </replace>
 
         <copy file="package.xml.dist" tofile="build/package/package.xml" overwrite="true" />
