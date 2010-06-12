@@ -26,7 +26,7 @@ class Cli extends Application
     public function __construct()
     {
         $this->_start = microtime(true);
-        parent::__construct('phpManipulator', Manipulator::VERSION);
+        parent::__construct('phpManipulator', Manipulator::VERSION . ' (' . Manipulator::GITHASH . ')');
         $this->_initApp();
     }
 
