@@ -5,7 +5,13 @@ namespace PHP;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Action;
 
-// @todo Should be the class used by apps not using the CLI ... really needed ?
+/**
+ * @package PHP\Manipulator
+ * @license http://opensource.org/licenses/bsd-license.php The BSD License
+ * @link    http://github.com/robo47/php-manipulator
+ * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @todo Should be the class used by apps not using the CLI ... really needed ?
+ */
 class Manipulator
 {
     /**

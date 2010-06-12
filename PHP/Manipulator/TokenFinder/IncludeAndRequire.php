@@ -7,7 +7,13 @@ use PHP\Manipulator\TokenFinder;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
-// @todo needs Better name, propably it is possible to create a super-class which allows to find complete statements ?
+/**
+ * @package PHP\Manipulator
+ * @license http://opensource.org/licenses/bsd-license.php The BSD License
+ * @link    http://github.com/robo47/php-manipulator
+ * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @todo    needs Better name, propably it is possible to create a super-class which allows to find complete statements ?
+ */
 class IncludeAndRequire
 extends TokenFinder
 {
