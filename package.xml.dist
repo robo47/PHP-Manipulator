@@ -28,86 +28,88 @@
 first test release
     </notes>
     <contents>
-        <dir baseinstalldir="PHP" name="/">
-            <file baseinstalldir="PHP" name="phpmanipulator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Actionset.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/AHelper.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Cli.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/ClosureFactory.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Config.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/ContainerConstraint.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/FileContainer.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Token.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenContainer.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenFinder.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/AddPublicKeyword.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/AsptagsToLongTags.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ChangeLineEndings.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ChangeQuotesToSingleQuotes.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/CommentOutIncludesAndRequires.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ElseAndIfToElseIf.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ElseIfToElseAndIf.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/FormatCasts.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/FormatIfElseifElse.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/FormatOperators.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/FormatSwitch.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/Indent.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/OldStyleConstructorReplacer.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveComments.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveEmptyElse.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveErrorControlOperator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveIncludesAndRequires.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveIndention.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveLeadingAndTrailingEmptyLinesInPhpdoc.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveMultipleEmptyLines.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveTrailingWhitespace.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveTypehints.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/RemoveWhitespaceFromEnd.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ReplaceBooleanOperatorsWithLogicalOperators.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ReplaceLogicalOperatorsWithBooleanOperators.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ReplaceVarWithPublic.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/ShorttagsToLongTags.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/StripNonPhp.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/StripPhp.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/StripUnneededPhpCloseTag.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Action/UppercaseConstants.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Actionset/PHPManipulator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Cli/Command/License.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Cli/Command/RunActions.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Cli/Command/ShowTokens.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Config/Xml.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/ContainerConstraint/ContainsClass.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Helper/CreateMultilineCommentFromTokenToToken.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Helper/NewlineDetector.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Helper/SetWhitespaceAfterToken.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/Helper/SetWhitespaceBeforeToken.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/BeginsWithNewline.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/ContainsNewline.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/ContainsOnlyWhitespace.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/EndsWithNewline.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsDoublequote.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsErrorControlOperator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsMultilineComment.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsOperator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsSinglelineComment.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenConstraint/IsSingleNewline.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenContainer/Iterator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenContainer/ReverseIterator.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenFinder/FunctionFinder.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenFinder/IncludeAndRequire.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenFinder/Result.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenFinder/SwitchFinder.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/IndentMultilineComment.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/LowercaseTokenValue.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/MultilineToSinglelineComment.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/RemoveBeginNewline.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/RemoveCommentIndention.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/RemoveLeadingAndTrailingEmptyLinesInPhpdoc.php" role="php" />
-            <file baseinstalldir="PHP" name="PHP/Manipulator/TokenManipulator/UppercaseTokenValue.php" role="php" />
+        <dir baseinstalldir="/" name="/">
+            <file baseinstalldir="/" name="phpmanipulator.php" role="script">
+                <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
+            </file>
+            <file name="PHP/Manipulator.php" role="php" />
+            <file name="PHP/Manipulator/Action.php" role="php" />
+            <file name="PHP/Manipulator/Actionset.php" role="php" />
+            <file name="PHP/Manipulator/AHelper.php" role="php" />
+            <file name="PHP/Manipulator/Cli.php" role="php" />
+            <file name="PHP/Manipulator/ClosureFactory.php" role="php" />
+            <file name="PHP/Manipulator/Config.php" role="php" />
+            <file name="PHP/Manipulator/ContainerConstraint.php" role="php" />
+            <file name="PHP/Manipulator/FileContainer.php" role="php" />
+            <file name="PHP/Manipulator/Token.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint.php" role="php" />
+            <file name="PHP/Manipulator/TokenContainer.php" role="php" />
+            <file name="PHP/Manipulator/TokenFinder.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator.php" role="php" />
+            <file name="PHP/Manipulator/Action/AddPublicKeyword.php" role="php" />
+            <file name="PHP/Manipulator/Action/AsptagsToLongTags.php" role="php" />
+            <file name="PHP/Manipulator/Action/ChangeLineEndings.php" role="php" />
+            <file name="PHP/Manipulator/Action/ChangeQuotesToSingleQuotes.php" role="php" />
+            <file name="PHP/Manipulator/Action/CommentOutIncludesAndRequires.php" role="php" />
+            <file name="PHP/Manipulator/Action/ElseAndIfToElseIf.php" role="php" />
+            <file name="PHP/Manipulator/Action/ElseIfToElseAndIf.php" role="php" />
+            <file name="PHP/Manipulator/Action/FormatCasts.php" role="php" />
+            <file name="PHP/Manipulator/Action/FormatIfElseifElse.php" role="php" />
+            <file name="PHP/Manipulator/Action/FormatOperators.php" role="php" />
+            <file name="PHP/Manipulator/Action/FormatSwitch.php" role="php" />
+            <file name="PHP/Manipulator/Action/Indent.php" role="php" />
+            <file name="PHP/Manipulator/Action/OldStyleConstructorReplacer.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveComments.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveEmptyElse.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveErrorControlOperator.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveIncludesAndRequires.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveIndention.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveLeadingAndTrailingEmptyLinesInPhpdoc.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveMultipleEmptyLines.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveTrailingWhitespace.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveTypehints.php" role="php" />
+            <file name="PHP/Manipulator/Action/RemoveWhitespaceFromEnd.php" role="php" />
+            <file name="PHP/Manipulator/Action/ReplaceBooleanOperatorsWithLogicalOperators.php" role="php" />
+            <file name="PHP/Manipulator/Action/ReplaceLogicalOperatorsWithBooleanOperators.php" role="php" />
+            <file name="PHP/Manipulator/Action/ReplaceVarWithPublic.php" role="php" />
+            <file name="PHP/Manipulator/Action/ShorttagsToLongTags.php" role="php" />
+            <file name="PHP/Manipulator/Action/StripNonPhp.php" role="php" />
+            <file name="PHP/Manipulator/Action/StripPhp.php" role="php" />
+            <file name="PHP/Manipulator/Action/StripUnneededPhpCloseTag.php" role="php" />
+            <file name="PHP/Manipulator/Action/UppercaseConstants.php" role="php" />
+            <file name="PHP/Manipulator/Actionset/PHPManipulator.php" role="php" />
+            <file name="PHP/Manipulator/Cli/Command/License.php" role="php" />
+            <file name="PHP/Manipulator/Cli/Command/RunActions.php" role="php" />
+            <file name="PHP/Manipulator/Cli/Command/ShowTokens.php" role="php" />
+            <file name="PHP/Manipulator/Config/Xml.php" role="php" />
+            <file name="PHP/Manipulator/ContainerConstraint/ContainsClass.php" role="php" />
+            <file name="PHP/Manipulator/Helper/CreateMultilineCommentFromTokenToToken.php" role="php" />
+            <file name="PHP/Manipulator/Helper/NewlineDetector.php" role="php" />
+            <file name="PHP/Manipulator/Helper/SetWhitespaceAfterToken.php" role="php" />
+            <file name="PHP/Manipulator/Helper/SetWhitespaceBeforeToken.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/BeginsWithNewline.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/ContainsNewline.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/ContainsOnlyWhitespace.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/EndsWithNewline.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsDoublequote.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsErrorControlOperator.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsMultilineComment.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsOperator.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsSinglelineComment.php" role="php" />
+            <file name="PHP/Manipulator/TokenConstraint/IsSingleNewline.php" role="php" />
+            <file name="PHP/Manipulator/TokenContainer/Iterator.php" role="php" />
+            <file name="PHP/Manipulator/TokenContainer/ReverseIterator.php" role="php" />
+            <file name="PHP/Manipulator/TokenFinder/FunctionFinder.php" role="php" />
+            <file name="PHP/Manipulator/TokenFinder/IncludeAndRequire.php" role="php" />
+            <file name="PHP/Manipulator/TokenFinder/Result.php" role="php" />
+            <file name="PHP/Manipulator/TokenFinder/SwitchFinder.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/IndentMultilineComment.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/LowercaseTokenValue.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/MultilineToSinglelineComment.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/RemoveBeginNewline.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/RemoveCommentIndention.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/RemoveLeadingAndTrailingEmptyLinesInPhpdoc.php" role="php" />
+            <file name="PHP/Manipulator/TokenManipulator/UppercaseTokenValue.php" role="php" />
         </dir>
     </contents>
     <dependencies>
@@ -118,12 +120,12 @@ first test release
             <pearinstaller>
                 <min>1.8.1</min>
             </pearinstaller>
-          <!-- @todo find symfony 2.0 pear repro -->
-          <!--<package>
-           <name>symfony2</name>
-           <channel>pear.symfony-project.com</channel>
-           <min>2.0</min>
-          </package>-->
+            <!-- @todo find symfony 2.0 pear repro -->
+            <package>
+                <name>symfony2</name>
+                <channel>pear.robo47.net</channel>
+                <min>0.0.0</min>
+            </package>
             <extension>
                 <name>dom</name>
             </extension>
@@ -138,16 +140,10 @@ first test release
             </extension>
         </required>
     </dependencies>
-    <phprelease >
-        <!-- @todo create .bat for windows and .sh for unix -->
-        <!--<installconditions>
-            <os>
-                <name>linux</name>
-            </os>
-        </installconditions>
+    <phprelease>
         <filelist>
             <install as="phpmanipulator" name="phpmanipulator.php" />
-        </filelist>-->
+        </filelist>
     </phprelease>
     <changelog>
         <release>

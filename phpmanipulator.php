@@ -4,20 +4,37 @@
 use PHP\Manipulator\Cli;
 use Symfony\Foundation\UniversalClassLoader;
 
-define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));
+// @todo use http://de3.php.net/manual/en/function.stream-resolve-include-path.php ? would make dependency 5.3.2!
+function findIncludePathForFile($file)
+{
+    $includePaths = explode(PATH_SEPARATOR, get_include_path());
+    $pearPath = null;
+    foreach($includePaths as $path) {
+        if (file_exists($path . DIRECTORY_SEPARATOR . $file)) {
+            $pearPath = $path;
+            break;
+        }
+    }
+    return $pearPath;
+}
 
-// Include path
-$pathes = array();
-$pathes[] = BASE_PATH . '/library/';
-$pathes[] = get_include_path();
+$symfonyPath = findIncludePathForFile('Symfony/Foundation/UniversalClassLoader.php');
+if ($symfonyPath === null) {
+    echo 'ERROR: PEAR-Path for Symonfy not found!';
+    exit(1);
+}
 
-set_include_path(implode($pathes, PATH_SEPARATOR));
+$manipulatorPath = findIncludePathForFile('PHP/Manipulator.php');
+if ($symfonyPath === null) {
+    echo 'ERROR: PEAR-Path for PHP\Manipulator not found!';
+    exit(1);
+}
 
 // Autoloader
 require_once 'Symfony/Foundation/UniversalClassLoader.php';
 $classLoader = new UniversalClassLoader();
-$classLoader->registerNamespace('Symfony', BASE_PATH . '/');
-$classLoader->registerNamespace('PHP', BASE_PATH . '/');
+$classLoader->registerNamespace('Symfony', $symfonyPath);
+$classLoader->registerNamespace('PHP', $manipulatorPath);
 $classLoader->register();
 
 // Cli

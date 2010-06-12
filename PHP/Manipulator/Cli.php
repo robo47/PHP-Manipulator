@@ -6,7 +6,6 @@ use PHP\Manipulator;
 use Symfony\Components\Console\Application;
 use Symfony\Components\Finder\Finder;
 
-
 class Cli extends Application
 {
 
