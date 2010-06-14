@@ -10,7 +10,6 @@ use PHP\Manipulator\Token;
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
- * @todo    think about optimizing seek/seekToToken by having a "seek forward" and "seek backwards" flag ?
  */
 class Iterator implements \Iterator, \Countable, \SeekableIterator
 {
