@@ -15,14 +15,6 @@ use PHP\Manipulator\Token;
 class ReverseIterator extends Iterator
 {
 
-    /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     */
-    public function __construct(TokenContainer $container)
-    {
-        parent::__construct($container);
-    }
-
     protected function _init()
     {
         parent::_init();
