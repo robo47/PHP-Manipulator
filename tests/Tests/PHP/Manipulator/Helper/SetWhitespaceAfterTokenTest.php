@@ -26,10 +26,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input0.php'),
             $this->getContainerFromFixture($path . 'output0.php'),
-            array(
-                'tokens' => array($inputContainer[3]),
-                'whitespace' => array(T_CONCAT_EQUAL => ' '),
-            ),
+            array($inputContainer[3]),
+            array(T_CONCAT_EQUAL => ' '),
             false
         );
 
@@ -37,10 +35,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input1.php'),
             $this->getContainerFromFixture($path . 'output1.php'),
-            array(
-                'tokens' => array($inputContainer[3]),
-                'whitespace' => array(T_CONCAT_EQUAL => '  '),
-            ),
+            array($inputContainer[3]),
+            array(T_CONCAT_EQUAL => '  '),
             false
         );
 
@@ -48,10 +44,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
-            array(
-                'tokens' => array($inputContainer[3]),
-                'whitespace' => array(T_CONCAT_EQUAL => ''),
-            ),
+            array($inputContainer[3]),
+            array(T_CONCAT_EQUAL => ''),
             false
         );
 
@@ -59,10 +53,8 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input3.php'),
             $this->getContainerFromFixture($path . 'output3.php'),
-            array(
-                'tokens' => array($inputContainer[3]),
-                'whitespace' => array('=' => ' '),
-            ),
+            array($inputContainer[3]),
+            array('=' => ' '),
             false
         );
 
@@ -70,64 +62,21 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     }
 
     /**
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param \\PHP\Manipulator\TokenContainer $expectedContainer
+     * @param array $tokens
+     * @param array $whitespace
+     * @param boolean $strict
+     *
      * @dataProvider manipulateProvider
      * @covers \PHP\Manipulator\Helper\SetWhitespaceAfterToken
      */
-    public function testManipulate($container, $expectedContainer, $params, $strict)
+     
+    public function testManipulate($container, $expectedContainer, $tokens, $whitespace, $strict)
     {
         $manipulator = new SetWhitespaceAfterToken();
-        $manipulator->run($container, $params);
+        $manipulator->run($container, $tokens, $whitespace);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\SetWhitespaceAfterToken::run
-     * @covers \Exception
-     */
-    public function testMissingWhitespaceThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('tokens' => array($container[5], $container[6]));
-        $manipulator = new SetWhitespaceAfterToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'whitespace' not found in \$params", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\SetWhitespaceAfterToken::run
-     * @covers \Exception
-     */
-    public function testMissingTokensThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('whitespace' => array(T_ECHO => 'blub'));
-        $manipulator = new SetWhitespaceAfterToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'tokens' not found in \$params", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\SetWhitespaceAfterToken::run
-     * @covers \Exception
-     */
-    public function testParamIsNotArrayThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $manipulator = new SetWhitespaceAfterToken();
-        try {
-            $manipulator->run($container);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('invalid input $params should be an array', $e->getMessage(), 'Wrong exception message');
-        }
     }
 
     /**
@@ -137,10 +86,11 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
     public function testNonExistingTokenInWhitespaceListThrowsExceptionInGetWhitespaceForToken()
     {
         $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('tokens' => array($container[2], $container[3]), 'whitespace' => array(T_ECHO => 'blub'));
+        $tokens = array($container[2], $container[3]);
+        $whitespace = array(T_ECHO => 'blub');
         $manipulator = new SetWhitespaceAfterToken();
         try {
-            $manipulator->run($container, $params);
+            $manipulator->run($container, $tokens, $whitespace);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals('No option found for: T_WHITESPACE (' . T_WHITESPACE . ')', $e->getMessage(), 'Wrong exception message');

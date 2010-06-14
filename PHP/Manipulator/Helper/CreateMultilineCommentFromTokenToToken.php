@@ -21,39 +21,13 @@ extends AHelper
      * @param \PHP\Manipulator\TokenContainer $container
      * @param mixed $params
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container, Token $from, Token $to)
     {
-        if (!is_array($params)) {
-            $message = 'invalid input $params should be an array';
-            throw new \Exception($message);
-        }
-        if (!isset($params['from'])) {
-            $message = "key 'from' not found in \$params";
-            throw new \Exception($message);
-        }
-        if (!($params['from'] instanceof Token)) {
-            $message = "key 'from' is not instance of PHP\Manipulator\Token";
-            throw new \Exception($message);
-        }
-        if (!isset($params['to'])) {
-            $message = "key 'to' not found in \$params";
-            throw new \Exception($message);
-        }
-        if (!($params['to'] instanceof Token)) {
-            $message = "key 'to' is not instance of PHP\Manipulator\Token";
-            throw new \Exception($message);
-        }
-
-        $from = $params['from'];
-        /* @var $from PHP\Manipulator\Token */
-
-        $to = $params['to'];
-        /* @var $from PHP\Manipulator\Token */
-
         if (!$container->contains($from)) {
             $message = "element 'from' not found in \$container";
             throw new \Exception($message);
         }
+
 
         if (!$container->contains($to)) {
             $message = "element 'to' not found in \$container";

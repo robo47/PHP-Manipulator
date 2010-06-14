@@ -23,7 +23,8 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         # 0
         $data[] = array(
             $c = new TokenContainer("<?php \$blub = \$bla; ?>"),
-            array('from' => $c[1], 'to' => $c[6]),
+            $c[1],
+            $c[6],
             new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
@@ -31,7 +32,8 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         # 1 Multiline-comment in code
         $data[] = array(
             $c = new TokenContainer("<?php \$blub =/* foo */ \$bla; ?>"),
-            array('from' => $c[1], 'to' => $c[7]),
+            $c[1],
+            $c[7],
             new TokenContainer("<?php /*\$blub = \$bla;*/ ?>"),
             false
         );
@@ -39,7 +41,8 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
         # 2 Multilinecomment nested in normal comment
         $data[] = array(
             $c = new TokenContainer("<?php \$blub =///* */\n \$bla; ?>"),
-            array('from' => $c[1], 'to' => $c[7]),
+            $c[1],
+            $c[7],
             new TokenContainer("<?php /*\$blub =///* \n \$bla;*/ ?>"),
             false
         );
@@ -48,100 +51,21 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     }
 
     /**
+     * @param \PHP\Manipulator\TokenContainer $container
+     * @param \PHP\Manipulator\Token $from
+     * @param \PHP\Manipulator\Token $to
+     * @param \PHP\Manipulator\TokenContainer $expectedContainer
+     * @param boolean $strict
+     *
      * @dataProvider manipulateProvider
      * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
      * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::<protected>
      */
-    public function testManipulate($container, $params, $expectedContainer, $strict)
+    public function testManipulate($container, $from, $to, $expectedContainer, $strict)
     {
         $manipulator = new CreateMultilineCommentFromTokenToToken();
-        $manipulator->run($container, $params);
+        $manipulator->run($container, $from, $to);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
-     * @covers \Exception
-     */
-    public function testNonArrayAsParamsThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = null;
-        $manipulator = new CreateMultilineCommentFromTokenToToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('invalid input $params should be an array', $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
-     * @covers \Exception
-     */
-    public function testMissingFromThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('to' => $container[5]);
-        $manipulator = new CreateMultilineCommentFromTokenToToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'from' not found in \$params", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
-     * @covers \Exception
-     */
-    public function testMissingToThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('from' => $container[1]);
-        $manipulator = new CreateMultilineCommentFromTokenToToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'to' not found in \$params", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
-     * @covers \Exception
-     */
-    public function testWrongDatatypeForFromThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('to' => $container[5], 'from' => 'foo');
-        $manipulator = new CreateMultilineCommentFromTokenToToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'from' is not instance of PHP\Manipulator\Token", $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken::run
-     * @covers \Exception
-     */
-    public function testWrongDatatypeForToThrowsException()
-    {
-        $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('to' => 'foo', 'from' => $container[1]);
-        $manipulator = new CreateMultilineCommentFromTokenToToken();
-        try {
-            $manipulator->run($container, $params);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("key 'to' is not instance of PHP\Manipulator\Token", $e->getMessage(), 'Wrong exception message');
-        }
     }
 
     /**
@@ -151,10 +75,9 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     public function testFromTokenisBehindToTokenThrowsException()
     {
         $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('to' => $container[1], 'from' => $container[5]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
-            $manipulator->run($container, $params);
+            $manipulator->run($container, $container[5], $container[1]);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals("startOffset is behind endOffset", $e->getMessage(), 'Wrong exception message');
@@ -168,10 +91,9 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     public function testToIsNotContainedInTheContainerThrowsException()
     {
         $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('to' => new Token('('), 'from' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
-            $manipulator->run($container, $params);
+            $manipulator->run($container, $container[1], new Token('('));
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals("element 'to' not found in \$container", $e->getMessage(), 'Wrong exception message');
@@ -185,10 +107,9 @@ class CreateMultilineCommentFromTokenToTokenTest extends \Tests\TestCase
     public function testFromIsNotContainedInTheContainerThrowsException()
     {
         $container = new TokenContainer("<?php echo 'hellow world'; ?>");
-        $params = array('from' => new Token('('), 'to' => $container[1]);
         $manipulator = new CreateMultilineCommentFromTokenToToken();
         try {
-            $manipulator->run($container, $params);
+            $manipulator->run($container, new Token('('), $container[1]);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals("element 'from' not found in \$container", $e->getMessage(), 'Wrong exception message');

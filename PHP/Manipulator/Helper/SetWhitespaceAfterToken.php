@@ -24,25 +24,11 @@ extends AHelper
 
     /**
      * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
+     * @param array $tokens
+     * @param string $whitespace
      */
-    public function run(TokenContainer $container, $params = null)
+    public function run(TokenContainer $container, array $tokens, array $whitespace)
     {
-        if (!is_array($params)) {
-            $message = 'invalid input $params should be an array';
-            throw new \Exception($message);
-        }
-        if (!isset($params['tokens'])) {
-            $message = "key 'tokens' not found in \$params";
-            throw new \Exception($message);
-        }
-        if (!isset($params['whitespace'])) {
-            $message = "key 'whitespace' not found in \$params";
-            throw new \Exception($message);
-        }
-
-        $tokens = $params['tokens'];
-        $whitespace = $params['whitespace'];
         $this->_container = $container;
         $iterator = $container->getIterator();
 

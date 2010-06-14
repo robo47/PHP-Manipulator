@@ -6,12 +6,18 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Action\RemoveIndention;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use SplStack;
 
 /**
  * @package PHP\Manipulator
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @uses    \PHP\Manipulator\TokenConstraint\IsSinglelineComment
+ * @uses    \PHP\Manipulator\TokenConstraint\IsMultilineComment
+ * @uses    \PHP\Manipulator\TokenConstraint\ContainsNewline
+ * @uses    \PHP\Manipulator\TokenConstraint\IsDoublequote
+ * @uses    \PHP\Manipulator\Action\IndentMultilineComment
  */
 class Indent extends Action
 {
@@ -77,7 +83,7 @@ class Indent extends Action
         $this->_insideCase = false;
         $this->_insideSwitch = false;
         $this->_indentionLevel = 0;
-        $this->_switchStack = new \SplStack();
+        $this->_switchStack = new SplStack();
     }
 
     /**

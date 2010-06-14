@@ -46,7 +46,7 @@ class ClosureFactory
      *
      * @param integer|null $type
      * @param string $value
-     * @return boolean
+     * @return \Closure
      */
     public static function getTypeAndValueClosure($type, $value)
     {

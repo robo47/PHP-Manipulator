@@ -104,6 +104,18 @@ extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
      */
+    public function testGetLastTokenWithOnlyOneTokenInResult()
+    {
+        $token = new Token('foo');
+        $result = new Result();
+        $result->addToken($token);
+
+        $this->assertSame($token, $result->getLastToken());
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
+     */
     public function testGetLastTokenThrowsExceptionOnEmptyResult()
     {
         $result = new Result();

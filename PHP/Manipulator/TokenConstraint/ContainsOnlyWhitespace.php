@@ -24,9 +24,6 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $params = null)
     {
-        if (true == preg_match('~^(\s)*$~', $token->getValue())) {
-            return true;
-        }
-        return false;
+        return (bool)preg_match('~^(\s)*$~', $token->getValue());
     }
 }

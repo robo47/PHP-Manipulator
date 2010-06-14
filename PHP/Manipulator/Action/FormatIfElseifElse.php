@@ -6,15 +6,19 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenConstraint\ContainsNewline;
 use PHP\Manipulator\ClosureFactory;
 use PHP\Manipulator\Helper\NewlineDetector;
+use SplStack;
 
 /**
  * @package PHP\Manipulator
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
- * @todo should only apply breaks before/after curly-braces if they are part of an if/else ?!?
+ * @uses    \PHP\Manipulator\Helper\NewlineDetector
+ * @uses    \PHP\Manipulator\TokenConstraint\ContainsNewline
+ * @todo    should only apply breaks before/after curly-braces if they are part of an if/else ?!?
  */
 // 
 class FormatIfElseifElse
@@ -128,9 +132,9 @@ extends Action
      */
     protected function _reset()
     {
-        $this->_ifStack = new \SplStack();
-        $this->_elseStack = new \SplStack();
-        $this->_elseifStack = new \SplStack();
+        $this->_ifStack = new SplStack();
+        $this->_elseStack = new SplStack();
+        $this->_elseifStack = new SplStack();
         $this->_level = 0;
     }
 
@@ -318,7 +322,7 @@ extends Action
      * @param \SplStack $stack
      * @return boolean
      */
-    protected function _stackHasLevelMatchingItem(\SplStack $stack)
+    protected function _stackHasLevelMatchingItem(SplStack $stack)
     {
         return (!$stack->isEmpty() && $this->_level === $stack[count($stack) -1]);
     }
@@ -346,7 +350,7 @@ extends Action
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
             function(Token $token) {
-                $constraint = new \PHP\Manipulator\TokenConstraint\ContainsNewline();
+                $constraint = new ContainsNewline();
                 return $constraint->evaluate($token);
             }
         );

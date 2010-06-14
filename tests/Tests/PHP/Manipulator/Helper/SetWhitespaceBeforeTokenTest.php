@@ -27,10 +27,8 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input0.php'),
             $this->getContainerFromFixture($path . 'output0.php'),
-            array(
-                'tokens' => array($inputContainer[3]),
-                'whitespace' => array(T_CONCAT_EQUAL => ' '),
-            ),
+            array($inputContainer[3]),
+            array(T_CONCAT_EQUAL => ' '),
             false
         );
 
@@ -38,10 +36,8 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input1.php'),
             $this->getContainerFromFixture($path . 'output1.php'),
-            array(
-                'tokens' => array($inputContainer[4]),
-                'whitespace' => array(T_CONCAT_EQUAL => '  '),
-            ),
+            array($inputContainer[4]),
+            array(T_CONCAT_EQUAL => '  '),
             false
         );
 
@@ -49,10 +45,8 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
         $data[] = array(
             $inputContainer = $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
-            array(
-                'tokens' => array($inputContainer[4]),
-                'whitespace' => array(T_CONCAT_EQUAL => ''),
-            ),
+            array($inputContainer[4]),
+            array(T_CONCAT_EQUAL => ''),
             false
         );
 
@@ -63,10 +57,10 @@ class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
      * @dataProvider manipulateProvider
      * @covers \PHP\Manipulator\Helper\SetWhitespaceBeforeToken
      */
-    public function testManipulate($container, $expectedContainer, $params, $strict)
+    public function testManipulate($container, $expectedContainer, $tokens, $whitespace, $strict)
     {
         $manipulator = new SetWhitespaceBeforeToken();
-        $manipulator->run($container, $params);
+        $manipulator->run($container, $tokens, $whitespace);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
     }
 }

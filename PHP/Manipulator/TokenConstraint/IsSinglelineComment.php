@@ -24,15 +24,14 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $param = null)
     {
-        $isSinglelineComment = false;
         if ($token->getType() === T_COMMENT) {
             $value = $token->getValue();
             if (strlen($value) >= 1 && substr($value, 0, 1) === '#') {
-                $isSinglelineComment = true;
+                return true;
             } else if (strlen($value) >= 2 && substr($value, 0, 2) === '//') {
-                $isSinglelineComment = true;
+                return true;
             }
         }
-        return $isSinglelineComment;
+        return false;
     }
 }

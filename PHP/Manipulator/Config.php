@@ -9,6 +9,9 @@ use Symfony\Components\Finder\Finder;
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @uses    \Symfony\Components\Finder\Finder
+ * @uses    \PHP\Manipulator\Action
+ * @uses    \PHP\Manipulator\Actionset
  */
 abstract class Config
 {
@@ -171,7 +174,7 @@ abstract class Config
     public function addDirectory($path)
     {
         $realpath = realpath($path);
-        if (false === $realpath || !\file_exists($realpath) || !\is_dir($realpath) || !\is_readable($realpath)) {
+        if (false === $realpath || !file_exists($realpath) || !is_dir($realpath) || !is_readable($realpath)) {
             throw new \Exception('Unable to open path: ' . $path);
         }
         $suffix = $this->_getOption('fileSuffix');
@@ -236,10 +239,10 @@ abstract class Config
         $oldFile = $file;
         $file = realpath($file);
 
-        if (!\file_exists($file) || !\is_file($file) || !\is_readable($file)) {
+        if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
             throw new \Exception('Unable to read file: ' . $oldFile);
         }
-        return \file_get_contents($file);
+        return file_get_contents($file);
     }
 
     /**

@@ -14,6 +14,9 @@ use PHP\Manipulator\TokenContainer;
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @uses    \PHP\Manipulator\Helper\SetWhitespaceAfterToken;
+ * @uses    \PHP\Manipulator\Helper\SetWhitespaceBeforeToken;
+ * @uses    \PHP\Manipulator\TokenContraint\IsOperator
  */
 class FormatOperators
 extends Action
@@ -132,19 +135,10 @@ extends Action
             $iterator->next();
         }
 
-        // since changing container can break iterator, we need to do actions here
-        $params = array(
-            'tokens' => $operatorTokens,
-            'whitespace' => $this->getOption('afterOperator'),
-        );
         $setWhitespaceAfterToken = new SetWhitespaceAfterToken();
-        $setWhitespaceAfterToken->run($container, $params);
+        $setWhitespaceAfterToken->run($container, $operatorTokens, $this->getOption('afterOperator'));
 
-        $params = array(
-            'tokens' => $operatorTokens,
-            'whitespace' => $this->getOption('beforeOperator'),
-        );
         $setWhitespaceBeforeToken = new SetWhitespaceBeforeToken();
-        $setWhitespaceBeforeToken->run($container, $params);
+        $setWhitespaceBeforeToken->run($container, $operatorTokens, $this->getOption('beforeOperator'));
     }
 }

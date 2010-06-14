@@ -24,11 +24,6 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $params = null)
     {
-        $endsWithNewline = false;
-        $pattern = '~(\n|\r\n|\r)$~';
-        if (preg_match($pattern, $token->getValue())) {
-            $endsWithNewline = true;
-        }
-        return $endsWithNewline;
+        return (bool)preg_match('~(\n|\r\n|\r)$~', $token->getValue());
     }
 }

@@ -11,6 +11,7 @@ use PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken;
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @uses    \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken;
  */
 class CommentOutIncludesAndRequires
 extends Action
@@ -49,10 +50,8 @@ extends Action
                 $commentOut = new CreateMultilineCommentFromTokenToToken();
                 $commentOut->run(
                     $container,
-                    array(
-                        'from' => $result->getFirstToken(),
-                        'to' => $result->getLastToken(),
-                    )
+                    $result->getFirstToken(),
+                    $result->getLastToken()
                 );
             }
         }

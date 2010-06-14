@@ -24,13 +24,12 @@ extends TokenConstraint
      */
     public function evaluate(Token $token, $param = null)
     {
-        $isNewline = false;
         $value = $token->getValue();
         if ($value === "\n" ||
             $value === "\r\n" ||
             $value === "\r") {
-            $isNewline = true;
+            return true;
         }
-        return $isNewline;
+        return false;
     }
 }

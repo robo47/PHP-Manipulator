@@ -44,7 +44,7 @@ class Cli extends Application
 
         foreach ($fileIterator as $file) {
             /* @var $file SplFileInfo */
-            $command = 'PHP\Manipulator\Cli\Command\\' . substr($file->getFilename(), 0, -4);
+            $command = 'PHP\\Manipulator\\Cli\\Command\\' . substr($file->getFilename(), 0, -4);
             $this->addCommand(new $command);
         }
     }

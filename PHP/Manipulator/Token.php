@@ -43,6 +43,7 @@ class Token
      *
      * @throws PHP\Manipulator\Token
      * @param string|array $input
+     * @todo move to "TokenFactory" ?
      * @return \PHP\Manipulator\Token
      */
     public static function factory($input)

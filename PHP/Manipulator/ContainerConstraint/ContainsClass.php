@@ -12,7 +12,6 @@ use PHP\Manipulator\TokenContainer;
  * @version @pear_package_version@ (@pear_package_git_hash@)
  * @deprecated
  * @todo seems unneeded ... marked deprecated can be removed if no usage is found
- * 
  */
 class ContainsClass
 extends ContainerConstraint

@@ -18,6 +18,15 @@ use PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
  * @license http://opensource.org/licenses/bsd-license.php The BSD License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
+ * @uses    \PHP\Manipulator\Action\ChangeLineEndings
+ * @uses    \PHP\Manipulator\Action\RemoveMultipleEmptyLines
+ * @uses    \PHP\Manipulator\Action\Indent
+ * @uses    \PHP\Manipulator\Action\ElseIfToElseAndIf
+ * @uses    \PHP\Manipulator\Action\StripUnneededPhpCloseTag
+ * @uses    \PHP\Manipulator\Action\RemoveTrailingWhitespace
+ * @uses    \PHP\Manipulator\Action\FormatIfElseifElse
+ * @uses    \PHP\Manipulator\Action\FormatSwitch
+ * @uses    \PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
  */
 class PHPManipulator extends Actionset
 {

@@ -5,6 +5,7 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use SplStack;
 
 /**
  * @package PHP\Manipulator
@@ -39,7 +40,7 @@ extends Action
     public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
-        $this->_classStack = new \SplStack();
+        $this->_classStack = new SplStack();
 
         $classname = null;
         while ($iterator->valid()) {
