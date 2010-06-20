@@ -4,6 +4,8 @@ namespace Tests\PHP\Manipulator\Cli\Command;
 
 use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Command\ShowTokens;
+use Symfony\Components\Console\Input\ArgvInput;
+use Symfony\Components\Console\Output\StreamOutput;
 
 /**
  * @group Cli
@@ -27,10 +29,34 @@ class ShowTokensTest extends \Tests\TestCase
      */
     public function testExecute()
     {
-        $this->markTestIncomplete('not implemented yet');
         $command = new ShowTokens();
-        $command->execute(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
+
+        $command->execute(new ArgvInput(array('showTokens', TESTS_PATH . '/_fixtures/Cli/Command/ShowTokens/helloWorld.php'), $command->getDefinition()), new StreamOutput(fopen('php://output', 'w')));
         $output = ob_get_contents();
-        $this->assertEquals('', $output);
+        $this->assertEquals('Filesize: 26 bytes
+Tokens: 6
+
+0)  T_OPEN_TAG                   | <?php\n
+1)  T_WHITESPACE                 | \n
+2)  T_ECHO                       | echo
+3)  T_WHITESPACE                 | .
+4)  T_CONSTANT_ENCAPSED_STRING   | \'hello.world\'
+5)  UNKNOWN                      | ;
+', $output);
+    }
+
+    /**
+     * @covers PHP\Manipulator\Cli\Command\ShowTokens::execute
+     */
+    public function testExecuteThrowsExceptionIfFileIsNotOpenable()
+    {
+        $command = new ShowTokens();
+
+        try {
+            $command->execute(new ArgvInput(array('showTokens', TESTS_PATH . '/_fixtures/nonExistingFile.php'), $command->getDefinition()), new StreamOutput(fopen('php://output', 'w')));
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Unable to open file: ' . TESTS_PATH . '/_fixtures/nonExistingFile.php', $e->getMessage(), 'Wrong exception message');
+        }
     }
 }
