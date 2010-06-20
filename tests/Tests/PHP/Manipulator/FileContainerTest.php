@@ -38,7 +38,9 @@ class FileContainerTest extends \Tests\TestCase
      */
     public function testConstruct()
     {
-        $this->markTestIncomplete('not implemented yet');
+        $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
+        
+        $this->assertCount(7, $container->getIterator());
     }
 
     /**
