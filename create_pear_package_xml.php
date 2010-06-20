@@ -26,7 +26,7 @@ if (!isset($argv[3]))
 
 if (!isset($argv[4]))
 {
-    die('You must provide the path to the ');
+    die('You must provide the path to the package.xml-template');
 }
 
 $context = array(
