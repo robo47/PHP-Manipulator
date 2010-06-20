@@ -37,10 +37,17 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
             false
         );
 
-        #0
+        #1
         $data[] = array(
             $this->getContainerFromFixture($path . 'input1.php'),
             $this->getContainerFromFixture($path . 'output1.php'),
+            false
+        );
+
+        #2 Test whitespace on end of html is removed too
+        $data[] = array(
+            $this->getContainerFromFixture($path . 'input2.php'),
+            $this->getContainerFromFixture($path . 'output2.php'),
             false
         );
 
