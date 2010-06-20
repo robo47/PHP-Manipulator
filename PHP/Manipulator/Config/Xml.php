@@ -132,9 +132,6 @@ class Xml extends Config
             case 'object':
                 $value = (object) $value;
                 break;
-            case 'string':
-                $value = (string) $value;
-                break;
             case 'linebreaks':
                 $value = str_replace('\n', "\n", $value);
                 $value = str_replace('\r', "\r", $value);
@@ -252,25 +249,20 @@ class Xml extends Config
                     case 'path':
                         $finder->in($value);
                         break;
-                    // @todo test
                     case 'size':
-                        $finder->size($size);
+                        $finder->size($value);
                         break;
-                    // @todo test
                     case 'followsymlinks':
                         if ((bool)$value === true) {
                             $finder->followLinks();
                         }
                         break;
-                    // @todo test
                     case 'mindepth':
                         $finder->minDepth($value);
                         break;
-                    // @todo test
                     case 'maxdepth':
                         $finder->maxDepth($value);
                         break;
-                    // @todo test
                     case 'exclude':
                         $finder->exclude($value);
                         break;

@@ -44,7 +44,7 @@ extends TokenFinder
     public function find(Token $token, TokenContainer $container, $params = null)
     {
         if (!$this->isType($token, T_FUNCTION)) {
-            throw new \Exception('Start-token is not T_FUNCTION: ' . $token->getTokenName());
+            throw new \Exception('Starttoken is not T_FUNCTION');
         }
 
         $iterator = $container->getIterator();

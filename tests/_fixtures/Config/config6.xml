@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <options>
+        <actionPrefix>\Baa\Foo\Action\</actionPrefix>
+    </options>
+    <actions>
+        <action name="FirstAction">
+            <option name="foo" value="1" cast="foo" />
+        </action>
+    </actions>
+</config>

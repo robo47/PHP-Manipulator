@@ -129,6 +129,19 @@ class XmlTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\Config\Xml::_castValue
+     */
+    public function testInvalidCastOptionThrowsException()
+    {
+        try {
+            $config = $this->getXmlConfig(6);
+            $this->fail('No exception thrown');
+        } catch(\Exception $e) {
+            $this->assertContains('unknown cast-type: foo', $e->getMessage());
+        }
+    }
+
+    /**
      * @covers \PHP\Manipulator\Config\Xml::_parseClassLoaders
      * @covers \PHP\Manipulator\Config\Xml::_getAttributesAsArray
      */
@@ -148,8 +161,7 @@ class XmlTest extends \Tests\TestCase
 
 
     /**
-     * @covers \PHP\Manipulator\Config\Xml::_parseClassLoaders
-     * @covers \PHP\Manipulator\Config\Xml::_getAttributesAsArray
+     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
      */
     public function testIteratorWithNameAndNotName()
     {
@@ -161,6 +173,38 @@ class XmlTest extends \Tests\TestCase
         $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Blub.php', $files);
 
         $this->assertCount(2, $files);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
+     */
+    public function testIteratorWithSize()
+    {
+        $this->markTestIncomplete('not implemented yet');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
+     */
+    public function testIteratorWithMindepth()
+    {
+        $this->markTestIncomplete('not implemented yet');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
+     */
+    public function testIteratorWithMaxdepth()
+    {
+        $this->markTestIncomplete('not implemented yet');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
+     */
+    public function testIteratorWithExclude()
+    {
+        $this->markTestIncomplete('not implemented yet');
     }
 
     /**
