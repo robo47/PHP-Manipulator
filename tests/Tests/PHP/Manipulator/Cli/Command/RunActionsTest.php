@@ -23,7 +23,7 @@ class RunActionsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Command\RunActions::execute
+     * @covers PHP\Manipulator\Cli\Command\RunActions::execute
      */
     public function testExecute()
     {

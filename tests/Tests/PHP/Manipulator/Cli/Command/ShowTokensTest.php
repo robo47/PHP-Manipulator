@@ -23,7 +23,7 @@ class ShowTokensTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Command\ShowTokens::execute
+     * @covers PHP\Manipulator\Cli\Command\ShowTokens::execute
      */
     public function testExecute()
     {

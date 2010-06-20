@@ -25,7 +25,7 @@ class LicenseTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Cli\Command\License::execute
+     * @covers PHP\Manipulator\Cli\Command\License::execute
      */
     public function testExecute()
     {
