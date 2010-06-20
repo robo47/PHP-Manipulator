@@ -33,7 +33,7 @@ function findPearIncludePath()
 
 $pearPath = findPearIncludePath();
 if ($pearPath === null) {
-    echo 'ERROR: PEAR-Path for Symonfy not found!';
+    echo 'ERROR: PEAR-Path for Symfony not found!';
     exit(1);
 }
 

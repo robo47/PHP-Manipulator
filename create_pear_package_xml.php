@@ -57,7 +57,7 @@ function findIncludePathForFile($file)
 
 $symfonyPath = findIncludePathForFile('Symfony/Foundation/UniversalClassLoader.php');
 if ($symfonyPath === null) {
-    echo 'ERROR: PEAR-Path for Symonfy not found!';
+    echo 'ERROR: PEAR-Path for Symfony not found!';
     exit(1);
 }
 
