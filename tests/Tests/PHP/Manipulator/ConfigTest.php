@@ -38,6 +38,32 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\Config::getOption
+     */
+    public function testGetOption()
+    {
+        $config = $this->getConfig();
+
+        $value = $config->getOption('actionPrefix');
+        $this->assertEquals('PHP\\Manipulator\\Action\\', $value);
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config::getOption
+     */
+    public function testGetOptionThrowsExceptionIfOptionDoesNotExist()
+    {
+        $config = $this->getConfig();
+
+        try {
+            $config->getOption('nonExistingOption');
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Option "nonExistingOption" does not exist', $e->getMessage(), 'Wrong exception message');
+        }
+    }
+
+    /**
      * @covers \PHP\Manipulator\Config::addFile
      * @covers \PHP\Manipulator\Config::getFiles
      */

@@ -118,13 +118,13 @@ abstract class Config
      * @param string $name
      * @return mixed
      */
-    protected function _getOption($name)
+    public function getOption($name)
     {
-        if (isset($this->_options[$name])) {
-            return $this->_options[$name];
+        if (!isset($this->_options[$name])) {
+            $message = 'Option "' . $name . '" does not exist';
+            throw new \Exception($message);
         }
-        $message = 'something which should not happen, just happened ... world is shutting down';
-        throw new \Exception($message);
+        return $this->_options[$name];
     }
 
     /**
@@ -137,7 +137,7 @@ abstract class Config
     public function addAction($action, $prefix = null, array $options = array())
     {
         if (null === $prefix) {
-            $prefix = $this->_getOption('actionPrefix');
+            $prefix = $this->getOption('actionPrefix');
         }
         $classname = $prefix . $action;
         $this->_actions[] = new $classname($options);
@@ -154,7 +154,7 @@ abstract class Config
     public function addActionset($actionset, $prefix = null)
     {
         if (null === $prefix) {
-            $prefix = $this->_getOption('actionsetPrefix');
+            $prefix = $this->getOption('actionsetPrefix');
         }
         $classname = $prefix . $actionset;
         $actionset = new $classname();
@@ -177,7 +177,7 @@ abstract class Config
         if (false === $realpath || !file_exists($realpath) || !is_dir($realpath) || !is_readable($realpath)) {
             throw new \Exception('Unable to open path: ' . $path);
         }
-        $suffix = $this->_getOption('fileSuffix');
+        $suffix = $this->getOption('fileSuffix');
         $finder = new Finder();
         $files = $finder->files()->name('*' . $suffix)->in($realpath);
 
