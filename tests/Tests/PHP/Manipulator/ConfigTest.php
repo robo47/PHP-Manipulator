@@ -64,6 +64,44 @@ class ConfigTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\Config::addOption
+     */
+    public function testAddOption()
+    {
+        $config = $this->getConfig();
+
+        $config->addOption('foo', 'baa');
+        $this->assertEquals('baa', $config->getOption('foo'));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config::addOption
+     */
+    public function testAddClassloader()
+    {
+        $config = $this->getConfig();
+
+        $config->addOption('foo', 'baa');
+        $this->assertEquals('baa', $config->getOption('foo'));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Config::addClassLoader
+     * @covers \PHP\Manipulator\Config::getClassLoaders
+     */
+    public function testAddClassloaderGetClassloaders()
+    {
+        $config = $this->getConfig();
+
+        $config->addClassLoader('Foo', 'baa');
+        $classloaders = $config->getClassLoaders();
+
+        $this->assertCount(1, $classloaders);
+        $this->assertArrayHasKey('Foo', $classloaders);
+        $this->assertContains('baa', $classloaders);
+    }
+
+    /**
      * @covers \PHP\Manipulator\Config::addFile
      * @covers \PHP\Manipulator\Config::getFiles
      */
