@@ -985,8 +985,8 @@ class AHelperTest extends \Tests\TestCase
 
         #3 backwards curly brace
         $data[] = array(
-            $container1->getIterator()->seekToToken($container1[7]),
-            $container1[29]
+            $container1->getIterator()->seekToToken($container1[29]),
+            $container1[7]
         );
 
         #4 forwards square bracket
@@ -1010,6 +1010,7 @@ class AHelperTest extends \Tests\TestCase
      *
      * @dataProvider getMatchingBraceProvider
      * @covers \PHP\Manipulator\AHelper::getMatchingBrace
+     * @covers \PHP\Manipulator\AHelper::_nextToken
      */
     public function testGetMatchingBrace($iterator, $token)
     {
