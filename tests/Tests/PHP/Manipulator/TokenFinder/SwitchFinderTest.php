@@ -43,4 +43,19 @@ extends \Tests\TestCase
         $actualResult = $finder->find($token, $container);
         $this->assertFinderResultsMatch($expectedResult, $actualResult);
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenFinder\SwitchFinder::find
+     */
+    public function testFinderThrowsExceptionIfFirstTokenIsNotT_SWITCH()
+    {
+        $container = $this->getContainerFromFixture('/TokenFinder/SwitchFinder/input0.php');
+        $finder = new SwitchFinder();
+        try {
+            $finder->find($container[0], $container);
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Starttoken is not T_SWITCH', $e->getMessage(), 'Wrong exception message');
+        }
+    }
 }

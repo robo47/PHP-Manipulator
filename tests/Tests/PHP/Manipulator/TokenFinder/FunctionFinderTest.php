@@ -135,4 +135,19 @@ extends \Tests\TestCase
         $actualResult = $finder->find($token, $container, $params);
         $this->assertFinderResultsMatch($expectedResult, $actualResult);
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenFinder\FunctionFinder::find
+     */
+    public function testFinderThrowsExceptionIfFirstTokenIsNotT_FUNCTION()
+    {
+        $container = $this->getContainerFromFixture('/TokenFinder/FunctionFinder/input0.php');
+        $finder = new FunctionFinder();
+        try {
+            $finder->find($container[0], $container);
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Starttoken is not T_FUNCTION', $e->getMessage(), 'Wrong exception message');
+        }
+    }
 }

@@ -68,4 +68,18 @@ extends \Tests\TestCase
         $manipulator->manipulate($actualToken);
         $this->assertTokenMatch($expectedToken, $actualToken, $strict);
     }
+
+    /**
+     * @covers \PHP\Manipulator\TokenManipulator\MultilineToSinglelineComment::manipulate
+     */
+    public function testManipulatorThrowsExceptionIfFirstTokenIsNotAMultilineComment()
+    {
+        $finder = new MultilineToSinglelineComment();
+        try {
+            $finder->manipulate(new Token('//foo', T_COMMENT));
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals('Token is no Multiline-comment', $e->getMessage(), 'Wrong exception message');
+        }
+    }
 }
