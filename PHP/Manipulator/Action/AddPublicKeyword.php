@@ -62,48 +62,18 @@ extends Action
             if (true === $insideClassOrInterface && false === $insideMethod) {
                 if ($this->isType($token, T_FUNCTION)) {
                     $insideMethod = true;
-                    $result = $this->findTokens(
-                        'FunctionFinder',
-                        $token,
-                        $container,
-                        array('includeMethodProperties' => true)
-                    );
-                    $this->_checkAndAddPublic($result);
+                    if (!$this->isPrecededByTokenType($iterator, array(T_PUBLIC, T_PRIVATE, T_PROTECTED))) {
+                        $token = $iterator->current();
+                        $publicToken = new Token('public', T_PUBLIC);
+                        $whitespaceToken = new Token(' ', T_WHITESPACE);
+
+                        $this->_container->insertTokensBefore($token, array($publicToken, $whitespaceToken));
+                        $iterator->update($token);
+                    }
                 }
             }
             $iterator->next();
         }
         $container->retokenize();
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenFinder\Result $result
-     */
-    protected function _checkAndAddPublic(Result $result)
-    {
-        $tokens = array(T_PUBLIC, T_PRIVATE, T_PROTECTED);
-        if (!$this->_resultContainsTokenType($result, $tokens)) {
-            $previous = $this->_container->getPreviousToken($result->getFirstToken());
-            $publicToken = new Token('public', T_PUBLIC);
-            $whitespaceToken = new Token(' ', T_WHITESPACE);
-
-            $this->_container->insertTokenAfter($previous, $publicToken);
-            $this->_container->insertTokenAfter($publicToken, $whitespaceToken);
-        }
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenFinder\Result $result
-     * @param array $tokentype
-     * @return boolean
-     */
-    protected function _resultContainsTokenType(Result $result, array $tokentypes)
-    {
-        foreach ($result->getTokens() as $token) {
-            if ($this->isType($token, $tokentypes)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
