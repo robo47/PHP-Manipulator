@@ -118,17 +118,6 @@ extends Action
              !$this->isFollowedByTokenValue($iterator, '(')));
     }
 
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @var boolean
-     */
-    protected function _isNotAMethodCall(Token $token)
-    {
-        $next = $this->_next;
-        return (null !== $next && !$this->isOpeningBrace($next));
-    }
-
     /**
      * Checks the current token and sets internal flags to true or false
      *
