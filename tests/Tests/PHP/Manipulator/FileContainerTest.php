@@ -42,6 +42,15 @@ class FileContainerTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\FileContainer::getFile
+     */
+    public function testGetFile()
+    {
+        $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
+        $this->assertEquals(TESTS_PATH . 'tmp/test.php', $container->getFile());
+    }
+
+    /**
      * @covers \PHP\Manipulator\FileContainer::__construct
      */
     public function testConstructThrowsExceptionIfFileNotExists()
