@@ -424,7 +424,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
      */
     public function testInsertTokensBefore()
     {
@@ -444,7 +444,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
+     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
      */
     public function testInsertTokensBeforeOnFirst()
     {
@@ -461,6 +461,26 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertEquals(1, $container->getOffsetByToken($token2));
         $this->assertEquals(2, $container->getOffsetByToken($token3));
         $this->assertEquals(3, $container->getOffsetByToken($token4));
+    }
+
+    /**
+     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
+     * @covers \Exception
+     */
+    public function testInsertTokensAfterThrowsExceptionIfBeforeTokenNotExists()
+    {
+        $token1 = Token::factory('Token1');
+        $token2 = Token::factory('Token2');
+        $token3 = Token::factory('Token3');
+        $token4 = Token::factory('Token4');
+        $container = new TokenContainer(array($token1));
+
+        try {
+            $container->insertTokensBefore($token2, array($token3, $token4));
+            $this->fail('Expected exception not thrown');
+        } catch (\Exception $e) {
+            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
+        }
     }
 
     /**
@@ -700,7 +720,7 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\TokenContainer::getPreviousToken::removeTokensFromTo
+     * @covers \PHP\Manipulator\TokenContainer::removeTokensFromTo
      */
     public function testRemoveTokensFromTo()
     {
