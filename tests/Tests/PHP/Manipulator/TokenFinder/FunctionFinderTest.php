@@ -122,9 +122,9 @@ extends \Tests\TestCase
         #12 abstract class method
         $data[] = array(
             $c = $this->getContainerFromFixture($path . 'input12.php'),
-            $c[12],
+            $c[14],
             array('includeMethodProperties' => true),
-            $this->getResultFromContainer($c, 8, 20),
+            $this->getResultFromContainer($c, 10, 22),
         );
 
         #13 interface method
@@ -134,6 +134,24 @@ extends \Tests\TestCase
             array('includeMethodProperties' => true),
             $this->getResultFromContainer($c, 8, 18),
         );
+
+        #14 try to include functionproperties but none exist
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input14.php'),
+            $c[2],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 2, 13),
+        );
+
+        #15 try to include phpdoc but none exist 
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input15.php'),
+            $c[2],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 2, 13),
+        );
+
+// @todo find testcase where setting back the iterator via seekToToken is needed (iterator got invalidated in search for methodProperties and/or phpdoc) [line 131-133 and 159-161]
 
         return $data;
     }
