@@ -55,7 +55,7 @@ extends \Tests\TestCase
             $this->getResultFromContainer($c, 13, 53),
         );
 
-        #4 abstract class method
+        #4 static class method
         $data[] = array(
             $c = $this->getContainerFromFixture($path . 'input4.php'),
             $c[13],
@@ -115,11 +115,25 @@ extends \Tests\TestCase
         $data[] = array(
             $c = $this->getContainerFromFixture($path . 'input11.php'),
             $c[8],
-            array('includePhpdoc' => true),
+            array('includeMethodProperties' => true),
             $this->getResultFromContainer($c, 8, 16),
         );
 
-        // abstract functions / methods
+        #12 abstract class method
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input12.php'),
+            $c[12],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 8, 20),
+        );
+
+        #13 interface method
+        $data[] = array(
+            $c = $this->getContainerFromFixture($path . 'input13.php'),
+            $c[10],
+            array('includeMethodProperties' => true),
+            $this->getResultFromContainer($c, 8, 18),
+        );
 
         return $data;
     }
