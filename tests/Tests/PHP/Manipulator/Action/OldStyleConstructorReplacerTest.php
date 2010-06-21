@@ -43,7 +43,7 @@ class OldStyleConstructorReplacerTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output1.php'),
         );
 
-        #2 A method outside the class
+        #2 A function outside the class
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input2.php'),

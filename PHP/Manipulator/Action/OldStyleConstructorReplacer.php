@@ -70,9 +70,6 @@ extends Action
                             }
                             break;
                         }
-                        if ($this->_classStack->isEmpty()) {
-                            break;
-                        }
                         $iterator->next();
                     }
                 }
