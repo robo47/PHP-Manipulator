@@ -16,14 +16,6 @@ class AHelperTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\AHelper
-     */
-    public function testAbstractClassAndMethods()
-    {
-        $reflection = new \ReflectionClass('PHP\Manipulator\AHelper');
-    }
-
-    /**
      * @covers \PHP\Manipulator\AHelper::getClassInstance
      */
     public function testGetClassInstanceWithAutoPrefix()
@@ -763,6 +755,52 @@ class AHelperTest extends \Tests\TestCase
     /**
      * @return array
      */
+    public function isPrecededByTokenMatchedByClosureProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isPrecededByTokenMatchedByClosure/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            ClosureFactory::getIsTypeClosure(T_ELSE),
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            false,
+        );
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[25]),
+            ClosureFactory::getIsTypeClosure(T_ELSE),
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            true,
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isPrecededByTokenMatchedByClosureProvider
+     * @param Iterator $iterator
+     * @param \Closure $closure
+     * @param array $allowedTokens
+     * @param <type> $expectedResult
+     */
+    public function testIsPrecededByTokenMatchedByClosure($iterator, $closure, $allowedTokens, $expectedResult)
+    {
+        $ahelper = new AHelper();
+        $startToken = $iterator->current();
+        $result = $ahelper->isPrecededByTokenMatchedByClosure(
+            $iterator,
+            $closure,
+            $allowedTokens
+        );
+        $this->assertSame($expectedResult, $result);
+        $this->assertSame($startToken, $iterator->current());
+    }
+
+    /**
+     * @return array
+     */
     public function isFollowedByTokenValueProvider()
     {
         $data = array();
@@ -797,6 +835,49 @@ class AHelperTest extends \Tests\TestCase
         $result = $ahelper->isFollowedByTokenValue(
             $iterator,
             $followedByType,
+            $allowedTokens
+        );
+        $this->assertSame($expectedResult, $result);
+        $this->assertSame($startToken, $iterator->current());
+    }
+
+    /**
+     * @return array
+     */
+    public function isFollowedByTokenMatchedByClosureProvider()
+    {
+        $data = array();
+        $path = '/AHelper/isFollowedByTokenMatchedByClosure/';
+        $container = $this->getContainerFromFixture($path . 'input0.php');
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            ClosureFactory::getHasValueClosure('echo'),
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            false,
+        );
+
+        $data[] = array(
+            $container->getIterator()->seekToToken($container[21]),
+            ClosureFactory::getHasValueClosure('echo'),
+            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            true,
+        );
+
+        return $data;
+    }
+
+    /**
+     * @dataProvider isFollowedByTokenMatchedByClosureProvider
+     * @covers \PHP\Manipulator\AHelper::isFollowedByTokenMatchedByClosure
+     */
+    public function testIsFollowedByTokenMatchedByClosure($iterator, $closure, $allowedTokens, $expectedResult)
+    {
+        $ahelper = new AHelper();
+        $startToken = $iterator->current();
+        $result = $ahelper->isFollowedByTokenMatchedByClosure(
+            $iterator,
+            $closure,
             $allowedTokens
         );
         $this->assertSame($expectedResult, $result);
