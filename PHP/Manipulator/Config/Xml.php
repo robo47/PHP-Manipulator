@@ -252,17 +252,6 @@ class Xml extends Config
                     case 'size':
                         $finder->size($value);
                         break;
-                    case 'followsymlinks':
-                        if ((bool)$value === true) {
-                            $finder->followLinks();
-                        }
-                        break;
-                    case 'mindepth':
-                        $finder->minDepth($value);
-                        break;
-                    case 'maxdepth':
-                        $finder->maxDepth($value);
-                        break;
                     case 'exclude':
                         $finder->exclude($value);
                         break;

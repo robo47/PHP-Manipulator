@@ -180,23 +180,15 @@ class XmlTest extends \Tests\TestCase
      */
     public function testIteratorWithSize()
     {
-        $this->markTestIncomplete('not implemented yet');
-    }
+        $config = $this->getXmlConfig(7);
 
-    /**
-     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
-     */
-    public function testIteratorWithMindepth()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
+        $files = $config->getFiles();
 
-    /**
-     * @covers \PHP\Manipulator\Config\Xml::_parseIterator
-     */
-    public function testIteratorWithMaxdepth()
-    {
-        $this->markTestIncomplete('not implemented yet');
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Baa.php', $files);
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Blub.phtml', $files);
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
+
+        $this->assertCount(3, $files);
     }
 
     /**
@@ -204,7 +196,14 @@ class XmlTest extends \Tests\TestCase
      */
     public function testIteratorWithExclude()
     {
-        $this->markTestIncomplete('not implemented yet');
+        $config = $this->getXmlConfig(8);
+
+        $files = $config->getFiles();
+
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Foo.php', $files);
+        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Blub.phtml', $files);
+
+        $this->assertCount(2, $files);
     }
 
     /**
