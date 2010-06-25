@@ -28,6 +28,7 @@ extends Action
         if (!$this->hasOption('spaceAfterSwitch')) {
             $this->setOption('spaceAfterSwitch', true);
         }
+        // @todo rename to spaceBeforeCurlyBrace ?
         if (!$this->hasOption('spaceAfterSwitchVariable')) {
             $this->setOption('spaceAfterSwitchVariable', true);
         }
