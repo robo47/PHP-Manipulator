@@ -22,7 +22,6 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertTrue($action->getOption('spaceAfterElseif'), 'Default value for spaceAfterElseif is wrong');
         $this->assertTrue($action->getOption('spaceAfterElse'), 'Default value for spaceAfterElse is wrong');
 
-        $this->assertTrue($action->getOption('spaceBeforeIf'), 'Default value for spaceBeforeIf is wrong');
         $this->assertTrue($action->getOption('spaceBeforeElseif'), 'Default value for spaceBeforeElseif is wrong');
         $this->assertTrue($action->getOption('spaceBeforeElse'), 'Default value for spaceBeforeElse is wrong');
 
@@ -46,7 +45,7 @@ class FormatIfElseifElseTest extends \Tests\TestCase
         $this->assertEquals('', $action->getOption('spaceBeforeElseifExpression'), 'Default value for spaceBeforeElseifExpression is wrong');
         $this->assertEquals('', $action->getOption('spaceAfterElseifExpression'), 'Default value for spaceAfterElseifExpression is wrong');
 
-        $this->assertCount(20, $action->getOptions());
+        $this->assertCount(19, $action->getOptions());
     }
 
     /**

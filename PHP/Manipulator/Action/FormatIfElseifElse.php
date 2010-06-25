@@ -68,9 +68,7 @@ extends Action
         if (!$this->hasOption('spaceAfterElse')) {
             $this->setOption('spaceAfterElse', true);
         }
-        if (!$this->hasOption('spaceBeforeIf')) {
-            $this->setOption('spaceBeforeIf', true);
-        }
+
         if (!$this->hasOption('spaceBeforeElseif')) {
             $this->setOption('spaceBeforeElseif', true);
         }
