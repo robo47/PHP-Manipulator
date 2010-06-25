@@ -10,7 +10,6 @@ use PHP\Manipulator\ClosureFactory;
 
 /**
  * @group AHelper
- * @todo test isFollowed/PrecededByMatchedByClosure
  */
 class AHelperTest extends \Tests\TestCase
 {
