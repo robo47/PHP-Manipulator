@@ -23,7 +23,7 @@ extends TokenManipulator
 
     /**
      * @param \PHP\Manipulator\Token $token
-     * @param mixed $params
+     * @param mixed $params (unused)
      */
     public function manipulate(Token $token, $params = null)
     {
