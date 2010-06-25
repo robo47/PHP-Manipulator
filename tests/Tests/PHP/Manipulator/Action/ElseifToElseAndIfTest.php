@@ -2,22 +2,22 @@
 
 namespace Tests\PHP\Manipulator\Action;
 
-use PHP\Manipulator\Action\ElseAndIfToElseIf;
+use PHP\Manipulator\Action\ElseifToElseAndIf;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
- * @group Action\ElseAndIfToElseIf
+ * @group Action\ElseifToElseAndIf
  */
-class ElseAndIfToElseIfTest extends \Tests\TestCase
+class ElseifToElseAndIfTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\Action\ElseAndIfToElseIf::init
+     * @covers \PHP\Manipulator\Action\ElseifToElseAndIf::init
      */
     public function testConstructorDefaults()
     {
-        $action = new ElseAndIfToElseIf();
+        $action = new ElseifToElseAndIf();
         $this->assertCount(0, $action->getOptions());
     }
 
@@ -27,7 +27,7 @@ class ElseAndIfToElseIfTest extends \Tests\TestCase
     public function actionProvider()
     {
         $data = array();
-        $path = '/Action/ElseAndIfToElseIf/';
+        $path = '/Action/ElseifToElseAndIf/';
 
         #0
         $data[] = array(
@@ -40,12 +40,12 @@ class ElseAndIfToElseIfTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\ElseAndIfToElseIf
+     * @covers \PHP\Manipulator\Action\ElseifToElseAndIf
      * @dataProvider actionProvider
      */
     public function testAction($options, $input, $expectedTokens)
     {
-        $action = new ElseAndIfToElseIf($options);
+        $action = new ElseifToElseAndIf($options);
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
