@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PHP_CodeFormatter" basedir=".">
+<project name="PHP\Manipulator" basedir=".">
 
     <!-- Clean Project -->
     <target name="clean">
@@ -66,7 +66,7 @@
         </exec>
     </target>
 
-    <!-- Run PHPUnit for libraray -->
+    <!-- Run PHPUnit for library -->
     <target name="phpunit">
         <exec dir="${basedir}/tests/"
             executable="phpunit"
