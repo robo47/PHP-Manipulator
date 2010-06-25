@@ -9,7 +9,6 @@ if ($_SERVER['argc'] < 3) {
     echo 'syntax: helper.php type name [fixture count]' . PHP_EOL . PHP_EOL;
     echo 'type can be:' . PHP_EOL;
     echo '  tf - TokenFinder' . PHP_EOL;
-    echo '  cc - ContainerConstraint' . PHP_EOL;
     echo '  a  - Action' . PHP_EOL;
     echo '  tc - TokenConstraint' . PHP_EOL;
     echo '  tm - TokenManipulator' . PHP_EOL . PHP_EOL;
@@ -26,12 +25,6 @@ switch ($type) {
     case 'tokenfinder':
     case 'tf':
         $typeName = 'TokenFinder';
-        $createFixturesDummy = true;
-        $inputOnly = true;
-        break;
-    case 'containerconstraint':
-    case 'cc':
-        $typeName = 'ContainerConstraint';
         $createFixturesDummy = true;
         $inputOnly = true;
         break;

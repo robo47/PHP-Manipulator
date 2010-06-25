@@ -6,7 +6,6 @@ use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\TokenContainer\Iterator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\Config;
-use PHP\Manipulator\ContainerConstraint;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\TokenFinder;
@@ -46,32 +45,6 @@ class AHelper
 
         /* @var $constraint \PHP\Manipulator\TokenConstraint */
         return $constraint->evaluate($token, $params);
-    }
-
-    /**
-     * Load/Instantiate/Evaluate Container Constraint on a Container
-     *
-     * @param \PHP\Manipulator\ContainerConstraint|string $constraint
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @param boolean $autoPrefix
-     * @return boolean
-     */
-    public function evaluateContainerConstraint($constraint, TokenContainer $container, $params = null, $autoPrefix = true)
-    {
-        $constraint = $this->getClassInstance(
-            $constraint,
-            'PHP\\Manipulator\\ContainerConstraint\\',
-            $autoPrefix
-        );
-
-        if (!$constraint instanceof ContainerConstraint) {
-            $message = 'constraint is not instance of PHP\\Manipulator\\ContainerConstraint';
-            throw new \Exception($message);
-        }
-
-        /* @var $constraint \PHP\Manipulator\ContainerConstraint */
-        return $constraint->evaluate($container, $params);
     }
 
     /**

@@ -66,23 +66,6 @@ class AHelperTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\AHelper::evaluateContainerConstraint
-     */
-    public function testEvaluateContainerConstraintEvaluatesContainerConstraint()
-    {
-        \Tests\Mock\ContainerConstraintMock::$return = false;
-        $abstractHelper = new AHelper();
-        $container = new TokenContainer();
-        $result = $abstractHelper->evaluateContainerConstraint(
-            'Tests\\Mock\\ContainerConstraintMock',
-            $container,
-            null,
-            false
-        );
-        $this->assertFalse($result);
-    }
-
-    /**
      * @covers \PHP\Manipulator\AHelper::runAction
      */
     public function testrunActionManipulatesContainer()
@@ -170,23 +153,6 @@ class AHelperTest extends \Tests\TestCase
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
             $this->assertEquals('finder is not instance of PHP\\Manipulator\\TokenFinder', $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::evaluateContainerConstraint
-     */
-    public function testEvaluateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
-    {
-        $abstractHelper = new AHelper();
-        $container = new TokenContainer();
-        $constraint = new \stdClass();
-
-        try {
-            $abstractHelper->evaluateContainerConstraint($constraint, $container);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of PHP\\Manipulator\\ContainerConstraint', $e->getMessage(), 'Wrong exception message');
         }
     }
 
