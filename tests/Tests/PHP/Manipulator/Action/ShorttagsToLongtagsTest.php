@@ -2,23 +2,23 @@
 
 namespace Tests\PHP\Manipulator\Action;
 
-use PHP\Manipulator\Action\ShorttagsToLongTags;
+use PHP\Manipulator\Action\ShorttagsToLongtags;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
 /**
  * @group Action
- * @group Action\ShorttagsToLongTags
+ * @group Action\ShorttagsToLongtags
  */
-class ShorttagsToLongTagsTest extends \Tests\TestCase
+class ShorttagsToLongtagsTest extends \Tests\TestCase
 {
 
     /**
-     * @covers \PHP\Manipulator\Action\ShorttagsToLongTags::init
+     * @covers \PHP\Manipulator\Action\ShorttagsToLongtags::init
      */
     public function testConstructorDefaults()
     {
-        $action = new ShorttagsToLongTags();
+        $action = new ShorttagsToLongtags();
         $this->assertCount(0, $action->getOptions());
     }
 
@@ -28,7 +28,7 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
     public function actionProvider()
     {
         $data = array();
-        $path = '/Action/ShorttagsToLongTags/';
+        $path = '/Action/ShorttagsToLongtags/';
 
         #0
         $data[] = array(
@@ -55,14 +55,14 @@ class ShorttagsToLongTagsTest extends \Tests\TestCase
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\ShorttagsToLongTags::run
+     * @covers \PHP\Manipulator\Action\ShorttagsToLongtags::run
      * @dataProvider actionProvider
      */
     public function testAction($options, $input, $expectedTokens)
     {
         $this->checkShorttags();
 
-        $action = new ShorttagsToLongTags($options);
+        $action = new ShorttagsToLongtags($options);
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

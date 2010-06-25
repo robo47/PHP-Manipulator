@@ -11,7 +11,7 @@ use PHP\Manipulator\TokenContainer;
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
  */
-class ShorttagsToLongTags
+class ShorttagsToLongtags
 extends Action
 {
 
