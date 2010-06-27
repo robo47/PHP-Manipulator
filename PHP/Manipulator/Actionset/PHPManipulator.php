@@ -6,7 +6,7 @@ use PHP\Manipulator\Actionset;
 use PHP\Manipulator\Action\ChangeLineEndings;
 use PHP\Manipulator\Action\RemoveMultipleEmptyLines;
 use PHP\Manipulator\Action\Indent;
-use PHP\Manipulator\Action\ElseIfToElseAndIf;
+use PHP\Manipulator\Action\ElseifToElseAndIf;
 use PHP\Manipulator\Action\StripUnneededPhpCloseTag;
 use PHP\Manipulator\Action\RemoveTrailingWhitespace;
 use PHP\Manipulator\Action\FormatIfElseifElse;
@@ -21,7 +21,7 @@ use PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
  * @uses    \PHP\Manipulator\Action\ChangeLineEndings
  * @uses    \PHP\Manipulator\Action\RemoveMultipleEmptyLines
  * @uses    \PHP\Manipulator\Action\Indent
- * @uses    \PHP\Manipulator\Action\ElseIfToElseAndIf
+ * @uses    \PHP\Manipulator\Action\ElseifToElseAndIf
  * @uses    \PHP\Manipulator\Action\StripUnneededPhpCloseTag
  * @uses    \PHP\Manipulator\Action\RemoveTrailingWhitespace
  * @uses    \PHP\Manipulator\Action\FormatIfElseifElse
@@ -83,7 +83,7 @@ class PHPManipulator extends Actionset
         $actions[] = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc();
         $actions[] = new RemoveMultipleEmptyLines($emptyLinesOptions);
         $actions[] = new StripUnneededPhpCloseTag();
-        $actions[] = new ElseIfToElseAndIf();
+        $actions[] = new ElseifToElseAndIf();
         $actions[] = new FormatIfElseifElse($formatIfElseifElseOptions);
         $actions[] = new FormatSwitch($formatSwitchOptions);
         $actions[] = new Indent($indentOptions);
