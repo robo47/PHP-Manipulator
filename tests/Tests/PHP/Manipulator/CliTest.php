@@ -16,18 +16,10 @@ class CliTest extends \Tests\TestCase
     {
         ob_start();
     }
+
     public function tearDown()
     {
         ob_end_clean();
-    }
-
-    /**
-     * @covers \PHP\Manipulator\Cli::getStartTime
-     */
-    public function testGetStartTime()
-    {
-        $cli = new Cli();
-        $this->assertType('float', $cli->getStartTime());
     }
 
     /**
@@ -37,5 +29,18 @@ class CliTest extends \Tests\TestCase
     public function testRun()
     {
         $this->markTestIncomplete('not implemented yet');
+    }
+
+    /**
+     * @covers \PHP\Manipulator\Cli::__construct
+     * @covers \PHP\Manipulator\Cli::_initApp
+     */
+    public function testConstruct()
+    {
+        $cli = new Cli();
+        $commands = $cli->getCommands();
+        // 2 defaults (helpCommand, listCommand)
+        // 3 own (ShowTokens, License, RunActions)
+        $this->assertCount(2 + 3, $commands);
     }
 }

@@ -14,18 +14,11 @@ use Symfony\Components\Finder\Finder;
  */
 class Cli extends Application
 {
-
-    /**
-     * @var float
-     */
-    protected $_start = - 1;
-
     /**
      * @param array $params
      */
     public function __construct()
     {
-        $this->_start = microtime(true);
         parent::__construct('phpManipulator', Manipulator::VERSION . ' (' . Manipulator::GITHASH . ')');
         $this->_initApp();
     }
@@ -36,11 +29,14 @@ class Cli extends Application
     protected function _initApp()
     {
         $path = __DIR__ .
-        DIRECTORY_SEPARATOR . 'Cli' .
-        DIRECTORY_SEPARATOR . 'Command' .
-        DIRECTORY_SEPARATOR;
+            DIRECTORY_SEPARATOR . 'Cli' .
+            DIRECTORY_SEPARATOR . 'Command' .
+            DIRECTORY_SEPARATOR;
         $finder = new Finder();
-        $fileIterator = $finder->files()->name('*.php')->in($path);
+
+        $fileIterator = $finder->files()
+                               ->name('*.php')
+                               ->in($path);
 
         foreach ($fileIterator as $file) {
             /* @var $file SplFileInfo */
@@ -48,13 +44,4 @@ class Cli extends Application
             $this->addCommand(new $command);
         }
     }
-
-    /**
-     * @return float
-     */
-    public function getStartTime()
-    {
-        return $this->_start;
-    }
-
 }
