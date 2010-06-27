@@ -12,7 +12,7 @@
     <filter>
         <whitelist>
             <directory>./Tests/Constraint/</directory>
-            <directory>./Tests/Mock/</directory>
+            <directory>./Tests/Stub/</directory>
             <file>./Tests/Util.php</file>
             <file>./Tests/TestCase.php</file>
             <exclude>
@@ -32,7 +32,7 @@
     <testsuites>
         <testsuite name="PHP\Manipulator Tests-Test Suite">
             <directory suffix="Test.php">./Tests/Constraint/</directory>
-            <directory suffix="Test.php">./Tests/Mock/</directory>
+            <directory suffix="Test.php">./Tests/Stub/</directory>
             <file>./Tests/UtilTest.php</file>
             <file>./Tests/TestCaseTest.php</file>
         </testsuite>

@@ -187,7 +187,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getConfig()
     {
-        return Config::factory('Tests\\Mock\\ConfigMock', '', false);
+        return Config::factory('Tests\\Stub\\ConfigStub', '', false);
     }
 
     /**

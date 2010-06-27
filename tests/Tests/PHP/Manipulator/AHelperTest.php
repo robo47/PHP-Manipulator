@@ -52,11 +52,11 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testEvaluateTokenConstraintEvaluatesTokenConstraint()
     {
-        \Tests\Mock\TokenConstraintMock::$return = false;
+        \Tests\Stub\TokenConstraintStub::$return = false;
         $abstractHelper = new AHelper();
         $token = Token::factory(array(T_WHITESPACE, "\n"));
         $result = $abstractHelper->evaluateConstraint(
-            'Tests\\Mock\\TokenConstraintMock',
+            'Tests\\Stub\\TokenConstraintStub',
             $token,
             null,
             false
@@ -69,17 +69,17 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testrunActionManipulatesContainer()
     {
-        \Tests\Mock\ActionMock::$called = false;
+        \Tests\Stub\ActionStub::$called = false;
         $abstractHelper = new AHelper();
 
         $abstractHelper->runAction(
-            'Tests\\Mock\\ActionMock',
+            'Tests\\Stub\\ActionStub',
             new TokenContainer(),
             null,
             false
         );
 
-        $this->assertTrue(\Tests\Mock\ActionMock::$called);
+        $this->assertTrue(\Tests\Stub\ActionStub::$called);
     }
 
     /**
@@ -87,17 +87,17 @@ class AHelperTest extends \Tests\TestCase
      */
     public function testManipulateTokenManipulatesToken()
     {
-        \Tests\Mock\TokenManipulatorMock::$called = false;
+        \Tests\Stub\TokenManipulatorStub::$called = false;
         $abstractHelper = new AHelper();
 
         $abstractHelper->manipulateToken(
-            'Tests\\Mock\\TokenManipulatorMock',
+            'Tests\\Stub\\TokenManipulatorStub',
             Token::factory(array(T_WHITESPACE, "\n")),
             null,
             false
         );
 
-        $this->assertTrue(\Tests\Mock\TokenManipulatorMock::$called);
+        $this->assertTrue(\Tests\Stub\TokenManipulatorStub::$called);
     }
 
     /**
@@ -106,7 +106,7 @@ class AHelperTest extends \Tests\TestCase
     public function testFindTokensFindsTokens()
     {
         $expectedResult = new \PHP\Manipulator\TokenFinder\Result();
-        $finder = new \Tests\Mock\TokenFinderMock($expectedResult);
+        $finder = new \Tests\Stub\TokenFinderStub($expectedResult);
         $token = new Token('Foo');
         $container = new TokenContainer();
         $abstractHelper = new AHelper();

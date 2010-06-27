@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Mock;
+namespace Tests\Stub;
 
 use PHP\Manipulator\TokenManipulator;
 use PHP\Manipulator\Token;
 
-class TokenManipulatorMock
+class TokenManipulatorStub
 extends TokenManipulator
 {
 

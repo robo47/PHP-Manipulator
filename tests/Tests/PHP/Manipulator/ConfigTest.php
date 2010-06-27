@@ -4,7 +4,7 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
 use Symfony\Components\Finder\Finder;
-use Tests\Mock\ConfigMock;
+use Tests\Stub\ConfigStub;
 
 /**
  * @group Config
@@ -406,10 +406,10 @@ class ConfigTest extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\Config::factory
      */
-    public function testFactoryWithConfigMockFromCode()
+    public function testFactoryWithConfigStubFromCode()
     {
-        $config = Config::factory('Tests\\Mock\\ConfigMock', '<config></config>', false);
-        $this->assertType('Tests\\Mock\\ConfigMock', $config);
+        $config = Config::factory('Tests\\Stub\\ConfigStub', '<config></config>', false);
+        $this->assertType('Tests\\Stub\\ConfigStub', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
@@ -426,11 +426,11 @@ class ConfigTest extends \Tests\TestCase
     /**
      * @covers \PHP\Manipulator\Config::factory
      */
-    public function testFactoryWithConfigMockFromFile()
+    public function testFactoryWithConfigStubFromFile()
     {
         $file = 'Config/config0.xml';
-        $config = Config::factory('\Tests\Mock\ConfigMock', '_fixtures/' . $file, true);
-        $this->assertType('Tests\Mock\ConfigMock', $config);
+        $config = Config::factory('\Tests\Stub\ConfigStub', '_fixtures/' . $file, true);
+        $this->assertType('Tests\Stub\ConfigStub', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 

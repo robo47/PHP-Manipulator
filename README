@@ -97,14 +97,14 @@ Project directory/file structure
 | +-Foo/                        # Directory with Dummy-Files for testing Components, the Config and Loading
 | +-Tests
 | | +-Constraint/               # Tests for special Constraints used in the tests
-| | +-Mock/                     # Tests for Mock-Objects used in the tests
+| | +-Stub/                     # Tests for Stub-Objects used in the tests
 | | +-PHP/                      # HERE are the actual unittests for PHP\Manipulator
 | | +-TestCase.php              # The base-TestCase Class with additional asserts using the new Constraints and some other methods
 | | +-Util.php                  # Helper-Methods used in the Constraints and for Debugging while riding new Code
 | +-_fixtures/                  # Containing all the php/xml-files used in the unittests ordered in subdirectories for each namespace below \PHP\Manipulator
 | +- TestHelper.php             # Bootstrap-File for unittests setting include-path and setting up the Symfony-Autoloader
 | +-phpunit.xml                 # Default config only Running Tests in /tests/Tests/PHP
-| +-phpunitTests.xml            # Config only running tests of "testing-components" like the Constraints, the Mocks, the TestCase and the Util-class.
+| +-phpunitTests.xml            # Config only running tests of "testing-components" like the Constraints, the Stubs, the TestCase and the Util-class.
 +-LICENSE                       # File containing the used New BSD-License for PHP\Manipulator
 +-README                        # The file you are currently reading
 +-TODO                          # List of todos, whishes, ideas and plans

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Mock;
+namespace Tests\Stub;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-class ActionMock
+class ActionStub
 extends Action
 {
 

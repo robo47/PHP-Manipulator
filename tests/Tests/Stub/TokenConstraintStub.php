@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Mock;
+namespace Tests\Stub;
 
 use PHP\Manipulator\TokenConstraint;
 use PHP\Manipulator\Token;
 
-class TokenConstraintMock
+class TokenConstraintStub
 extends TokenConstraint
 {
 

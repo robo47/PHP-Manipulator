@@ -4,7 +4,7 @@ namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
-use Tests\Mock\ActionMock;
+use Tests\Stub\ActionStub;
 
 /**
  * @group Action
@@ -38,7 +38,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testDefaultConstructor()
     {
-        $abstractHelper = new ActionMock();
+        $abstractHelper = new ActionStub();
         $this->assertEquals(array(), $abstractHelper->getOptions(), 'options don\'t match');
     }
 
@@ -48,7 +48,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testConstructorCallsInit()
     {
-        $abstractHelper = new ActionMock();
+        $abstractHelper = new ActionStub();
         $this->assertTrue($abstractHelper->init, 'init is not true');
     }
 
@@ -72,7 +72,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testConstructorSetsOptions($options)
     {
-        $abstractHelper = new ActionMock($options);
+        $abstractHelper = new ActionStub($options);
         $this->assertEquals($options, $abstractHelper->getOptions(), 'options don\'t match');
     }
 
@@ -86,7 +86,7 @@ class ActionTest extends \Tests\TestCase
             'baa' => 'foo',
             'blub' => 'bla',
         );
-        $abstractHelper = new ActionMock(array('foo' => 'bla'));
+        $abstractHelper = new ActionStub(array('foo' => 'bla'));
         $fluent = $abstractHelper->addOptions($options);
         $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
 
@@ -99,7 +99,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testSetOptionAndGetOption()
     {
-        $abstractHelper = new ActionMock();
+        $abstractHelper = new ActionStub();
         $fluent = $abstractHelper->setOption('baa', 'foo');
         $this->assertSame($fluent, $abstractHelper, 'No fluent interface');
         $this->assertEquals('foo', $abstractHelper->getOption('baa'), 'Wrong value');
@@ -111,7 +111,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testGetOptionThrowsExceptionOnNonExistingOption()
     {
-        $abstractHelper = new ActionMock();
+        $abstractHelper = new ActionStub();
         try {
             $abstractHelper->getOption('foo');
             $this->fail('Expected exception not thrown');
@@ -125,7 +125,7 @@ class ActionTest extends \Tests\TestCase
      */
     public function testHasOption()
     {
-        $abstractHelper = new ActionMock(array('foo' => 'bla'));
+        $abstractHelper = new ActionStub(array('foo' => 'bla'));
         $this->assertTrue($abstractHelper->hasOption('foo'));
         $this->assertFalse($abstractHelper->hasOption('blub'));
     }

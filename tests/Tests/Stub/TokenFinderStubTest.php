@@ -1,28 +1,28 @@
 <?php
 
-namespace Tests\Mock;
+namespace Tests\Stub;
 
-use Tests\Mock\TokenFinderMock;
+use Tests\Stub\TokenFinderStub;
 use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
 
 /**
- * @group Mock
- * @group Mock\TokenFinder
+ * @group Stub
+ * @group Stub\TokenFinder
  */
-class TokenFinderMockTest
+class TokenFinderStubTest
 extends \Tests\TestCase
 {
 
     /**
-     * @covers \Tests\Mock\TokenFinderMock::__construct
+     * @covers \Tests\Stub\TokenFinderStub::__construct
      */
     public function testConstruct()
     {
         $result = new Result();
-        $mock = new TokenFinderMock($result);
-        $this->assertSame($result, $mock->result);
+        $stub = new TokenFinderStub($result);
+        $this->assertSame($result, $stub->result);
     }
 
     /**
@@ -31,7 +31,7 @@ extends \Tests\TestCase
     public function findProvider()
     {
         $data = array();
-        $path = '/TokenFinder/Mock/';
+        $path = '/TokenFinder/Stub/';
 
         #0
         $data[] = array(
@@ -46,12 +46,12 @@ extends \Tests\TestCase
 
     /**
      * @dataProvider findProvider
-     * @covers \Tests\Mock\TokenFinderMock::find
-     * @covers \Tests\Mock\TokenFinderMock::<protected>
+     * @covers \Tests\Stub\TokenFinderStub::find
+     * @covers \Tests\Stub\TokenFinderStub::<protected>
      */
     public function testFind($token, $params, $container, $expectedResult)
     {
-        $finder = new TokenFinderMock($expectedResult);
+        $finder = new TokenFinderStub($expectedResult);
         $actualResult = $finder->find($token, $container, $params);
         $this->assertFinderResultsMatch($expectedResult, $actualResult);
     }

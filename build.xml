@@ -79,7 +79,7 @@
         </exec>
     </target>
 
-    <!-- Run PHPUnit for Tests (Constraints, Mocks, TestCase, Util, ... ) -->
+    <!-- Run PHPUnit for Tests (Constraints, Stubs, TestCase, Util, ... ) -->
     <target name="phpunitTestcode">
         <exec dir="${basedir}/tests/"
             executable="phpunit"

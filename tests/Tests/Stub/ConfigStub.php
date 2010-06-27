@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Mock;
+namespace Tests\Stub;
 
 use PHP\Manipulator\Config;
 
-class ConfigMock extends Config
+class ConfigStub extends Config
 {
     /**
      * @var mixed
