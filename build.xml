@@ -17,6 +17,16 @@
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
+    <!-- Generate apidocs with doxygen -->
+    <target name="apidocs">
+        <delete dir="${basedir}/build/apidocs" failonerror="false" />
+        <mkdir dir="${basedir}/build/apidocs" />
+        <exec dir="${basedir}"
+            executable="doxygen"
+            failonerror="true">
+        </exec>
+    </target>
+
     <!-- Run php lint check on lib, tests and fixtures -->
     <target name="phplint">
         <parallel threadCount="4" failonany="true">
