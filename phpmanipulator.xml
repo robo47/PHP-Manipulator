@@ -4,7 +4,7 @@
         <actionset name="PHPManipulator" />
     </actions>
     <files>
-        <directory>./library/PHP/</directory>
+        <directory>./PHP/</directory>
         <directory>./tests/Baa/</directory>
         <directory>./tests/Foo/</directory>
         <directory>./tests/Tests/</directory>

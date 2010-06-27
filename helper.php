@@ -48,7 +48,7 @@ switch ($type) {
 
 $name = $_SERVER['argv'][2];
 
-$newFile = './library/PHP/Manipulator/' . $typeName . '/' . $name . '.php';
+$newFile = './PHP/Manipulator/' . $typeName . '/' . $name . '.php';
 $newTestFile = './tests/Tests/PHP/Manipulator/' . $typeName . '/' . $name . 'Test.php';
 
 if (file_exists($newTestFile) || file_exists($newFile)) {
