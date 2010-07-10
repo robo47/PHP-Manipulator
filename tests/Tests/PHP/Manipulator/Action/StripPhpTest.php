@@ -37,13 +37,6 @@ class StripPhpTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output0.php'),
         );
 
-        #1
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
         return $data;
     }
 
