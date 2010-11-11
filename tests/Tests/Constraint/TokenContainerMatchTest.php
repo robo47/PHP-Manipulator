@@ -108,7 +108,7 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
             $tokenContainerMatch = new TokenContainerMatch('foo', false);
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\TokenContainerMatch::__construct() is no PHP\Manipulator\TokenContainer', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\TokenContainerMatch::__construct() must be a PHP\Manipulator\TokenContainer', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -121,7 +121,7 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
             $tokenContainerMatch = new TokenContainerMatch(new TokenContainer(), 'false');
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #2 of Tests\Constraint\TokenContainerMatch::__construct() is no boolean', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #2 of Tests\Constraint\TokenContainerMatch::__construct() must be a boolean', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -135,7 +135,7 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
             $tokenContainerMatch->evaluate('string');
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\TokenContainerMatch::evaluate() is no PHP\Manipulator\TokenContainer', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\TokenContainerMatch::evaluate() must be a PHP\Manipulator\TokenContainer', $e->getMessage(), 'Wrong exception message');
         }
     }
 

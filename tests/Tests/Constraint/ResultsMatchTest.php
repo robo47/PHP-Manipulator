@@ -108,7 +108,7 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
             $count = new ResultsMatch('0');
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::__construct() is no PHP\\Manipulator\\Tokenfinder\\Result', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::__construct() must be a PHP\\Manipulator\\Tokenfinder\\Result', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -123,7 +123,7 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
             $resultsMatch->evaluate('foo');
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::evaluate() is no PHP\\Manipulator\\Tokenfinder\\Result', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\ResultsMatch::evaluate() must be a PHP\\Manipulator\\Tokenfinder\\Result', $e->getMessage(), 'Wrong exception message');
         }
     }
 

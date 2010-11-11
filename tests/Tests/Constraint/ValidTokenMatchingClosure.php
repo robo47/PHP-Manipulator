@@ -23,7 +23,7 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
     public function evaluate($other)
     {
         if (!$other instanceof \Closure) {
-             $this->_cause = 'Variable is no Closure';
+             $this->_cause = 'Variable must be a Closure';
             return false;
         }
 

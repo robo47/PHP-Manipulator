@@ -208,7 +208,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
             $count = new Count('0');
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\Count::__construct() is no integer', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\Count::__construct() must be a integer', $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -223,7 +223,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
             $count->evaluate("foo");
             $this->fail('Expected exception not thrown');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals('Argument #1 of Tests\Constraint\Count::evaluate() is no countable type', $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals('Argument #1 of Tests\Constraint\Count::evaluate() must be a countable type', $e->getMessage(), 'Wrong exception message');
         }
     }
 

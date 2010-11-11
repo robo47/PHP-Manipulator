@@ -125,7 +125,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
         $valid = new ValidTokenMatchingClosure();
         $valid->evaluate($other);
 
-        $message = 'Variable is no Closure';
+        $message = 'Variable must be a Closure';
 
         try {
             $valid->fail($other, '');

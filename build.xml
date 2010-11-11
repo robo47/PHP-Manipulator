@@ -52,7 +52,7 @@
     <target name="phpcpd">
         <exec dir="${basedir}"
             executable="phpcpd"
-            failonerror="true">
+            failonerror="false">
             <arg line="--log-pmd &quot;${basedir}/build/logs/pmd.xml&quot; &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
@@ -61,7 +61,7 @@
     <target name="pdepend">
         <exec dir="${basedir}"
             executable="pdepend"
-            failonerror="true">
+            failonerror="false">
             <arg line="--jdepend-xml=&quot;${basedir}/build/logs/jdepend.xml&quot; &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
@@ -72,7 +72,7 @@
             executable="phpcs"
             output="${basedir}/build/logs/checkstyle.xml"
             failonerror="false">
-            <arg line="--report=checkstyle --standard=robo47 &quot;${basedir}/PHP&quot;"/>
+            <arg line="--report=checkstyle --standard=ZF2 &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
 
@@ -80,7 +80,7 @@
     <target name="phpunit">
         <exec dir="${basedir}/tests/"
             executable="phpunit"
-            failonerror="true">
+            failonerror="false">
             <arg line="--no-configuration
                        --configuration &quot;${basedir}/tests/phpunit.xml&quot;
                        --log-junit &quot;${basedir}/build/logs/junit.xml&quot;
@@ -182,7 +182,7 @@
         <exec executable="sloccount"
               dir="${basedir}"
               output="${basedir}/build/logs/sloccount.sc"
-              failonerror="true">
+              failonerror="false">
             <arg line="--duplicates --wide --details --addlangall --datadir &quot;${basedir}/build/logs/sloccount/&quot; &quot;${basedir}/PHP/&quot;"/>
         </exec>
     </target>
@@ -190,7 +190,7 @@
     <!-- Build complete Project -->
     <target name="build" depends="clean, prepare" >
         <antcall target="phplint" />
-        <parallel threadCount="4" failonany="true">
+        <parallel threadCount="8" failonany="true">
             <antcall target="phpunit" />
             <antcall target="phpcs" />
             <antcall target="phpcpd" />
