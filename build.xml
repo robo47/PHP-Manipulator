@@ -82,10 +82,10 @@
             executable="phpunit"
             failonerror="false">
             <arg line="--no-configuration
-                       --configuration &quot;${basedir}/tests/phpunit.xml&quot;
-                       --log-junit &quot;${basedir}/build/logs/junit.xml&quot;
+                       --configuration &quot;${basedir}/tests/phpunit.xml.dist&quot;
+                       --log-junit &quot;${basedir}/build/logs/junit-lib.xml&quot;
                        --coverage-html &quot;${basedir}/build/logs/coverage/&quot;
-                       --coverage-clover &quot;${basedir}/build/logs/clover.xml&quot;" />
+                       --coverage-clover &quot;${basedir}/build/logs/clover-lib.xml&quot;" />
         </exec>
     </target>
 
@@ -95,7 +95,10 @@
             executable="phpunit"
             failonerror="true">
             <arg line="--no-configuration
-                       --configuration &quot;${basedir}/tests/phpunitTests.xml&quot;" />
+                       --configuration &quot;${basedir}/tests/phpunitTests.xml.dist&quot;
+                       --log-junit &quot;${basedir}/build/logs/junit-tests.xml&quot;
+                       --coverage-html &quot;${basedir}/build/logs/coverage-tests/&quot;
+                       --coverage-clover &quot;${basedir}/build/logs/clover-tests.xml&quot;" />
         </exec>
     </target>
 
