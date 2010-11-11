@@ -84,7 +84,7 @@
             <arg line="--no-configuration
                        --configuration &quot;${basedir}/tests/phpunit.xml.dist&quot;
                        --log-junit &quot;${basedir}/build/logs/junit-lib.xml&quot;
-                       --coverage-html &quot;${basedir}/build/logs/coverage/&quot;
+                       --coverage-html &quot;${basedir}/build/reports/coverage-lib/&quot;
                        --coverage-clover &quot;${basedir}/build/logs/clover-lib.xml&quot;" />
         </exec>
     </target>
@@ -97,7 +97,7 @@
             <arg line="--no-configuration
                        --configuration &quot;${basedir}/tests/phpunitTests.xml.dist&quot;
                        --log-junit &quot;${basedir}/build/logs/junit-tests.xml&quot;
-                       --coverage-html &quot;${basedir}/build/logs/coverage-tests/&quot;
+                       --coverage-html &quot;${basedir}/build/reports/coverage-tests/&quot;
                        --coverage-clover &quot;${basedir}/build/logs/clover-tests.xml&quot;" />
         </exec>
     </target>
