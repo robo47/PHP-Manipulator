@@ -8,21 +8,21 @@
     convertWarningsToExceptions="true"
     processIsolation="false"
     syntaxCheck="false"
-    bootstrap="TestHelper.php">
+    bootstrap="./tests/TestHelper.php">
     <filter>
         <whitelist>
-            <directory>./Tests/Constraint/</directory>
-            <directory>./Tests/Stub/</directory>
-            <file>./Tests/Util.php</file>
-            <file>./Tests/TestCase.php</file>
+            <directory>./tests/Tests/Constraint/</directory>
+            <directory>./tests/Tests/Stub/</directory>
+            <file>./tests/Tests/Util.php</file>
+            <file>./tests/Tests/TestCase.php</file>
             <exclude>
-                <directory suffix="Test.php">./Tests/</directory>
+                <directory suffix="Test.php">./tests/Tests/</directory>
             </exclude>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-html"
-             target="./tmp/testsreport"
+             target="./tests/tmp/testsreport"
              charset="UTF-8"
              yui="true"
              highlight="false"
@@ -31,10 +31,10 @@
     </logging>
     <testsuites>
         <testsuite name="PHP\Manipulator Tests-Test Suite">
-            <directory suffix="Test.php">./Tests/Constraint/</directory>
-            <directory suffix="Test.php">./Tests/Stub/</directory>
-            <file>./Tests/UtilTest.php</file>
+            <directory suffix="Test.php">./tests/Tests/Constraint/</directory>
+            <directory suffix="Test.php">./tests/Tests/Stub/</directory>
+            <file>./tests/Tests/UtilTest.php</file>
             <file>./Tests/TestCaseTest.php</file>
-        </testsuite>
+        </testsuite>tests/
     </testsuites>
 </phpunit>

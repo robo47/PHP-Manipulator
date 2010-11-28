@@ -2,7 +2,7 @@
 <config>
     <files>
         <iterator>
-            <path>./tests/_fixtures/Config/testDir2</path>
+            <path>./_fixtures/Config/testDir2</path>
             <size>== 0</size>
         </iterator>
     </files>

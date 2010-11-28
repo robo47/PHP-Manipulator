@@ -129,7 +129,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     public function testGetXmlConfig()
     {
         $test = new TestCase();
-        $config = $test->getXmlConfig(0);
+        $config = $test->getXmlConfig(1);
         $this->assertType('\PHP\Manipulator\Config\Xml', $config);
         $this->markTestIncomplete('test right file was loaded ?');
     }

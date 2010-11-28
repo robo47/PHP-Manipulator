@@ -14,8 +14,8 @@
     <target name="prepare">
         <exec dir="${basedir}"
             executable="git"
-            failonerror="true git://github.com/symfony/symfony.git ./symfony">
-            <arg line=" clone />
+            failonerror="true">
+            <arg line=" clone git://github.com/symfony/symfony.git ./symfony" />
         </exec>
         <mkdir dir="${basedir}/build/logs" />
         <mkdir dir="${basedir}/build/docs" />
@@ -35,7 +35,7 @@
 
     <!-- Run php lint check on lib, tests and fixtures -->
     <target name="phplint">
-        <parallel threadCount="4" failonany="true">
+        <parallel threadCount="8" failonany="true">
             <apply executable   = "php"
                    failonerror  = "true">
                 <arg value="-nl" />
@@ -46,9 +46,33 @@
             <apply executable   = "php"
                    failonerror  = "true">
                 <arg value="-nl" />
-                <fileset dir="tests/">
+                <fileset dir="tests/Tests">
                     <include name="**/*.php" />
-                    <include name="**/phtml" />
+                    <include name="**/*.phtml" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-nl" />
+                <fileset dir="tests/Baa">
+                    <include name="**/*.php" />
+                    <include name="**/*.phtml" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-nl" />
+                <fileset dir="tests/Foo">
+                    <include name="**/*.php" />
+                    <include name="**/*.phtml" />
+                </fileset>
+            </apply>
+            <apply executable   = "php"
+                   failonerror  = "true">
+                <arg value="-nl" />
+                <fileset dir="tests/_fixtures">
+                    <include name="**/*.php" />
+                    <include name="**/*.phtml" />
                 </fileset>
             </apply>
         </parallel>
@@ -88,7 +112,7 @@
             executable="phpunit"
             failonerror="false">
             <arg line="--no-configuration
-                       --configuration &quot;${basedir}/tests/phpunit.xml.dist&quot;
+                       --configuration &quot;${basedir}/phpunit.xml.dist&quot;
                        --log-junit &quot;${basedir}/build/logs/junit-lib.xml&quot;
                        --coverage-html &quot;${basedir}/build/reports/coverage-lib/&quot;
                        --coverage-clover &quot;${basedir}/build/logs/clover-lib.xml&quot;" />
@@ -101,7 +125,7 @@
             executable="phpunit"
             failonerror="true">
             <arg line="--no-configuration
-                       --configuration &quot;${basedir}/tests/phpunitTests.xml.dist&quot;
+                       --configuration &quot;${basedir}/phpunitTests.xml.dist&quot;
                        --log-junit &quot;${basedir}/build/logs/junit-tests.xml&quot;
                        --coverage-html &quot;${basedir}/build/reports/coverage-tests/&quot;
                        --coverage-clover &quot;${basedir}/build/logs/clover-tests.xml&quot;" />
@@ -120,7 +144,6 @@
 
     <!-- Create pear package -->
     <target name="package">
-
         <tstamp>
             <format property="pear_package_date" pattern="yyyy-MM-dd"/>
         </tstamp>

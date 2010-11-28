@@ -56,8 +56,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getContainerFromFixture($filename)
     {
-        $code = $this->getFixtureFileContent($filename);
-        return new TokenContainer($code);
+        return new TokenContainer(
+            $this->getFixtureFileContent($filename)
+        );
     }
 
     /**
@@ -196,7 +197,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function getXmlConfig($number)
     {
-        $path = 'tests/_fixtures/Config/config' . $number . '.xml';
-        return Config::factory('xml', $path, true);
+        return Config::factory(
+            'xml',
+            TESTS_PATH . '/_fixtures/Config/config' . $number . '.xml'
+            , true
+        );
     }
 }

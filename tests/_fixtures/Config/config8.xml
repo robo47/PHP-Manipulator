@@ -2,7 +2,7 @@
 <config>
     <files>
         <iterator>
-            <path>./tests/_fixtures/Config</path>
+            <path>./_fixtures/Config</path>
             <exclude>testDir0</exclude>
             <exclude>testDir1</exclude>
             <exclude>testDir2</exclude>

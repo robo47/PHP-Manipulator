@@ -35,3 +35,6 @@ $classLoader->register();
 if (!file_exists(TESTS_PATH . '/tmp')) {
     mkdir(TESTS_PATH . '/tmp');
 }
+
+// For all relative paths to work as expected we set current dir (cwd) to the tests paths
+chdir(TESTS_PATH);
