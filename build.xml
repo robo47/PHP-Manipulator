@@ -3,6 +3,7 @@
 
     <!-- Clean Project -->
     <target name="clean">
+        <delete dir="${basedir}/symfony"          failonerror="false" />
         <delete dir="${basedir}/build"          failonerror="false" />
         <delete dir="${basedir}/tests/tmp"      failonerror="false" />
         <delete dir="${basedir}/website/api"    failonerror="false" />
@@ -11,6 +12,11 @@
 
     <!-- Prepare -->
     <target name="prepare">
+        <exec dir="${basedir}"
+            executable="git"
+            failonerror="true git://github.com/symfony/symfony.git ./symfony">
+            <arg line=" clone />
+        </exec>
         <mkdir dir="${basedir}/build/logs" />
         <mkdir dir="${basedir}/build/docs" />
         <mkdir dir="${basedir}/build/reports" />
