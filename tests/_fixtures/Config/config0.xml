@@ -18,15 +18,15 @@
         <actionset prefix="Foo\Baa\Actionset\" name="SecondActionset" />
     </actions>
     <files>
-        <directory>./_fixtures/Config/testDir0</directory>
-        <file>./_fixtures/Config/testDir1/Baafoo.php</file>
+        <directory>./tests/_fixtures/Config/testDir0</directory>
+        <file>./tests/_fixtures/Config/testDir1/Baafoo.php</file>
         <iterator>
-            <path>./_fixtures/Config/testDir2</path>
+            <path>./tests/_fixtures/Config/testDir2</path>
             <name>*.php</name>
             <name>Baa*</name>
         </iterator>
         <iterator>
-            <path>./_fixtures/Config/testDir3</path>
+            <path>./tests/_fixtures/Config/testDir3</path>
             <name>*.php</name>
         </iterator>
     </files>

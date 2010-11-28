@@ -4,8 +4,8 @@ namespace Tests\PHP\Manipulator\Cli\Command;
 
 use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Command\ShowTokens;
-use Symfony\Components\Console\Input\ArgvInput;
-use Symfony\Components\Console\Output\StreamOutput;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * @group Cli

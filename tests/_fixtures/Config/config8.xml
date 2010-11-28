@@ -2,8 +2,12 @@
 <config>
     <files>
         <iterator>
-            <path>./_fixtures/Config/testDir3</path>
-            <exclude>Baa.php</exclude>
+            <path>./tests/_fixtures/Config</path>
+            <exclude>testDir0</exclude>
+            <exclude>testDir1</exclude>
+            <exclude>testDir2</exclude>
+            <name>*.php</name>
+            <name>*.phtml</name>
         </iterator>
     </files>
 </config>

@@ -6,11 +6,11 @@ use PHP\Manipulator\Config;
 use PHP\Manipulator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\FileContainer;
-use Symfony\Components\Console\Input\InputInterface;
-use Symfony\Components\Console\Output\OutputInterface;
-use Symfony\Components\Console\Command\Command;
-use Symfony\Components\Console\Input\InputOption;
-use Symfony\Foundation\UniversalClassLoader;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\HttpFoundation\UniversalClassLoader;
 
 /**
  * @package PHP\Manipulator

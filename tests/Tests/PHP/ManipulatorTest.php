@@ -3,7 +3,7 @@
 namespace Tests\PHP;
 
 use PHP\Manipulator;
-use Symfony\Components\Finder\Finder;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @group Manipulator

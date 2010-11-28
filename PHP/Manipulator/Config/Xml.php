@@ -3,13 +3,13 @@
 namespace PHP\Manipulator\Config;
 
 use PHP\Manipulator\Config,
-    PHP\Manipulator\Config\Xml;
-use Symfony\Components\Finder\Finder;
+ PHP\Manipulator\Config\Xml;
+use Symfony\Component\Finder\Finder;
 use DOMNode,
-    DOMAttr,
-    DOMDocument,
-    DOMXpath,
-    LibXMLError;
+ DOMAttr,
+ DOMDocument,
+ DOMXpath,
+ LibXMLError;
 use Exception;
 
 /**
@@ -76,9 +76,9 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/options');
         foreach ($list as $node) {
-            /* @var $node DOMNode*/
+            /* @var $node DOMNode */
             foreach ($node->childNodes as $option) {
-                /* @var $option DOMNode*/
+                /* @var $option DOMNode */
                 if ($option->nodeType === XML_ELEMENT_NODE) {
                     $this->_options[$option->nodeName] = $option->nodeValue;
                 }
@@ -156,7 +156,7 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/actions/action');
         foreach ($list as $option) {
-            /* @var $option \DOMNode*/
+            /* @var $option \DOMNode */
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $options = $this->_parseActionOptions($option);
                 $prefix = $option->attributes->getNamedItem('prefix');
@@ -171,7 +171,7 @@ class Xml extends Config
         }
     }
 
-   /**
+    /**
      * @param \DOMDocument $dom
      */
     protected function _parseActionsets(DOMDocument $document)
@@ -179,7 +179,7 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/actions/actionset');
         foreach ($list as $option) {
-            /* @var $option \DOMNode*/
+            /* @var $option \DOMNode */
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $prefix = $option->attributes->getNamedItem('prefix');
                 if ($prefix instanceof DOMAttr) {
@@ -202,7 +202,7 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/files/file');
         foreach ($list as $option) {
-            /* @var $option \DOMNode*/
+            /* @var $option \DOMNode */
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $this->addFile($option->nodeValue);
             }
@@ -217,7 +217,7 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/files/iterator');
         foreach ($list as $option) {
-            /* @var $option \DOMNode*/
+            /* @var $option \DOMNode */
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $iterator = $this->_parseIterator($option);
                 if ($iterator instanceof \Iterator) {
@@ -235,7 +235,7 @@ class Xml extends Config
         $xpath = new DOMXpath($document);
         $list = $xpath->query('//config/files/directory');
         foreach ($list as $option) {
-            /* @var $option \DOMNode*/
+            /* @var $option \DOMNode */
             if ($option->nodeType === XML_ELEMENT_NODE) {
                 $this->addDirectory($option->nodeValue);
             }
@@ -286,7 +286,7 @@ class Xml extends Config
         $list = $xpath->query('//config/classloaders/classloader');
         /* @var $list DOMNodeList */
         foreach ($list as $classLoader) {
-            /* @var $classLoader DOMNode*/
+            /* @var $classLoader DOMNode */
             $attributes = $this->_getAttributesAsArray($classLoader);
             if (isset($attributes['namespace'], $attributes['path'])) {
                 $this->addClassLoader($attributes['namespace'], $attributes['path']);
@@ -308,4 +308,5 @@ class Xml extends Config
         }
         return $attributes;
     }
+
 }

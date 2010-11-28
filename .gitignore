@@ -1,7 +1,7 @@
-_priv
-nbproject
-build
-tests/tmp
-Symfony
-catalog.xml
-package.xml
+/_priv/
+/nbproject/
+/build
+/tests/tmp
+/symfony/
+/catalog.xml
+/package.xml

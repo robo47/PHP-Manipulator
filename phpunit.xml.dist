@@ -8,15 +8,15 @@
     convertWarningsToExceptions="true"
     processIsolation="false"
     syntaxCheck="false"
-    bootstrap="TestHelper.php">
+    bootstrap="./tests/TestHelper.php">
     <filter>
         <whitelist>
-            <directory suffix=".php">../PHP/</directory>
+            <directory suffix=".php">./PHP/</directory>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-html"
-             target="./tmp/report"
+             target="./tests/tmp/report"
              charset="UTF-8"
              yui="true"
              highlight="false"
@@ -25,7 +25,7 @@
     </logging>
     <testsuites>
         <testsuite name="PHP\Manipulator Test Suite">
-            <directory>./Tests/PHP/</directory>
+            <directory>./tests/Tests/PHP/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

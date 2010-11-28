@@ -64,17 +64,17 @@ class XmlTest extends \Tests\TestCase
         $files = $config->getFiles();
         $this->assertType('array', $files);
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Blub.phtml', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir1/Baafoo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir0/Blub.phtml', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir1/Baafoo.php', $files);
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Baafoo.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Baa.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Blub.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Baa.phtml', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Baafoo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Baa.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Foo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Blub.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Baa.phtml', $files);
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Baa.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Foo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir3/Baa.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir3/Foo.php', $files);
 
         $this->assertCount(9, $files);
     }
@@ -169,8 +169,8 @@ class XmlTest extends \Tests\TestCase
 
         $files = $config->getFiles();
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Blub.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Foo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Blub.php', $files);
 
         $this->assertCount(2, $files);
     }
@@ -184,14 +184,15 @@ class XmlTest extends \Tests\TestCase
 
         $files = $config->getFiles();
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Baa.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Blub.phtml', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir2/Foo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Baa.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Blub.phtml', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir2/Foo.php', $files);
 
         $this->assertCount(3, $files);
     }
 
     /**
+     * @group foo
      * @covers \PHP\Manipulator\Config\Xml::_parseIterator
      */
     public function testIteratorWithExclude()
@@ -200,10 +201,11 @@ class XmlTest extends \Tests\TestCase
 
         $files = $config->getFiles();
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Foo.php', $files);
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir3/Blub.phtml', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir3/Foo.php', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir3/Blub.phtml', $files);
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir3/Baa.php', $files);
 
-        $this->assertCount(2, $files);
+        $this->assertCount(3, $files);
     }
 
     /**
@@ -213,7 +215,7 @@ class XmlTest extends \Tests\TestCase
     public function testLoadingDefectXmlThrowsException()
     {
         try {
-            $config = $this->getXmlConfig(4);
+            $this->getXmlConfig(4);
             $this->fail('No exception thrown');
         } catch(\Exception $e) {
             $this->assertContains('Unable to parse data: ', $e->getMessage());

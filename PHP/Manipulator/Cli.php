@@ -3,8 +3,8 @@
 namespace PHP\Manipulator;
 
 use PHP\Manipulator;
-use Symfony\Components\Console\Application;
-use Symfony\Components\Finder\Finder;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @package PHP\Manipulator
@@ -41,7 +41,7 @@ class Cli extends Application
         foreach ($fileIterator as $file) {
             /* @var $file SplFileInfo */
             $command = 'PHP\\Manipulator\\Cli\\Command\\' . substr($file->getFilename(), 0, -4);
-            $this->addCommand(new $command);
+            $this->add(new $command);
         }
     }
 }

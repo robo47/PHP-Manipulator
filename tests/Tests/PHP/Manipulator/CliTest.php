@@ -38,7 +38,7 @@ class CliTest extends \Tests\TestCase
     public function testConstruct()
     {
         $cli = new Cli();
-        $commands = $cli->getCommands();
+        $commands = $cli->all();
         // 2 defaults (helpCommand, listCommand)
         // 3 own (ShowTokens, License, RunActions)
         $this->assertCount(2 + 3, $commands);

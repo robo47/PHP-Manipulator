@@ -134,4 +134,13 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($message, $e->getMessage());
         }
     }
+
+    /**
+     * @covers \Tests\Constraint\ValidTokenMatchingClosure::toString
+     */
+    public function testToString()
+    {
+        $valid = new ValidTokenMatchingClosure();
+        $this->assertEquals('Is a valid Token Matching Closure ', $valid->toString());
+    }
 }

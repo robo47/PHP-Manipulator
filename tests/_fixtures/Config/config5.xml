@@ -2,7 +2,7 @@
 <config>
     <files>
         <iterator>
-            <path>./_fixtures/Config/testDir2</path>
+            <path>./tests/_fixtures/Config/testDir2</path>
             <notname>Baa*</notname>
             <name>*.php</name>
         </iterator>

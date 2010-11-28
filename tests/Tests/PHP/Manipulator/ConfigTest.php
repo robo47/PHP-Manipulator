@@ -3,7 +3,7 @@
 namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Config;
-use Symfony\Components\Finder\Finder;
+use Symfony\Component\Finder\Finder;
 use Tests\Stub\ConfigStub;
 
 /**
@@ -111,11 +111,11 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(0, $config->getFiles());
 
-        $fluent = $config->addFile('TestHelper.php');
+        $fluent = $config->addFile('./tests/TestHelper.php');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $config->getFiles());
-        $this->assertContains(getcwd() . '/TestHelper.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/tests/TestHelper.php', $config->getFiles());
     }
 
     /**
@@ -159,12 +159,12 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertCount(0, $config->getFiles());
 
-        $fluent = $config->addDirectory('./_fixtures/Config/testDir0');
+        $fluent = $config->addDirectory('./tests/_fixtures/Config/testDir0');
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(2, $config->getFiles());
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
     }
 
     /**
@@ -179,15 +179,15 @@ class ConfigTest extends \Tests\TestCase
         $this->assertCount(0, $config->getFiles());
 
         $finder = new Finder();
-        $iterator = $finder->files()->name('*.php')->in(getcwd() . '/_fixtures/Config/testDir0');
+        $iterator = $finder->files()->name('*.php')->in(getcwd() . '/tests/_fixtures/Config/testDir0');
 
         $fluent = $config->addIterator($iterator->getIterator());
 
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
 
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
-        $this->assertContains(getcwd() . '/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir0/Baa.php', $config->getFiles());
+        $this->assertContains(getcwd() . '/tests/_fixtures/Config/testDir0/Foo.php', $config->getFiles());
 
         $this->assertCount(2, $config->getFiles());
     }
@@ -362,7 +362,7 @@ class ConfigTest extends \Tests\TestCase
     public function testGetFileContent()
     {
         $file = 'Config/config0.xml';
-        $content = Config::getFileContent('_fixtures/' . $file);
+        $content = Config::getFileContent('tests/_fixtures/' . $file);
         $this->assertEquals($this->getFixtureFileContent($file), $content);
     }
 
@@ -387,10 +387,10 @@ class ConfigTest extends \Tests\TestCase
     {
         $file = 'Config/';
         try {
-            Config::getFileContent('_fixtures/' . $file);
+            Config::getFileContent('tests/_fixtures/' . $file);
             $this->fail('Expected exception not thrown');
         } catch (\Exception $e) {
-            $this->assertEquals("Unable to read file: _fixtures/Config/", $e->getMessage(), 'Wrong exception message');
+            $this->assertEquals("Unable to read file: tests/_fixtures/Config/", $e->getMessage(), 'Wrong exception message');
         }
     }
 
@@ -419,7 +419,7 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithXmlFromFile()
     {
         $file = 'Config/config0.xml';
-        $config = Config::factory('xml', '_fixtures/' . $file, true);
+        $config = Config::factory('xml', 'tests/_fixtures/' . $file, true);
         $this->assertType('PHP\Manipulator\Config\Xml', $config);
     }
 
@@ -429,7 +429,7 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithConfigStubFromFile()
     {
         $file = 'Config/config0.xml';
-        $config = Config::factory('\Tests\Stub\ConfigStub', '_fixtures/' . $file, true);
+        $config = Config::factory('\Tests\Stub\ConfigStub', 'tests/_fixtures/' . $file, true);
         $this->assertType('Tests\Stub\ConfigStub', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }

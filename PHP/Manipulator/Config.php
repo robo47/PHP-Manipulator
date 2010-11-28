@@ -2,7 +2,7 @@
 
 namespace PHP\Manipulator;
 
-use Symfony\Components\Finder\Finder;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @package PHP\Manipulator
