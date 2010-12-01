@@ -8,6 +8,7 @@
     convertWarningsToExceptions="true"
     processIsolation="false"
     syntaxCheck="false"
+    forceCoversAnnotation="true"
     bootstrap="./tests/TestHelper.php">
     <filter>
         <whitelist>
