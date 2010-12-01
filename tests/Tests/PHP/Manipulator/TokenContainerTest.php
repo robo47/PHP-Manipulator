@@ -34,6 +34,20 @@ class TokenContainerTest extends \Tests\TestCase
     }
 
     /**
+     * @covers \PHP\Manipulator\TokenContainer::toArray
+     */
+    public function testToArray()
+    {
+        $tokens = array(
+            0 => Token::factory(';'),
+            1 => Token::factory('('),
+            2 => Token::factory(')'),
+        );
+        $container = new TokenContainer($tokens);
+        $this->assertEquals($tokens, $container->toArray(), 'Container missmatch');
+    }
+
+    /**
      * @covers \PHP\Manipulator\TokenContainer::<protected>
      * @covers \PHP\Manipulator\TokenContainer::__construct
      */
