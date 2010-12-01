@@ -745,10 +745,11 @@ class AHelperTest extends \Tests\TestCase
 
     /**
      * @dataProvider isPrecededByTokenMatchedByClosureProvider
-     * @param Iterator $iterator
+     * @param \Iterator $iterator
      * @param \Closure $closure
      * @param array $allowedTokens
-     * @param <type> $expectedResult
+     * @param boolean $expectedResult
+     * @covers \PHP\Manipulator\AHelper::isPrecededByTokenMatchedByClosure
      */
     public function testIsPrecededByTokenMatchedByClosure($iterator, $closure, $allowedTokens, $expectedResult)
     {

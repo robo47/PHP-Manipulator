@@ -83,6 +83,7 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider resultsProvider
+     * @covers  \Tests\Constraint\ResultsMatch::evaluate
      */
     public function testResultsMatch($other, $expected, $expectedEvaluationResult)
     {
