@@ -51,7 +51,7 @@ class ClosureFactory
     public static function getTypeAndValueClosure($type, $value)
     {
         return function(Token $token) use ($value, $type) {
-            if ($value === $token->getValue() && $type == $token->getType()) {
+            if ($value === $token->getValue() && $type === $token->getType()) {
                 return true;
             }
             return false;
