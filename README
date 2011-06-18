@@ -1,3 +1,29 @@
+Warning - project was never finished - is in a really untested state - only used privately sometimes - many things may not work anymore!
+Wasn't really fast! Call it unused, unsupported, crap :)
+Most of this README is probably wrong by now
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 PHP\Manipulator
 ==============
 
@@ -46,7 +72,7 @@ libraries:
  * Classloader
  * Console
  * Finder
-* PHPUnit 3.4+ (unittests only)
+* PHPUnit 3.5+ (unittests only)
 
 configuration:
 

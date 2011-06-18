@@ -49,6 +49,7 @@ class AddPublicKeywordTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'input2.php'),
             $this->getContainerFromFixture($path . 'output2.php'),
         );
+
         #3 Test it not adds public to anonymous functions
         $data[] = array(
             array(),
@@ -56,7 +57,7 @@ class AddPublicKeywordTest extends \Tests\TestCase
             $this->getContainerFromFixture($path . 'output3.php'),
         );
 
-        #3 Test it works with interfaces too
+        #4 Test it works with interfaces too
         $data[] = array(
             array(),
             $this->getContainerFromFixture($path . 'input4.php'),

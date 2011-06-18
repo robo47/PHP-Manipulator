@@ -110,7 +110,7 @@ class TokenTest extends \Tests\TestCase
     public function testFactoryWithValidInput($input, $value, $type, $linenumber)
     {
         $token = Token::factory($input);
-        $this->assertType('PHP\Manipulator\Token', $token, 'wrong datatype for token');
+        $this->assertInstanceOf('PHP\Manipulator\Token', $token, 'wrong datatype for token');
 
         $this->assertEquals($value, $token->getValue(), 'wrong value');
         $this->assertEquals($type, $token->getType(), 'wrong type');

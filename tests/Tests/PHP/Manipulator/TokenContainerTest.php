@@ -593,7 +593,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container[] = $token3;
 
         $array = $container->toArray();
-        $this->assertType('array', $array);
+        $this->assertInternalType('array', $array);
         $this->assertCount(3, $array);
         $this->assertContains($token1, $array);
         $this->assertContains($token2, $array);
@@ -601,7 +601,7 @@ class TokenContainerTest extends \Tests\TestCase
 
         $container->setArray(array());
         $array = $container->toArray();
-        $this->assertType('array', $array);
+        $this->assertInternalType('array', $array);
         $this->assertCount(0, $array);
     }
 
@@ -613,7 +613,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container = new TokenContainer();
 
         $iterator = $container->getIterator();
-        $this->assertType('PHP\Manipulator\TokenContainer\Iterator', $iterator);
+        $this->assertInstanceOf('PHP\Manipulator\TokenContainer\Iterator', $iterator);
     }
 
     /**
@@ -624,7 +624,7 @@ class TokenContainerTest extends \Tests\TestCase
         $container = new TokenContainer();
 
         $iterator = $container->getReverseIterator();
-        $this->assertType('PHP\Manipulator\TokenContainer\ReverseIterator', $iterator);
+        $this->assertInstanceOf('PHP\Manipulator\TokenContainer\ReverseIterator', $iterator);
     }
 
     /**

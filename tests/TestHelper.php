@@ -3,7 +3,7 @@
 namespace Tests;
 
 use PHP\Manipulator\Autoloader;
-use Symfony\Component\HttpFoundation\UniversalClassLoader;
+use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -20,7 +20,7 @@ $paths[] = SYMFONY_PATH;
 // Include path
 set_include_path(implode($paths, PATH_SEPARATOR));
 
-require_once 'Symfony/Component/HttpFoundation/UniversalClassLoader.php';
+require_once 'Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new UniversalClassLoader();
 $classLoader->registerNamespaces(array(

@@ -67,7 +67,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
         $test = new TestCase();
         $filename = '/TokenFinder/SwitchFinder/input0';
         $container = $test->getContainerFromFixture($filename);
-        $this->assertType('\PHP\Manipulator\TokenContainer', $container);
+        $this->assertInstanceOf('\PHP\Manipulator\TokenContainer', $container);
         $this->assertCount(91, $container);
     }
 
@@ -120,7 +120,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     {
         $test = new TestCase();
         $config = $test->getConfig();
-        $this->assertType('\PHP\Manipulator\Config', $config);
+        $this->assertInstanceOf('\PHP\Manipulator\Config', $config);
     }
 
     /**
@@ -130,7 +130,7 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
     {
         $test = new TestCase();
         $config = $test->getXmlConfig(1);
-        $this->assertType('\PHP\Manipulator\Config\Xml', $config);
+        $this->assertInstanceOf('\PHP\Manipulator\Config\Xml', $config);
         $this->markTestIncomplete('test right file was loaded ?');
     }
 }

@@ -228,8 +228,8 @@ class ConfigTest extends \Tests\TestCase
 
         $actions = $config->getActions();
 
-        $this->assertType('Baa\\Foo\\Action\\ThirdAction', $actions[0]);
-        $this->assertType('Baa\\Foo\\Action\\FourthAction', $actions[1]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\ThirdAction', $actions[0]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FourthAction', $actions[1]);
 
         $this->assertEquals('bla', $actions[0]->getOption('blub'));
         $this->assertEquals('blub', $actions[1]->getOption('bla'));
@@ -255,8 +255,8 @@ class ConfigTest extends \Tests\TestCase
 
         $actions = $config->getActions();
 
-        $this->assertType('Foo\\Baa\\Action\\ThirdAction', $actions[0]);
-        $this->assertType('Foo\\Baa\\Action\\FourthAction', $actions[1]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\ThirdAction', $actions[0]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\FourthAction', $actions[1]);
 
         $this->assertEquals('bla', $actions[0]->getOption('blub'));
         $this->assertEquals('blub', $actions[1]->getOption('bla'));
@@ -280,7 +280,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FirstAction', $actions[0]);
     }
 
     /**
@@ -301,7 +301,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FirstAction', $actions[0]);
 
         $action = $actions[0];
         /* @var $action \Baa\Foo\Action\FirstAction */
@@ -327,7 +327,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('Foo\\Baa\\Action\\FirstAction', $actions[0]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\FirstAction', $actions[0]);
     }
 
     /**
@@ -348,7 +348,7 @@ class ConfigTest extends \Tests\TestCase
 
         $this->assertSame($config, $fluent, 'Does not provide fluent interface');
         $this->assertCount(1, $actions);
-        $this->assertType('Foo\\Baa\\Action\\FirstAction', $actions[0]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\FirstAction', $actions[0]);
 
         $action = $actions[0];
         /* @var $action \Foo\Baa\Action\FirstAction */
@@ -401,7 +401,7 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithXmlFromCode()
     {
         $config = Config::factory('xml', '<config></config>', false);
-        $this->assertType('PHP\\Manipulator\\Config\\Xml', $config);
+        $this->assertInstanceOf('PHP\\Manipulator\\Config\\Xml', $config);
     }
 
     /**
@@ -410,7 +410,7 @@ class ConfigTest extends \Tests\TestCase
     public function testFactoryWithConfigStubFromCode()
     {
         $config = Config::factory('Tests\\Stub\\ConfigStub', '<config></config>', false);
-        $this->assertType('Tests\\Stub\\ConfigStub', $config);
+        $this->assertInstanceOf('Tests\\Stub\\ConfigStub', $config);
         $this->assertEquals('<config></config>', $config->data);
     }
 
@@ -421,7 +421,7 @@ class ConfigTest extends \Tests\TestCase
     {
         $file = 'Config/config0.xml';
         $config = Config::factory('xml', TESTS_PATH . '_fixtures/' . $file, true);
-        $this->assertType('PHP\Manipulator\Config\Xml', $config);
+        $this->assertInstanceOf('PHP\Manipulator\Config\Xml', $config);
     }
 
     /**
@@ -431,7 +431,7 @@ class ConfigTest extends \Tests\TestCase
     {
         $file = 'Config/config0.xml';
         $config = Config::factory('\Tests\Stub\ConfigStub', TESTS_PATH . '_fixtures/' . $file, true);
-        $this->assertType('Tests\Stub\ConfigStub', $config);
+        $this->assertInstanceOf('Tests\Stub\ConfigStub', $config);
         $this->assertEquals($this->getFixtureFileContent($file), $config->data);
     }
 

@@ -9,15 +9,13 @@
     processIsolation="false"
     syntaxCheck="false"
     forceCoversAnnotation="true"
-    bootstrap="./tests/TestHelper.php">
+    bootstrap="tests/TestHelper.php">
     <filter>
         <whitelist>
-            <directory>./tests/Tests/Constraint/</directory>
-            <directory>./tests/Tests/Stub/</directory>
-            <file>./tests/Tests/Util.php</file>
-            <file>./tests/Tests/TestCase.php</file>
+            <directory>./Tests/Constraint/</directory>
+            <directory>./Tests/Stub/</directory>
             <exclude>
-                <directory suffix="Test.php">./tests/Tests/</directory>
+                <directory suffix="Test.php">./Tests/</directory>
             </exclude>
         </whitelist>
     </filter>
@@ -34,8 +32,8 @@
         <testsuite name="PHP\Manipulator Tests-Test Suite">
             <directory suffix="Test.php">./tests/Tests/Constraint/</directory>
             <directory suffix="Test.php">./tests/Tests/Stub/</directory>
-            <file>./tests/Tests/UtilTest.php</file>
+            <file>./Tests/UtilTest.php</file>
             <file>./Tests/TestCaseTest.php</file>
-        </testsuite>tests/
+        </testsuite>
     </testsuites>
 </phpunit>

@@ -2,7 +2,10 @@
 <?php
 
 use PHP\Manipulator\Cli;
-use Symfony\Foundation\UniversalClassLoader;
+use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+// fallback to symfony if not exists via PEAR
+set_include_path(implode(array(get_include_path(), __DIR__ . '/symfony/src/'), PATH_SEPARATOR));
 
 // @todo use http://de3.php.net/manual/en/function.stream-resolve-include-path.php ? would make dependency 5.3.2!
 function findIncludePathForFile($file)
@@ -18,7 +21,7 @@ function findIncludePathForFile($file)
     return $pearPath;
 }
 
-$symfonyPath = findIncludePathForFile('Symfony/Foundation/UniversalClassLoader.php');
+$symfonyPath = findIncludePathForFile('Symfony/Component/ClassLoader/UniversalClassLoader.php');
 if ($symfonyPath === null) {
     echo 'ERROR: PEAR-Path for Symfony not found!';
     exit(1);
@@ -31,7 +34,7 @@ if ($symfonyPath === null) {
 }
 
 // Autoloader
-require_once 'Symfony/Foundation/UniversalClassLoader.php';
+require_once 'Symfony/Component/ClassLoader/UniversalClassLoader.php';
 $classLoader = new UniversalClassLoader();
 $classLoader->registerNamespace('Symfony', $symfonyPath);
 $classLoader->registerNamespace('PHP', $manipulatorPath);

@@ -3,20 +3,39 @@
 
     <!-- Clean Project -->
     <target name="clean">
-        <delete dir="${basedir}/symfony"          failonerror="false" />
         <delete dir="${basedir}/build"          failonerror="false" />
         <delete dir="${basedir}/tests/tmp"      failonerror="false" />
         <delete dir="${basedir}/website/api"    failonerror="false" />
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
-    <!-- Prepare -->
-    <target name="prepare">
+    <!-- Get symfony2 -->
+    <target name="getSymfony2" unless="symfony.exists">
         <exec dir="${basedir}"
             executable="git"
             failonerror="true">
             <arg line=" clone git://github.com/symfony/symfony.git ./symfony" />
         </exec>
+    </target>
+
+    <!-- Update symfony2 -->
+    <target name="updateSymfony2" if="symfony.exists">
+        <echo message="baa" />
+        <exec dir="${basedir}/symfony/"
+            executable="git"
+            failonerror="true">
+            <arg line="pull origin master" />
+        </exec>
+    </target>
+
+    <!-- Prepare -->
+    <target name="prepare">
+        <condition property="symfony.exists">
+            <available type="dir" file="${basedir}/symfony/" />
+        </condition>
+        <antcall target="getSymfony2" />
+        <antcall target="updateSymfony2" />
+        
         <mkdir dir="${basedir}/build/logs" />
         <mkdir dir="${basedir}/build/docs" />
         <mkdir dir="${basedir}/build/reports" />
@@ -221,6 +240,20 @@
 
     <!-- Build complete Project -->
     <target name="build" depends="clean, prepare" >
+        <antcall target="phplint" />
+        <parallel threadCount="8" failonany="true">
+            <antcall target="phpunit" />
+            <antcall target="phpcs" />
+            <antcall target="phpcpd" />
+            <antcall target="pdepend" />
+            <antcall target="sloccount" />
+            <antcall target="phpunitTestcode" />
+        </parallel>
+        <antcall target="phpcb" />
+    </target>
+
+    <!-- Build complete Project -->
+    <target name="buildWithoutClone" depends="clean, prepare" >
         <antcall target="phplint" />
         <parallel threadCount="8" failonany="true">
             <antcall target="phpunit" />

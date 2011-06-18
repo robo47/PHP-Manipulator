@@ -22,7 +22,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
         $instance = $abstractHelper->getClassInstance('Dummy1', 'Baa\\Foo\\', true);
         $this->assertTrue(class_exists('Baa\\Foo\\Dummy1', false), 'Class not loaded');
-        $this->assertType('Baa\\Foo\\Dummy1', $instance, 'Wrong type');
+        $this->assertInstanceOf('Baa\\Foo\\Dummy1', $instance, 'Wrong type');
     }
 
     /**
@@ -33,7 +33,7 @@ class AHelperTest extends \Tests\TestCase
         $abstractHelper = new AHelper();
         $instance = $abstractHelper->getClassInstance('Baa\\Foo\\Dummy2', '', false);
         $this->assertTrue(class_exists('Baa\\Foo\\Dummy2', false), 'Class not loaded');
-        $this->assertType('Baa\\Foo\\Dummy2', $instance, 'Wrong type');
+        $this->assertInstanceOf('Baa\\Foo\\Dummy2', $instance, 'Wrong type');
     }
 
     /**

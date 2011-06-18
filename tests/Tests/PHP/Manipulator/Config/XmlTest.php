@@ -21,7 +21,7 @@ class XmlTest extends \Tests\TestCase
         $config = $this->getXmlConfig(0);
 
         $options = $config->getOptions();
-        $this->assertType('array', $options);
+        $this->assertInternalType('array', $options);
 
         $this->assertArrayHasKey('actionPrefix', $options);
         $this->assertEquals('Baa\\Foo\\Action\\', $options['actionPrefix']);
@@ -36,33 +36,33 @@ class XmlTest extends \Tests\TestCase
         $this->assertEquals("\n", $options['defaultNewline']);
 
         $actions = $config->getActions();
-        $this->assertType('array', $actions);
+        $this->assertInternalType('array', $actions);
 
-        $this->assertType('Baa\\Foo\\Action\\FirstAction', $actions[0]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FirstAction', $actions[0]);
 
         $this->assertEquals('foo', $actions[0]->getOption('baa'));
 
-        $this->assertType('Foo\\Baa\\Action\\SecondAction', $actions[1]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\SecondAction', $actions[1]);
         $this->assertEquals('baa', $actions[1]->getOption('foo'));
         $this->assertTrue($actions[1]->getOption('someTrueBoolean'));
         $this->assertFalse($actions[1]->getOption('someFalseBoolean'));
 
-        $this->assertType('Baa\\Foo\\Action\\ThirdAction', $actions[2]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\ThirdAction', $actions[2]);
         $this->assertEquals('bla', $actions[2]->getOption('blub'));
 
-        $this->assertType('Baa\\Foo\\Action\\FourthAction', $actions[3]);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FourthAction', $actions[3]);
         $this->assertEquals('blub', $actions[3]->getOption('bla'));
 
-        $this->assertType('Foo\\Baa\\Action\\FifthAction', $actions[4]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\FifthAction', $actions[4]);
         $this->assertEquals('foo', $actions[4]->getOption('baa'));
 
-        $this->assertType('Foo\\Baa\\Action\\SixthsAction', $actions[5]);
+        $this->assertInstanceOf('Foo\\Baa\\Action\\SixthsAction', $actions[5]);
         $this->assertEquals('baa', $actions[5]->getOption('foo'));
 
         $this->assertCount(6, $actions);
 
         $files = $config->getFiles();
-        $this->assertType('array', $files);
+        $this->assertInternalType('array', $files);
 
         $this->assertContains(TESTS_PATH . '_fixtures/Config/testDir0/Blub.phtml', $files);
         $this->assertContains(TESTS_PATH . '_fixtures/Config/testDir1/Baafoo.php', $files);
@@ -87,42 +87,42 @@ class XmlTest extends \Tests\TestCase
         $config = $this->getXmlConfig(2);
 
         $actions = $config->getActions();
-        $this->assertType('array', $actions);
+        $this->assertInternalType('array', $actions);
         $this->assertCount(1, $actions);
 
         $action = $actions[0];
 
-        $this->assertType('Baa\\Foo\\Action\\FirstAction', $action);
+        $this->assertInstanceOf('Baa\\Foo\\Action\\FirstAction', $action);
         /* @var $action \PHP\Manipulator\Action */
 
-        $this->assertType('integer', $action->getOption('integerOne'));
+        $this->assertInternalType('integer', $action->getOption('integerOne'));
         $this->assertSame(1, $action->getOption('integerOne'));
 
-        $this->assertType('integer', $action->getOption('integerTwenty'));
+        $this->assertInternalType('integer', $action->getOption('integerTwenty'));
         $this->assertSame(20, $action->getOption('integerTwenty'));
 
-        $this->assertType('bool', $action->getOption('booleanTrue'));
+        $this->assertInternalType('bool', $action->getOption('booleanTrue'));
         $this->assertSame(true, $action->getOption('booleanTrue'));
 
-        $this->assertType('bool', $action->getOption('booleanFalse'));
+        $this->assertInternalType('bool', $action->getOption('booleanFalse'));
         $this->assertSame(false, $action->getOption('booleanFalse'));
 
-        $this->assertType('array', $action->getOption('array'));
+        $this->assertInternalType('array', $action->getOption('array'));
         $this->assertEquals(array('foo'), $action->getOption('array'));
 
-        $this->assertType('object', $action->getOption('object'));
+        $this->assertInternalType('object', $action->getOption('object'));
         $this->assertEquals((object) 'foo', $action->getOption('object'));
 
-        $this->assertType('float', $action->getOption('real'));
+        $this->assertInternalType('float', $action->getOption('real'));
         $this->assertEquals(1.23, $action->getOption('real'));
 
-        $this->assertType('float', $action->getOption('float'));
+        $this->assertInternalType('float', $action->getOption('float'));
         $this->assertEquals(1.23, $action->getOption('float'));
 
-        $this->assertType('float', $action->getOption('double'));
+        $this->assertInternalType('float', $action->getOption('double'));
         $this->assertEquals(1.23, $action->getOption('double'));
 
-        $this->assertType('string', $action->getOption('linebreaks'));
+        $this->assertInternalType('string', $action->getOption('linebreaks'));
         $this->assertEquals("\n\r\n\r", $action->getOption('linebreaks'));
 
         $this->assertCount(10, $action->getOptions());
