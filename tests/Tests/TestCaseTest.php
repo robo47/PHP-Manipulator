@@ -71,13 +71,6 @@ class TestCaseTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(91, $container);
     }
 
-    /**
-     * @covers \Tests\Testcase::assertCount
-     */
-    public function testAssertCount()
-    {
-        $this->markTestIncomplete('not implemented yet');
-    }
 
     /**
      * @covers \Tests\Testcase::assertTokenMatch

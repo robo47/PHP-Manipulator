@@ -64,26 +64,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two Tokens Match
      *
-     * @param integer $expectedToken
-     * @param \PHP\Manipulator\Token $actualToken
-     * @param boolean $strict
-     */
-    public function assertCount($expectedCount, $element, $message = '')
-    {
-        $constraint = new Count(
-            $expectedCount
-        );
-
-        self::assertThat(
-            $element,
-            $constraint,
-            $message
-        );
-    }
-
-    /**
-     * Compares if two Tokens Match
-     *
      * @param \PHP\Manipulator\Token $expectedToken
      * @param \PHP\Manipulator\Token $actualToken
      * @param boolean $strict
