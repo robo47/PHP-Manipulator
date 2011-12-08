@@ -9,33 +9,14 @@
         <mkdir dir="${basedir}/tests/tmp" />
     </target>
 
-    <!-- Get symfony2 -->
-    <target name="getSymfony2" unless="symfony.exists">
-        <exec dir="${basedir}"
-            executable="git"
-            failonerror="true">
-            <arg line=" clone git://github.com/symfony/symfony.git ./symfony" />
-        </exec>
-    </target>
-
-    <!-- Update symfony2 -->
-    <target name="updateSymfony2" if="symfony.exists">
-        <echo message="baa" />
-        <exec dir="${basedir}/symfony/"
-            executable="git"
-            failonerror="true">
-            <arg line="pull origin master" />
-        </exec>
-    </target>
-
     <!-- Prepare -->
     <target name="prepare">
-        <condition property="symfony.exists">
-            <available type="dir" file="${basedir}/symfony/" />
-        </condition>
-        <antcall target="getSymfony2" />
-        <antcall target="updateSymfony2" />
-        
+                <exec dir="${basedir}"
+            executable="git"
+            failonerror="true">
+                <arg line=" submodule update --init --recursive"/>
+        </exec>
+
         <mkdir dir="${basedir}/build/logs" />
         <mkdir dir="${basedir}/build/docs" />
         <mkdir dir="${basedir}/build/reports" />
@@ -121,7 +102,7 @@
             executable="phpcs"
             output="${basedir}/build/logs/checkstyle.xml"
             failonerror="false">
-            <arg line="--report=checkstyle --standard=ZF2 &quot;${basedir}/PHP&quot;"/>
+            <arg line="--report=checkstyle --standard=Symfony2 &quot;${basedir}/PHP&quot;"/>
         </exec>
     </target>
 
@@ -227,40 +208,13 @@
         <!-- @todo Test the package contains the right files ? -->
     </target>
 
-    <!-- Run Sloccount -->
-    <target name="sloccount">
-        <mkdir dir="${basedir}/build/logs/sloccount/" />
-        <exec executable="sloccount"
-              dir="${basedir}"
-              output="${basedir}/build/logs/sloccount.sc"
-              failonerror="false">
-            <arg line="--duplicates --wide --details --addlangall --datadir &quot;${basedir}/build/logs/sloccount/&quot; &quot;${basedir}/PHP/&quot;"/>
-        </exec>
-    </target>
-
     <!-- Build complete Project -->
     <target name="build" depends="clean, prepare" >
-        <antcall target="phplint" />
         <parallel threadCount="8" failonany="true">
             <antcall target="phpunit" />
             <antcall target="phpcs" />
             <antcall target="phpcpd" />
             <antcall target="pdepend" />
-            <antcall target="sloccount" />
-            <antcall target="phpunitTestcode" />
-        </parallel>
-        <antcall target="phpcb" />
-    </target>
-
-    <!-- Build complete Project -->
-    <target name="buildWithoutClone" depends="clean, prepare" >
-        <antcall target="phplint" />
-        <parallel threadCount="8" failonany="true">
-            <antcall target="phpunit" />
-            <antcall target="phpcs" />
-            <antcall target="phpcpd" />
-            <antcall target="pdepend" />
-            <antcall target="sloccount" />
             <antcall target="phpunitTestcode" />
         </parallel>
         <antcall target="phpcb" />

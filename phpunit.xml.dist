@@ -9,7 +9,7 @@
     processIsolation="false"
     syntaxCheck="false"
     forceCoversAnnotation="true"
-    bootstrap="./tests/TestHelper.php">
+    bootstrap="./tests/bootstrap.php">
     <filter>
         <whitelist>
             <directory suffix=".php">./PHP/</directory>
