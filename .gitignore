@@ -1,7 +1,5 @@
-/_priv/
 /nbproject/
-/build
-/tests/tmp
-/symfony/
-/catalog.xml
-/package.xml
+/docs/build/*
+!/docs/build/.gitkeep
+/build/*
+!/build/phpmd.xml
