@@ -12,7 +12,7 @@
     bootstrap="./tests/bootstrap.php">
     <filter>
         <whitelist>
-            <directory suffix=".php">./PHP/</directory>
+            <directory suffix=".php">./src/PHP/</directory>
         </whitelist>
     </filter>
     <logging>
