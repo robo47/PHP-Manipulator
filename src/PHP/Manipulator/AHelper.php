@@ -13,7 +13,7 @@ use PHP\Manipulator\TokenManipulator;
 
 /**
  * @package PHP\Manipulator
- * @license http://opensource.org/licenses/bsd-license.php The BSD License
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link    http://github.com/robo47/php-manipulator
  * @version @pear_package_version@ (@pear_package_git_hash@)
  * @todo ugly name
