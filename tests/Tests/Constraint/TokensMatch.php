@@ -51,7 +51,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
      * @param \PHP\Manipulator\Token $other
      * @return boolean
      */
-    public function evaluate($other)
+    public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof Token) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
@@ -97,7 +97,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
      * @param boolean $not
      * @return string
      */
-    protected function failureDescription($other, $description, $not)
+    protected function failureDescription($other)
     {
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $this->_expectedToken,

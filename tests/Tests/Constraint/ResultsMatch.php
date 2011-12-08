@@ -40,7 +40,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @param \PHP\Manipulator\Tokenfinder\Result $other
      * @return boolean
      */
-    public function evaluate($other)
+    public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof Result) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
@@ -71,7 +71,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @param boolean $not
      * @return string
      */
-    protected function failureDescription($other, $description, $not)
+    protected function failureDescription($other)
     {
         return 'Results do not match: ' . PHP_EOL .
         'Cause: ' . $this->_cause . PHP_EOL .

@@ -7,9 +7,9 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 error_reporting(E_ALL | E_STRICT);
 
-define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));
+define('BASE_PATH', realpath(__DIR__ . '/../'));
 define('TESTS_PATH', BASE_PATH . '/tests/');
-define('SYMFONY_PATH', BASE_PATH . '/symfony/src/');
+define('SYMFONY_PATH', BASE_PATH . '/vendor/');
 
 $paths = array();
 $paths[] = BASE_PATH . '/';
@@ -20,7 +20,7 @@ $paths[] = SYMFONY_PATH;
 // Include path
 set_include_path(implode($paths, PATH_SEPARATOR));
 
-require_once 'Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once BASE_PATH . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $classLoader = new UniversalClassLoader();
 $classLoader->registerNamespaces(array(

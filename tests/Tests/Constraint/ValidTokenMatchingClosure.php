@@ -20,7 +20,7 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
      * @param \Closure $other
      * @return boolean
      */
-    public function evaluate($other)
+    public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof \Closure) {
              $this->_cause = 'Variable must be a Closure';
@@ -54,7 +54,7 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
      * @param boolean $not
      * @return string
      */
-    protected function failureDescription($other, $description, $not)
+    protected function failureDescription($other)
     {
         return $this->_cause;
     }

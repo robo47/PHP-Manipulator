@@ -48,7 +48,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @param \PHP\Manipulator\TokenContainer $other
      * @return boolean
      */
-    public function evaluate($other)
+    public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof TokenContainer) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
@@ -88,7 +88,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @param string  $description
      * @param boolean $not
      */
-    protected function failureDescription($other, $description, $not)
+    protected function failureDescription($other)
     {
         $containerDiff = Util::compareContainers(
             $this->_expectedContainer,
