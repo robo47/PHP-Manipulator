@@ -25,7 +25,7 @@ require_once BASE_PATH . '/vendor/Symfony/Component/ClassLoader/UniversalClassLo
 $classLoader = new UniversalClassLoader();
 $classLoader->registerNamespaces(array(
     'Symfony' => SYMFONY_PATH,
-    'PHP' => BASE_PATH . '/',
+    'PHP' => BASE_PATH . '/src/',
     'Tests' => TESTS_PATH . '/',
     'Baa' => TESTS_PATH . '/',
     'Foo' => TESTS_PATH . '/',
