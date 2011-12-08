@@ -5,7 +5,7 @@ use PHP\Manipulator\Cli;
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 // fallback to symfony if not exists via PEAR
-set_include_path(implode(array(get_include_path(), __DIR__ . '/symfony/src/'), PATH_SEPARATOR));
+set_include_path(implode(array(get_include_path(), __DIR__ . '/src/', __DIR__ . '/vendor/'), PATH_SEPARATOR));
 
 // @todo use http://de3.php.net/manual/en/function.stream-resolve-include-path.php ? would make dependency 5.3.2!
 function findIncludePathForFile($file)
