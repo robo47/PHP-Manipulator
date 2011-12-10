@@ -72,7 +72,7 @@ libraries:
  * Classloader
  * Console
  * Finder
-* PHPUnit 3.5+ (unittests only)
+* PHPUnit 3.6 (unittests only)
 
 configuration:
 
@@ -84,11 +84,7 @@ asp_tags = On
 Installation
 ------------
 
-PHP\Manipulator can be installed using the PEAR Installer.
-
-    % pear channel-discover pear.robo47.net
-    % pear install robo47/PHP_Manipulator-alpha
-
+@todo
 
 License
 -------
@@ -117,7 +113,8 @@ Project directory/file structure
 
 <pre>
 +-helper/                       # Directory with templates for creating new Classes
-+-PHP/                          # Here the actual PHP\Manipulators Code is located
++-src/
+| +-PHP/                        # Here the actual PHP\Manipulators Code is located
 +-tests/
 | +-Baa/                        # Directory with Dummy-Files for testing Components, the Config and Loading
 | +-Foo/                        # Directory with Dummy-Files for testing Components, the Config and Loading
@@ -135,9 +132,7 @@ Project directory/file structure
 +-README                        # The file you are currently reading
 +-TODO                          # List of todos, whishes, ideas and plans
 +-build.xml                     # ant-build-script used mainly by hudson for running all tools around a build (phpunit, phpcpd, phpcs, phplint, phpunit, ... )
-+-create_pear_package_xml.php   # script for creating package.xml for pear-package
 +-helper.php                    # Simple cli-script to create new Classes + unitests + empty fixture-files
-+-package.xml.dist              # dummy-file for the pear-package.xml
 +-phpmanipulator.xml            # Default configuration for running phpManipulator for enforcing coding-standard for itself by formatting/indenting code the right way (formatting not like expected yet!)
 +-phpmanipulator.php            # the phpmanipulator binary
 </pre>
