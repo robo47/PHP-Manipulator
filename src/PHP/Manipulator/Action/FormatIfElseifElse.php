@@ -15,7 +15,6 @@ use SplStack;
  * @package PHP\Manipulator
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link    http://github.com/robo47/php-manipulator
- * @version @pear_package_version@ (@pear_package_git_hash@)
  * @uses    \PHP\Manipulator\Helper\NewlineDetector
  * @uses    \PHP\Manipulator\TokenConstraint\ContainsNewline
  * @todo    should only apply breaks before/after curly-braces if they are part of an if/else ?!?

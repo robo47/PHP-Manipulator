@@ -9,7 +9,6 @@ use PHP\Manipulator\Action;
  * @package PHP\Manipulator
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link    http://github.com/robo47/php-manipulator
- * @version @pear_package_version@ (@pear_package_git_hash@)
  * @todo Should be the class used by apps not using the CLI ... really needed ?
  * @uses    \PHP\Manipulator\Action
  */
