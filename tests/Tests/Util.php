@@ -66,7 +66,7 @@ class Util
 
             if ($actualIterator->valid() && $expectedIterator->valid()) {
                 $constraint = new TokensMatchConstraint($expectedIterator->current(), $strict);
-                $missmatch = !$constraint->evaluate($actualIterator->current());
+                $missmatch = !$constraint->evaluate($actualIterator->current(), '', true);
             }
 
             $values[] = array(

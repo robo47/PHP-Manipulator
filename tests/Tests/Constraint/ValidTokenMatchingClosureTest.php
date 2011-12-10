@@ -6,20 +6,16 @@ use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Token;
 use Tests\Constraint\TokensMatch;
 
-function foo(Token $blub) {
-
+function foo(Token $blub)
+{
+    
 }
 
+/**
+ * @group ValidTokenMatchingClosure
+ */
 class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::__construct
-     */
-    public function testConstruct()
-    {
-        $token = new ValidTokenMatchingClosure();
-    }
 
     /**
      * @return array
@@ -30,38 +26,46 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
 
         #0
         $data[] = array(
-            function(Token $token) { },
-            true
+          function(Token $token) {
+              
+          },
+          true
         );
 
         #1
         $data[] = array(
-            function(Result $token) { },
-            false
+          function(Result $token) {
+              
+          },
+          false
         );
 
         #2
         $data[] = array(
-            function(Token $token, Result $result) { },
-            false
+          function(Token $token, Result $result) {
+              
+          },
+          false
         );
 
         #3
         $data[] = array(
-            function() { },
-            false
+          function() {
+              
+          },
+          false
         );
 
         #4
         $data[] = array(
-            '',
-            false
+          '',
+          false
         );
 
         #5
         $data[] = array(
-            'foo',
-            false
+          'foo',
+          false
         );
 
         return $data;
@@ -75,7 +79,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     public function testTokensMatch($closure, $expectedResult)
     {
         $valid = new ValidTokenMatchingClosure();
-        $this->assertSame($expectedResult, $valid->evaluate($closure));
+        $this->assertSame($expectedResult, $valid->evaluate($closure, '', true));
     }
 
     /**
@@ -83,14 +87,14 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailAndFailureDescriptionWithWrongTypehint()
     {
-        $other = function(Result $token) { };
+        $other = function(Result $token) {
+              
+          };
         $valid = new ValidTokenMatchingClosure();
-        $valid->evaluate($other);
-
-        $message = 'Closures Token-Parameter has wrong Typehint';
+        $message = 'Failed asserting that Closures Token-Parameter has wrong Typehint.';
 
         try {
-            $valid->fail($other, '');
+            $valid->evaluate($other, '', false);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -102,14 +106,16 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailAndFailureDescriptionWithWrongParameterCount()
     {
-        $other = function(Token $token, Result $result) { };
+        $other = function(Token $token, Result $result) {
+              
+          };
         $valid = new ValidTokenMatchingClosure();
-        $valid->evaluate($other);
 
-        $message = 'Closure does not have 1 required parameter';
+
+        $message = 'Failed asserting that Closure does not have 1 required parameter.';
 
         try {
-            $valid->fail($other, '');
+            $valid->evaluate($other);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -123,12 +129,11 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     {
         $other = '';
         $valid = new ValidTokenMatchingClosure();
-        $valid->evaluate($other);
 
-        $message = 'Variable must be a Closure';
+        $message = 'Failed asserting that Variable must be a Closure.';
 
         try {
-            $valid->fail($other, '');
+            $valid->evaluate($other);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -141,6 +146,8 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $valid = new ValidTokenMatchingClosure();
-        $this->assertEquals('Is a valid Token Matching Closure ', $valid->toString());
+        $this->assertEquals('Is a valid Token Matching Closure ',
+          $valid->toString());
     }
+
 }

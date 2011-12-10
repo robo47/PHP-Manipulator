@@ -6,33 +6,32 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
 {
 
     /**
-     * @var \Closure
-     */
-    protected $_cause = '';
-
-    public function __construct()
-    {
-    }
-
-    /**
      * Evaluate
      *
      * @param \Closure $other
+     * @param  string $description Additional information about the test
+     * @param  bool $returnResult Whether to return a result or throw an exception
      * @return boolean
      */
     public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof \Closure) {
-             $this->_cause = 'Variable must be a Closure';
-            return false;
+            $this->_cause = 'Variable must be a Closure';
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         $reflection = new \ReflectionFunction($other);
 
         $requiredParameters = new \PHPUnit_Framework_Constraint_IsEqual(1);
-        if (false === $requiredParameters->evaluate($reflection->getNumberOfRequiredParameters())) {
+        if (false === $requiredParameters->evaluate($reflection->getNumberOfRequiredParameters(), $description, true)) {
             $this->_cause = 'Closure does not have 1 required parameter';
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         $params = $reflection->getParameters();
@@ -40,9 +39,12 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
         /* @var $tokenParameter \ReflectionParameter */
 
         $parameterType = new \PHPUnit_Framework_Constraint_IsEqual('PHP\Manipulator\Token');
-        if (false === $parameterType->evaluate($tokenParameter->getClass()->name)) {
+        if (false === $parameterType->evaluate($tokenParameter->getClass()->name, $description, true)) {
             $this->_cause = 'Closures Token-Parameter has wrong Typehint';
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         return true;
@@ -66,4 +68,5 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
     {
         return 'Is a valid Token Matching Closure ';
     }
+
 }

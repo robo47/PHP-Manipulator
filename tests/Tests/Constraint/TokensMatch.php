@@ -33,13 +33,13 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$expected instanceof Token) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\Token'
+              1, 'PHP\Manipulator\Token'
             );
         }
 
         if (!is_bool($strict)) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                2, 'boolean'
+              2, 'boolean'
             );
         }
 
@@ -49,34 +49,45 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
 
     /**
      * @param \PHP\Manipulator\Token $other
+     * @param  string $description Additional information about the test
+     * @param  bool $returnResult Whether to return a result or throw an exception
      * @return boolean
      */
     public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof Token) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\Token'
+              1, 'PHP\Manipulator\Token'
             );
         }
         $expectedToken = $this->_expectedToken;
 
         $equal = $this->_getEqualsConstraint($expectedToken->getValue());
-        if (!$equal->evaluate($other->getValue())) {
+        if (!$equal->evaluate($other->getValue(), $description, true)) {
             $this->_difference = 'values';
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         $equal = $this->_getEqualsConstraint($expectedToken->getType());
-        if (!$equal->evaluate($other->getType())) {
+        if (!$equal->evaluate($other->getType(), $description, true)) {
             $this->_difference = 'types';
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         if (true === $this->_strict) {
             $equal = $this->_getEqualsConstraint($expectedToken->getLinenumber());
-            if (!$equal->evaluate($other->getLinenumber())) {
+            if (!$equal->evaluate($other->getLinenumber(), $description, true)) {
                 $this->_difference = 'linenumber';
-                return false;
+                if ($returnResult) {
+                    return FALSE;
+                }
+                $this->fail($other, $description);
             }
         }
         return true;
@@ -114,4 +125,5 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     {
         return 'Token matches another Token';
     }
+
 }

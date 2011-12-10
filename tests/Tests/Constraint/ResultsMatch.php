@@ -15,6 +15,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
      * @var \PHP\Manipulator\Tokenfinder\Result
      */
     protected $_expectedResult = null;
+
     /**
      * Cause of missmatch
      *
@@ -29,7 +30,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$expected instanceof Result) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\\Manipulator\\Tokenfinder\\Result'
+              1, 'PHP\\Manipulator\\Tokenfinder\\Result'
             );
         }
 
@@ -38,13 +39,15 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
 
     /**
      * @param \PHP\Manipulator\Tokenfinder\Result $other
+     * @param  string $description Additional information about the test
+     * @param  bool $returnResult Whether to return a result or throw an exception
      * @return boolean
      */
     public function evaluate($other, $description = '', $returnResult = FALSE)
     {
         if (!$other instanceof Result) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\\Tokenfinder\\Result'
+              1, 'PHP\Manipulator\\Tokenfinder\\Result'
             );
         }
         $expectedResultTokens = $this->_expectedResult->getTokens();
@@ -52,13 +55,19 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
 
         if (count($expectedResultTokens) != count($actualResultTokens)) {
             $this->_cause = 'length';
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
 
         foreach ($expectedResultTokens as $key => $token) {
             if ($token !== $actualResultTokens[$key]) {
                 $this->_cause = 'missmatch of token: ' . $key;
-                return false;
+                if ($returnResult) {
+                    return FALSE;
+                }
+                $this->fail($other, $description);
             }
         }
 
@@ -85,4 +94,5 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     {
         return 'Result matches ';
     }
+
 }

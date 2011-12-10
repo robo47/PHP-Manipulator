@@ -7,6 +7,9 @@ use PHP\Manipulator\TokenContainer;
 use Tests\Constraint\TokenContainerMatch;
 use Tests\Util;
 
+/**
+ * @group TokenContainerMatch
+ */
 class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -87,7 +90,7 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
     public function testTokenContainerMatch($other, $expected, $expectedEvaluationResult, $strict)
     {
         $count = new TokenContainerMatch($expected, $strict);
-        $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        $this->assertSame($expectedEvaluationResult, $count->evaluate($other, '', true));
     }
 
     /**
@@ -149,7 +152,6 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
         $other = new TokenContainer('<?php echo "foo"; /* foo */ ?>');
 
         $containerMatch = new TokenContainerMatch($expected, false);
-        $containerMatch->evaluate($other);
 
         $containerDiff = Util::compareContainers(
             $expected,
@@ -157,11 +159,11 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        $message = 'Tokens are different:' . PHP_EOL .
-        PHP_EOL . $containerDiff;
+        $message = 'Failed asserting that Tokens are different:' . PHP_EOL .
+        PHP_EOL . $containerDiff . '.';
 
         try {
-            $containerMatch->fail($other, '');
+            $containerMatch->evaluate($other);
             $this->fail('no exception thrown');
          } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());

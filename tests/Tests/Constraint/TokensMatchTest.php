@@ -6,6 +6,9 @@ use PHP\Manipulator\TokenFinder\Result;
 use PHP\Manipulator\Token;
 use Tests\Constraint\TokensMatch;
 
+/**
+ * @group TokensMatch
+ */
 class TokensMatchTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -83,7 +86,7 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
     public function testTokensMatch($other, $expected, $expectedEvaluationResult, $strict)
     {
         $count = new TokensMatch($expected, $strict);
-        $this->assertSame($expectedEvaluationResult, $count->evaluate($other));
+        $this->assertSame($expectedEvaluationResult, $count->evaluate($other, '', true));
     }
 
     /**
@@ -143,17 +146,16 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Token('blub', null, '4');
         $other = new Token('bla', null, '4');
         $tokenMatch = new TokensMatch($expected, true);
-        $tokenMatch->evaluate($other);
 
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $expected,
             (string) $other
         );
 
-        $message = 'Tokens are different: [values]' . $message;
+        $message = 'Failed asserting that Tokens are different: [values]' . $message . '.';
 
         try {
-            $tokenMatch->fail($other, '');
+            $tokenMatch->evaluate($other);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -165,21 +167,20 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailAndFailureDescriptionWithDifferentTypes()
     {
-
         $expected = new Token('blub', null, '4');
         $other = new Token('blub', T_WHITESPACE, '4');
         $tokenMatch = new TokensMatch($expected, true);
-        $tokenMatch->evaluate($other);
+        
 
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $expected,
             (string) $other
         );
-        $message = 'Tokens are different: [types]' . $message;
+        $message = 'Failed asserting that Tokens are different: [types]' . $message . '.';
 
 
         try {
-            $tokenMatch->fail($other, '');
+            $tokenMatch->evaluate($other);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -194,16 +195,16 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Token('blub', null, '5');
         $other = new Token('blub', null, '4');
         $tokenMatch = new TokensMatch($expected, true);
-        $tokenMatch->evaluate($other);
+        
 
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $expected,
             (string) $other
         );
-        $message = 'Tokens are different: [linenumber]' . $message;
+        $message = 'Failed asserting that Tokens are different: [linenumber]' . $message . '.';
 
         try {
-            $tokenMatch->fail($other, '');
+            $tokenMatch->evaluate($other);
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());

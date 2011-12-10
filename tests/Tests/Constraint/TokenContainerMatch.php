@@ -13,6 +13,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
      * @var PHP\Manipulator\TokenContainer
      */
     protected $_expectedContainer = null;
+
     /**
      * @var boolean
      */
@@ -46,6 +47,8 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
 
     /**
      * @param \PHP\Manipulator\TokenContainer $other
+     * @param  string $description Additional information about the test
+     * @param  bool $returnResult Whether to return a result or throw an exception
      * @return boolean
      */
     public function evaluate($other, $description = '', $returnResult = FALSE)
@@ -69,7 +72,10 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
             /* @var $actualToken PHP\Manipulator\Token */
 
             if (!$actualToken->equals($expectedToken, $this->_strict)) {
-                return false;
+                if ($returnResult) {
+                    return FALSE;
+                }
+                $this->fail($other, $description);
             }
 
             $i++;
@@ -78,7 +84,10 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
         }
 
         if ($expectedIterator->valid() || $actualIterator->valid()) {
-            return false;
+            if ($returnResult) {
+                return FALSE;
+            }
+            $this->fail($other, $description);
         }
         return true;
     }

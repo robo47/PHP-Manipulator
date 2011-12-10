@@ -7,6 +7,9 @@ use PHP\Manipulator\Token;
 use Tests\Constraint\ResultsMatch;
 use Tests\Util;
 
+/**
+ * @group ResultsMatch
+ */
 class ResultsMatchTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -88,7 +91,7 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
     public function testResultsMatch($other, $expected, $expectedEvaluationResult)
     {
         $resultsMatch = new ResultsMatch($expected);
-        $this->assertSame($expectedEvaluationResult, $resultsMatch->evaluate($other));
+        $this->assertSame($expectedEvaluationResult, $resultsMatch->evaluate($other, '', true));
     }
 
     /**
@@ -136,15 +139,15 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Result();
         $other = Result::factory(array(new Token('Foo')));
         $resultsMatch = new ResultsMatch($expected);
-        $resultsMatch->evaluate($other);
+        
 
         $message =
-        'Results do not match: ' . PHP_EOL .
+        'Failed asserting that Results do not match: ' . PHP_EOL .
         'Cause: length' . PHP_EOL .
-        Util::compareResults($expected, $other);
+        Util::compareResults($expected, $other) . '.';
 
         try {
-            $resultsMatch->fail($other, '');
+            $resultsMatch->evaluate($other, '');
             $this->fail('no exception thrown');
         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
