@@ -4,6 +4,14 @@
 <project name="PHP-Manipulator" default="build" basedir=".">
     <property name="source" value="src"/>
 
+    <target name="init">
+      <exec dir="${basedir}/"
+            executable="git"
+            failonerror="true">
+            <arg line="submodule update --init --recursive" />
+      </exec>
+    </target>
+
     <target name="clean" description="Clean up and create artifact directories">
         <delete dir="${basedir}/build/api"/>
         <delete dir="${basedir}/build/code-browser"/>
@@ -117,5 +125,5 @@
         </exec>
     </target>
 
-    <target name="build" depends="clean,parallelTasks,phpcb"/>
+    <target name="build" depends="init,clean,parallelTasks,phpcb"/>
 </project>
