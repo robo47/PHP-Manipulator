@@ -12,4 +12,4 @@ before_script:
   - ./bin/ci/install_dependencies.sh
   
 # omitting "script:" will default to phpunit
-script: ant build
+script: ant init clean phpunit phpunitTestcode
