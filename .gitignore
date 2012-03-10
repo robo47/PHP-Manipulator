@@ -3,5 +3,5 @@
 !/docs/build/.gitkeep
 /build/*
 !/build/phpmd.xml
+/composer.phar
 /vendor/
-composer.phar
