@@ -1,0 +1,25 @@
+{
+  "name": "robo47/php-manipulator",
+  "description": "Manipulation of php code, automated refactoring based on phps tokenizer",
+  "type": "library",
+  "keywords":  [ "php", "manipulator"],
+  "homepage": "https://github.com/robo47/PHP-Manipulator",
+  "license": "MIT",
+  "authors": [
+  {
+    "name": "Benjamin Steininger",
+    "email": "robo47@robo47.net",
+    "homepage": "http://www.benjamin-steininger.de"
+  }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "symfony/console": ">=2.0",
+    "symfony/finder": ">=2.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "PHP\\Manipulator": "src/"
+    }
+  }
+}

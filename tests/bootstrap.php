@@ -9,28 +9,15 @@ error_reporting(E_ALL | E_STRICT);
 
 define('BASE_PATH', realpath(__DIR__ . '/../'));
 define('TESTS_PATH', BASE_PATH . '/tests/');
-define('SYMFONY_PATH', BASE_PATH . '/vendor/');
 
-$paths = array();
-$paths[] = BASE_PATH . '/';
-$paths[] = TESTS_PATH;
-$paths[] = get_include_path();
-$paths[] = SYMFONY_PATH;
+$loader = require_once __DIR__ . '/../vendor/.composer/autoload.php';
 
-// Include path
-set_include_path(implode($paths, PATH_SEPARATOR));
+/* @var $loader \Composer\Autoload\ClassLoader */
 
-require_once BASE_PATH . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+$loader->add('Tests', TESTS_PATH . '/');
+$loader->add('Baa', TESTS_PATH . '/');
+$loader->add('Foo', TESTS_PATH . '/');
 
-$classLoader = new UniversalClassLoader();
-$classLoader->registerNamespaces(array(
-    'Symfony' => SYMFONY_PATH,
-    'PHP' => BASE_PATH . '/src/',
-    'Tests' => TESTS_PATH . '/',
-    'Baa' => TESTS_PATH . '/',
-    'Foo' => TESTS_PATH . '/',
-));
-$classLoader->register();
 
 if (!file_exists(TESTS_PATH . '/tmp')) {
     mkdir(TESTS_PATH . '/tmp');

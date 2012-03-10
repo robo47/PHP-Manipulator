@@ -18,7 +18,7 @@ class Cli extends Application
      */
     public function __construct()
     {
-        parent::__construct('phpManipulator', Manipulator::VERSION . ' (' . Manipulator::GITHASH . ')');
+        parent::__construct('phpManipulator', Manipulator::VERSION);
         $this->_initApp();
     }
 
@@ -33,6 +33,7 @@ class Cli extends Application
             DIRECTORY_SEPARATOR;
         $finder = new Finder();
 
+        // @todo use *Command.php and rename Commands
         $fileIterator = $finder->files()
                                ->name('*.php')
                                ->in($path);

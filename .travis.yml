@@ -3,8 +3,9 @@ language: php
 php:
   - 5.3
   - 5.4
-  
+
 before_script:
-  - ./bin/ci/install_dependencies.sh
-  
+  - "curl -s http://getcomposer.org/installer | php"
+  - "php composer.phar install"
+
 script: ant init clean phpunit phpunitTestcode
