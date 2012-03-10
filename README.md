@@ -76,7 +76,7 @@ License
 
 MIT
 
-See file LICENSE
+See file LICENSE.MIT
 
 
 Usage
