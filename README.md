@@ -60,20 +60,16 @@ Installation
 
 Create a composer.json 
 
-    ``` json
     {
         "require": {
             "robo47/php-manipulator": "*"
         }
     }
-    ```
 
 Download and run composer
 
-    ``` sh
     curl -s http://getcomposer.org/installer | php
     php composer.phar install
-    ```
 
 License
 -------
