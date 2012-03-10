@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+use PHP\Manipulator\Cli;
+
+# vendor inside project
+if (file_exists(__DIR__ . '/../vendor/.composer/autoload.php')) {
+    require_once __DIR__ . '/../vendor/.composer/autoload.php';
+} else {
+    die('autoload failed');
+}
+
+// Cli
+$cli = new Cli();
+$cli->run();

@@ -1,1 +1,3 @@
 USE Symfony\Component\Process for cli to run up to X files parallel (making use of multiple cpus/cores
+MOVE helper into cli
+Use Twig for helper templates

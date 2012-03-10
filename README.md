@@ -1,31 +1,8 @@
-Warning - project was never finished - is in a really untested state - only used privately sometimes - many things may not work anymore!
-Wasn't really fast! Call it unused, unsupported, crap :)
-Most of this README is probably wrong by now
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 PHP\Manipulator
 ==============
+
+[![Build Status](https://secure.travis-ci.org/robo47/PHP-Manipulator.png)](robo47/PHP-Manipulator)
+
 
 Table of Contents
 -----------------
@@ -36,8 +13,6 @@ Table of Contents
 * License
 * Usage
 * Project directory/file structure
-* Contributing
-* Contact
 
 
 About PHP\Manipulator
@@ -69,7 +44,6 @@ extensions:
 libraries:
 
 * Symfony 2.0
- * Classloader
  * Console
  * Finder
 * PHPUnit 3.6 (unittests only)
@@ -84,10 +58,27 @@ asp_tags = On
 Installation
 ------------
 
-@todo
+Create a composer.json 
+
+    ``` json
+    {
+        "require": {
+            "robo47/php-manipulator": "*"
+        }
+    }
+    ```
+
+Download and run composer
+
+    ``` sh
+    curl -s http://getcomposer.org/installer | php
+    php composer.phar install
+    ```
 
 License
 -------
+
+MIT
 
 See file LICENSE
 
@@ -97,21 +88,22 @@ Usage
 
 Running phpmanipulator:
 
-    % phpmanipulator
+    bin/phpmanipulator
 
 Run actions from a config:
 
-    % phpmanipulator runActions ./config.xml
+    bin/phpmanipulator runActions ./config.xml
 
 Show tokens of a script
 
-    % phpmanipulator showTokens /path/to/script.php
+    bin/phpmanipulator showTokens /path/to/script.php
 
 
 Project directory/file structure
 --------------------------------
 
 <pre>
++-bin/phpmanipulator.php        # the phpmanipulator binary
 +-helper/                       # Directory with templates for creating new Classes
 +-src/
 | +-PHP/                        # Here the actual PHP\Manipulators Code is located
@@ -134,7 +126,6 @@ Project directory/file structure
 +-build.xml                     # ant-build-script used mainly by hudson for running all tools around a build (phpunit, phpcpd, phpcs, phplint, phpunit, ... )
 +-helper.php                    # Simple cli-script to create new Classes + unitests + empty fixture-files
 +-phpmanipulator.xml            # Default configuration for running phpManipulator for enforcing coding-standard for itself by formatting/indenting code the right way (formatting not like expected yet!)
-+-phpmanipulator.php            # the phpmanipulator binary
 </pre>
 
 
@@ -144,33 +135,3 @@ helper script
 The helper.php is only meant for development, it allows an easy and fast creation of new empty dummys for Actions,
 TokenConstraints, TokenManipulators, ContainerConstraints and TokenFinders including a unittest-file-dummy and empty fixture-files via
 the command line.
-
-
-Contributing
-------------
-
-My aim is to make Contributing to PHP\Manipulator as easy
-as possible, therefor using github for issues and code.
-
-If you have some nice additions, fork on github, and send me a pull-request with
-a short description of your changes and I will have a look at it and try to
-respond to each one if i will include it or not, why not or what i would expect
-to change for inclusion.
-
-Contact
--------
-
-Best way to contact me in realtime is probably using Jabber (no i don't use icq/msn/aol/whatever).
-
-JID: robo47@blub-blub.net (THIS IS NO EMAILADRESS!)
-EMAIL: robo47@robo47.net
-
-(My timezone is CET/CEST [GMT +1/+2 hours])
-
-The fact that my jabber-account is online and status tells online does not mean
-I am really at the PC! So don't get angry if I don't answer immediatly.
-
-You can use GPG for emails and OTR for Jabber
-
-GPG: 0xB23A4C0B - http://www.robo47.net/media/daten/0xB23A4C0B.asc
-OTR-Fingerprint: 9262263C 3024C0D5 B4EEA269 CFEDF021 D28CB980
