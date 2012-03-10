@@ -41,6 +41,7 @@ class NewlineDetector
     public function setDefaultNewline($defaultNewline)
     {
         $this->_defaultNewline = $defaultNewline;
+
         return $this;
     }
 
@@ -54,6 +55,7 @@ class NewlineDetector
         if (false !== $newline) {
             return $newline;
         }
+
         return $this->_defaultNewline;
     }
 
@@ -68,6 +70,7 @@ class NewlineDetector
         if (preg_match("~(\r\n|\r|\n)~", $token->getValue(), $matches)) {
             return $matches[0];
         }
+
         return $default;
     }
 
@@ -85,6 +88,7 @@ class NewlineDetector
             }
             $iterator->next();
         }
+
         return $this->_defaultNewline;
     }
 }

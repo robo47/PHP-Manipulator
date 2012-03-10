@@ -116,7 +116,7 @@ class Indent extends Action
                 $container->insertTokenAfter($previous, $newToken);
                 $iterator = $container->getIterator();
                 $iterator->seekToToken($token);
-            } else if ($this->_isWhitespaceWithBreak($token)) {
+            } elseif ($this->_isWhitespaceWithBreak($token)) {
                 $iterator->next();
                 if (!$iterator->valid()) {
                     break;
@@ -275,7 +275,7 @@ class Indent extends Action
     protected function _indentWhitespace(Token $whitespaceToken)
     {
         $newValue = $whitespaceToken->getValue() .
-            $this->getIndention($this->getIndentionLevel());
+        $this->getIndention($this->getIndentionLevel());
         $whitespaceToken->setValue($newValue);
     }
 
@@ -401,6 +401,7 @@ class Indent extends Action
     {
         $tabCount = floor($spaceLength / $tabWidth);
         $additionalSpaces = $spaceLength % $tabWidth;
+
         return str_repeat("\t", $tabCount) . str_repeat(' ', $additionalSpaces);
     }
 }

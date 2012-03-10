@@ -48,9 +48,10 @@ extends CommentOutIncludesAndRequires
         $globalScopeOnly = $this->getOption('globalScopeOnly');
         if (true === $globalScopeOnly && !($inClass || $inFunction)) {
             return true;
-        } else if (false === $globalScopeOnly) {
+        } elseif (false === $globalScopeOnly) {
             return true;
         }
+
         return false;
     }
 }

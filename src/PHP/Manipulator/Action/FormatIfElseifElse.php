@@ -19,7 +19,6 @@ use SplStack;
  * @uses    \PHP\Manipulator\TokenConstraint\ContainsNewline
  * @todo    should only apply breaks before/after curly-braces if they are part of an if/else ?!?
  */
-// 
 class FormatIfElseifElse
 extends Action
 {
@@ -271,7 +270,7 @@ extends Action
         if (!$this->isType($currentToken, T_WHITESPACE)) {
             $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
             $this->_container->insertTokenBefore($token, $whitespaceToken);
-        } else if (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
+        } elseif (!$this->evaluateConstraint('ContainsNewline', $currentToken)) {
             $currentToken->setValue($currentToken->getValue() . $this->_defaultLineBreak);
         }
 
@@ -312,6 +311,7 @@ extends Action
             $this->_stackHasLevelMatchingItem($this->_elseStack)) {
             return true;
         }
+
         return false;
     }
 
@@ -348,6 +348,7 @@ extends Action
             $iterator,
             function(Token $token) {
                 $constraint = new ContainsNewline();
+
                 return $constraint->evaluate($token);
             }
         );
@@ -374,6 +375,7 @@ extends Action
             !$this->_isFollowedByWhitespaceContainingBreak($iterator)) {
             return true;
         }
+
         return false;
     }
 
@@ -411,6 +413,7 @@ extends Action
         if ($this->isType($newToken, T_WHITESPACE) && $newToken->getValue() !== ' ') {
             return true;
         }
+
         return false;
     }
 
@@ -469,10 +472,10 @@ extends Action
         if (!$this->isFollowedByTokenType($iterator, T_WHITESPACE) &&
             true === $this->getOption('spaceAfter' . $type)) {
             $this->_addWhitespaceTokenAfter($iterator);
-        } else if ($this->_isFollowedByWrongWhitespace($iterator) &&
+        } elseif ($this->_isFollowedByWrongWhitespace($iterator) &&
             true === $this->getOption('spaceAfter'. $type)) {
             $this->_setNextTokenValueToOneSpace($iterator);
-        } else if (false === $this->getOption('spaceAfter' . $type) &&
+        } elseif (false === $this->getOption('spaceAfter' . $type) &&
             $this->isFollowedByTokenType($iterator, T_WHITESPACE)) {
             $this->_removeNextToken($iterator);
         }
@@ -482,10 +485,10 @@ extends Action
             if (!$this->isPrecededByTokenType($iterator, T_WHITESPACE) &&
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_addWhitespaceTokenBefore($iterator);
-            } else if ($this->_isPrecededByWrongWhitespace($iterator) &&
+            } elseif ($this->_isPrecededByWrongWhitespace($iterator) &&
                 true === $this->getOption('spaceBefore' . $type)) {
                 $this->_setPreviousTokenValueToOneSpace($iterator);
-            } else if (false === $this->getOption('spaceBefore' . $type) &&
+            } elseif (false === $this->getOption('spaceBefore' . $type) &&
                 $this->isPrecededByTokenType($iterator, T_WHITESPACE)) {
                 $this->_removePreviousToken($iterator);
             }
@@ -504,6 +507,7 @@ extends Action
         if ($this->isType($newToken, T_WHITESPACE) && $newToken->getValue() !== ' ') {
             return true;
         }
+
         return false;
     }
 
@@ -544,6 +548,7 @@ extends Action
             $iterator->previous();
         }
         $iterator->seekToToken($token);
+
         return $result;
     }
 }

@@ -39,6 +39,7 @@ class ReverseIteratorTest extends \Tests\TestCase
         $container = new TokenContainer($tokens);
         unset($container[1]);
         unset($container[3]);
+
         return $container;
     }
 

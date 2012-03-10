@@ -113,8 +113,8 @@ extends Action
         return $this->isType($iterator->current(), T_STRING) &&
         ( (true === $this->_isConstant) ||
             ($this->_notInsideClassFunctionMethodUseOrNamespace() &&
-             !$this->isFollowedByTokenValue($iterator, '::') &&
-             !$this->isFollowedByTokenValue($iterator, '(')));
+                !$this->isFollowedByTokenValue($iterator, '::') &&
+                !$this->isFollowedByTokenValue($iterator, '(')));
     }
 
     /**
@@ -126,13 +126,13 @@ extends Action
     {
         if ($this->isType($token, T_CONST)) {
             $this->_isConstant = true;
-        } else if ($this->isType($token, T_USE)) {
+        } elseif ($this->isType($token, T_USE)) {
             $this->_isUse = true;
-        } else if ($this->isType($token, T_NAMESPACE)) {
+        } elseif ($this->isType($token, T_NAMESPACE)) {
             $this->_isNamespace = true;
-        } else if ($this->isType($token, T_CLASS)) {
+        } elseif ($this->isType($token, T_CLASS)) {
             $this->_isClassDeclaration = true;
-        } else if ($this->isType($token, T_FUNCTION)) {
+        } elseif ($this->isType($token, T_FUNCTION)) {
             $this->_isFunctionDeclaration = true;
         } if ($this->isSemicolon( $token)) {
             if (true === $this->_isConstant) {
@@ -141,7 +141,7 @@ extends Action
             if (true === $this->_isUse) {
                 $this->_isUse = false;
             }
-        } else if ($this->isOpeningBrace($token)) {
+        } elseif ($this->isOpeningBrace($token)) {
             if (true === $this->_isClassDeclaration) {
                 $this->_isClassDeclaration = false;
             }

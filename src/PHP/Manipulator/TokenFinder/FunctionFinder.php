@@ -70,6 +70,7 @@ extends TokenFinder
 
             $iterator->next();
         }
+
         return $result;
     }
 

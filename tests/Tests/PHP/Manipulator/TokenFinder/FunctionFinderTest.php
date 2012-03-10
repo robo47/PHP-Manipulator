@@ -143,7 +143,7 @@ extends \Tests\TestCase
             $this->getResultFromContainer($c, 2, 13),
         );
 
-        #15 try to include phpdoc but none exist 
+        #15 try to include phpdoc but none exist
         $data[] = array(
             $c = $this->getContainerFromFixture($path . 'input15.php'),
             $c[2],
@@ -151,7 +151,7 @@ extends \Tests\TestCase
             $this->getResultFromContainer($c, 2, 13),
         );
 
-// @todo find testcase where setting back the iterator via seekToToken is needed (iterator got invalidated in search for methodProperties and/or phpdoc) [line 131-133 and 159-161]
+        // @todo find testcase where setting back the iterator via seekToToken is needed (iterator got invalidated in search for methodProperties and/or phpdoc) [line 131-133 and 159-161]
 
         return $data;
     }

@@ -165,7 +165,7 @@ class TokenContainerMatchTest extends \PHPUnit_Framework_TestCase
         try {
             $containerMatch->evaluate($other);
             $this->fail('no exception thrown');
-         } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
             $this->assertEquals($message, $e->getMessage());
         }
     }

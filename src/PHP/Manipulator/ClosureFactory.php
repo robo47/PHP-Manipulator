@@ -21,7 +21,8 @@ class ClosureFactory
     public static function getIsTypeClosure($types)
     {
         return function(Token $token) use ($types) {
-            $helper = new AHelper();
+                $helper = new AHelper();
+
             return $helper->isType($token, $types);
         };
     }
@@ -35,7 +36,8 @@ class ClosureFactory
     public static function getHasValueClosure($values)
     {
         return function(Token $token) use ($values) {
-            $helper = new AHelper();
+                $helper = new AHelper();
+
             return $helper->hasValue($token, $values);
         };
     }
@@ -50,9 +52,10 @@ class ClosureFactory
     public static function getTypeAndValueClosure($type, $value)
     {
         return function(Token $token) use ($value, $type) {
-            if ($value === $token->getValue() && $type === $token->getType()) {
-                return true;
+                if ($value === $token->getValue() && $type === $token->getType()) {
+                    return true;
             }
+
             return false;
         };
     }

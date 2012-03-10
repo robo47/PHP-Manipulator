@@ -109,6 +109,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function offsetExists($offset)
     {
         $this->_checkOffsetType($offset);
+
         return isset($this->_container[$offset]);
     }
 
@@ -140,6 +141,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             $message = "Offset '$offset' does not exist";
             throw new \Exception($message);
         }
+
         return $this->_container[$offset];
     }
 
@@ -166,6 +168,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $position = $this->_getPositionForOffset($offset);
         $this->_insertAtPosition($position, $value);
+
         return $this;
     }
 
@@ -190,6 +193,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         }
 
         $this->_container = $newContainer;
+
         return $this;
     }
 
@@ -255,6 +259,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             }
             $position++;
         }
+
         return $position;
     }
 
@@ -293,6 +298,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
                 break;
             }
         }
+
         return $contains;
     }
 
@@ -312,6 +318,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         $offset = $this->getOffsetByToken($after);
         $position = $this->_getPositionForOffset($offset);
         $this->_insertAtPosition($position + 1, $newToken);
+
         return $this;
     }
 
@@ -336,6 +343,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             $position = $this->_getPositionForOffset($iterator->key());
         }
         $this->_insertAtPosition($position+1, $newToken);
+
         return $this;
     }
 
@@ -357,6 +365,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             $this->insertTokenBefore($before, $newToken);
             $before = $newToken;
         }
+
         return $this;
     }
 
@@ -377,6 +386,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             $this->insertTokenAfter($after, $newToken);
             $after = $newToken;
         }
+
         return $this;
     }
 
@@ -388,6 +398,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function updateFromCode($code)
     {
         $this->_container = $this->_createTokensFromCode($code);
+
         return $this;
     }
 
@@ -399,6 +410,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function retokenize()
     {
         $this->updateFromCode($this->toString());
+
         return $this;
     }
 
@@ -413,6 +425,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
         foreach ($tokens as $token) {
             $this->removeToken($token);
         }
+
         return $this;
     }
 
@@ -426,6 +439,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $offset = $this->getOffsetByToken($token);
         unset($this[$offset]);
+
         return $this;
     }
 
@@ -442,6 +456,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             /* @var $token PHP\Manipulator\Token */
             $code .= (string) $token;
         }
+
         return $code;
     }
 
@@ -472,6 +487,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
     public function setArray(array $container)
     {
         $this->_container = $container;
+
         return $this;
     }
 
@@ -532,6 +548,7 @@ implements \ArrayAccess, \Countable, \IteratorAggregate
             /* @var $token array|string */
             $array[] = Token::factory($token);
         }
+
         return $array;
     }
 }

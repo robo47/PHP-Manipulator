@@ -139,8 +139,6 @@ class ResultsMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Result();
         $other = Result::factory(array(new Token('Foo')));
         $resultsMatch = new ResultsMatch($expected);
-        
-
         $message =
         'Failed asserting that Results do not match: ' . PHP_EOL .
         'Cause: length' . PHP_EOL .

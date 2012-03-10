@@ -108,6 +108,7 @@ abstract class Config
             throw new \Exception('File ' . $file . ' not found');
         }
         $this->_files[] = $realPath;
+
         return $this;
     }
 
@@ -123,6 +124,7 @@ abstract class Config
             $message = 'Option "' . $name . '" does not exist';
             throw new \Exception($message);
         }
+
         return $this->_options[$name];
     }
 
@@ -140,6 +142,7 @@ abstract class Config
         }
         $classname = $prefix . $action;
         $this->_actions[] = new $classname($options);
+
         return $this;
     }
 
@@ -161,6 +164,7 @@ abstract class Config
         foreach ($actionset->getActions() as $action) {
             $this->_actions[] = $action;
         }
+
         return $this;
     }
 
@@ -224,6 +228,7 @@ abstract class Config
             default:
                 break;
         }
+
         return new $type($data);
     }
 
@@ -241,6 +246,7 @@ abstract class Config
         if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
             throw new \Exception('Unable to read file: ' . $oldFile);
         }
+
         return file_get_contents($file);
     }
 
@@ -252,6 +258,7 @@ abstract class Config
     public function addOption($name, $value)
     {
         $this->_options[$name] = $value;
+
         return $this;
     }
     /**

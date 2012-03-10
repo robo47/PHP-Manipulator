@@ -31,7 +31,7 @@ extends Action
             if ($this->isType($token, T_OPEN_TAG)) {
                 $value = str_replace('<?php', '<?', $value);
                 $value = str_replace('<?', '<?php', $value);
-            } else if ($this->isType($token, T_OPEN_TAG_WITH_ECHO)) {
+            } elseif ($this->isType($token, T_OPEN_TAG_WITH_ECHO)) {
                 $value = str_replace('<?=', '<?php echo ', $value);
             }
 

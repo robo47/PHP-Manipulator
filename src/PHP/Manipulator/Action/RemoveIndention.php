@@ -44,7 +44,7 @@ class RemoveIndention extends Action
                 $value = preg_replace('~(' . $linebreak . ')' . $regexWhitespace . $regexNotWhitespace . '(.*?)$~m', '\1\2', $value);
 
                 $token->setValue($value);
-            } else if ($this->evaluateConstraint('IsMultilineComment', $token)) {
+            } elseif ($this->evaluateConstraint('IsMultilineComment', $token)) {
                 $this->manipulateToken('RemoveCommentIndention', $token);
             }
             $previousToken = $token;

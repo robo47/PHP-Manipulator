@@ -73,6 +73,7 @@ extends AHelper
             }
             $iterator->next();
         }
+
         return $tokens;
     }
 
@@ -89,6 +90,7 @@ extends AHelper
             }
         }
         $value = str_replace('*/', '', $value);
+
         return $value;
     }
 }

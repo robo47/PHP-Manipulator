@@ -71,7 +71,6 @@ class SetWhitespaceAfterTokenTest extends \Tests\TestCase
      * @dataProvider manipulateProvider
      * @covers \PHP\Manipulator\Helper\SetWhitespaceAfterToken
      */
-     
     public function testManipulate($container, $expectedContainer, $tokens, $whitespace, $strict)
     {
         $manipulator = new SetWhitespaceAfterToken();

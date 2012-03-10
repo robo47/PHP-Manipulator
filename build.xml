@@ -31,7 +31,7 @@
     <target name="phpunit" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
         <exec executable="phpunit" failonerror="true"/>
     </target>
- 
+
     <!-- Run PHPUnit for Tests (Constraints, Stubs, TestCase, Util, ... ) -->
     <target name="phpunitTestcode">
         <exec dir="${basedir}/tests/"
@@ -57,7 +57,7 @@
             <antcall target="phploc"/>
             <sequential>
                 <antcall target="phpunit" />
-                <antcall target="phpunitTestcode" />       
+                <antcall target="phpunitTestcode" />
             </sequential>
         </parallel>
     </target>
@@ -100,7 +100,7 @@
               ${source}" />
         </exec>
     </target>
- 
+
     <target name="phpcs-local" description="Generate output using PHP_CodeSniffer">
         <exec executable="phpcs">
             <arg line="--report=full

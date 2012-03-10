@@ -33,13 +33,13 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$expected instanceof Token) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-              1, 'PHP\Manipulator\Token'
+                1, 'PHP\Manipulator\Token'
             );
         }
 
         if (!is_bool($strict)) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-              2, 'boolean'
+                2, 'boolean'
             );
         }
 
@@ -57,7 +57,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$other instanceof Token) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-              1, 'PHP\Manipulator\Token'
+                1, 'PHP\Manipulator\Token'
             );
         }
         $expectedToken = $this->_expectedToken;
@@ -90,6 +90,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
                 $this->fail($other, $description);
             }
         }
+
         return true;
     }
 
@@ -115,6 +116,7 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
             (string) $other
         );
         $difference = $this->_difference;
+
         return 'Tokens are different: [' . $difference . ']' . $message;
     }
 

@@ -60,6 +60,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         if (null !== $token) {
             $this->seekToToken($token);
         }
+
         return $this;
     }
 
@@ -103,6 +104,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         if (false === $key) {
             throw new \OutOfBoundsException('Position not valid');
         }
+
         return $this->_container[$key];
     }
 
@@ -115,6 +117,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         if (false === $key) {
             throw new \OutOfBoundsException('Position not valid');
         }
+
         return $key;
     }
 
@@ -174,6 +177,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         }
         $key = $this->_container->getOffsetByToken($token);
         $this->seek($key);
+
         return $this;
     }
 
@@ -189,6 +193,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
         } else {
             throw new \OutOfBoundsException('Position not found');
         }
+
         return $this;
     }
 
@@ -205,6 +210,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
             $next = $this->current();
         }
         $this->previous();
+
         return $next;
     }
 
@@ -220,6 +226,7 @@ class Iterator implements \Iterator, \Countable, \SeekableIterator
             $previous = $this->current();
         }
         $this->next();
+
         return $previous;
     }
 }

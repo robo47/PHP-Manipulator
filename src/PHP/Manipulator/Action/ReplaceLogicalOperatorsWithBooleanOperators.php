@@ -42,7 +42,7 @@ extends Action
             if ($this->_isLogicalAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_BOOLEAN_AND);
-            } else if ($this->_isLogicalOrAndShouldBeReplaced($token)) {
+            } elseif ($this->_isLogicalOrAndShouldBeReplaced($token)) {
                 $token->setValue($or);
                 $token->setType(T_BOOLEAN_OR);
             }

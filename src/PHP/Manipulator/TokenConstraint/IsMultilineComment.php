@@ -28,9 +28,10 @@ extends TokenConstraint
             if (strlen($value) > 2 && substr($value, 0, 2) === '/*') {
                 return true;
             }
-        } else if ($token->getType() === T_DOC_COMMENT) {
+        } elseif ($token->getType() === T_DOC_COMMENT) {
             return true;
         }
+
         return false;
     }
 }

@@ -47,6 +47,7 @@ extends AHelper
         foreach ($options as $option => $value) {
             $this->setOption($option, $value);
         }
+
         return $this;
     }
 
@@ -59,6 +60,7 @@ extends AHelper
         if (isset($this->_options[$option])) {
             return true;
         }
+
         return false;
     }
 
@@ -70,6 +72,7 @@ extends AHelper
     public function setOption($option, $value)
     {
         $this->_options[$option] = $value;
+
         return $this;
     }
 
@@ -95,6 +98,7 @@ extends AHelper
             $message = "Option '$option' not found";
             throw new \Exception($message);
         }
+
         return $this->_options[$option];
     }
 

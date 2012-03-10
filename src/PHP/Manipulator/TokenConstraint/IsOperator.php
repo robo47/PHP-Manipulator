@@ -95,6 +95,7 @@ extends TokenConstraint
                 return true;
             }
         }
+
         return false;
     }
 }

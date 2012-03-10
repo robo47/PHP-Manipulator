@@ -57,7 +57,7 @@ extends Action
 
             if ($this->isOpeningBrace( $token)) {
                 $indentionLevel++;
-            } else if ($this->isClosingBrace( $token)) {
+            } elseif ($this->isClosingBrace( $token)) {
                 $indentionLevel--;
             }
 
@@ -70,7 +70,7 @@ extends Action
             if ($indentionLevel > 0) {
                 $argumentTokens[] = $token;
                 $inside = true;
-            } else if ($indentionLevel === 0 && true === $inside) {
+            } elseif ($indentionLevel === 0 && true === $inside) {
                 // break if we are at the end of the arguments
                 break;
             }

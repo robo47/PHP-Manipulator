@@ -68,6 +68,7 @@ class ShowTokens extends Command
     {
         $name = str_pad($token->getTokenName(), 28, ' ');
         $value = $this->transformTokenValue($token->getValue());
+
         return $name . ' | ' . $value;
     }
 }

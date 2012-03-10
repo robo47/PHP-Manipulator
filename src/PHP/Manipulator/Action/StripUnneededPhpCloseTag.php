@@ -43,7 +43,7 @@ extends Action
 
             if (!$this->_isNotAllowedTag($token)) {
                 break;
-            } else if ($this->isType($token, T_CLOSE_TAG)) {
+            } elseif ($this->isType($token, T_CLOSE_TAG)) {
                 if ($this->evaluateConstraint('EndsWithNewline', $token)) {
 
                     $newline = $helper->getNewlineFromToken($token);
@@ -69,6 +69,6 @@ extends Action
     protected function _isNotAllowedTag(Token $token)
     {
         return $this->isType($token, array(T_WHITESPACE, T_CLOSE_TAG)) ||
-               $this->evaluateConstraint('ContainsOnlyWhitespace', $token);
+        $this->evaluateConstraint('ContainsOnlyWhitespace', $token);
     }
 }

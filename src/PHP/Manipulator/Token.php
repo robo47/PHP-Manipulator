@@ -57,12 +57,13 @@ class Token
             } else {
                 $token = new Token($input[1], $input[0], $input[2]);
             }
-        } else if (is_string($input)) {
+        } elseif (is_string($input)) {
             $token = new Token($input);
         } else {
             $message = 'invalid datatype for creating a token: ' . gettype($input);
             throw new \Exception($message);
         }
+
         return $token;
     }
 
@@ -85,6 +86,7 @@ class Token
     public function setValue($value)
     {
         $this->_value = $value;
+
         return $this;
     }
 
@@ -107,6 +109,7 @@ class Token
     public function setLinenumber($linenumber)
     {
         $this->_linenumber = $linenumber;
+
         return $this;
     }
 
@@ -129,6 +132,7 @@ class Token
     public function setType($type)
     {
         $this->_type = $type;
+
         return $this;
     }
 
@@ -149,6 +153,7 @@ class Token
             $this->_linenumber !== $token->getLinenumber()) {
             $match = false;
         }
+
         return $match;
     }
 

@@ -49,6 +49,7 @@ class Manipulator
     public function addAction(Action $action)
     {
         $this->_actions[] = $action;
+
         return $this;
     }
 
@@ -61,6 +62,7 @@ class Manipulator
         foreach ($actions as $action) {
             $this->addAction($action);
         }
+
         return $this;
     }
 
@@ -75,6 +77,7 @@ class Manipulator
                 unset($this->_actions[$key]);
             }
         }
+
         return $this;
     }
 
@@ -92,6 +95,7 @@ class Manipulator
     public function removeAllActions()
     {
         $this->_actions = array();
+
         return $this;
     }
 
@@ -106,6 +110,7 @@ class Manipulator
                 unset($this->_actions[$key]);
             }
         }
+
         return $this;
     }
 
@@ -121,9 +126,10 @@ class Manipulator
                 // string-cast if it is something else (SplFileInfo)
                 $this->addFile((string) $file);
             }
-        } else if (is_string($files)) {
+        } elseif (is_string($files)) {
             $this->addFile($files);
         }
+
         return $this;
     }
 
@@ -133,6 +139,7 @@ class Manipulator
     public function addFile($file)
     {
         $this->_files[] = $file;
+
         return $this;
     }
 
@@ -150,6 +157,7 @@ class Manipulator
     public function removeAllFiles()
     {
         $this->_files = array();
+
         return $this;
     }
 }

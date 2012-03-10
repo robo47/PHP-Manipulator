@@ -39,7 +39,6 @@ class FileContainerTest extends \Tests\TestCase
     public function testConstruct()
     {
         $container = new FileContainer(TESTS_PATH . 'tmp/test.php');
-        
         $this->assertCount(7, $container->getIterator());
     }
 

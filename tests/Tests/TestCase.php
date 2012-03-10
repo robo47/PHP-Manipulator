@@ -28,6 +28,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         if (!file_exists($file) || !is_file($file)) {
             throw new \Exception('Fixture ' . $filename . ' not found');
         }
+
         return file_get_contents($file);
     }
 
@@ -45,6 +46,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         for ($index = $start; $index <= $end; $index++) {
             $result->addToken($container[$index]);
         }
+
         return $result;
     }
 

@@ -91,7 +91,7 @@ extends Action
                 if (!$this->isType($iterator->current(), T_WHITESPACE)) {
                     $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenBefore($iterator->current(), $whitespaceToken);
-                } else if (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
+                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
                     $iterator->current()->setValue($this->_defaultLineBreak . $iterator->current()->getValue());
                 }
                 $iterator->update($token);
@@ -101,7 +101,7 @@ extends Action
                 if (!$this->isType($iterator->current(), T_WHITESPACE)) {
                     $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenAfter($iterator->current(), $whitespaceToken);
-                } else if (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
+                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
                     $iterator->current()->setValue($iterator->current()->getValue() . $this->_defaultLineBreak);
                 }
                 $iterator->update($token);
@@ -111,7 +111,7 @@ extends Action
                 if (!$this->isType($iterator->current(), T_WHITESPACE)) {
                     $whitespaceToken = new Token(' ', T_WHITESPACE);
                     $container->insertTokenBefore($iterator->current(), $whitespaceToken);
-                } else if (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
+                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
                     $iterator->current()->setValue(' ');
                 }
                 $iterator->update($token);
@@ -119,7 +119,7 @@ extends Action
                 if (!$this->isType($iterator->current(), T_WHITESPACE)) {
                     $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenAfter($iterator->current(), $whitespaceToken);
-                } else if (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
+                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
                     $iterator->current()->setValue($iterator->current()->getValue() . $this->_defaultLineBreak);
                 }
                 $iterator->update($token);

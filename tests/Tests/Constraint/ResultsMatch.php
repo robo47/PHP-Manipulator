@@ -30,7 +30,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$expected instanceof Result) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-              1, 'PHP\\Manipulator\\Tokenfinder\\Result'
+                1, 'PHP\\Manipulator\\Tokenfinder\\Result'
             );
         }
 
@@ -47,7 +47,7 @@ class ResultsMatch extends \PHPUnit_Framework_Constraint
     {
         if (!$other instanceof Result) {
             throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-              1, 'PHP\Manipulator\\Tokenfinder\\Result'
+                1, 'PHP\Manipulator\\Tokenfinder\\Result'
             );
         }
         $expectedResultTokens = $this->_expectedResult->getTokens();

@@ -26,6 +26,7 @@ extends TokenConstraint
         if (null === $token->getType() && '@' === $token->getValue()) {
             return true;
         }
+
         return false;
     }
 }

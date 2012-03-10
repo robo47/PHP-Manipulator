@@ -3,13 +3,13 @@
 namespace PHP\Manipulator\Config;
 
 use PHP\Manipulator\Config,
- PHP\Manipulator\Config\Xml;
+    PHP\Manipulator\Config\Xml;
 use Symfony\Component\Finder\Finder;
 use DOMNode,
- DOMAttr,
- DOMDocument,
- DOMXpath,
- LibXMLError;
+    DOMAttr,
+    DOMDocument,
+    DOMXpath,
+    LibXMLError;
 use Exception;
 
 /**
@@ -62,6 +62,7 @@ class Xml extends Config
             $message .= 'File: ' . $error->file . PHP_EOL;
             $message .= 'Line: ' . $error->line . PHP_EOL;
         }
+
         return $message;
     }
 
@@ -106,6 +107,7 @@ class Xml extends Config
                 }
             }
         }
+
         return $actionOptions;
     }
 
@@ -144,118 +146,119 @@ class Xml extends Config
             default:
                 throw new Exception('unknown cast-type: ' . $type);
         }
-        return $value;
-    }
 
-    /**
-     * @param \DOMDocument $dom
-     */
-    protected function _parseActions(DOMDocument $document)
-    {
-        $xpath = new DOMXpath($document);
-        $list = $xpath->query('//config/actions/action');
-        foreach ($list as $option) {
-            /* @var $option \DOMNode */
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $options = $this->_parseActionOptions($option);
-                $prefix = $option->attributes->getNamedItem('prefix');
-                if ($prefix instanceof DOMAttr) {
-                    $prefix = $prefix->value;
-                }
-                $name = $option->attributes->getNamedItem('name');
-                if ($name instanceof DOMAttr) {
-                    $this->addAction($name->value, $prefix, $options);
-                }
-            }
+            return $value;
         }
-    }
 
-    /**
-     * @param \DOMDocument $dom
-     */
-    protected function _parseActionsets(DOMDocument $document)
-    {
-        $xpath = new DOMXpath($document);
-        $list = $xpath->query('//config/actions/actionset');
-        foreach ($list as $option) {
-            /* @var $option \DOMNode */
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $prefix = $option->attributes->getNamedItem('prefix');
-                if ($prefix instanceof DOMAttr) {
-                    $prefix = $prefix->value;
-                }
-                // @todo Actionset-options
-                $name = $option->attributes->getNamedItem('name');
-                if ($name instanceof DOMAttr) {
-                    $this->addActionset($name->value, $prefix);
+        /**
+         * @param \DOMDocument $dom
+         */
+        protected function _parseActions(DOMDocument $document)
+        {
+            $xpath = new DOMXpath($document);
+            $list = $xpath->query('//config/actions/action');
+            foreach ($list as $option) {
+                /* @var $option \DOMNode */
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $options = $this->_parseActionOptions($option);
+                    $prefix = $option->attributes->getNamedItem('prefix');
+                    if ($prefix instanceof DOMAttr) {
+                        $prefix = $prefix->value;
+                    }
+                    $name = $option->attributes->getNamedItem('name');
+                    if ($name instanceof DOMAttr) {
+                        $this->addAction($name->value, $prefix, $options);
+                    }
                 }
             }
         }
-    }
 
-    /**
-     * @param \DOMDocument $dom
-     */
-    protected function _parseFiles(DOMDocument $document)
-    {
-        $xpath = new DOMXpath($document);
-        $list = $xpath->query('//config/files/file');
-        foreach ($list as $option) {
-            /* @var $option \DOMNode */
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $this->addFile($option->nodeValue);
-            }
-        }
-    }
-
-    /**
-     * @param \DOMDocument $dom
-     */
-    protected function _parseIterators(DOMDocument $document)
-    {
-        $xpath = new DOMXpath($document);
-        $list = $xpath->query('//config/files/iterator');
-        foreach ($list as $option) {
-            /* @var $option \DOMNode */
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $iterator = $this->_parseIterator($option);
-                if ($iterator instanceof \Iterator) {
-                    $this->addIterator($iterator);
+        /**
+         * @param \DOMDocument $dom
+         */
+        protected function _parseActionsets(DOMDocument $document)
+        {
+            $xpath = new DOMXpath($document);
+            $list = $xpath->query('//config/actions/actionset');
+            foreach ($list as $option) {
+                /* @var $option \DOMNode */
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $prefix = $option->attributes->getNamedItem('prefix');
+                    if ($prefix instanceof DOMAttr) {
+                        $prefix = $prefix->value;
+                    }
+                    // @todo Actionset-options
+                    $name = $option->attributes->getNamedItem('name');
+                    if ($name instanceof DOMAttr) {
+                        $this->addActionset($name->value, $prefix);
+                    }
                 }
             }
         }
-    }
 
-    /**
-     * @param \DOMDocument $dom
-     */
-    protected function _parseDirectories(DOMDocument $document)
-    {
-        $xpath = new DOMXpath($document);
-        $list = $xpath->query('//config/files/directory');
-        foreach ($list as $option) {
-            /* @var $option \DOMNode */
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $this->addDirectory($option->nodeValue);
+        /**
+         * @param \DOMDocument $dom
+         */
+        protected function _parseFiles(DOMDocument $document)
+        {
+            $xpath = new DOMXpath($document);
+            $list = $xpath->query('//config/files/file');
+            foreach ($list as $option) {
+                /* @var $option \DOMNode */
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $this->addFile($option->nodeValue);
+                }
             }
         }
-    }
 
-    /**
-     * @param \DOMNode $node
-     * @return \Iterator|null
-     */
-    protected function _parseIterator(DOMNode $node)
-    {
-        $finder = new Finder();
-        $finder->files();
+        /**
+         * @param \DOMDocument $dom
+         */
+        protected function _parseIterators(DOMDocument $document)
+        {
+            $xpath = new DOMXpath($document);
+            $list = $xpath->query('//config/files/iterator');
+            foreach ($list as $option) {
+                /* @var $option \DOMNode */
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $iterator = $this->_parseIterator($option);
+                    if ($iterator instanceof \Iterator) {
+                        $this->addIterator($iterator);
+                    }
+                }
+            }
+        }
 
-        foreach ($node->childNodes as $option) {
-            if ($option->nodeType === XML_ELEMENT_NODE) {
-                $nodeName = strtolower($option->nodeName);
-                $value = $option->nodeValue;
-                switch ($nodeName) {
-                    case 'name':
+        /**
+         * @param \DOMDocument $dom
+         */
+        protected function _parseDirectories(DOMDocument $document)
+        {
+            $xpath = new DOMXpath($document);
+            $list = $xpath->query('//config/files/directory');
+            foreach ($list as $option) {
+                /* @var $option \DOMNode */
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $this->addDirectory($option->nodeValue);
+                }
+            }
+        }
+
+        /**
+         * @param \DOMNode $node
+         * @return \Iterator|null
+         */
+        protected function _parseIterator(DOMNode $node)
+        {
+            $finder = new Finder();
+            $finder->files();
+
+            foreach ($node->childNodes as $option) {
+                if ($option->nodeType === XML_ELEMENT_NODE) {
+                    $nodeName = strtolower($option->nodeName);
+                    $value = $option->nodeValue;
+                    switch ($nodeName) {
+                        case 'name':
                         $finder->name($value);
                         break;
                     case 'notname':
@@ -273,6 +276,7 @@ class Xml extends Config
                 }
             }
         }
+
         return $finder->getIterator();
     }
 
@@ -305,6 +309,7 @@ class Xml extends Config
         foreach ($node->attributes as $attribute) {
             $attributes[$attribute->name] = $attribute->value;
         }
+
         return $attributes;
     }
 

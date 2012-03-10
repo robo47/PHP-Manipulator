@@ -24,8 +24,9 @@ extends TokenConstraint
     public function evaluate(Token $token, $params = null)
     {
         if (null === $token->getType() && $token->getValue() === '"') {
-           return true;
+            return true;
         }
+
         return false;
     }
 }

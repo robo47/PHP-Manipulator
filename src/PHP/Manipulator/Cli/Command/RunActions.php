@@ -53,10 +53,12 @@ class RunActions extends Command
 
         if ($filesCount === 0) {
             $output->write('No files found' . PHP_EOL);
+
             return;
         }
         if ($actionsCount === 0) {
             $output->write('No actions found' . PHP_EOL);
+
             return;
         }
 

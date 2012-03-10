@@ -29,6 +29,7 @@ extends TokenConstraint
             $value === "\r") {
             return true;
         }
+
         return false;
     }
 }

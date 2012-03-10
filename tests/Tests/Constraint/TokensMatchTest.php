@@ -170,8 +170,6 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Token('blub', null, '4');
         $other = new Token('blub', T_WHITESPACE, '4');
         $tokenMatch = new TokensMatch($expected, true);
-        
-
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $expected,
             (string) $other
@@ -195,8 +193,6 @@ class TokensMatchTest extends \PHPUnit_Framework_TestCase
         $expected = new Token('blub', null, '5');
         $other = new Token('blub', null, '4');
         $tokenMatch = new TokensMatch($expected, true);
-        
-
         $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
             (string) $expected,
             (string) $other

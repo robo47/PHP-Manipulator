@@ -27,10 +27,11 @@ extends TokenConstraint
             $value = $token->getValue();
             if (strlen($value) >= 1 && substr($value, 0, 1) === '#') {
                 return true;
-            } else if (strlen($value) >= 2 && substr($value, 0, 2) === '//') {
+            } elseif (strlen($value) >= 2 && substr($value, 0, 2) === '//') {
                 return true;
             }
         }
+
         return false;
     }
 }

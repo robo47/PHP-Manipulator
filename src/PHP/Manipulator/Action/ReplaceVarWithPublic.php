@@ -29,7 +29,7 @@ extends Action
             $token = $iterator->current();
             if ($this->isType($token, T_VAR)) {
                 $token->setType(T_PUBLIC)
-                      ->setValue('public');
+                ->setValue('public');
             }
             $iterator->next();
         }

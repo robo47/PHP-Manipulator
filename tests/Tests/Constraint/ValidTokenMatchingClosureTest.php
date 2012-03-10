@@ -8,7 +8,7 @@ use Tests\Constraint\TokensMatch;
 
 function foo(Token $blub)
 {
-    
+
 }
 
 /**
@@ -26,46 +26,42 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
 
         #0
         $data[] = array(
-          function(Token $token) {
-              
-          },
-          true
+            function(Token $token) {
+            },
+            true
         );
 
         #1
         $data[] = array(
-          function(Result $token) {
-              
-          },
-          false
+            function(Result $token) {
+            },
+            false
         );
 
         #2
         $data[] = array(
-          function(Token $token, Result $result) {
-              
-          },
-          false
+            function(Token $token, Result $result) {
+            },
+            false
         );
 
         #3
         $data[] = array(
-          function() {
-              
-          },
-          false
+            function() {
+            },
+            false
         );
 
         #4
         $data[] = array(
-          '',
-          false
+            '',
+            false
         );
 
         #5
         $data[] = array(
-          'foo',
-          false
+            'foo',
+            false
         );
 
         return $data;
@@ -88,8 +84,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     public function testFailAndFailureDescriptionWithWrongTypehint()
     {
         $other = function(Result $token) {
-              
-          };
+        };
         $valid = new ValidTokenMatchingClosure();
         $message = 'Failed asserting that Closures Token-Parameter has wrong Typehint.';
 
@@ -107,8 +102,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     public function testFailAndFailureDescriptionWithWrongParameterCount()
     {
         $other = function(Token $token, Result $result) {
-              
-          };
+        };
         $valid = new ValidTokenMatchingClosure();
 
 
@@ -147,7 +141,7 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
     {
         $valid = new ValidTokenMatchingClosure();
         $this->assertEquals('Is a valid Token Matching Closure ',
-          $valid->toString());
+            $valid->toString());
     }
 
 }

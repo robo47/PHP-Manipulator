@@ -106,6 +106,7 @@ class Util
             $i++;
         }
         $comparision = rtrim($comparision);
+
         return $comparision;
     }
 
@@ -137,6 +138,7 @@ class Util
         if (null === $line) {
             $line = 'NULL';
         }
+
         return str_pad($typeName, 28, ' ', STR_PAD_RIGHT) . '| ' .
         str_pad($length, 4, ' ', STR_PAD_LEFT) . ' | ' .
         str_pad($line, 4, ' ', STR_PAD_LEFT) . ' | ' . $value;
@@ -204,6 +206,7 @@ class Util
             $comparision .= PHP_EOL;
             $i++;
         }
+
         return $comparision;
     }
 }

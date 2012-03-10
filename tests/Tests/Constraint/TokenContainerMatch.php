@@ -89,6 +89,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
             }
             $this->fail($other, $description);
         }
+
         return true;
     }
 

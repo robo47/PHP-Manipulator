@@ -29,6 +29,7 @@ implements \Countable
     public function addToken(Token $token)
     {
         $this->_tokens[] = $token;
+
         return $this;
     }
 
@@ -47,6 +48,7 @@ implements \Countable
     {
         if (!$this->isEmpty()) {
             reset($this->_tokens);
+
             return current($this->_tokens);
         } else {
             throw new \Exception('Result is Empty');
@@ -61,6 +63,7 @@ implements \Countable
     {
         if (!$this->isEmpty()) {
             end($this->_tokens);
+
             return current($this->_tokens);
         } else {
             throw new \Exception('Result is Empty');
@@ -83,6 +86,7 @@ implements \Countable
     public function clean()
     {
         $this->_tokens = array();
+
         return $this;
     }
 
@@ -107,6 +111,7 @@ implements \Countable
         foreach ($tokens as $token) {
             $result->addToken($token);
         }
+
         return $result;
     }
 }

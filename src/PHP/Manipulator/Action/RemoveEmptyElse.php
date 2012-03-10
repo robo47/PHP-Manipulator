@@ -79,6 +79,7 @@ extends Action
         if ($this->isType($token, T_ENDIF)) {
             return true;
         }
+
         return false;
     }
 
@@ -99,6 +100,7 @@ extends Action
             $this->isType($token, array(T_COMMENT, T_DOC_COMMENT))) {
             return true;
         }
+
         return false;
     }
 }

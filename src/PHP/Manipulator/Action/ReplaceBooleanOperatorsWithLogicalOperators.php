@@ -50,7 +50,7 @@ extends Action
             if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_LOGICAL_AND);
-            } else if ($this->_isBooleanOrAndShouldBeReplaced($token)) {
+            } elseif ($this->_isBooleanOrAndShouldBeReplaced($token)) {
                 $token->setValue($or);
                 $token->setType(T_LOGICAL_OR);
             }

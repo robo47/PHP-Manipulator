@@ -27,6 +27,7 @@ extends TokenConstraint
         if (preg_match($pattern, $token->getValue())) {
             return true;
         }
+
         return false;
     }
 }

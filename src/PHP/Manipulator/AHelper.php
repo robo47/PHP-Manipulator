@@ -43,6 +43,7 @@ class AHelper
         }
 
         /* @var $constraint \PHP\Manipulator\TokenConstraint */
+
         return $constraint->evaluate($token, $params);
     }
 
@@ -120,6 +121,7 @@ class AHelper
         }
 
         /* @var $finder \PHP\Manipulator\TokenFinder */
+
         return $finder->find($token, $container, $params);
     }
 
@@ -140,6 +142,7 @@ class AHelper
         if ($autoPrefix) {
             $classname = $prefix . $class;
         }
+
         return new $classname;
     }
 
@@ -162,6 +165,7 @@ class AHelper
                 return true;
             }
         }
+
         return false;
     }
 
@@ -183,6 +187,7 @@ class AHelper
                 return true;
             }
         }
+
         return false;
     }
 
@@ -195,6 +200,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === ':') {
             return true;
         }
+
         return false;
     }
 
@@ -206,6 +212,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === ',') {
             return true;
         }
+
         return false;
     }
 
@@ -218,6 +225,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === ')') {
             return true;
         }
+
         return false;
     }
 
@@ -230,6 +238,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === '(') {
             return true;
         }
+
         return false;
     }
 
@@ -242,6 +251,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === '}') {
             return true;
         }
+
         return false;
     }
 
@@ -254,6 +264,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === '{') {
             return true;
         }
+
         return false;
     }
 
@@ -266,6 +277,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === ';') {
             return true;
         }
+
         return false;
     }
 
@@ -278,6 +290,7 @@ class AHelper
         if ($token->getType() === null && $token->getValue() === '?') {
             return true;
         }
+
         return false;
     }
 
@@ -288,7 +301,7 @@ class AHelper
      * @return boolean
      */
     public function isFollowedByTokenType(Iterator $iterator, $type,
-                                          array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
 
         return $this->isFollowedByTokenMatchedByClosure(
@@ -305,7 +318,7 @@ class AHelper
      * @return boolean
      */
     public function isPrecededByTokenType(Iterator $iterator, $type,
-                                          array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
@@ -321,7 +334,7 @@ class AHelper
      * @return boolean
      */
     public function isFollowedByTokenValue(Iterator $iterator, $value,
-                                           array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
@@ -337,7 +350,7 @@ class AHelper
      * @return boolean
      */
     public function isPrecededByTokenValue(Iterator $iterator, $value,
-                                           array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
@@ -354,7 +367,7 @@ class AHelper
      * @todo ugly name
      */
     public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
-                                                      array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isFollowed(
             $iterator,
@@ -371,7 +384,7 @@ class AHelper
      * @todo ugly name
      */
     public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
-                                                      array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
+        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
     {
         return $this->isPreceded(
             $iterator,
@@ -407,6 +420,7 @@ class AHelper
         }
 
         $iterator->seekToToken($token);
+
         return $result;
     }
 
@@ -437,6 +451,7 @@ class AHelper
         }
 
         $iterator->seekToToken($token);
+
         return $result;
     }
 
@@ -452,7 +467,7 @@ class AHelper
         $searchForward = true;
         $incrementBrace = '';
         $decrementBrace = '';
-        switch($brace) {
+        switch ($brace) {
             case '[':
                 $incrementBrace = '[';
                 $decrementBrace = ']';
@@ -485,25 +500,26 @@ class AHelper
                 throw new \Exception($message);
         }
 
-        $level = 1;
-        $this->_nextToken($iterator, $searchForward);
-        $foundToken = null;
-        while($iterator->valid()) {
-            $currentToken = $iterator->current();
-            if (null === $currentToken->getType()) {
-                if ($currentToken->getValue() === $incrementBrace) {
-                    $level++;
-                } else if ($currentToken->getValue() === $decrementBrace) {
-                    $level--;
+            $level = 1;
+            $this->_nextToken($iterator, $searchForward);
+            $foundToken = null;
+            while($iterator->valid()) {
+                $currentToken = $iterator->current();
+                if (null === $currentToken->getType()) {
+                    if ($currentToken->getValue() === $incrementBrace) {
+                        $level++;
+                    } elseif ($currentToken->getValue() === $decrementBrace) {
+                        $level--;
+                    }
                 }
-            }
-            if ($level === 0) {
-                $foundToken = $currentToken;
-                break;
+                if ($level === 0) {
+                    $foundToken = $currentToken;
+                    break;
             }
             $this->_nextToken($iterator, $searchForward);
         }
         $iterator->update($token);
+
         return $foundToken;
     }
 
@@ -540,6 +556,7 @@ class AHelper
             $iterator->next();
         }
         $iterator->update($token);
+
         return $foundToken;
     }
 }

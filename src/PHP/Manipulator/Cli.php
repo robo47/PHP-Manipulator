@@ -28,15 +28,15 @@ class Cli extends Application
     protected function _initApp()
     {
         $path = __DIR__ .
-            DIRECTORY_SEPARATOR . 'Cli' .
-            DIRECTORY_SEPARATOR . 'Command' .
-            DIRECTORY_SEPARATOR;
+        DIRECTORY_SEPARATOR . 'Cli' .
+        DIRECTORY_SEPARATOR . 'Command' .
+        DIRECTORY_SEPARATOR;
         $finder = new Finder();
 
         // @todo use *Command.php and rename Commands
         $fileIterator = $finder->files()
-                               ->name('*.php')
-                               ->in($path);
+        ->name('*.php')
+        ->in($path);
 
         foreach ($fileIterator as $file) {
             /* @var $file SplFileInfo */
