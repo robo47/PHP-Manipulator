@@ -2,38 +2,32 @@
 
 namespace PHP\Manipulator;
 
-use PHP\Manipulator\TokenContainer;
-
 /**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
  * @todo Create IActionset when api is stable
  */
 abstract class Actionset
 {
-
     /**
      * Array with Options
      *
-     * @var array
+     * @var mixed[]
      */
-    protected $_options = array();
+    private $options = [];
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
-        $this->_options = $options;
+        $this->options = $options;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
 
     /**
@@ -41,8 +35,7 @@ abstract class Actionset
      *
      * Returns array with all actions used by this actionset
      *
-     * @return array
+     * @return Action[]
      */
     abstract public function getActions();
-
 }

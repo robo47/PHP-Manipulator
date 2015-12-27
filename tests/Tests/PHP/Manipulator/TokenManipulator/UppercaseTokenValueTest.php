@@ -2,48 +2,47 @@
 
 namespace Tests\PHP\Manipulator\TokenManipulator;
 
-use PHP\Manipulator\TokenManipulator\UppercaseTokenValue;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator\UppercaseTokenValue;
+use Tests\TestCase;
 
 /**
- * @group TokenFinder
- * @group TokenFinder\UppercaseTokenValue
+ * @covers PHP\Manipulator\TokenManipulator\UppercaseTokenValue
  */
-class UppercaseTokenValueTest extends \Tests\TestCase
+class UppercaseTokenValueTest extends TestCase
 {
-
     /**
      * @return array
      */
     public function manipluateProvider()
     {
-        $data = array();
+        $data = [];
 
         #0
-        $data[] = array(
-            Token::factory(array(T_BOOLEAN_AND, 'and')),
-            Token::factory(array(T_BOOLEAN_AND, 'AND')),
-            true
-        );
+        $data[] = [
+            Token::createFromMixed([T_BOOLEAN_AND, 'and']),
+            Token::createFromMixed([T_BOOLEAN_AND, 'AND']),
+        ];
 
         #1
-        $data[] = array(
-            Token::factory(array(T_BOOLEAN_OR, 'or')),
-            Token::factory(array(T_BOOLEAN_OR, 'OR')),
-            true
-        );
+        $data[] = [
+            Token::createFromMixed([T_BOOLEAN_OR, 'or']),
+            Token::createFromMixed([T_BOOLEAN_OR, 'OR']),
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider manipluateProvider
-     * @covers \PHP\Manipulator\TokenManipulator\UppercaseTokenValue::manipulate
+     *
+     * @param Token $actualToken
+     * @param Token $expectedToken
      */
-    public function testManipulate($actualToken, $expectedToken, $strict)
+    public function testManipulate(Token $actualToken, Token $expectedToken)
     {
         $manipulator = new UppercaseTokenValue();
         $manipulator->manipulate($actualToken);
-        $this->assertTokenMatch($expectedToken, $actualToken, $strict);
+        $this->assertTokenMatch($expectedToken, $actualToken, true);
     }
 }

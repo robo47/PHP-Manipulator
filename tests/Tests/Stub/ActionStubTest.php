@@ -2,24 +2,19 @@
 
 namespace Tests\Stub;
 
-use Tests\Stub\ActionStub;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Stub
- * @group Stub\ActionStub
+ * @covers Tests\Stub\ActionStub
  */
-class ActionStubTest extends \Tests\TestCase
+class ActionStubTest extends TestCase
 {
-
-    /**
-     * @covers \Tests\Stub\ActionStub
-     */
     public function testCallingManipulateSetsCalledToTrue()
     {
         ActionStub::$called = false;
-        $stub = new ActionStub();
-        $container = new TokenContainer();
+        $stub               = new ActionStub();
+        $container          = TokenContainer::createEmptyContainer();
         $this->assertFalse(ActionStub::$called);
         $stub->run($container);
         $this->assertTrue(ActionStub::$called);

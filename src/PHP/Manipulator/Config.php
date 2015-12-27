@@ -2,187 +2,165 @@
 
 namespace PHP\Manipulator;
 
+use Iterator;
+use PHP\Manipulator\Config\XmlConfig;
+use PHP\Manipulator\Exception\ConfigException;
 use Symfony\Component\Finder\Finder;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \Symfony\Components\Finder\Finder
- * @uses    \PHP\Manipulator\Action
- * @uses    \PHP\Manipulator\Actionset
- */
 abstract class Config
 {
-
     /**
-     * Array with all Optipons
-     *
-     * @var array
+     * @var mixed[]
      */
-    protected $_options = array();
+    private $options = [];
 
     /**
-     * Array with all Actions
-     *
-     * @var array
+     * @var Action[]
      */
-    protected $_actions = array();
+    private $actions = [];
 
     /**
-     * Array with all Files
-     *
-     * @var array
+     * @var string[]
      */
-    protected $_files = array();
+    private $files = [];
 
     /**
-     * Classloaders
-     *
-     * @var array
+     * @var string[]
      */
-    protected $_classLoaders = array();
+    private $classLoaders = [];
 
     /**
-     * @param mixed $config
+     * @param mixed $data
      */
     public function __construct($data)
     {
-        $this->_initDefaultOptions();
-        $this->_initConfig($data);
+        $this->initDefaultOptions();
+        $this->initConfig($data);
     }
 
-    protected function _initDefaultOptions()
+    private function initDefaultOptions()
     {
-        $this->_options['actionPrefix'] = 'PHP\\Manipulator\\Action\\';
-        $this->_options['actionsetPrefix'] = 'PHP\\Manipulator\\Actionset\\';
-        $this->_options['fileSuffix'] = '.php';
-        $this->_options['defaultNewline'] = "\n";
+        $this->options['actionPrefix']    = 'PHP\\Manipulator\\Action\\';
+        $this->options['actionsetPrefix'] = 'PHP\\Manipulator\\Actionset\\';
+        $this->options['fileSuffix']      = '.php';
+        $this->options['defaultNewline']  = "\n";
     }
 
     /**
-     *Child-Classes implement it and read/parse their configs in there
+     * @param mixed $data
      */
-    abstract protected function _initConfig($data);
+    abstract protected function initConfig($data);
 
     /**
-     * Get Options
-     *
-     * @return array
+     * @return mixed[]
      */
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
 
     /**
-     * Get Actions
-     *
-     * @return array
+     * @return Action[]
      */
     public function getActions()
     {
-        return $this->_actions;
+        return $this->actions;
     }
 
     /**
-     * Get Files
-     *
-     * @return array
+     * @return string[]
      */
     public function getFiles()
     {
-        return $this->_files;
+        return $this->files;
     }
 
     /**
-     * Add File
-     *
      * @param string $file
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     *
+     * @return Config
      */
     public function addFile($file)
     {
         $realPath = realpath($file);
         if (false === $realPath) {
-            throw new \Exception('File ' . $file . ' not found');
+            $message = sprintf('File "%s" not found', $file);
+            throw new ConfigException($message, ConfigException::FILE_NOT_FOUND);
         }
-        $this->_files[] = $realPath;
+        $this->files[] = $realPath;
 
         return $this;
     }
 
     /**
-     * Get Option
-     *
      * @param string $name
+     *
      * @return mixed
      */
     public function getOption($name)
     {
-        if (!isset($this->_options[$name])) {
-            $message = 'Option "' . $name . '" does not exist';
-            throw new \Exception($message);
+        if (!isset($this->options[$name])) {
+            $message = sprintf('Option "%s" does not exist', $name);
+            throw new ConfigException($message, ConfigException::OPTION_NOT_FOUND);
         }
 
-        return $this->_options[$name];
+        return $this->options[$name];
     }
 
     /**
-     * Add action
-     *
-     * @param string $action
+     * @param string      $action
      * @param string|null $prefix
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     * @param mixed[]     $options
+     *
+     * @return Config
      */
-    public function addAction($action, $prefix = null, array $options = array())
+    public function addAction($action, $prefix = null, array $options = [])
     {
         if (null === $prefix) {
             $prefix = $this->getOption('actionPrefix');
         }
-        $classname = $prefix . $action;
-        $this->_actions[] = new $classname($options);
+        $classname       = $prefix.$action;
+        $this->actions[] = new $classname($options);
 
         return $this;
     }
 
     /**
-     * Add Actionset
-     *
-     * @param string $actionset
+     * @param string      $actionset
      * @param string|null $prefix
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     *
+     * @return Config
      */
     public function addActionset($actionset, $prefix = null)
     {
         if (null === $prefix) {
             $prefix = $this->getOption('actionsetPrefix');
         }
-        $classname = $prefix . $actionset;
+        $classname = $prefix.$actionset;
         $actionset = new $classname();
         /* @var $actionset \PHP\Manipulator\Actionset */
         foreach ($actionset->getActions() as $action) {
-            $this->_actions[] = $action;
+            $this->actions[] = $action;
         }
 
         return $this;
     }
 
     /**
-     * Add directory
-     *
      * @param string $path
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     *
+     * @return Config
      */
     public function addDirectory($path)
     {
-        $realpath = realpath($path);
-        if (false === $realpath || !file_exists($realpath) || !is_dir($realpath) || !is_readable($realpath)) {
-            throw new \Exception('Unable to open path: ' . $path);
+        if (!file_exists($path) || !is_dir($path) || !is_readable($path)) {
+            $message = sprintf('Unable to open path %s', $path);
+            throw new ConfigException($message, ConfigException::UNABLE_TO_OPEN_PATH);
         }
         $suffix = $this->getOption('fileSuffix');
-        $finder = new Finder();
-        $files = $finder->files()->name('*' . $suffix)->in($realpath);
+        $files  = Finder::create()->files()
+                       ->name(sprintf('*%s', $suffix))
+                       ->in($path);
 
         foreach ($files as $file) {
             $this->addFile((string) $file);
@@ -192,29 +170,24 @@ abstract class Config
     }
 
     /**
-     * Add an iterator
+     * @param Iterator $iterator
      *
-     * All it needs to do is return a string or SplFileInfo-object on current()
-     *
-     * @param string $path
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     * @return Config
      */
-    public function addIterator(\Iterator $iterator)
+    public function addIterator(Iterator $iterator)
     {
         foreach ($iterator as $file) {
-            // cast to string for \SplFileInfo
-            $this->addFile((string)$file);
+            // cast to string for SplFileInfo
+            $this->addFile((string) $file);
         }
 
         return $this;
     }
 
     /**
-     * Factory
-     *
      * @param string $type
-     * @param string $data Path or Code
-     * @param boolean $isFile
+     * @param string $data   Path or Code
+     * @param bool   $isFile
      */
     public static function factory($type, $data, $isFile = false)
     {
@@ -223,7 +196,7 @@ abstract class Config
         }
         switch (strtolower($type)) {
             case 'xml':
-                $type = 'PHP\\Manipulator\\Config\\Xml';
+                $type = XmlConfig::class;
                 break;
             default:
                 break;
@@ -233,18 +206,18 @@ abstract class Config
     }
 
     /**
-     * Get file content
-     *
      * @param string $file
+     *
      * @return string
      */
     public static function getFileContent($file)
     {
         $oldFile = $file;
-        $file = realpath($file);
+        $file    = realpath($file);
 
         if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
-            throw new \Exception('Unable to read file: ' . $oldFile);
+            $message = sprintf('Unable to read file:  %s', $oldFile);
+            throw new ConfigException($message, ConfigException::UNABLE_TO_READ_FILE);
         }
 
         return file_get_contents($file);
@@ -252,29 +225,31 @@ abstract class Config
 
     /**
      * @param string $name
-     * @param mixed $value
-     * @return \PHP\Manipulator\Config *Provides Fluent Interface*
+     * @param mixed  $value
+     *
+     * @return Config
      */
     public function addOption($name, $value)
     {
-        $this->_options[$name] = $value;
+        $this->options[$name] = $value;
 
         return $this;
     }
+
     /**
-     * @param string $name
+     * @param string $namespace
      * @param string $path
      */
     public function addClassLoader($namespace, $path)
     {
-        $this->_classLoaders[$namespace] = $path;
+        $this->classLoaders[$namespace] = $path;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getClassLoaders()
     {
-        return $this->_classLoaders;
+        return $this->classLoaders;
     }
 }

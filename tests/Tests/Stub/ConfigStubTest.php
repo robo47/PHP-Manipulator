@@ -2,19 +2,13 @@
 
 namespace Tests\Stub;
 
-use Tests\Stub\ConfigStub;
-use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Stub
- * @group Stub\ConfigStub
+ * @covers Tests\Stub\ConfigStub
  */
-class ConfigStubTest extends \Tests\TestCase
+class ConfigStubTest extends TestCase
 {
-
-    /**
-     * @covers \Tests\Stub\ConfigStub
-     */
     public function testStub()
     {
         $configStub = new ConfigStub('foo');
@@ -23,7 +17,7 @@ class ConfigStubTest extends \Tests\TestCase
         $configStub->setOption('baa', 'foo');
         $this->assertCount(5, $configStub->getOptions());
         $options = $configStub->getOptions();
-        $this->assertArrayHasKey('baa',  $options);
-        $this->assertEquals('foo',  $options['baa']);
+        $this->assertArrayHasKey('baa', $options);
+        $this->assertSame('foo', $options['baa']);
     }
 }

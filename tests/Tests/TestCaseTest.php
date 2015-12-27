@@ -2,128 +2,97 @@
 
 namespace Tests;
 
-use Tests\Util;
-use Tests\TestCase;
+use Exception;
+use PHP\Manipulator\Config;
+use PHP\Manipulator\Config\XmlConfig;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHPUnit_Framework_TestCase;
 
 /**
- * @group TestCase
+ * @covers Tests\Testcase
  */
-class TestCaseTest extends \PHPUnit_Framework_TestCase
+class TestCaseTest extends PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @covers \Tests\Testcase::getFixtureFileContent
-     */
     public function testGetFixtureFileContent()
     {
-        $test = new TestCase();
+        $test     = new TestCase();
         $filename = '/TokenFinder/SwitchFinder/input0.php';
-        $content = $test->getFixtureFileContent($filename);
-        $this->assertEquals(file_get_contents(TESTS_PATH . '/_fixtures/' . $filename), $content);
+        $content  = $test->getFixtureFileContent($filename);
+        $this->assertSame(file_get_contents(TESTS_PATH.'/_fixtures/'.$filename), $content);
     }
 
-    /**
-     * @covers \Tests\Testcase::getFixtureFileContent
-     */
     public function testGetFixtureFileContentThrowsExceptionOnNonExistingFile()
     {
-        $test = new TestCase();
+        $test     = new TestCase();
         $filename = '/non-existing-file';
-        try {
-            $test->getFixtureFileContent($filename);
-            $this->fail('no exception thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('Fixture ' . $filename . ' not found', $e->getMessage());
-        }
+        $this->setExpectedException(
+            Exception::class,
+            $filename
+        );
+        $test->getFixtureFileContent($filename);
     }
 
-    /**
-     * @covers \Tests\Testcase::getResultFromContainer
-     */
     public function testGetResultFromContainer()
     {
-        $test = new TestCase();
-        $t1 = new Token('<?php' . PHP_EOL, T_OPEN_TAG);
-        $t2 = new Token('echo', T_ECHO);
-        $t3 = new Token(' ', T_WHITESPACE);
-        $t4 = new Token('$var', T_VARIABLE);
-        $t5 = new Token(';');
-        $container = new TokenContainer(array($t1, $t2, $t3, $t4, $t5));
-        $result = $test->getResultFromContainer($container, 1, 3);
-        $this->assertEquals(3, count($result->getTokens()));
+        $test      = new TestCase();
+        $t1        = Token::createFromValueAndType('<?php'.PHP_EOL, T_OPEN_TAG);
+        $t2        = Token::createFromValueAndType('echo', T_ECHO);
+        $t3        = Token::createFromValueAndType(' ', T_WHITESPACE);
+        $t4        = Token::createFromValueAndType('$var', T_VARIABLE);
+        $t5        = Token::createFromValue(';');
+        $container = TokenContainer::factory([$t1, $t2, $t3, $t4, $t5]);
+        $result    = $test->getResultFromContainer($container, 1, 3);
+        $this->assertCount(3, $result->getTokens());
         $this->assertContains($t2, $result->getTokens());
         $this->assertContains($t3, $result->getTokens());
         $this->assertContains($t4, $result->getTokens());
     }
 
-    /**
-     * @covers \Tests\Testcase::getContainerFromFixture
-     */
     public function testGetContainerFromFixture()
     {
         $this->markTestIncomplete('not implemented yet');
-        $test = new TestCase();
-        $filename = '/TokenFinder/SwitchFinder/input0';
+        $test      = new TestCase();
+        $filename  = '/TokenFinder/SwitchFinder/input0';
         $container = $test->getContainerFromFixture($filename);
-        $this->assertInstanceOf('\PHP\Manipulator\TokenContainer', $container);
+        $this->assertInstanceOf(TokenContainer::class, $container);
         $this->assertCount(91, $container);
     }
 
-
-    /**
-     * @covers \Tests\Testcase::assertTokenMatch
-     */
     public function testAssertTokenMatch()
     {
         $this->markTestIncomplete('not implemented yet');
     }
 
-    /**
-     * @covers \Tests\Testcase::assertTokenContainerMatch
-     */
     public function testAssertTokenContainerMatch()
     {
         $this->markTestIncomplete('not implemented yet');
     }
 
-    /**
-     * @covers \Tests\Testcase::checkAsptags
-     */
     public function testCheckAsptags()
     {
         // not really testable because of setting ini-values is required, which fails for shorttags and asptags
         $this->markTestIncomplete('not implemented yet');
     }
 
-    /**
-     * @covers \Tests\Testcase::checkShorttags
-     */
     public function testCheckShorttags()
     {
         // not really testable because of setting ini-values is required, which fails for shorttags and asptags
         $this->markTestIncomplete('not implemented yet');
     }
 
-    /**
-     * @covers \Tests\Testcase::getConfig
-     */
     public function testGetConfig()
     {
-        $test = new TestCase();
+        $test   = new TestCase();
         $config = $test->getConfig();
-        $this->assertInstanceOf('\PHP\Manipulator\Config', $config);
+        $this->assertInstanceOf(Config::class, $config);
     }
 
-    /**
-     * @covers \Tests\Testcase::getXmlConfig
-     */
     public function testGetXmlConfig()
     {
-        $test = new TestCase();
+        $test   = new TestCase();
         $config = $test->getXmlConfig(1);
-        $this->assertInstanceOf('\PHP\Manipulator\Config\Xml', $config);
+        $this->assertInstanceOf(XmlConfig::class, $config);
         $this->markTestIncomplete('test right file was loaded ?');
     }
 }

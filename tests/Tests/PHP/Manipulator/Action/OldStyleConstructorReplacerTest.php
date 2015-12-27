@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\OldStyleConstructorReplacer;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\OldStyleConstructorReplacer
+ * @covers PHP\Manipulator\Action\OldStyleConstructorReplacer
  */
-class OldStyleConstructorReplacerTest extends \Tests\TestCase
+class OldStyleConstructorReplacerTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\OldStyleConstructorReplacer::init
-     */
     public function testConstructorDefaults()
     {
         $action = new OldStyleConstructorReplacer();
@@ -26,40 +22,23 @@ class OldStyleConstructorReplacerTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/OldStyleConstructorReplacer/';
+        $data                                 = [];
+        $data['Example 0']                    = 0;
+        $data['2 Classes']                    = 1;
+        $data['A function outside the class'] = 2;
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
-
-        #1 2 Classes
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2 A function outside the class
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/OldStyleConstructorReplacer/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\OldStyleConstructorReplacer
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-        $action = new OldStyleConstructorReplacer($options);
+        $action = new OldStyleConstructorReplacer();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

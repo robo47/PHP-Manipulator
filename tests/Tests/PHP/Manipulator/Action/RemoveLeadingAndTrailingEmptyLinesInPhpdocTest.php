@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
+ * @covers PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
  */
-class RemoveLeadingAndTrailingEmptyLinesInPhpdocTest extends \Tests\TestCase
+class RemoveLeadingAndTrailingEmptyLinesInPhpdocTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc();
@@ -26,47 +22,28 @@ class RemoveLeadingAndTrailingEmptyLinesInPhpdocTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/RemoveLeadingAndTrailingEmptyLinesInPhpdoc/';
+        $data = [];
 
-        #0 Leading empty line
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
+        $data['Leading empty line']                            = 0;
+        $data['Trailing']                                      = 1;
+        $data['Leading and Trailing']                          = 2;
+        $data['Leading and Trailing and empty line in middle'] = 3;
+
+        return $this->convertContainerFixtureToProviderData(
+            $data,
+            '/Action/RemoveLeadingAndTrailingEmptyLinesInPhpdoc/'
         );
-
-        #1 Trailing
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2 Leading and Trailing
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        #3 Leading and Trailing and empty line in middle
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-        );
-
-        return $data;
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-        $action = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc($options);
+        $action = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

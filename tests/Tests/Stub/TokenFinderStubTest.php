@@ -2,26 +2,20 @@
 
 namespace Tests\Stub;
 
-use Tests\Stub\TokenFinderStub;
-use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder\Result;
+use Tests\TestCase;
 
 /**
- * @group Stub
- * @group Stub\TokenFinder
+ * @covers Tests\Stub\TokenFinderStub
  */
-class TokenFinderStubTest
-extends \Tests\TestCase
+class TokenFinderStubTest extends TestCase
 {
-
-    /**
-     * @covers \Tests\Stub\TokenFinderStub::__construct
-     */
     public function testConstruct()
     {
         $result = new Result();
-        $stub = new TokenFinderStub($result);
+        $stub   = new TokenFinderStub($result);
         $this->assertSame($result, $stub->result);
     }
 
@@ -30,29 +24,29 @@ extends \Tests\TestCase
      */
     public function findProvider()
     {
-        $data = array();
-        $path = '/TokenFinder/Stub/';
+        $data = [];
 
         #0
-        $data[] = array(
-            new Token('Foo'),
-            null,
-            new TokenContainer(),
-            new Result()
-        );
+        $data[] = [
+            Token::createFromValue('Foo'),
+            TokenContainer::createEmptyContainer(),
+            new Result(),
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider findProvider
-     * @covers \Tests\Stub\TokenFinderStub::find
-     * @covers \Tests\Stub\TokenFinderStub::<protected>
+     *
+     * @param Token          $token
+     * @param TokenContainer $container
+     * @param Result         $expectedResult
      */
-    public function testFind($token, $params, $container, $expectedResult)
+    public function testFind(Token $token, TokenContainer $container, Result $expectedResult)
     {
-        $finder = new TokenFinderStub($expectedResult);
-        $actualResult = $finder->find($token, $container, $params);
+        $finder       = new TokenFinderStub($expectedResult);
+        $actualResult = $finder->find($token, $container);
         $this->assertFinderResultsMatch($expectedResult, $actualResult);
     }
 }

@@ -2,25 +2,19 @@
 
 namespace Tests\Stub;
 
-use Tests\Stub\TokenManipulatorStub;
-use PHP\Manipulator\TokenManipulator\Stub;
 use PHP\Manipulator\Token;
+use Tests\TestCase;
 
 /**
- * @group Stub
- * @group Stub\TokenManipulatorStub
+ * @covers Tests\Stub\TokenManipulatorStub
  */
-class TokenManipulatorStubTest extends \Tests\TestCase
+class TokenManipulatorStubTest extends TestCase
 {
-
-    /**
-     * @covers \Tests\Stub\TokenManipulatorStub
-     */
     public function testCallingManipulateSetsCalledToTrue()
     {
         TokenManipulatorStub::$called = false;
-        $stub = new TokenManipulatorStub();
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
+        $stub                         = new TokenManipulatorStub();
+        $token                        = Token::createFromMixed([T_WHITESPACE, "\n"]);
         $this->assertFalse(TokenManipulatorStub::$called);
         $stub->manipulate($token);
         $this->assertTrue(TokenManipulatorStub::$called);

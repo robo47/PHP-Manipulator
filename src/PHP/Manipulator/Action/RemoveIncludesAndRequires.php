@@ -2,29 +2,17 @@
 
 namespace PHP\Manipulator\Action;
 
-use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder\IncludeAndRequireFinder;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\TokenFinder\IncludeAndRequire
- * @todo add possibility to filter which tokens should be deleted and which not
- */
-class RemoveIncludesAndRequires
-extends CommentOutIncludesAndRequires
+class RemoveIncludesAndRequires extends CommentOutIncludesAndRequires
 {
-
-    /**
-     * @param array $tokens
-     */
-    protected function _handleTokens(TokenContainer $container, array $tokens)
+    protected function handleTokens(TokenContainer $container, array $tokens)
     {
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
                 $result = $this->findTokens(
-                    'IncludeAndRequire',
+                    IncludeAndRequireFinder::class,
                     $start,
                     $container
                 );
@@ -39,14 +27,15 @@ extends CommentOutIncludesAndRequires
     }
 
     /**
-     * @param boolean $inClass
-     * @param boolean $inFunction
-     * @return boolean
+     * @param bool $insideClass
+     * @param bool $insideFunction
+     *
+     * @return bool
      */
-    protected function _shouldCheckAndReplace($inClass, $inFunction)
+    protected function shouldCheckAndReplace($insideClass, $insideFunction)
     {
-        $globalScopeOnly = $this->getOption('globalScopeOnly');
-        if (true === $globalScopeOnly && !($inClass || $inFunction)) {
+        $globalScopeOnly = $this->getOption(CommentOutIncludesAndRequires::OPTION_GLOBAL_SCOPE_ONLY);
+        if (true === $globalScopeOnly && !($insideClass || $insideFunction)) {
             return true;
         } elseif (false === $globalScopeOnly) {
             return true;

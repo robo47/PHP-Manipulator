@@ -3,57 +3,46 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class StripPhp
-extends Action
+class StripPhp extends Action
 {
     /**
-     * @var array
+     * @var Token[]
      */
-    protected $_deleteList = array();
+    private $deleteList = [];
 
-    /**
-     * Remove php-code
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
-        $open = false;
-        $this->_deleteList = array();
-        $allowedTokens = array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO);
+        $open             = false;
+        $this->deleteList = [];
+        $allowedTokens    = [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO];
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, $allowedTokens)) {
+            if ($token->isType($allowedTokens)) {
                 $open = true;
             }
-            if ($this->_shoudDelete($open)) {
-                $this->_deleteList[] = $token;
+            if ($this->shoudDelete($open)) {
+                $this->deleteList[] = $token;
             }
-            if ($this->isType($token, T_CLOSE_TAG)) {
+            if ($token->isType(T_CLOSE_TAG)) {
                 $open = false;
             }
             $iterator->next();
         }
-        $container->removeTokens($this->_deleteList);
+        $container->removeTokens($this->deleteList);
         $container->retokenize();
     }
 
     /**
-     * @param boolean $open
-     * @return boolean
+     * @param bool $open
+     *
+     * @return bool
      */
-    protected function _shoudDelete($open)
+    protected function shoudDelete($open)
     {
         return $open;
     }

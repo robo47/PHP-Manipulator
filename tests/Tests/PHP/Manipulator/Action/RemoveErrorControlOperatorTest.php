@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveErrorControlOperator;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\RemoveErrorControlOperator
+ * @covers PHP\Manipulator\Action\RemoveErrorControlOperator
  */
-class RemoveErrorControlOperatorTest extends \Tests\TestCase
+class RemoveErrorControlOperatorTest extends TestCase
 {
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveErrorControlOperator::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveErrorControlOperator();
@@ -26,27 +22,23 @@ class RemoveErrorControlOperatorTest extends \Tests\TestCase
      */
     public function manipulateProvider()
     {
-        $data = array();
-        $path = '/Action/RemoveErrorControlOperator/';
+        $data = [];
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            false
-        );
+        $data['Remove ErrorControl Operator'] = 0;
 
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/RemoveErrorControlOperator/');
     }
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\RemoveErrorControlOperator
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
      */
-    public function testManipulate($container, $expectedContainer, $strict)
+    public function testManipulate(TokenContainer $container, TokenContainer $expectedContainer)
     {
         $manipulator = new RemoveErrorControlOperator();
         $manipulator->run($container);
-        $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
+        $this->assertTokenContainerMatch($expectedContainer, $container);
     }
 }

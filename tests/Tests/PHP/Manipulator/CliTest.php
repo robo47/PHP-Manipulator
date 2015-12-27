@@ -2,15 +2,13 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator;
 use PHP\Manipulator\Cli;
-use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Cli
+ * @covers PHP\Manipulator\Cli
  */
-class CliTest extends \Tests\TestCase
+class CliTest extends TestCase
 {
     public function setUp()
     {
@@ -22,22 +20,14 @@ class CliTest extends \Tests\TestCase
         ob_end_clean();
     }
 
-    /**
-     * @covers \PHP\Manipulator\Cli::<protected>
-     * @covers \PHP\Manipulator\Cli::run
-     */
     public function testRun()
     {
         $this->markTestIncomplete('not implemented yet');
     }
 
-    /**
-     * @covers \PHP\Manipulator\Cli::__construct
-     * @covers \PHP\Manipulator\Cli::_initApp
-     */
     public function testConstruct()
     {
-        $cli = new Cli();
+        $cli      = new Cli();
         $commands = $cli->all();
         // 2 defaults (helpCommand, listCommand)
         // 3 own (ShowTokens, License, RunActions)

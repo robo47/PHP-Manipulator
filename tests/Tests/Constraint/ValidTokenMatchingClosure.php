@@ -2,63 +2,54 @@
 
 namespace Tests\Constraint;
 
-class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
-{
+use Closure;
+use PHP\Manipulator\Token;
+use PHPUnit_Framework_Constraint;
+use PHPUnit_Framework_Constraint_IsEqual;
+use ReflectionFunction;
 
+class ValidTokenMatchingClosure extends PHPUnit_Framework_Constraint
+{
     /**
      * Evaluate
      *
-     * @param \Closure $other
-     * @param  string $description Additional information about the test
-     * @param  bool $returnResult Whether to return a result or throw an exception
-     * @return boolean
+     * @param Closure $other
+     * @param string  $description  Additional information about the test
+     * @param bool    $returnResult Whether to return a result or throw an exception
+     *
+     * @return bool
      */
-    public function evaluate($other, $description = '', $returnResult = FALSE)
+    public function evaluate($other, $description = '', $returnResult = false)
     {
-        if (!$other instanceof \Closure) {
-            $this->_cause = 'Variable must be a Closure';
+        if (!$other instanceof Closure) {
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
-            $this->fail($other, $description);
+            $this->fail($other, 'Variable must be a Closure');
         }
 
-        $reflection = new \ReflectionFunction($other);
+        $reflection = new ReflectionFunction($other);
 
-        $requiredParameters = new \PHPUnit_Framework_Constraint_IsEqual(1);
+        $requiredParameters = new PHPUnit_Framework_Constraint_IsEqual(1);
         if (false === $requiredParameters->evaluate($reflection->getNumberOfRequiredParameters(), $description, true)) {
-            $this->_cause = 'Closure does not have 1 required parameter';
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
-            $this->fail($other, $description);
+            $this->fail($other, 'Closure does not have 1 required parameter');
         }
 
-        $params = $reflection->getParameters();
+        $params         = $reflection->getParameters();
         $tokenParameter = $params[0];
-        /* @var $tokenParameter \ReflectionParameter */
 
-        $parameterType = new \PHPUnit_Framework_Constraint_IsEqual('PHP\Manipulator\Token');
+        $parameterType = new PHPUnit_Framework_Constraint_IsEqual(Token::class);
         if (false === $parameterType->evaluate($tokenParameter->getClass()->name, $description, true)) {
-            $this->_cause = 'Closures Token-Parameter has wrong Typehint';
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
-            $this->fail($other, $description);
+            $this->fail($other, 'Closures Token-Parameter has wrong Typehint');
         }
 
         return true;
-    }
-
-    /**
-     * @param mixed   $other
-     * @param string  $description
-     * @param boolean $not
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        return $this->_cause;
     }
 
     /**
@@ -68,5 +59,4 @@ class ValidTokenMatchingClosure extends \PHPUnit_Framework_Constraint
     {
         return 'Is a valid Token Matching Closure ';
     }
-
 }

@@ -1,7 +1,10 @@
 /nbproject/
+.idea
 /docs/build/*
 !/docs/build/.gitkeep
 /build/*
 !/build/phpmd.xml
 /composer.phar
 /vendor/
+.php_cs.cache
+npm-debug.log

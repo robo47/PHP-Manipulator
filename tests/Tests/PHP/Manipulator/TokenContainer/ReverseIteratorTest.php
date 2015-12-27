@@ -2,82 +2,77 @@
 
 namespace Tests\PHP\Manipulator\TokenContainer;
 
-use PHP\Manipulator\TokenContainer\ReverseIterator;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\ReverseTokenContainerIterator;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
+use ReflectionClass;
+use Tests\TestCase;
 
 /**
- * @group TokenContainer
- * @group TokenContainer\ReverseIterator
+ * @covers PHP\Manipulator\TokenContainer\ReverseTokenContainerIterator
  */
-class ReverseIteratorTest extends \Tests\TestCase
+class ReverseIteratorTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator
-     */
     public function testIteratorClass()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainer\ReverseIterator');
-        $this->assertTrue($reflection->isSubclassOf('PHP\Manipulator\TokenContainer\Iterator'));
+        $reflection = new ReflectionClass(ReverseTokenContainerIterator::class);
+        $this->assertTrue($reflection->isSubclassOf(TokenContainerIterator::class));
     }
 
     /**
-     * @return \PHP\Manipulator\TokenContainer
+     * @return TokenContainer
      */
     public function getTestContainerWithHoles()
     {
-        $tokens = array(
-            0 => Token::factory(array(null, "<?php\n")),
-            1 => Token::factory(array(null, "dummy")),
-            2 => Token::factory(array(null, 'echo')),
-            3 => Token::factory(array(null, "dummy")),
-            4 => Token::factory(array(null, ' ')),
-            5 => Token::factory(array(null, '\$var')),
-            6 => Token::factory(array(null, ';')),
-        );
-        $container = new TokenContainer($tokens);
+        $tokens = [
+            0 => Token::createFromMixed([null, "<?php\n"]),
+            1 => Token::createFromMixed([null, 'dummy']),
+            2 => Token::createFromMixed([null, 'echo']),
+            3 => Token::createFromMixed([null, 'dummy']),
+            4 => Token::createFromMixed([null, ' ']),
+            5 => Token::createFromMixed([null, '\$var']),
+            6 => Token::createFromMixed([null, ';']),
+        ];
+        $container = TokenContainer::factory($tokens);
         unset($container[1]);
         unset($container[3]);
 
         return $container;
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator
-     */
     public function testReverseIterator()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new TokenContainer\ReverseIterator($container);
+        $iterator  = new ReverseTokenContainerIterator($container);
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[6], $iterator->current());
-        $this->assertEquals(6, $iterator->key(), 'Wrong key');
+        $this->assertSame(6, $iterator->key(), 'Wrong key');
 
         $iterator->next();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[5], $iterator->current());
-        $this->assertEquals(5, $iterator->key(), 'Wrong key');
+        $this->assertSame(5, $iterator->key(), 'Wrong key');
 
         $iterator->next();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[4], $iterator->current());
-        $this->assertEquals(4, $iterator->key(), 'Wrong key');
+        $this->assertSame(4, $iterator->key(), 'Wrong key');
 
         $iterator->next();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[2], $iterator->current());
-        $this->assertEquals(2, $iterator->key(), 'Wrong key');
+        $this->assertSame(2, $iterator->key(), 'Wrong key');
 
         $iterator->next();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[0], $iterator->current());
-        $this->assertEquals(0, $iterator->key(), 'Wrong key');
+        $this->assertSame(0, $iterator->key(), 'Wrong key');
 
         $iterator->next();
 
@@ -87,31 +82,31 @@ class ReverseIteratorTest extends \Tests\TestCase
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[0], $iterator->current());
-        $this->assertEquals(0, $iterator->key(), 'Wrong key');
+        $this->assertSame(0, $iterator->key(), 'Wrong key');
 
         $iterator->previous();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[2], $iterator->current());
-        $this->assertEquals(2, $iterator->key(), 'Wrong key');
+        $this->assertSame(2, $iterator->key(), 'Wrong key');
 
         $iterator->previous();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[4], $iterator->current());
-        $this->assertEquals(4, $iterator->key(), 'Wrong key');
+        $this->assertSame(4, $iterator->key(), 'Wrong key');
 
         $iterator->previous();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[5], $iterator->current());
-        $this->assertEquals(5, $iterator->key(), 'Wrong key');
+        $this->assertSame(5, $iterator->key(), 'Wrong key');
 
         $iterator->previous();
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[6], $iterator->current());
-        $this->assertEquals(6, $iterator->key(), 'Wrong key');
+        $this->assertSame(6, $iterator->key(), 'Wrong key');
 
         $iterator->previous();
 
@@ -121,23 +116,19 @@ class ReverseIteratorTest extends \Tests\TestCase
 
         $this->assertTrue($iterator->valid());
         $this->assertSame($container[6], $iterator->current());
-        $this->assertEquals(6, $iterator->key(), 'Wrong key');
+        $this->assertSame(6, $iterator->key(), 'Wrong key');
     }
 
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer\ReverseIterator::update
-     */
     public function testUpdate()
     {
         $container = $this->getTestContainerWithHoles();
-        $iterator = new ReverseIterator($container);
+        $iterator  = new ReverseTokenContainerIterator($container);
 
         $this->assertCount(count($container), $iterator);
 
-        $container[] = new Token('Foo', null);
+        $container[] = Token::createFromValue('Foo');
 
-        $this->assertCount(count($container)-1, $iterator);
+        $this->assertCount(count($container) - 1, $iterator);
         $iterator->update();
         $this->assertCount(count($container), $iterator);
     }

@@ -2,67 +2,64 @@
 
 namespace Tests\PHP\Manipulator\TokenManipulator;
 
-use PHP\Manipulator\TokenManipulator\IndentMultilineComment;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator\IndentMultilineComment;
+use Tests\TestCase;
 
 /**
- * @group TokenFinder
- * @group TokenFinder\IndentMultilineComment
+ * @covers PHP\Manipulator\TokenManipulator\IndentMultilineComment
  */
-class IndentMultilineCommentTest
-extends \Tests\TestCase
+class IndentMultilineCommentTest extends TestCase
 {
-
     /**
      * @return array
      */
     public function manipluateProvider()
     {
-        $data = array();
+        $data = [];
 
         #0
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\n* @return array\n*/\n")),
-            Token::factory(array(T_DOC_COMMENT, "/**\n     * @return array\n     */\n")),
+        $data[] = [
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n* @return array\n*/\n"]),
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n     * @return array\n     */\n"]),
             '    ',
-            true
-        );
+        ];
 
         #1
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "/*\n* @return array\n*/\n")),
-            Token::factory(array(T_COMMENT, "/*\n     * @return array\n     */\n")),
+        $data[] = [
+            Token::createFromMixed([T_COMMENT, "/*\n* @return array\n*/\n"]),
+            Token::createFromMixed([T_COMMENT, "/*\n     * @return array\n     */\n"]),
             '    ',
-            true
-        );
+        ];
 
         #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "/*\r\n* @return array\r\n*/\r\n")),
-            Token::factory(array(T_COMMENT, "/*\r\n     * @return array\r\n     */\r\n")),
+        $data[] = [
+            Token::createFromMixed([T_COMMENT, "/*\r\n* @return array\r\n*/\r\n"]),
+            Token::createFromMixed([T_COMMENT, "/*\r\n     * @return array\r\n     */\r\n"]),
             '    ',
-            true
-        );
+        ];
 
         #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "/*\r* @return array\r*/\r")),
-            Token::factory(array(T_COMMENT, "/*\r     * @return array\r     */\r")),
+        $data[] = [
+            Token::createFromMixed([T_COMMENT, "/*\r* @return array\r*/\r"]),
+            Token::createFromMixed([T_COMMENT, "/*\r     * @return array\r     */\r"]),
             '    ',
-            true
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider manipluateProvider
-     * @covers \PHP\Manipulator\TokenManipulator\IndentMultilineComment::manipulate
+     *
+     * @param Token  $actualToken
+     * @param Token  $expectedToken
+     * @param string $indention
      */
-    public function testManipulate($actualToken, $expectedToken, $indention, $strict)
+    public function testManipulate(Token $actualToken, Token $expectedToken, $indention)
     {
         $manipulator = new IndentMultilineComment();
         $manipulator->manipulate($actualToken, $indention);
-        $this->assertTokenMatch($expectedToken, $actualToken, $strict);
+        $this->assertTokenMatch($expectedToken, $actualToken, true);
     }
 }

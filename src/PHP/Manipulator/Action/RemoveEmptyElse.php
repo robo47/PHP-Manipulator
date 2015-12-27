@@ -6,56 +6,40 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class RemoveEmptyElse
-extends Action
+class RemoveEmptyElse extends Action
 {
-
-    /**
-     * @var PHP\Manipulator\TokenContainer
-     */
-    protected $_container = null;
+    const OPTION_IGNORE_COMMENTS = 'ignoreComments';
 
     public function init()
     {
-        if (!$this->hasOption('ignoreComments')) {
-            $this->setOption('ignoreComments', false);
+        if (!$this->hasOption(self::OPTION_IGNORE_COMMENTS)) {
+            $this->setOption(self::OPTION_IGNORE_COMMENTS, false);
         }
     }
 
-    /**
-     * Run Action
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     */
     public function run(TokenContainer $container)
     {
-        $this->_container = $container;
-        $iterator = $container->getIterator();
+        $iterator        = $container->getIterator();
 
-        $lastElse = null;
+        $lastElse      = null;
         $noOtherTokens = true;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_ELSE)) {
-                $lastElse = $token;
+            if ($token->isType(T_ELSE)) {
+                $lastElse      = $token;
                 $noOtherTokens = true;
             }
 
-            if (null !== $lastElse && !$this->_isAllowedTokenInsideEmptyElse($token)) {
+            if (null !== $lastElse && !$this->isAllowedTokenInsideEmptyElse($token)) {
                 $noOtherTokens = false;
             }
 
-            if ($this->_isEndElse($token) && true === $noOtherTokens && null !== $lastElse) {
-                $start = $lastElse;
-                $end = $token;
+            if ($this->isEndElse($token) && true === $noOtherTokens && null !== $lastElse) {
+                $start    = $lastElse;
+                $end      = $token;
                 $previous = $container->getPreviousToken($start);
-                if ($this->isType($end, T_ENDIF)) {
+                if ($end->isType(T_ENDIF)) {
                     $end = $container->getPreviousToken($end);
                 }
                 $container->removeTokensFromTo($start, $end);
@@ -68,15 +52,16 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isEndElse(Token $token)
+    private function isEndElse(Token $token)
     {
-        if ($this->isClosingCurlyBrace( $token)) {
+        if ($token->isClosingCurlyBrace()) {
             return true;
         }
-        if ($this->isType($token, T_ENDIF)) {
+        if ($token->isType(T_ENDIF)) {
             return true;
         }
 
@@ -84,20 +69,23 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isAllowedTokenInsideEmptyElse(Token $token)
+    private function isAllowedTokenInsideEmptyElse(Token $token)
     {
-        if ($this->isColon($token) ||
-            $this->isType($token, array(T_ELSE, T_ENDIF, T_WHITESPACE)) ||
-            $this->isClosingCurlyBrace( $token) ||
-            $this->isOpeningCurlyBrace( $token)) {
+        if ($token->isColon() ||
+            $token->isType([T_ELSE, T_ENDIF, T_WHITESPACE]) ||
+            $token->isClosingCurlyBrace() ||
+            $token->isOpeningCurlyBrace()
+        ) {
             return true;
         }
         // check for ignored comments
-        if (true === $this->getOption('ignoreComments') &&
-            $this->isType($token, array(T_COMMENT, T_DOC_COMMENT))) {
+        if (true === $this->getOption(self::OPTION_IGNORE_COMMENTS) &&
+            $token->isType([T_COMMENT, T_DOC_COMMENT])
+        ) {
             return true;
         }
 

@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\AddPublicKeyword;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\AddPublicKeyword
+ * @covers PHP\Manipulator\Action\AddPublicKeyword
  */
-class AddPublicKeywordTest extends \Tests\TestCase
+class AddPublicKeywordTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\AddPublicKeyword::init
-     */
     public function testConstructorDefaults()
     {
         $action = new AddPublicKeyword();
@@ -26,54 +22,25 @@ class AddPublicKeywordTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/AddPublicKeyword/';
+        $lines                                                                            = [];
+        $lines['Test']                                                                    = 0;
+        $lines['Test it only adds to methods, not functions']                             = 1;
+        $lines['Test it only adds public to methods and not to functions inside methods'] = 2;
+        $lines['Test it not adds public to anonymous functions']                          = 3;
+        $lines['Test it works with interfaces too']                                       = 4;
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
-
-        #1 Test it only adds to methods, not functions
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2 Test it only adds public to methods and not to functions inside methods (crazy ... but possible :P)
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        #3 Test it not adds public to anonymous functions
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-        );
-
-        #4 Test it works with interfaces too
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input4.php'),
-            $this->getContainerFromFixture($path . 'output4.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($lines, '/Action/AddPublicKeyword/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\AddPublicKeyword
      * @dataProvider actionProvider
+     *
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-        $action = new AddPublicKeyword($options);
+        $action = new AddPublicKeyword();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

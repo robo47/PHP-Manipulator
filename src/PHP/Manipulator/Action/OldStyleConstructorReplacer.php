@@ -7,63 +7,51 @@ use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 use SplStack;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class OldStyleConstructorReplacer
-extends Action
+class OldStyleConstructorReplacer extends Action
 {
+    /**
+     * @var int
+     */
+    private $level = 0;
 
     /**
-     * @var integer
+     * @var SplStack
      */
-    protected $_level = 0;
+    private $classStack;
 
     /**
-     * @var \SplStack
+     * @var int
      */
-    protected $_classStack = null;
+    private $maxLevel = 0;
 
-    /**
-     * @var integer
-     */
-    protected $_maxLevel = 0;
-
-    /**
-     * Run Action
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     */
     public function run(TokenContainer $container)
     {
-        $iterator = $container->getIterator();
-        $this->_classStack = new SplStack();
+        $iterator         = $container->getIterator();
+        $this->classStack = new SplStack();
 
         $classname = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
-            $this->_checkLevel($token);
-            if ($this->isType($token, T_CLASS)) {
-                $this->_classStack->push($this->_level);
+            $this->checkLevel($token);
+            if ($token->isType(T_CLASS)) {
+                $this->classStack->push($this->level);
                 $iterator->next();
                 while ($iterator->valid()) {
                     $token = $iterator->current();
-                    $this->_checkLevel($token);
-                    if ($this->isType($token, T_STRING)) {
+                    $this->checkLevel($token);
+                    if ($token->isType(T_STRING)) {
                         $classname = $token->getValue();
                         break;
                     }
                     $iterator->next();
                 }
             }
-            if (!$this->_classStack->isEmpty()) {
-                if ($this->isType($token, T_FUNCTION)) {
+            if (!$this->classStack->isEmpty()) {
+                if ($token->isType(T_FUNCTION)) {
                     while ($iterator->valid()) {
                         $token = $iterator->current();
-                        $this->_checkLevel($token);
-                        if ($this->isType($token, T_STRING)) {
+                        $this->checkLevel($token);
+                        if ($token->isType(T_STRING)) {
                             if (strtolower($token->getValue()) === strtolower($classname)) {
                                 $token->setValue('__construct');
                             }
@@ -79,21 +67,21 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _checkLevel(Token $token)
+    private function checkLevel(Token $token)
     {
-        if ($this->isOpeningCurlyBrace( $token)) {
-            $this->_level++;
-            $this->_maxLevel = max(array($this->_level, $this->_maxLevel));
+        if ($token->isOpeningCurlyBrace()) {
+            $this->level++;
+            $this->maxLevel = max([$this->level, $this->maxLevel]);
         }
-        if ($this->isClosingCurlyBrace( $token)) {
-            $this->_level--;
-            if (!$this->_classStack->isEmpty() &&
-                $this->_level === $this->_classStack[count($this->_classStack) -1]) {
-                $this->_classStack->pop();
+        if ($token->isClosingCurlyBrace()) {
+            $this->level--;
+            if (!$this->classStack->isEmpty() &&
+                $this->level === $this->classStack[count($this->classStack) - 1]
+            ) {
+                $this->classStack->pop();
             }
         }
-
     }
 }

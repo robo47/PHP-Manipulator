@@ -7,45 +7,32 @@ use PHP\Manipulator\Helper\NewlineDetector;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\TokenConstraint\EndsWithNewline
- * @uses    \PHP\Manipulator\TokenConstraint\ContainsOnlyWhitespace
- * @uses    \PHP\Manipulator\Action\RemoveWhitespaceFromEnd
- */
-class StripUnneededPhpCloseTag
-extends Action
+class StripUnneededPhpCloseTag extends Action
 {
+    const OPTION_STRIP_WHITESPACE_FROM_END = 'stripWhitespaceFromEnd';
+
     public function init()
     {
-        if (!$this->hasOption('stripWhitespaceFromEnd')) {
-            $this->setOption('stripWhitespaceFromEnd', false);
+        if (!$this->hasOption(self::OPTION_STRIP_WHITESPACE_FROM_END)) {
+            $this->setOption(self::OPTION_STRIP_WHITESPACE_FROM_END, false);
         }
     }
 
-    /**
-     * Remove unneded ?> from the file-end
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $stripWhitespaceFromEnd = $this->getOption('stripWhitespaceFromEnd');
+        $stripWhitespaceFromEnd = $this->getOption(self::OPTION_STRIP_WHITESPACE_FROM_END);
 
         $iterator = $container->getReverseIterator();
-        $helper = new NewlineDetector("\n");
+        $helper   = new NewlineDetector("\n");
 
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            if (!$this->_isNotAllowedTag($token)) {
+            if (!$this->isNotAllowedTag($token)) {
                 break;
-            } elseif ($this->isType($token, T_CLOSE_TAG)) {
-                if ($this->evaluateConstraint('EndsWithNewline', $token)) {
-
+            }
+            if ($token->isType(T_CLOSE_TAG)) {
+                if ($token->endsWithNewline()) {
                     $newline = $helper->getNewlineFromToken($token);
                     $token->setType(T_WHITESPACE);
                     $token->setValue($newline);
@@ -58,17 +45,17 @@ extends Action
         }
         $container->retokenize();
         if (true === $stripWhitespaceFromEnd) {
-            $this->runAction('RemoveWhitespaceFromEnd', $container);
+            $this->runAction(RemoveWhitespaceFromEnd::class, $container);
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isNotAllowedTag(Token $token)
+    private function isNotAllowedTag(Token $token)
     {
-        return $this->isType($token, array(T_WHITESPACE, T_CLOSE_TAG)) ||
-        $this->evaluateConstraint('ContainsOnlyWhitespace', $token);
+        return $token->isType(T_CLOSE_TAG) || $token->isWhitespace() || $token->containsOnlyWhitespace();
     }
 }

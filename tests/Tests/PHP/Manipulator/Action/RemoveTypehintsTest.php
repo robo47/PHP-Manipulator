@@ -3,19 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveTypehints;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\RemoveTypehints
+ * @covers PHP\Manipulator\Action\RemoveTypehints
  */
-class RemoveTypehintsTest extends \Tests\TestCase
+class RemoveTypehintsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveTypehints::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveTypehints();
@@ -27,48 +22,26 @@ class RemoveTypehintsTest extends \Tests\TestCase
      */
     public function manipulateProvider()
     {
-        $data = array();
-        $path = '/Action/RemoveTypehints/';
+        $data = [];
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            false
-        );
+        $data['Example 0']                      = 0;
+        $data['Example 1']                      = 1;
+        $data['Test = null not get\'s removed'] = 2;
+        $data['Test it works with namespaces']  = 3;
 
-        #1
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-            false
-        );
-
-        #2 Test = null not get's removed
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-            false
-        );
-
-        #2 Test it works with namespaces too
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-            false
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/RemoveTypehints/');
     }
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\RemoveTypehints
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
      */
-    public function testManipulate($container, $expectedContainer, $strict)
+    public function testManipulate(TokenContainer $container, TokenContainer $expectedContainer)
     {
         $manipulator = new RemoveTypehints();
         $manipulator->run($container);
-        $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
+        $this->assertTokenContainerMatch($expectedContainer, $container);
     }
 }

@@ -3,25 +3,21 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\FormatSwitch;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\FormatSwitch
+ * @covers PHP\Manipulator\Action\FormatSwitch
  */
-class FormatSwitchTest extends \Tests\TestCase
+class FormatSwitchTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\FormatSwitch::init
-     */
     public function testConstructorDefaults()
     {
         $action = new FormatSwitch();
 
-        $this->assertTrue($action->getOption('spaceAfterSwitch'));
-        $this->assertTrue($action->getOption('spaceAfterSwitchVariable'));
-        $this->assertFalse($action->getOption('breakBeforeCurlyBrace'));
+        $this->assertTrue($action->getOption(FormatSwitch::OPTION_SPACE_AFTER_SWITCH));
+        $this->assertTrue($action->getOption(FormatSwitch::OPTION_SPACE_BEFORE_CURLY_BRACE));
+        $this->assertFalse($action->getOption(FormatSwitch::OPTION_BREAK_BEFORE_CURLY_BRACE));
 
         $this->assertCount(3, $action->getOptions());
     }
@@ -31,24 +27,27 @@ class FormatSwitchTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
+        $data = [];
         $path = '/Action/FormatSwitch/';
 
         #0 Space after switch
-        $data[] = array(
-            array('spaceAfterSwitch' => true, 'spaceAfterSwitchVariable' => true),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $data[] = [
+            [FormatSwitch::OPTION_SPACE_AFTER_SWITCH => true, FormatSwitch::OPTION_SPACE_BEFORE_CURLY_BRACE => true],
+            $this->getContainerFromFixture($path.'input0.php'),
+            $this->getContainerFromFixture($path.'output0.php'),
+        ];
 
         return $data;
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\FormatSwitch
+     * @param array          $options
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(array $options, TokenContainer $input, TokenContainer $expectedTokens)
     {
         $action = new FormatSwitch($options);
         $action->run($input);

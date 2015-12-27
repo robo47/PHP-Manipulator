@@ -3,33 +3,28 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\FormatCasts;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\FormatCasts
+ * @covers PHP\Manipulator\Action\FormatCasts
  */
-class FormatCastsTest extends \Tests\TestCase
+class FormatCastsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\FormatCasts::init
-     */
     public function testConstructorDefaults()
     {
-        $searchedTokens = array(
-            T_INT_CAST => '(int)',
-            T_BOOL_CAST => '(bool)',
+        $searchedTokens = [
+            T_INT_CAST    => '(int)',
+            T_BOOL_CAST   => '(bool)',
             T_DOUBLE_CAST => '(double)',
             T_OBJECT_CAST => '(object)',
             T_STRING_CAST => '(string)',
-            T_UNSET_CAST => '(unset)',
-            T_ARRAY_CAST => '(array)',
-        );
+            T_UNSET_CAST  => '(unset)',
+            T_ARRAY_CAST  => '(array)',
+        ];
         $action = new FormatCasts();
-        $this->assertEquals($searchedTokens, $action->getOption('searchedTokens'));
-        $this->assertEquals('', $action->getOption('whitespaceBehindCasts'));
+        $this->assertSame($searchedTokens, $action->getOption(FormatCasts::OPTION_SEARCHED_TOKENS));
+        $this->assertSame('', $action->getOption(FormatCasts::OPTION_WHITESPACE_BEHIND_CASTS));
         $this->assertCount(2, $action->getOptions());
     }
 
@@ -38,61 +33,64 @@ class FormatCastsTest extends \Tests\TestCase
      */
     public function manipulateProvider()
     {
-        $data = array();
+        $data = [];
         $path = '/Action/FormatCasts/';
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            array(
-                'searchedTokens' => array(
-                    T_INT_CAST => '(iNt)',
-                    T_BOOL_CAST => '(bOoL)',
+        $data['Replace all tokens'] = [
+            $this->getContainerFromFixture($path.'input0.php'),
+            $this->getContainerFromFixture($path.'output0.php'),
+            [
+                FormatCasts::OPTION_SEARCHED_TOKENS => [
+                    T_INT_CAST    => '(iNt)',
+                    T_BOOL_CAST   => '(bOoL)',
                     T_DOUBLE_CAST => '(dOuBlE)',
                     T_OBJECT_CAST => '(oBjEcT)',
                     T_STRING_CAST => '(sTrInG)',
-                    T_UNSET_CAST => '(uNsEt)',
-                    T_ARRAY_CAST => '(aRrAy)',
-                )
-            ),
-            true
-        );
+                    T_UNSET_CAST  => '(uNsEt)',
+                    T_ARRAY_CAST  => '(aRrAy)',
+                ],
+            ],
+            true,
+        ];
 
-        #1
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-            array(),
-            true
-        );
+        $data['Uppercase to lowercase'] = [
+            $this->getContainerFromFixture($path.'input1.php'),
+            $this->getContainerFromFixture($path.'output1.php'),
+            [],
+            true,
+        ];
 
-        #2 Test whitespace is created if wanted
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-            array('whitespaceBehindCasts' => ' '),
-            false
-        );
+        $data['Test whitespace is created if wanted'] = [
+            $this->getContainerFromFixture($path.'input2.php'),
+            $this->getContainerFromFixture($path.'output2.php'),
+            [FormatCasts::OPTION_WHITESPACE_BEHIND_CASTS => ' '],
+            false,
+        ];
 
-        #3 Test whitespace gets removed if not wanted
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-            array('whitespaceBehindCasts' => ''),
-            false
-        );
+        $data['Test whitespace gets removed if not wanted'] = [
+            $this->getContainerFromFixture($path.'input3.php'),
+            $this->getContainerFromFixture($path.'output3.php'),
+            [FormatCasts::OPTION_WHITESPACE_BEHIND_CASTS => ''],
+            false,
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\FormatCasts::run
-     * @covers \PHP\Manipulator\Action\FormatCasts::<protected>
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
+     * @param array          $options
+     * @param bool           $strict
      */
-    public function testManipulate($container, $expectedContainer, $options, $strict)
-    {
+    public function testManipulate(
+        TokenContainer $container,
+        TokenContainer $expectedContainer,
+        array $options,
+        $strict
+    ) {
         $manipulator = new FormatCasts($options);
         $manipulator->run($container);
         $this->assertTokenContainerMatch($expectedContainer, $container, $strict);

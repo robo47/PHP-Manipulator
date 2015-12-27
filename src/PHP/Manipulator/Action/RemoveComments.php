@@ -3,46 +3,35 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Helper\NewlineDetector;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\NewlineDetector
- * @uses    \PHP\Manipulator\TokenConstraint\IsSinglelineComment
- */
-class RemoveComments
-extends Action
+class RemoveComments extends Action
 {
+    const OPTION_REMOVE_DOC_COMMENTS      = 'removeDocComments';
+    const OPTION_REMOVE_STANDARD_COMMENTS = 'removeStandardComments';
+
     public function init()
     {
-        if (!$this->hasOption('removeDocComments')) {
-            $this->setOption('removeDocComments', true);
+        if (!$this->hasOption(self::OPTION_REMOVE_DOC_COMMENTS)) {
+            $this->setOption(self::OPTION_REMOVE_DOC_COMMENTS, true);
         }
-        if (!$this->hasOption('removeStandardComments')) {
-            $this->setOption('removeStandardComments', true);
+        if (!$this->hasOption(self::OPTION_REMOVE_STANDARD_COMMENTS)) {
+            $this->setOption(self::OPTION_REMOVE_STANDARD_COMMENTS, true);
         }
     }
 
-    /**
-     * Removes all Comments
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $helper = new NewlineDetector();
+        $helper  = new NewlineDetector();
         $newline = $helper->getNewlineFromContainer($container);
 
         $iterator = $container->getIterator();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->_isCommentAndShouldBeRemoved($token)) {
-                if ($this->evaluateConstraint('IsSinglelineComment', $token)) {
+            if ($this->isCommentAndShouldBeRemoved($token)) {
+                if ($token->isSingleLineComment()) {
                     $token->setType(T_WHITESPACE);
                     $token->setValue($newline);
                 } else {
@@ -55,12 +44,13 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isCommentAndShouldBeRemoved(Token $token)
+    private function isCommentAndShouldBeRemoved(Token $token)
     {
-        return ($this->isType($token, T_DOC_COMMENT) && $this->getOption('removeDocComments'))
-        || ($this->isType($token, T_COMMENT) && $this->getOption('removeStandardComments'));
+        return ($token->isType(T_DOC_COMMENT) && $this->getOption(self::OPTION_REMOVE_DOC_COMMENTS)) ||
+        ($token->isType(T_COMMENT) && $this->getOption(self::OPTION_REMOVE_STANDARD_COMMENTS));
     }
 }

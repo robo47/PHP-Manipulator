@@ -6,58 +6,50 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class FormatCasts
-extends Action
+class FormatCasts extends Action
 {
+    const OPTION_SEARCHED_TOKENS = 'searchedTokens';
+
+    const OPTION_WHITESPACE_BEHIND_CASTS = 'whitespaceBehindCasts';
+
     public function init()
     {
-        if (!$this->hasOption('searchedTokens')) {
+        if (!$this->hasOption(self::OPTION_SEARCHED_TOKENS)) {
             $this->setOption(
-                'searchedTokens',
-                array(
-                    T_INT_CAST => '(int)',
-                    T_BOOL_CAST => '(bool)',
+                self::OPTION_SEARCHED_TOKENS,
+                [
+                    T_INT_CAST    => '(int)',
+                    T_BOOL_CAST   => '(bool)',
                     T_DOUBLE_CAST => '(double)',
                     T_OBJECT_CAST => '(object)',
                     T_STRING_CAST => '(string)',
-                    T_UNSET_CAST => '(unset)',
-                    T_ARRAY_CAST => '(array)',
-                )
+                    T_UNSET_CAST  => '(unset)',
+                    T_ARRAY_CAST  => '(array)',
+                ]
             );
         }
-        if (!$this->hasOption('whitespaceBehindCasts')) {
-            $this->setOption('whitespaceBehindCasts', '');
+        if (!$this->hasOption(self::OPTION_WHITESPACE_BEHIND_CASTS)) {
+            $this->setOption(self::OPTION_WHITESPACE_BEHIND_CASTS, '');
         }
     }
 
-    /**
-     * Format casts
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param array $params
-     */
     public function run(TokenContainer $container)
     {
-        $iterator = $container->getIterator();
-        $searchedTokens = $this->getOption('searchedTokens');
-        $whitespace = $this->getOption('whitespaceBehindCasts');
+        $iterator       = $container->getIterator();
+        $searchedTokens = $this->getOption(self::OPTION_SEARCHED_TOKENS);
+        $whitespace     = $this->getOption(self::OPTION_WHITESPACE_BEHIND_CASTS);
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, array_keys($searchedTokens))) {
+            if ($token->isType(array_keys($searchedTokens))) {
                 $token->setValue($searchedTokens[$token->getType()]);
                 $next = $iterator->getNext();
-                if ($this->isType($next, T_WHITESPACE)) {
-                    if ($next->getValue() != $whitespace) {
-                        $next->setValue($this->getOption('whitespaceBehindCasts'));
+                if ($next->isWhitespace()) {
+                    if ($next->getValue() !== $whitespace) {
+                        $next->setValue($this->getOption(self::OPTION_WHITESPACE_BEHIND_CASTS));
                     }
                 } elseif (!empty($whitespace)) {
-                    $container->insertTokenAfter($token, new Token($whitespace, T_WHITESPACE));
+                    $container->insertTokenAfter($token, Token::createFromValueAndType($whitespace, T_WHITESPACE));
                     $iterator->update($token);
                 }
             }

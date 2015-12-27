@@ -2,45 +2,77 @@
 
 namespace Tests;
 
-use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenFinder\Result;
+use Closure;
+use Exception;
 use PHP\Manipulator\Config;
-use PHP\Manipulator\Util;
-use Tests\Constraint\Count;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder\Result;
+use PHP\Manipulator\ValueObject\ReadableFile;
+use PHPUnit_Framework_TestCase;
 use Tests\Constraint\ResultsMatch;
 use Tests\Constraint\TokenContainerMatch;
 use Tests\Constraint\TokensMatch;
 use Tests\Constraint\ValidTokenMatchingClosure;
+use Tests\Stub\ConfigStub;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends PHPUnit_Framework_TestCase
 {
-
     /**
      * Returns content of fixture file
      *
      * @param string $filename Name of the fixture file
+     *
+     * @throws Exception
+     *
      * @return string
      */
     public function getFixtureFileContent($filename)
     {
-        $file = TESTS_PATH . '/_fixtures/' . $filename;
-        if (!file_exists($file) || !is_file($file)) {
-            throw new \Exception('Fixture ' . $filename . ' not found');
+        $path = sprintf('%s/_fixtures/%s', TESTS_PATH, $filename);
+        $file = ReadableFile::createFromPath($path);
+
+        return file_get_contents($file->asString());
+    }
+
+    /**
+     * @param int[]  $incomingData
+     * @param string $basePath
+     *
+     * @return array
+     *
+     * @throws Exception
+     *
+     * @todo nicer exception
+     */
+    protected function convertContainerFixtureToProviderData(array $incomingData, $basePath)
+    {
+        $data = [];
+        foreach ($incomingData as $name => $line) {
+            if (array_key_exists($name, $data)) {
+                // Clean up
+                $message = 'Foo';
+                throw new \Exception($message);
+            }
+            $data[$name] = [
+                $this->getContainerFromFixture(sprintf('%sinput%u.php', $basePath, $line)),
+                $this->getContainerFromFixture(sprintf('%soutput%u.php', $basePath, $line)),
+            ];
         }
 
-        return file_get_contents($file);
+        return $data;
     }
 
     /**
      * Get Result From Container
      *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param integer $start
-     * @param integer $end
-     * @return \PHP\Manipulator\TokenFinder\Result
+     * @param TokenContainer $container
+     * @param int            $start
+     * @param int            $end
+     *
+     * @return Result
      */
-    public function getResultFromContainer($container, $start, $end)
+    public function getResultFromContainer(TokenContainer $container, $start, $end)
     {
         $result = new Result();
         for ($index = $start; $index <= $end; $index++) {
@@ -54,11 +86,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * Returns tokens-array from fixture-file
      *
      * @param string $filename
-     * @return \PHP\Manipulator\TokenContainer
+     *
+     * @return TokenContainer
      */
     public function getContainerFromFixture($filename)
     {
-        return new TokenContainer(
+        return TokenContainer::factory(
             $this->getFixtureFileContent($filename)
         );
     }
@@ -66,9 +99,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two Tokens Match
      *
-     * @param \PHP\Manipulator\Token $expectedToken
-     * @param \PHP\Manipulator\Token $actualToken
-     * @param boolean $strict
+     * @param Token  $expectedToken
+     * @param Token  $actualToken
+     * @param bool   $strict
+     * @param string $message
      */
     public function assertTokenMatch($expectedToken, $actualToken, $strict = false, $message = '')
     {
@@ -84,13 +118,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
-     * Compares if two Tokens Match
-     *
-     * @param \PHP\Manipulator\Token $expectedToken
-     * @param \PHP\Manipulator\Token $actualToken
-     * @param boolean $strict
+     * @param Closure $closure
+     * @param string  $message
      */
     public function assertValidTokenMatchingClosure($closure, $message = '')
     {
@@ -108,9 +138,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Compares if two TokenContainer tokens match
      *
-     * @param \PHP\Manipulator\TokenContainer $expectedTokens
-     * @param \PHP\Manipulator\TokenContainer $actualTokens
-     * @param string $message
+     * @param TokenContainer $expectedTokens
+     * @param TokenContainer $actualTokens
+     * @param bool           $strict
+     * @param string         $message
      */
     public function assertTokenContainerMatch($expectedTokens, $actualTokens, $strict = false, $message = '')
     {
@@ -127,8 +158,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \PHP\Manipulator\TokenFinder\Result $expectedResult
-     * @param \PHP\Manipulator\TokenFinder\Result $actualResult
+     * @param Result $expectedResult
+     * @param Result $actualResult
      * @param string $message
      */
     public function assertFinderResultsMatch($expectedResult, $actualResult, $message = '')
@@ -150,7 +181,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function checkAsptags()
     {
         if (false === (bool) ini_get('asp_tags')) {
-            $this->markTestSkipped('Can\'t ' . __CLASS__ . ' with asp_tags deactivated');
+            $this->markTestSkipped('Can\'t '.__CLASS__.' with asp_tags deactivated');
         }
     }
 
@@ -160,29 +191,29 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function checkShorttags()
     {
         if (false === (bool) ini_get('short_open_tag')) {
-            $this->markTestSkipped('Can\'t run ' . __CLASS__ . ' with short_open_tag deactivated');
+            $this->markTestSkipped('Can\'t run '.__CLASS__.' with short_open_tag deactivated');
         }
     }
 
     /**
-     * @param integer$number
-     * @return \PHP\Manipulator\Config
+     * @return ConfigStub
      */
     public function getConfig()
     {
-        return Config::factory('Tests\\Stub\\ConfigStub', '', false);
+        return Config::factory(ConfigStub::class, '', false);
     }
 
     /**
-     * @param integer $number
-     * @return \PHP\Manipulator\Config\Xml
+     * @param int $number
+     *
+     * @return Config\XmlConfig
      */
     public function getXmlConfig($number)
     {
         return Config::factory(
             'xml',
-            TESTS_PATH . '/_fixtures/Config/config' . $number . '.xml'
-            , true
+            TESTS_PATH.'/_fixtures/Config/config'.$number.'.xml',
+            true
         );
     }
 }

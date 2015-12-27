@@ -2,21 +2,16 @@
 
 namespace Tests\PHP\Manipulator\TokenFinder;
 
-use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Exception\ResultException;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenFinder\Result;
+use Tests\TestCase;
 
 /**
- * @group TokenFinder
- * @group TokenFinder\Result
+ * @covers PHP\Manipulator\TokenFinder\Result
  */
-class ResultTest
-extends \Tests\TestCase
+class ResultTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result
-     */
     public function testDefaultConstruct()
     {
         $result = new Result();
@@ -24,13 +19,10 @@ extends \Tests\TestCase
         $this->assertCount(0, $result);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::addToken
-     */
     public function testAddToken()
     {
-        $token = new Token('foo');
-        $token2 = new Token('baa');
+        $token  = Token::createFromValue('foo');
+        $token2 = Token::createFromValue('baa');
         $result = new Result();
 
         $this->assertCount(0, $result->getTokens());
@@ -44,13 +36,10 @@ extends \Tests\TestCase
         $this->assertContains($token2, $result->getTokens());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getTokens
-     */
     public function testGetTokens()
     {
-        $token = new Token('foo');
-        $token2 = new Token('baa');
+        $token  = Token::createFromValue('foo');
+        $token2 = Token::createFromValue('baa');
         $result = new Result();
         $result->addToken($token);
         $result->addToken($token2);
@@ -63,13 +52,10 @@ extends \Tests\TestCase
         $this->assertContains($token2, $tokens);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getFirstToken
-     */
     public function testGetFirstToken()
     {
-        $token = new Token('foo');
-        $token2 = new Token('baa');
+        $token  = Token::createFromValue('foo');
+        $token2 = Token::createFromValue('baa');
         $result = new Result();
         $result->addToken($token);
         $result->addToken($token2);
@@ -77,23 +63,17 @@ extends \Tests\TestCase
         $this->assertSame($token, $result->getFirstToken());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
-     */
     public function testAddTokensProvidesFluentInterface()
     {
         $result = new Result();
-        $fluent = $result->addToken(new Token('foo'));
+        $fluent = $result->addToken(Token::createFromValue('foo'));
         $this->assertSame($result, $fluent);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
-     */
     public function testGetLastToken()
     {
-        $token = new Token('foo');
-        $token2 = new Token('baa');
+        $token  = Token::createFromValue('foo');
+        $token2 = Token::createFromValue('baa');
         $result = new Result();
         $result->addToken($token);
         $result->addToken($token2);
@@ -101,110 +81,86 @@ extends \Tests\TestCase
         $this->assertSame($token2, $result->getLastToken());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
-     */
     public function testGetLastTokenWithOnlyOneTokenInResult()
     {
-        $token = new Token('foo');
+        $token  = Token::createFromValue('foo');
         $result = new Result();
         $result->addToken($token);
 
         $this->assertSame($token, $result->getLastToken());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getLastToken
-     */
     public function testGetLastTokenThrowsExceptionOnEmptyResult()
     {
         $result = new Result();
-        try {
-            $result->getLastToken();
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Result is Empty", $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            ResultException::class,
+            '',
+            ResultException::EMPTY_RESULT
+        );
+        $result->getLastToken();
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::getFirstToken
-     */
     public function testGetFirstTokenThrowsExceptionOnEmptyResult()
     {
         $result = new Result();
-        try {
-            $result->getFirstToken();
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Result is Empty", $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            ResultException::class,
+            '',
+            ResultException::EMPTY_RESULT
+        );
+        $result->getFirstToken();
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::isEmpty
-     */
     public function testIsEmpty()
     {
         $result = new Result();
         $this->assertTrue($result->isEmpty());
-        $result->addToken(new Token('foo'));
+        $result->addToken(Token::createFromValue('foo'));
         $this->assertFalse($result->isEmpty());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::count
-     */
     public function testCount()
     {
         $result = new Result();
         $this->assertCount(0, $result);
-        $result->addToken(new Token('Foo'));
+        $result->addToken(Token::createFromValue('Foo'));
         $this->assertCount(1, $result);
-        $result->addToken(new Token('Foo'));
+        $result->addToken(Token::createFromValue('Foo'));
         $this->assertCount(2, $result);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::clean
-     */
     public function testClean()
     {
-        $t1 = new Token('foo');
-        $t2 = new Token('baa');
-        $t3 = new Token('blub');
-        $result = Result::factory(array($t1, $t2, $t3));
+        $t1     = Token::createFromValue('foo');
+        $t2     = Token::createFromValue('baa');
+        $t3     = Token::createFromValue('blub');
+        $result = Result::factory([$t1, $t2, $t3]);
         $this->assertCount(3, $result);
         $result->clean();
         $this->assertCount(0, $result);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::factory
-     */
     public function testFactoryWithEmptyArray()
     {
-        $result = Result::factory(array());
-        $this->assertInstanceOf('PHP\\Manipulator\\TokenFinder\\Result', $result);
+        $result = Result::factory([]);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isEmpty());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenFinder\Result::factory
-     */
     public function testFactoryWithNonEmptyArray()
     {
-        $t1 = new Token('foo');
-        $t2 = new Token('baa');
-        $t3 = new Token('blub');
-        $result = Result::factory(array($t1, $t2, $t3));
-        $this->assertInstanceOf('PHP\\Manipulator\\TokenFinder\\Result', $result);
+        $t1     = Token::createFromValue('foo');
+        $t2     = Token::createFromValue('baa');
+        $t3     = Token::createFromValue('blub');
+        $result = Result::factory([$t1, $t2, $t3]);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isEmpty());
         $this->assertCount(3, $result);
 
         $this->assertSame($t1, $result->getFirstToken());
         $this->assertSame($t3, $result->getLastToken());
 
-        $this->assertSame(array($t1, $t2, $t3), $result->getTokens());
+        $this->assertSame([$t1, $t2, $t3], $result->getTokens());
     }
 }

@@ -3,19 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveWhitespaceFromEnd;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\RemoveWhitespaceFromEnd
+ * @covers PHP\Manipulator\Action\RemoveWhitespaceFromEnd
  */
-class RemoveWhitespaceFromEndTest extends \Tests\TestCase
+class RemoveWhitespaceFromEndTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveWhitespaceFromEnd::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveWhitespaceFromEnd();
@@ -27,41 +22,25 @@ class RemoveWhitespaceFromEndTest extends \Tests\TestCase
      */
     public function manipulateProvider()
     {
-        $data = array();
-        $path = '/Action/RemoveWhitespaceFromEnd/';
+        $data = [];
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            false
-        );
+        $data['Example 0']                                     = 0;
+        $data['Example 1']                                     = 1;
+        $data['Test whitespace on end of html is removed too'] = 2;
 
-        #1
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-            false
-        );
-
-        #2 Test whitespace on end of html is removed too
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-            false
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/RemoveWhitespaceFromEnd/');
     }
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Action\RemoveWhitespaceFromEnd
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
      */
-    public function testManipulate($container, $expectedContainer, $strict)
+    public function testManipulate(TokenContainer $container, TokenContainer $expectedContainer)
     {
         $manipulator = new RemoveWhitespaceFromEnd();
         $manipulator->run($container);
-        $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
+        $this->assertTokenContainerMatch($expectedContainer, $container);
     }
 }

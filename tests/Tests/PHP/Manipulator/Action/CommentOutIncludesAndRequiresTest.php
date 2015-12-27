@@ -3,23 +3,21 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\CommentOutIncludesAndRequires;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\CommentOutIncludesAndRequires
+ * @covers PHP\Manipulator\Action\CommentOutIncludesAndRequires
  */
-class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
+class CommentOutIncludesAndRequiresTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\CommentOutIncludesAndRequires::init
-     */
     public function testConstructorDefaults()
     {
         $action = new CommentOutIncludesAndRequires();
-        $this->assertTrue($action->getOption('globalScopeOnly'), 'Default value for globalScopeOnly is wrong');
+        $this->assertTrue(
+            $action->getOption(CommentOutIncludesAndRequires::OPTION_GLOBAL_SCOPE_ONLY),
+            'Default value for globalScopeOnly is wrong'
+        );
         $this->assertCount(1, $action->getOptions());
     }
 
@@ -28,37 +26,39 @@ class CommentOutIncludesAndRequiresTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
+        $data = [];
         $path = '/Action/CommentOutIncludesAndRequires/';
 
         #0
-        $data[] = array(
-            array('globalScopeOnly' => false),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $data[] = [
+            [CommentOutIncludesAndRequires::OPTION_GLOBAL_SCOPE_ONLY => false],
+            $this->getContainerFromFixture($path.'input0.php'),
+            $this->getContainerFromFixture($path.'output0.php'),
+        ];
 
         #1
-        $data[] = array(
-            array('globalScopeOnly' => true),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
+        $data[] = [
+            [CommentOutIncludesAndRequires::OPTION_GLOBAL_SCOPE_ONLY => true],
+            $this->getContainerFromFixture($path.'input1.php'),
+            $this->getContainerFromFixture($path.'output1.php'),
+        ];
 
         #2
-        $data[] = array(
-            array('globalScopeOnly' => true),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
+        $data[] = [
+            [CommentOutIncludesAndRequires::OPTION_GLOBAL_SCOPE_ONLY => true],
+            $this->getContainerFromFixture($path.'input2.php'),
+            $this->getContainerFromFixture($path.'output2.php'),
+        ];
 
         return $data;
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\CommentOutIncludesAndRequires::run
-     * @covers \PHP\Manipulator\Action\CommentOutIncludesAndRequires::<protected>
      * @dataProvider actionProvider
+     *
+     * @param array          $options
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
     public function testAction($options, $input, $expectedTokens)
     {

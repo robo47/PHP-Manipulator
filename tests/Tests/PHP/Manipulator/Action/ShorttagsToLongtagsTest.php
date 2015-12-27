@@ -3,19 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\ShorttagsToLongtags;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\ShorttagsToLongtags
+ * @covers \PHP\Manipulator\Action\ShorttagsToLongtags
  */
-class ShorttagsToLongtagsTest extends \Tests\TestCase
+class ShorttagsToLongtagsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\ShorttagsToLongtags::init
-     */
     public function testConstructorDefaults()
     {
         $action = new ShorttagsToLongtags();
@@ -27,42 +22,26 @@ class ShorttagsToLongtagsTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
+        $lines=[];
         $path = '/Action/ShorttagsToLongtags/';
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $lines['Example 0'] = 0;
+        $lines['Example 1'] = 1;
+        $lines['Example 2'] = 2;
 
-        #1
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($lines, $path);
     }
-
     /**
-     * @covers \PHP\Manipulator\Action\ShorttagsToLongtags::run
      * @dataProvider actionProvider
+     *
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction($input, $expectedTokens)
     {
         $this->checkShorttags();
 
-        $action = new ShorttagsToLongtags($options);
+        $action = new ShorttagsToLongtags();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

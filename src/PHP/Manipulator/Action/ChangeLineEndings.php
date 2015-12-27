@@ -5,28 +5,20 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class ChangeLineEndings
-extends Action
+class ChangeLineEndings extends Action
 {
+    const OPTION_NEWLINE = 'newline';
+
     public function init()
     {
-        if (!$this->hasOption('newline')) {
-            $this->setOption('newline', "\n");
+        if (!$this->hasOption(self::OPTION_NEWLINE)) {
+            $this->setOption(self::OPTION_NEWLINE, "\n");
         }
     }
 
-    /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $newline = $this->getOption('newline');
+        $newline = $this->getOption(self::OPTION_NEWLINE);
 
         $iterator = $container->getIterator();
 

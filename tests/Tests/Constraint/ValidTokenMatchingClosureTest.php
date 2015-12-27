@@ -2,75 +2,76 @@
 
 namespace Tests\Constraint;
 
-use PHP\Manipulator\TokenFinder\Result;
+use Closure;
 use PHP\Manipulator\Token;
-use Tests\Constraint\TokensMatch;
+use PHP\Manipulator\TokenFinder\Result;
+use PHPUnit_Framework_ExpectationFailedException;
+use PHPUnit_Framework_TestCase;
 
 function foo(Token $blub)
 {
-
 }
 
 /**
- * @group ValidTokenMatchingClosure
+ * @covers Tests\Constraint\ValidTokenMatchingClosure
  */
-class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
+class ValidTokenMatchingClosureTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @return array
      */
     public function closuresProvider()
     {
-        $data = array();
+        $data = [];
 
         #0
-        $data[] = array(
-            function(Token $token) {
+        $data[] = [
+            function (Token $token) {
             },
-            true
-        );
+            true,
+        ];
 
         #1
-        $data[] = array(
-            function(Result $token) {
+        $data[] = [
+            function (Result $token) {
             },
-            false
-        );
+            false,
+        ];
 
         #2
-        $data[] = array(
-            function(Token $token, Result $result) {
+        $data[] = [
+            function (Token $token, Result $result) {
             },
-            false
-        );
+            false,
+        ];
 
         #3
-        $data[] = array(
-            function() {
+        $data[] = [
+            function () {
             },
-            false
-        );
+            false,
+        ];
 
         #4
-        $data[] = array(
+        $data[] = [
             '',
-            false
-        );
+            false,
+        ];
 
         #5
-        $data[] = array(
+        $data[] = [
             'foo',
-            false
-        );
+            false,
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider closuresProvider
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::evaluate
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::<protected>
+     *
+     * @param Closure|string $closure
+     * @param bool           $expectedResult
      */
     public function testTokensMatch($closure, $expectedResult)
     {
@@ -78,70 +79,45 @@ class ValidTokenMatchingClosureTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedResult, $valid->evaluate($closure, '', true));
     }
 
-    /**
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::failureDescription
-     */
     public function testFailAndFailureDescriptionWithWrongTypehint()
     {
-        $other = function(Result $token) {
+        $other = function (Result $token) {
         };
         $valid = new ValidTokenMatchingClosure();
-        $message = 'Failed asserting that Closures Token-Parameter has wrong Typehint.';
-
-        try {
-            $valid->evaluate($other, '', false);
-            $this->fail('no exception thrown');
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            $this->assertEquals($message, $e->getMessage());
-        }
+        $this->setExpectedException(
+            PHPUnit_Framework_ExpectationFailedException::class,
+            'Token-Parameter has wrong Typehint'
+        );
+        $valid->evaluate($other, '', false);
     }
 
-    /**
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::failureDescription
-     */
     public function testFailAndFailureDescriptionWithWrongParameterCount()
     {
-        $other = function(Token $token, Result $result) {
+        $other = function (Token $token, Result $result) {
         };
         $valid = new ValidTokenMatchingClosure();
 
-
-        $message = 'Failed asserting that Closure does not have 1 required parameter.';
-
-        try {
-            $valid->evaluate($other);
-            $this->fail('no exception thrown');
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            $this->assertEquals($message, $e->getMessage());
-        }
+        $this->setExpectedException(
+            PHPUnit_Framework_ExpectationFailedException::class,
+            'Closure does not have 1 required parameter'
+        );
+        $valid->evaluate($other);
     }
 
-    /**
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::failureDescription
-     */
     public function testFailAndFailureDescriptionWithNoClosure()
     {
-        $other = '';
         $valid = new ValidTokenMatchingClosure();
 
-        $message = 'Failed asserting that Variable must be a Closure.';
-
-        try {
-            $valid->evaluate($other);
-            $this->fail('no exception thrown');
-        } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
-            $this->assertEquals($message, $e->getMessage());
-        }
+        $this->setExpectedException(
+            PHPUnit_Framework_ExpectationFailedException::class,
+            'Variable must be a Closure'
+        );
+        $valid->evaluate('');
     }
 
-    /**
-     * @covers \Tests\Constraint\ValidTokenMatchingClosure::toString
-     */
     public function testToString()
     {
         $valid = new ValidTokenMatchingClosure();
-        $this->assertEquals('Is a valid Token Matching Closure ',
-            $valid->toString());
+        $this->assertSame('Is a valid Token Matching Closure ', $valid->toString());
     }
-
 }

@@ -2,32 +2,39 @@
 
 namespace PHP\Manipulator;
 
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\ValueObject\ReadableFile;
 
 /**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
+ * @todo Refactor to delegate to the container and implement Interface for container
  */
 class FileContainer extends TokenContainer
 {
+    /**
+     * @var ReadableFile
+     */
+    private $file = '';
 
     /**
-     * @var string
+     * @param ReadableFile $file
+     * @param array        $tokens
      */
-    protected $_file = '';
-
-    /**
-     * @param string $file
-     * @throws Exception If file does not exist or is not readable
-     */
-    public function __construct($file)
+    protected function __construct(ReadableFile $file, array $tokens)
     {
-        $this->_file = $file;
-        if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
-            throw new \Exception('Unable to open file for reading: ' . $file);
-        }
-        parent::__construct(file_get_contents($file));
+        parent::__construct($tokens);
+        $this->file = $file;
+    }
+
+    /**
+     * @param ReadableFile $file
+     *
+     * @return FileContainer
+     */
+    public static function createFromFile(ReadableFile $file)
+    {
+        $code   = file_get_contents($file->asString());
+        $tokens = token_get_all($code);
+
+        return new self($file, self::createTokensFromArray($tokens));
     }
 
     /**
@@ -35,31 +42,21 @@ class FileContainer extends TokenContainer
      */
     public function getFile()
     {
-        return $this->_file;
+        return $this->file->asString();
     }
 
     /**
      * Save code to a file
      *
      * @param string $file
-     * @throws Exception If file is not writeable
      */
     public function saveTo($file)
     {
-        @touch($file);
-        if (!is_writeable($file)) {
-            throw new \Exception('Unable to open file for writing: ' . $file);
-        }
         file_put_contents($file, $this->toString());
     }
 
-    /**
-     * Save code back to file
-     *
-     * @throws Exception If file is not writeable
-     */
     public function save()
     {
-        $this->saveTo($this->_file);
+        $this->saveTo($this->file->asString());
     }
 }

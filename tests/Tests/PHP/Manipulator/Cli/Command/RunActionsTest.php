@@ -2,35 +2,22 @@
 
 namespace Tests\PHP\Manipulator\Cli\Command;
 
-use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Command\RunActions;
+use Symfony\Component\Console\Tester\CommandTester;
+use Tests\TestCase;
 
 /**
- * @group Cli
- * @group Cli\Command
- * @group Cli\Command\RunActions
+ * @covers PHP\Manipulator\Cli\Command\RunActions
  */
-class RunActionsTest extends \Tests\TestCase
+class RunActionsTest extends TestCase
 {
-    public function setUp()
-    {
-        ob_start();
-    }
-
-    public function tearDown()
-    {
-        ob_end_clean();
-    }
-
-    /**
-     * @covers PHP\Manipulator\Cli\Command\RunActions::execute
-     */
     public function testExecute()
     {
         $this->markTestIncomplete('not implemented yet');
-        $command = new RunActions();
-        $command->execute(new ArgvInput(array()), new StreamOutput(fopen('php://output', 'w')));
-        $output = ob_get_contents();
-        $this->assertEquals('', $output);
+
+        $command       = new RunActions();
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([]);
+        $this->assertSame('something', $commandTester->getDisplay());
     }
 }

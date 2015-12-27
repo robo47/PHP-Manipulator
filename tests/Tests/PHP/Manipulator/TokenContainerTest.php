@@ -2,114 +2,80 @@
 
 namespace Tests\PHP\Manipulator;
 
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Exception\TokenContainerException;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\ReverseTokenContainerIterator;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
+use ReflectionClass;
+use Tests\TestCase;
 
 /**
- * @group TokenContainer
+ * @covers PHP\Manipulator\TokenContainer
  */
-class TokenContainerTest extends \Tests\TestCase
+class TokenContainerTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer
-     */
     public function testContainer()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\TokenContainer');
+        $reflection = new ReflectionClass(TokenContainer::class);
         $this->assertTrue($reflection->implementsInterface('ArrayAccess'), 'Missing interface ArrayAccess');
         $this->assertTrue($reflection->implementsInterface('Countable'), 'Missing interface Countable');
         $this->assertTrue($reflection->implementsInterface('IteratorAggregate'), 'Missing interface IteratorAggregate');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::__construct
-     */
     public function testDefaultConstruct()
     {
-        $container = new TokenContainer();
-        $this->assertEquals(array(), $container->toArray(), 'Container missmatch');
+        $container = TokenContainer::createEmptyContainer();
+        $this->assertSame([], $container->toArray(), 'Container missmatch');
         $this->assertCount(0, $container, 'Count missmatch');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::toArray
-     */
     public function testToArray()
     {
-        $tokens = array(
-            0 => Token::factory(';'),
-            1 => Token::factory('('),
-            2 => Token::factory(')'),
-        );
-        $container = new TokenContainer($tokens);
-        $this->assertEquals($tokens, $container->toArray(), 'Container missmatch');
+        $tokens = [
+            0 => Token::createFromMixed(';'),
+            1 => Token::createFromMixed('('),
+            2 => Token::createFromMixed(')'),
+        ];
+        $container = TokenContainer::factory($tokens);
+        $this->assertSame($tokens, $container->toArray(), 'Container missmatch');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::__construct
-     */
     public function testConstructWithTokens()
     {
-        $tokens = array(
-            2 => Token::factory(';'),
-            15 => Token::factory('('),
-            'asdf' => Token::factory(')'),
-        );
-        $container = new TokenContainer($tokens);
+        $tokens = [
+            2      => Token::createFromMixed(';'),
+            15     => Token::createFromMixed('('),
+            'asdf' => Token::createFromMixed(')'),
+        ];
+        $container = TokenContainer::factory($tokens);
         $this->assertCount(3, $container, 'Count missmatch');
         $array = $container->toArray();
         $this->assertArrayHasKey(0, $array, 'Array misses key');
         $this->assertArrayHasKey(1, $array, 'Array misses key');
         $this->assertArrayHasKey(2, $array, 'Array misses key');
-        $this->assertEquals($tokens[2], $array[0], 'Element missmatch');
-        $this->assertEquals($tokens[15], $array[1], 'Element missmatch');
-        $this->assertEquals($tokens['asdf'], $array[2], 'Element missmatch');
+        $this->assertSame($tokens[2], $array[0], 'Element missmatch');
+        $this->assertSame($tokens[15], $array[1], 'Element missmatch');
+        $this->assertSame($tokens['asdf'], $array[2], 'Element missmatch');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::__construct
-     */
     public function testConstructWithCode()
     {
-        $code = '<?php echo $foo; ?>';
-        $container = new TokenContainer($code);
+        $code      = '<?php echo $foo; ?>';
+        $container = TokenContainer::factory($code);
         $this->assertCount(7, $container, 'Count missmatch');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::__construct
-     * @covers \Exception
-     */
-    public function testConstructWithInvalidTokens()
-    {
-        $tokens = array('blub', 'bla');
-        try {
-            new TokenContainer($tokens);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('TokenContainer only allows adding PHP\Manipulator\Token', $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertAtOffset
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     */
     public function testInsertAtOffset()
     {
-        $array = array(
-            Token::factory('Blub'),
-            Token::factory('Bla'),
-            Token::factory('Foo'),
-        );
-        $container = new TokenContainer($array);
-        $newToken = Token::factory('BaaFoo');
-        $fluent = $container->insertAtOffset(1, $newToken);
+        $array = [
+            Token::createFromMixed('Blub'),
+            Token::createFromMixed('Bla'),
+            Token::createFromMixed('Foo'),
+        ];
+        $container = TokenContainer::factory($array);
+        $newToken  = Token::createFromMixed('BaaFoo');
+        $fluent    = $container->insertAtOffset(1, $newToken);
 
         $this->assertSame($fluent, $container, 'No fluent interface');
 
@@ -120,35 +86,25 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertSame($array[2], $container[3]);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertAtOffset
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     */
     public function testInsertAtOffsetThrowsExceptionOnInsertAfterNonExistingOffset()
     {
-        $token = Token::factory('Blub');
-        $containter = new TokenContainer();
+        $token      = Token::createFromMixed('Blub');
+        $containter = TokenContainer::createEmptyContainer();
 
-        try {
-            $containter->insertAtOffset(5, $token);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '5',
+            TokenContainerException::OFFSET_DOES_NOT_EXIST
+        );
+
+        $containter->insertAtOffset(5, $token);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetSet
-     * @covers \PHP\Manipulator\TokenContainer::offsetGet
-     * @covers \PHP\Manipulator\TokenContainer::offsetUnset
-     * @covers \PHP\Manipulator\TokenContainer::offsetExists
-     */
     public function testArrayAccess()
     {
-        $token = Token::factory('foo');
-        $token2 = Token::factory('baa');
-        $container = new TokenContainer();
+        $token     = Token::createFromMixed('foo');
+        $token2    = Token::createFromMixed('baa');
+        $container = TokenContainer::createEmptyContainer();
 
         // offsetSet
         $container[] = $token;
@@ -172,156 +128,112 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertFalse(isset($container[0]));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetSet
-     * @covers \Exception
-     */
     public function testOffsetSetWithNonIntegerOffsetThrowsException()
     {
-        $container = new TokenContainer();
-        try {
-            $container->offsetSet('offset', Token::factory('foo'));
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '',
+            TokenContainerException::EXPECTED_OFFSET_TO_BE_INT
+        );
+        $container->offsetSet('offset', Token::createFromMixed('foo'));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetExists
-     * @covers \Exception
-     */
     public function testOffsetExistsWithNonIntegerOffsetThrowsException()
     {
-        $container = new TokenContainer();
-        try {
-            $container->offsetExists('offset');
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '',
+            TokenContainerException::EXPECTED_OFFSET_TO_BE_INT
+        );
+        $container->offsetExists('offset');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetUnset
-     * @covers \Exception
-     */
     public function testOffsetUnsetWithNonIntegerOffsetThrowsException()
     {
-        $container = new TokenContainer();
-        try {
-            $container->offsetUnset('offset');
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '',
+            TokenContainerException::EXPECTED_OFFSET_TO_BE_INT
+        );
+        $container->offsetUnset('offset');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetGet
-     * @covers \Exception
-     */
     public function testOffsetGetWithNonIntegerOffsetThrowsException()
     {
-        $container = new TokenContainer();
-        try {
-            $container->offsetGet('offset');
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('TokenContainer only allows integers as offset', $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '',
+            TokenContainerException::EXPECTED_OFFSET_TO_BE_INT
+        );
+        $container->offsetGet('offset');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::count
-     * @covers \Exception
-     */
     public function testCount()
     {
-        $container = new TokenContainer();
+        $container = TokenContainer::createEmptyContainer();
         $this->assertCount(0, $container, 'Wrong container count');
-        $container[] = Token::factory('foo');
+        $container[] = Token::createFromMixed('foo');
         $this->assertCount(1, $container, 'Wrong container count');
-        $container[] = Token::factory('foo');
-        $container[] = Token::factory('foo');
+        $container[] = Token::createFromMixed('foo');
+        $container[] = Token::createFromMixed('foo');
         $this->assertCount(3, $container, 'Wrong container count');
-        $container->setArray(array());
+        $container->removeTokens($container->toArray());
         $this->assertCount(0, $container, 'Wrong container count');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::offsetGet
-     * @covers \Exception
-     */
     public function testOffsetGetOnNotExistingOffsetThrowsException()
     {
-        $container = new TokenContainer();
-        try {
-            $container->offsetGet(5);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Offset '5' does not exist", $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $this->setExpectedException(
+            TokenContainerException::class,
+            '5',
+            TokenContainerException::OFFSET_DOES_NOT_EXIST
+        );
+        $container->offsetGet(5);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::getOffsetByToken
-     * @covers \Exception
-     */
     public function testGetOffsetByToken()
     {
-        $array = array(
-            Token::factory('Blub'),
-            Token::factory('Bla'),
-            Token::factory('Foo'),
-            Token::factory('BaaFoo'),
-        );
-        $container = new TokenContainer($array);
+        $array = [
+            Token::createFromMixed('Blub'),
+            Token::createFromMixed('Bla'),
+            Token::createFromMixed('Foo'),
+            Token::createFromMixed('BaaFoo'),
+        ];
+        $container = TokenContainer::factory($array);
 
-        $this->assertEquals(0, $container->getOffsetByToken($array[0]));
-        $this->assertEquals(1, $container->getOffsetByToken($array[1]));
-        $this->assertEquals(2, $container->getOffsetByToken($array[2]));
-        $this->assertEquals(3, $container->getOffsetByToken($array[3]));
+        $this->assertSame(0, $container->getOffsetByToken($array[0]));
+        $this->assertSame(1, $container->getOffsetByToken($array[1]));
+        $this->assertSame(2, $container->getOffsetByToken($array[2]));
+        $this->assertSame(3, $container->getOffsetByToken($array[3]));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::getOffsetByToken
-     * @covers \Exception
-     */
     public function testGetOffsetByTokenThrowsExceptionOnNonExistingToken()
     {
-        $container = new TokenContainer();
-        $token = Token::factory('Blub');
-        try {
-            $container->getOffsetByToken($token);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Token '$token' does not exist in this container", $e->getMessage(), 'Wrong exception message');
-        }
+        $container = TokenContainer::createEmptyContainer();
+        $token     = Token::createFromMixed('Blub');
+        $this->setExpectedException(
+            TokenContainerException::class,
+            'Blub',
+            TokenContainerException::TOKEN_DOES_NOT_EXIST_IN_CONTAINER
+        );
+        $container->getOffsetByToken($token);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::<protected>
-     * @covers \PHP\Manipulator\TokenContainer::contains
-     */
     public function testContains()
     {
-        $anotherToken = Token::factory('Blub');
-        $array = array(
-            Token::factory('Blub'),
-            Token::factory('Bla'),
-            Token::factory('Foo'),
-            Token::factory('BaaFoo'),
-        );
-        $container = new TokenContainer($array);
+        $anotherToken = Token::createFromMixed('Blub');
+        $array        = [
+            Token::createFromMixed('Blub'),
+            Token::createFromMixed('Bla'),
+            Token::createFromMixed('Foo'),
+            Token::createFromMixed('BaaFoo'),
+        ];
+        $container = TokenContainer::factory($array);
 
         $this->assertTrue($container->contains($array[0]));
         $this->assertTrue($container->contains($array[1]));
@@ -336,33 +248,27 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertFalse($container->contains($array[2]));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenAfter
-     */
     public function testInsertTokenAfter()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer(array($token1));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::factory([$token1]);
         $container->insertTokenAfter($token1, $token2);
         $container->insertTokenAfter($token1, $token3);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token3));
-        $this->assertEquals(2, $container->getOffsetByToken($token2));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token3));
+        $this->assertSame(2, $container->getOffsetByToken($token2));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
-     */
     public function testInsertTokenBefore()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer(array($token1,$token4));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::factory([$token1, $token4]);
         $container->insertTokenBefore($token4, $token3);
 
         $this->assertCount(3, $container);
@@ -371,21 +277,18 @@ class TokenContainerTest extends \Tests\TestCase
 
         $this->assertCount(4, $container);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token2));
-        $this->assertEquals(2, $container->getOffsetByToken($token3));
-        $this->assertEquals(3, $container->getOffsetByToken($token4));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token2));
+        $this->assertSame(2, $container->getOffsetByToken($token3));
+        $this->assertSame(3, $container->getOffsetByToken($token4));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
-     */
     public function testInsertTokenBeforeOnFirstToken()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer(array($token3));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::factory([$token3]);
         $container->insertTokenBefore($token3, $token2);
 
         $this->assertCount(2, $container);
@@ -394,199 +297,160 @@ class TokenContainerTest extends \Tests\TestCase
 
         $this->assertCount(3, $container);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token2));
-        $this->assertEquals(2, $container->getOffsetByToken($token3));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token2));
+        $this->assertSame(2, $container->getOffsetByToken($token3));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenAfter
-     * @covers \Exception
-     */
     public function testInsertTokenAfterThrowsExceptionIfAfterTokenNotExists()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer(array($token1));
-
-        try {
-            $container->insertTokenAfter($token2, $token3);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
-        }
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::factory([$token1]);
+        $this->setExpectedException(
+            TokenContainerException::class,
+            (string) $token2,
+            TokenContainerException::TOKEN_DOES_NOT_EXIST_IN_CONTAINER
+        );
+        $container->insertTokenAfter($token2, $token3);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokenBefore
-     * @covers \Exception
-     */
     public function testInsertTokenBeforeThrowsExceptionIfAfterTokenNotExists()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer(array($token1));
-
-        try {
-            $container->insertTokenBefore($token2, $token3);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
-        }
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::factory([$token1]);
+        $this->setExpectedException(
+            TokenContainerException::class,
+            (string) $token2,
+            TokenContainerException::TOKEN_DOES_NOT_EXIST_IN_CONTAINER
+        );
+        $container->insertTokenBefore($token2, $token3);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
-     */
     public function testInsertTokensBefore()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer(array($token1,$token4));
-        $container->insertTokensBefore($token4, array($token2, $token3));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::factory([$token1, $token4]);
+        $container->insertTokensBefore($token4, [$token2, $token3]);
 
         $this->assertCount(4, $container);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token2));
-        $this->assertEquals(2, $container->getOffsetByToken($token3));
-        $this->assertEquals(3, $container->getOffsetByToken($token4));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token2));
+        $this->assertSame(2, $container->getOffsetByToken($token3));
+        $this->assertSame(3, $container->getOffsetByToken($token4));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
-     */
     public function testInsertTokensBeforeOnFirst()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer(array($token4));
-        $container->insertTokensBefore($token4, array($token1, $token2, $token3));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::factory([$token4]);
+        $container->insertTokensBefore($token4, [$token1, $token2, $token3]);
 
         $this->assertCount(4, $container);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token2));
-        $this->assertEquals(2, $container->getOffsetByToken($token3));
-        $this->assertEquals(3, $container->getOffsetByToken($token4));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token2));
+        $this->assertSame(2, $container->getOffsetByToken($token3));
+        $this->assertSame(3, $container->getOffsetByToken($token4));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokensBefore
-     * @covers \Exception
-     */
     public function testInsertTokensAfterThrowsExceptionIfBeforeTokenNotExists()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer(array($token1));
-
-        try {
-            $container->insertTokensBefore($token2, array($token3, $token4));
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
-        }
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::factory([$token1]);
+        $this->setExpectedException(
+            TokenContainerException::class,
+            (string) $token2,
+            TokenContainerException::TOKEN_DOES_NOT_EXIST_IN_CONTAINER
+        );
+        $container->insertTokensBefore($token2, [$token3, $token4]);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokensAfter
-     */
     public function testInsertTokensAfter()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer(array($token1));
-        $container->insertTokensAfter($token1, array($token3, $token2));
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::factory([$token1]);
+        $container->insertTokensAfter($token1, [$token3, $token2]);
 
-        $this->assertEquals(0, $container->getOffsetByToken($token1));
-        $this->assertEquals(1, $container->getOffsetByToken($token3));
-        $this->assertEquals(2, $container->getOffsetByToken($token2));
+        $this->assertSame(0, $container->getOffsetByToken($token1));
+        $this->assertSame(1, $container->getOffsetByToken($token3));
+        $this->assertSame(2, $container->getOffsetByToken($token2));
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::insertTokensAfter
-     * @covers \Exception
-     */
     public function testInsertTokensAfterThrowsExceptionIfAfterTokenNotExists()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer(array($token1));
-
-        try {
-            $container->insertTokensAfter($token2, array($token3, $token4));
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals("Container does not contain Token: $token2", $e->getMessage(), 'Wrong exception message');
-        }
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::factory([$token1]);
+        $this->setExpectedException(
+            TokenContainerException::class,
+            (string) $token2,
+            TokenContainerException::TOKEN_DOES_NOT_EXIST_IN_CONTAINER
+        );
+        $container->insertTokensAfter($token2, [$token3, $token4]);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::toString
-     * @covers \Exception
-     */
     public function testToString()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::createEmptyContainer();
 
-        $this->assertEquals('', $container->toString());
+        $this->assertSame('', $container->toString());
 
         $container[] = $token1;
-        $this->assertEquals('Token1', $container->toString());
+        $this->assertSame('Token1', $container->toString());
 
         $container[] = $token3;
-        $this->assertEquals('Token1Token3', $container->toString());
+        $this->assertSame('Token1Token3', $container->toString());
 
         $container[] = $token2;
-        $this->assertEquals('Token1Token3Token2', $container->toString());
+        $this->assertSame('Token1Token3Token2', $container->toString());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::__toString
-     */
-    public function test__ToString()
+    public function testMagicToString()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::createEmptyContainer();
 
-        $this->assertEquals('', (string) $container);
+        $this->assertSame('', (string) $container);
 
         $container[] = $token1;
-        $this->assertEquals('Token1', (string) $container);
+        $this->assertSame('Token1', (string) $container);
 
         $container[] = $token3;
-        $this->assertEquals('Token1Token3', (string) $container);
+        $this->assertSame('Token1Token3', (string) $container);
 
         $container[] = $token2;
-        $this->assertEquals('Token1Token3Token2', (string) $container);
+        $this->assertSame('Token1Token3Token2', (string) $container);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::setArray
-     */
     public function testGetContainersetArray()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::createEmptyContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -599,65 +463,53 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertContains($token2, $array);
         $this->assertContains($token3, $array);
 
-        $container->setArray(array());
+        $container->removeTokens($container->toArray());
         $array = $container->toArray();
         $this->assertInternalType('array', $array);
         $this->assertCount(0, $array);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::getIterator
-     */
     public function testGetIterator()
     {
-        $container = new TokenContainer();
+        $container = TokenContainer::createEmptyContainer();
 
         $iterator = $container->getIterator();
-        $this->assertInstanceOf('PHP\Manipulator\TokenContainer\Iterator', $iterator);
+        $this->assertInstanceOf(TokenContainerIterator::class, $iterator);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::getReverseIterator
-     */
     public function testGetReverseIterator()
     {
-        $container = new TokenContainer();
+        $container = TokenContainer::createEmptyContainer();
 
         $iterator = $container->getReverseIterator();
-        $this->assertInstanceOf('PHP\Manipulator\TokenContainer\ReverseIterator', $iterator);
+        $this->assertInstanceOf(ReverseTokenContainerIterator::class, $iterator);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::retokenize
-     */
     public function testRetokenize()
     {
-        $token0 = Token::factory(array(0 => T_OPEN_TAG, 1 => "<?php\n"));
-        $token1 = Token::factory(array(0 => T_WHITESPACE, 1 => " \n \n \n"));
-        $token2 = Token::factory(array(0 => T_WHITESPACE, 1 => " \t \n "));
-        $token3 = Token::factory(array(0 => T_CLOSE_TAG, 1 => "?>"));
-        $container = new TokenContainer(array($token0, $token1, $token2, $token3));
+        $token0    = Token::createFromMixed([0 => T_OPEN_TAG, 1 => "<?php\n"]);
+        $token1    = Token::createFromMixed([0 => T_WHITESPACE, 1 => " \n \n \n"]);
+        $token2    = Token::createFromMixed([0 => T_WHITESPACE, 1 => " \t \n "]);
+        $token3    = Token::createFromMixed([0 => T_CLOSE_TAG, 1 => '?>']);
+        $container = TokenContainer::factory([$token0, $token1, $token2, $token3]);
         $container->retokenize();
         $this->assertCount(3, $container);
 
-        $this->assertEquals("<?php\n \n \n \n \t \n ?>", $container->toString());
+        $this->assertSame("<?php\n \n \n \n \t \n ?>", $container->toString());
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::removeTokens
-     */
     public function testRemoveTokens()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::createEmptyContainer();
 
         $container[] = $token1;
         $container[] = $token2;
         $container[] = $token3;
 
-        $fluent = $container->removeTokens(array($token3, $token1));
+        $fluent = $container->removeTokens([$token3, $token1]);
         $this->assertSame($fluent, $container, 'No fluent interface');
 
         $this->assertCount(1, $container, 'Wrong count of Tokens in Container');
@@ -667,15 +519,12 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertTrue($container->contains($token2), 'Container not contains Token2');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::removeToken
-     */
     public function testRemoveToken()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $container = TokenContainer::createEmptyContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -691,16 +540,13 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertFalse($container->contains($token2), 'Container not contains Token2');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::getNextToken
-     */
     public function testGetNextToken()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::createEmptyContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -712,16 +558,13 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertNull($container->getNextToken($token4), 'Found Token which could not be found');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::getPreviousToken
-     */
     public function testGetPreviousToken()
     {
-        $token1 = Token::factory('Token1');
-        $token2 = Token::factory('Token2');
-        $token3 = Token::factory('Token3');
-        $token4 = Token::factory('Token4');
-        $container = new TokenContainer();
+        $token1    = Token::createFromMixed('Token1');
+        $token2    = Token::createFromMixed('Token2');
+        $token3    = Token::createFromMixed('Token3');
+        $token4    = Token::createFromMixed('Token4');
+        $container = TokenContainer::createEmptyContainer();
 
         $container[] = $token1;
         $container[] = $token2;
@@ -733,17 +576,14 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertNull($container->getPreviousToken($token4), 'Found Token which could not be found');
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::removeTokensFromTo
-     */
     public function testRemoveTokensFromTo()
     {
-        $t1 = Token::factory('Token1');
-        $t2 = Token::factory('Token2');
-        $t3 = Token::factory('Token3');
-        $t4 = Token::factory('Token4');
-        $t5 = Token::factory('Token5');
-        $container = new TokenContainer(array($t1,$t2, $t3, $t4, $t5));
+        $t1        = Token::createFromMixed('Token1');
+        $t2        = Token::createFromMixed('Token2');
+        $t3        = Token::createFromMixed('Token3');
+        $t4        = Token::createFromMixed('Token4');
+        $t5        = Token::createFromMixed('Token5');
+        $container = TokenContainer::factory([$t1, $t2, $t3, $t4, $t5]);
 
         $container->removeTokensFromTo($t2, $t4);
         $array = $container->toArray();
@@ -752,14 +592,11 @@ class TokenContainerTest extends \Tests\TestCase
         $this->assertContains($t5, $array);
     }
 
-    /**
-     * @covers \PHP\Manipulator\TokenContainer::updateFromCode
-     */
     public function testUpdateFromCode()
     {
-        $container = new TokenContainer();
+        $container = TokenContainer::createEmptyContainer();
         $this->assertCount(0, $container, 'Count missmatch');
-        $container->updateFromCode('<?php echo $foo; ?>');
+        $container->recreateContainerFromCode('<?php echo $foo; ?>');
         $this->assertCount(7, $container, 'Count missmatch');
     }
 }

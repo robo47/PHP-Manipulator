@@ -3,20 +3,17 @@
 namespace Tests\Stub;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-class ActionStub
-extends Action
+class ActionStub extends Action
 {
-
     /**
-     * @var boolean
+     * @var bool
      */
     public static $called = true;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $init = false;
 
@@ -26,8 +23,8 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
+     * @param TokenContainer $container
+     * @param mixed          $params
      */
     public function run(TokenContainer $container, $params = null)
     {

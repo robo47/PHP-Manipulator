@@ -2,71 +2,70 @@
 
 namespace PHP\Manipulator\TokenFinder;
 
-use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenFinder;
-use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\Exception\TokenFinderException;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
+use PHP\Manipulator\TokenFinder;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class FunctionFinder
-extends TokenFinder
+class FunctionFinder extends TokenFinder
 {
+    const PARAM_INCLUDE_PHPDOC            = 'includePhpdoc';
+    const PARAM_INCLUDE_METHOD_PROPERTIES = 'includeMethodProperties';
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_inside = false;
+    private $inside = false;
 
     /**
-     * @var integer
+     * @var int
      */
-    protected $_level = 0;
+    private $level = 0;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_end = false;
+    private $end = false;
 
     /**
      * Finds tokens
      *
-     * @param \PHP\Manipulator\Token $token
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @return \PHP\Manipulator\TokenFinder\Result
+     * @param Token          $token
+     * @param TokenContainer $container
+     * @param mixed          $params
+     *
+     * @return Result
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->isType($token, T_FUNCTION)) {
-            throw new \Exception('Starttoken is not T_FUNCTION');
+        if (!$token->isType(T_FUNCTION)) {
+            $message = 'Starttoken is not T_FUNCTION';
+            throw new TokenFinderException($message, TokenFinderException::UNSUPPORTED_START_TOKEN);
         }
 
         $iterator = $container->getIterator();
         $iterator->seekToToken($token);
 
-        if ($this->_includeMethodProperties($params) &&
-            !$this->_includePhpDoc($params)) {
-            $this->_seekToMethodProperties($iterator);
+        if ($this->includeMethodProperties($params) &&
+            !$this->includePhpDoc($params)
+        ) {
+            $this->seekToMethodProperties($iterator);
         }
 
-        if ($this->_includePhpDoc($params)) {
-            $this->_seekToPhpdoc($iterator, $params);
+        if ($this->includePhpDoc($params)) {
+            $this->seekToPhpdoc($iterator);
         }
-        $this->_inside = false;
-        $this->_level = 0;
-        $this->_end = false;
+        $this->inside = false;
+        $this->level  = 0;
+        $this->end    = false;
 
         $result = new Result();
-        while ($iterator->valid() && false === $this->_end) {
+        while ($iterator->valid() && false === $this->end) {
             $result->addToken($iterator->current());
 
-            $this->_checkLevel($iterator);
-            $this->_checkBreak($iterator);
+            $this->checkLevel($iterator);
+            $this->checkBreak($iterator);
 
             $iterator->next();
         }
@@ -75,49 +74,63 @@ extends TokenFinder
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _checkBreak(Iterator $iterator)
+    private function checkBreak(TokenContainerIterator $iterator)
     {
         $token = $iterator->current();
         // abstract methods or interface-methods
-        if (false === $this->_inside && $this->isSemicolon($token)) {
-            $this->_end = true;
+        if (false === $this->inside && $token->isSemicolon()) {
+            $this->end = true;
         }
         // last curly-brace closed
-        if (true === $this->_inside && $this->_level === 0) {
-            $this->_end = true;
+        if (true === $this->inside && $this->level === 0) {
+            $this->end = true;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _checkLevel(Iterator $iterator)
+    private function checkLevel(TokenContainerIterator $iterator)
     {
         $token = $iterator->current();
-        if ($this->isOpeningCurlyBrace( $token)) {
-            $this->_inside = true;
-            $this->_level++;
+        if ($token->isOpeningCurlyBrace()) {
+            $this->inside = true;
+            $this->level++;
         }
 
-        if ($this->isClosingCurlyBrace( $token)) {
-            $this->_level--;
+        if ($token->isClosingCurlyBrace()) {
+            $this->level--;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _seekToMethodProperties(Iterator $iterator)
+    private function seekToMethodProperties(TokenContainerIterator $iterator)
     {
         $token = $iterator->current();
         $iterator->previous();
         while ($iterator->valid()) {
-            if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_ABSTRACT))) {
+            if (!$iterator->current()->isType([
+                T_WHITESPACE,
+                T_PUBLIC,
+                T_COMMENT,
+                T_DOC_COMMENT,
+                T_PUBLIC,
+                T_PROTECTED,
+                T_PRIVATE,
+                T_STATIC,
+                T_ABSTRACT,
+            ])
+            ) {
                 $iterator->next();
                 while ($iterator->valid()) {
-                    if (!$this->isType($iterator->current(), array(T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION, T_ABSTRACT))) {
+                    if (!$iterator->current()->isType(
+                        [T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION, T_ABSTRACT]
+                    )
+                    ) {
                         $iterator->next();
                     } else {
                         break;
@@ -134,18 +147,24 @@ extends TokenFinder
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _seekToPhpdoc(Iterator $iterator)
+    private function seekToPhpdoc(TokenContainerIterator $iterator)
     {
         $token = $iterator->current();
         // travel reverse as long as there is only whitespace and stuff
         $iterator->previous();
         while ($iterator->valid()) {
-            if (!$this->isType($iterator->current(), array(T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC))) {
+            if (!$iterator->current()->isType(
+                [T_WHITESPACE, T_PUBLIC, T_COMMENT, T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC]
+            )
+            ) {
                 $iterator->next();
                 while ($iterator->valid()) {
-                    if (!$this->isType($iterator->current(), array(T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION))) {
+                    if (!$iterator->current()->isType(
+                        [T_DOC_COMMENT, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_STATIC, T_FUNCTION]
+                    )
+                    ) {
                         $iterator->next();
                     } else {
                         break;
@@ -163,29 +182,31 @@ extends TokenFinder
 
     /**
      * @param array|null $params
-     * @return boolean
+     *
+     * @return bool
      */
-    protected function _includePhpDoc($params)
+    private function includePhpDoc($params)
     {
-        if (is_array($params) && isset($params['includePhpdoc'])) {
-            return (bool) $params['includePhpdoc'];
-        } else {
-            return false;
+        if (is_array($params) && isset($params[self::PARAM_INCLUDE_PHPDOC])) {
+            return (bool) $params[self::PARAM_INCLUDE_PHPDOC];
         }
+
+        return false;
     }
 
     /**
      * wheter to check for public/protected/private
      *
      * @param array|null $params
-     * @return boolean
+     *
+     * @return bool
      */
-    protected function _includeMethodProperties($params)
+    private function includeMethodProperties($params)
     {
-        if (is_array($params) && isset($params['includeMethodProperties'])) {
-            return (bool) $params['includeMethodProperties'];
-        } else {
-            return false;
+        if (is_array($params) && isset($params[self::PARAM_INCLUDE_METHOD_PROPERTIES])) {
+            return (bool) $params[self::PARAM_INCLUDE_METHOD_PROPERTIES];
         }
+
+        return false;
     }
 }

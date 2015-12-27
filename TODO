@@ -1,3 +1,14 @@
-USE Symfony\Component\Process for cli to run up to X files parallel (making use of multiple cpus/cores
-MOVE helper into cli
-Use Twig for helper templates
+USE Symfony\Component\Process for cli to run up to X files parallel (making use of multiple cpus/cores)
+THROW OUT short_open_tag related stuff
+Better Exceptions
+DTD for config
+mocks!
+sprintf
+get rid of unnecassary type declarations /* @var $actualToken Token */
+(extends|implements|throws|new)( )+\\([a-z]+)
+Less Reflection
+refactor #0 #1 in dataproviders
+get rid of autoloader magic stuff in config
+get rid of stubs
+method order (public protected private)
+A token factory where you can say -> createLogicAndToken() ...

@@ -2,93 +2,90 @@
 
 namespace PHP\Manipulator\Cli\Command;
 
+use PHP\Manipulator\Action;
 use PHP\Manipulator\Config;
-use PHP\Manipulator;
-use PHP\Manipulator\Token;
+use PHP\Manipulator\Config\XmlConfig;
+use PHP\Manipulator\Exception\CliException;
 use PHP\Manipulator\FileContainer;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use PHP\Manipulator\ValueObject\ReadableFile;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\ClassLoader\UniversalClassLoader;
+use Symfony\Component\Console\Output\OutputInterface;
+use PHP\Manipulator\Exception\PHPManipulatorException;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \Symfony\Components\Console\Input\InputInterface
- * @uses    \Symfony\Components\Console\Output\OutputInterface
- * @uses    \Symfony\Components\Console\Command\Command
- * @uses    \Symfony\Components\Console\Input\InputOption
- * @uses    \Symfony\Foundation\UniversalClassLoader
- * @uses    \PHP\Manipulator\FileContainer
- */
 class RunActions extends Command
 {
     protected function configure()
     {
         $this->setName('runActions');
         $this->setDescription('Runs actions from config an runs them');
-        $def = array(
-            new InputOption('--config', null, InputOption::VALUE_OPTIONAL, 'the config used', 'phpmanipulator.xml')
-        );
+        $def = [
+            new InputOption('--config', null, InputOption::VALUE_OPTIONAL, 'the config used', 'phpmanipulator.xml'),
+        ];
         $this->setDefinition($def);
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $configFile = $input->getOption('config');
 
-        $config = $this->_getConfig($configFile);
+        $config = $this->getConfig($configFile);
 
-        $files = $config->getFiles();
+        $files   = $config->getFiles();
         $actions = $config->getActions();
 
-        $filesCount = count($files);
+        $filesCount   = count($files);
         $actionsCount = count($actions);
 
         if ($filesCount === 0) {
-            $output->write('No files found' . PHP_EOL);
+            $output->writeln('No files found');
 
             return;
         }
         if ($actionsCount === 0) {
-            $output->write('No actions found' . PHP_EOL);
+            $output->writeln('No actions found');
 
             return;
         }
 
         $filesDone = 1;
-        $output->write('Processing ' . $filesCount . ' files and ' . $actionsCount . ' actions' . PHP_EOL);
+        $message   = sprintf('Processing %u files and %u actions', $filesCount, $actionsCount);
+        $output->writeln($message);
         foreach ($files as $file) {
-            $output->write('File: ' . $file . ' (' . $filesDone . '/' . $filesCount . ')' . PHP_EOL);
-            $container = new FileContainer($file);
+            $message = sprintf('File: %s (%u/%u)', $file, $filesDone, $filesCount);
+            $output->writeln($message);
+            $container = FileContainer::createFromFile(ReadableFile::createFromPath($file));
             foreach ($actions as $action) {
-                /* @var $action \PHP\Manipulator\Action */
                 $action->run($container);
-                $output->write('    Action: ' . get_class($action) . PHP_EOL);
+                $output->writeln(sprintf('    Action: %s', get_class($action)));
             }
             $container->save();
             $filesDone++;
         }
 
-        $output->write(PHP_EOL . 'Applied all actions ' . PHP_EOL);
+        $output->writeln('');
+        $output->writeln('Applied all actions ');
     }
 
     /**
      * @param string $configFile
-     * @return \PHP\Manipulator\Config\Xml
+     *
+     * @return XmlConfig
      */
-    protected function _getConfig($configFile)
+    private function getConfig($configFile)
     {
         try {
             return Config::factory('xml', $configFile, true);
-        } catch (\Exception $e) {
-            throw new \Exception('Unable to load config: ' . $configFile . PHP_EOL . 'error: ' . $e->getMessage());
+        } catch (PHPManipulatorException $exception) {
+            $message = sprintf('Unable to load config "%s": %s', $configFile, $exception->getMessage());
+            throw new CliException($message, CliException::UNABLE_TO_LOAD_CONFIG, $exception);
         }
     }
 }

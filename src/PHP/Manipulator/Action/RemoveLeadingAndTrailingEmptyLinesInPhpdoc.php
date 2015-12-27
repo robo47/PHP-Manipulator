@@ -4,30 +4,18 @@ namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
 use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc as RemoveLeadingAndTrailingEmptyLinesInPhpdocTokenManipulator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
- */
-class RemoveLeadingAndTrailingEmptyLinesInPhpdoc
-extends Action
+class RemoveLeadingAndTrailingEmptyLinesInPhpdoc extends Action
 {
-
-    /**
-     * Run Action
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     */
     public function run(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_DOC_COMMENT)) {
-                $this->manipulateToken('RemoveLeadingAndTrailingEmptyLinesInPhpdoc', $token);
+            if ($token->isDocComment()) {
+                $this->manipulateToken(RemoveLeadingAndTrailingEmptyLinesInPhpdocTokenManipulator::class, $token);
             }
             $iterator->next();
         }

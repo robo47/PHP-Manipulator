@@ -2,90 +2,91 @@
 
 namespace Tests\Constraint;
 
-use \PHP\Manipulator\TokenContainer;
-use \PHP\Manipulator\Token;
+use PHP\Manipulator\Token;
+use PHPUnit_Framework_Constraint;
+use PHPUnit_Framework_Constraint_IsEqual;
+use PHPUnit_Util_InvalidArgumentHelper;
+use SebastianBergmann\Diff\Differ;
 
-class TokensMatch extends \PHPUnit_Framework_Constraint
+class TokensMatch extends PHPUnit_Framework_Constraint
 {
+    /**
+     * @var Token
+     */
+    protected $expectedToken = null;
 
     /**
-     * @var PHP\Manipulator\Token
+     * @var bool
      */
-    protected $_expectedToken = null;
-
-    /**
-     * @var boolean
-     */
-    protected $_strict = false;
+    protected $strict = false;
 
     /**
      * Difference found on evaluation
      *
      * @var string
      */
-    protected $_difference = '';
+    protected $difference = '';
 
     /**
-     * @param \PHP\Manipulator\Token $expected
-     * @param boolean $strict
+     * @param Token $expected
+     * @param bool  $strict
      */
-    public function __construct($expected, $strict)
+    public function __construct(Token $expected, $strict)
     {
-        if (!$expected instanceof Token) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\Token'
-            );
-        }
+        parent::__construct();
 
         if (!is_bool($strict)) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                2, 'boolean'
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+                2,
+                'bool'
             );
         }
 
-        $this->_expectedToken = $expected;
-        $this->_strict = $strict;
+        $this->expectedToken = $expected;
+        $this->strict        = $strict;
     }
 
     /**
-     * @param \PHP\Manipulator\Token $other
-     * @param  string $description Additional information about the test
-     * @param  bool $returnResult Whether to return a result or throw an exception
-     * @return boolean
+     * @param Token  $other
+     * @param string $description  Additional information about the test
+     * @param bool   $returnResult Whether to return a result or throw an exception
+     *
+     * @return bool
      */
-    public function evaluate($other, $description = '', $returnResult = FALSE)
+    public function evaluate($other, $description = '', $returnResult = false)
     {
         if (!$other instanceof Token) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\Token'
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+                1,
+                Token::class
             );
         }
-        $expectedToken = $this->_expectedToken;
+        $expectedToken = $this->expectedToken;
 
-        $equal = $this->_getEqualsConstraint($expectedToken->getValue());
+        $equal = $this->getEqualsConstraint($expectedToken->getValue());
         if (!$equal->evaluate($other->getValue(), $description, true)) {
-            $this->_difference = 'values';
+            $this->difference = 'values';
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
             $this->fail($other, $description);
         }
 
-        $equal = $this->_getEqualsConstraint($expectedToken->getType());
+        $equal = $this->getEqualsConstraint($expectedToken->getType());
         if (!$equal->evaluate($other->getType(), $description, true)) {
-            $this->_difference = 'types';
+            $this->difference = 'types';
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
             $this->fail($other, $description);
         }
 
-        if (true === $this->_strict) {
-            $equal = $this->_getEqualsConstraint($expectedToken->getLinenumber());
-            if (!$equal->evaluate($other->getLinenumber(), $description, true)) {
-                $this->_difference = 'linenumber';
+        if (true === $this->strict) {
+            $equal = $this->getEqualsConstraint($expectedToken->getLineNumber());
+            if (!$equal->evaluate($other->getLineNumber(), $description, true)) {
+                $this->difference = 'linenumber';
                 if ($returnResult) {
-                    return FALSE;
+                    return false;
                 }
                 $this->fail($other, $description);
             }
@@ -96,28 +97,28 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
 
     /**
      * @param mixed $value
-     * @return \PHPUnit_Framework_Constraint_IsEqual
+     *
+     * @return PHPUnit_Framework_Constraint_IsEqual
      */
-    protected function _getEqualsConstraint($value)
+    protected function getEqualsConstraint($value)
     {
-        return new \PHPUnit_Framework_Constraint_IsEqual($value);
+        return new PHPUnit_Framework_Constraint_IsEqual($value);
     }
 
     /**
-     * @param mixed   $other
-     * @param string  $description
-     * @param boolean $not
+     * @param mixed $other
+     *
      * @return string
      */
     protected function failureDescription($other)
     {
-        $message = PHP_EOL . \PHPUnit_Util_Diff::diff(
-            (string) $this->_expectedToken,
+        $message = PHP_EOL.(new Differ())->diff(
+            (string) $this->expectedToken,
             (string) $other
         );
-        $difference = $this->_difference;
+        $difference = $this->difference;
 
-        return 'Tokens are different: [' . $difference . ']' . $message;
+        return 'Tokens are different: ['.$difference.']'.$message;
     }
 
     /**
@@ -127,5 +128,4 @@ class TokensMatch extends \PHPUnit_Framework_Constraint
     {
         return 'Token matches another Token';
     }
-
 }

@@ -1,59 +1,43 @@
 <?php
 
-namespace Test\PHP\Manipulator;
+namespace Tests\PHP\Manipulator;
 
 use PHP\Manipulator\Actionset;
-
-class MyActionset extends Actionset
-{
-    public function getActions() {
-        return array();
-    }
-}
+use ReflectionClass;
+use Tests\TestCase;
 
 /**
- * @group Actionset
+ * @covers PHP\Manipulator\Actionset
  */
-class ActionsetTest extends \Tests\TestCase
+class ActionsetTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Actionset
-     */
     public function testActionset()
     {
-        $reflection = new \ReflectionClass('PHP\Manipulator\Actionset');
+        $reflection = new ReflectionClass(Actionset::class);
         $this->assertTrue($reflection->isAbstract(), 'Class must be abstract');
 
         $getActionsMethod = $reflection->getMethod('getActions');
-        /* @var $getActionsMethod ReflectionMethod */
         $this->assertSame(0, $getActionsMethod->getNumberOfParameters(), 'Method has wrong number of parameters');
 
         $constructor = $reflection->getMethod('__construct');
-        /* @var $constructor ReflectionMethod */
         $this->assertSame(1, $constructor->getNumberOfParameters(), 'Method has wrong number of parameters');
-        $params = $constructor->getParameters();
+
+        $params           = $constructor->getParameters();
         $optionsParameter = $params[0];
-        /* @var $optionsParameter \ReflectionParameter */
+
         $this->assertTrue($optionsParameter->isArray(), 'Parameter has no array type hint');
-        $this->assertEquals(array(), $optionsParameter->getDefaultValue(), 'Parameter was wrong default value');
+        $this->assertSame([], $optionsParameter->getDefaultValue(), 'Parameter was wrong default value');
     }
 
-    /**
-     * @covers \PHP\Manipulator\Actionset::__construct
-     */
     public function testConstruct()
     {
-        $actionset = new MyActionset();
-        $this->assertEquals(array(), $actionset->getOptions());
+        $actionset = new MyActionSet();
+        $this->assertSame([], $actionset->getOptions());
     }
 
-    /**
-     * @covers \PHP\Manipulator\Actionset::getOptions
-     */
     public function testGetOptions()
     {
-        $actionset = new MyActionset(array('foo' => 'blub'));
-        $this->assertEquals(array('foo' => 'blub'), $actionset->getOptions());
+        $actionset = new MyActionSet(['foo' => 'blub']);
+        $this->assertSame(['foo' => 'blub'], $actionset->getOptions());
     }
 }

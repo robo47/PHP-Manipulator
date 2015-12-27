@@ -3,54 +3,48 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class ReplaceBooleanOperatorsWithLogicalOperators
-extends Action
+class ReplaceBooleanOperatorsWithLogicalOperators extends Action
 {
+    const OPTION_UPPERCASE = 'uppercase';
+
+    const OPTION_REPLACE_AND = 'replaceAnd';
+
+    const OPTION_REPLACE_OR = 'replaceOr';
+
     public function init()
     {
-        if (!$this->hasOption('uppercase')) {
-            $this->setOption('uppercase', false);
+        if (!$this->hasOption(self::OPTION_UPPERCASE)) {
+            $this->setOption(self::OPTION_UPPERCASE, false);
         }
-        if (!$this->hasOption('replaceAnd')) {
-            $this->setOption('replaceAnd', true);
+        if (!$this->hasOption(self::OPTION_REPLACE_AND)) {
+            $this->setOption(self::OPTION_REPLACE_AND, true);
         }
-        if (!$this->hasOption('replaceOr')) {
-            $this->setOption('replaceOr', true);
+        if (!$this->hasOption(self::OPTION_REPLACE_OR)) {
+            $this->setOption(self::OPTION_REPLACE_OR, true);
         }
     }
 
-    /**
-     * Replace boolean and (AND)/or (OR) with logical and (&&)/or (||)
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
-        if ($this->getOption('uppercase')) {
+        if ($this->getOption(self::OPTION_UPPERCASE)) {
             $and = 'AND';
-            $or = 'OR';
+            $or  = 'OR';
         } else {
             $and = 'and';
-            $or = 'or';
+            $or  = 'or';
         }
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->_isBooleanAndAndShouldBeReplaced($token)) {
+            if ($this->isBooleanAndAndShouldBeReplaced($token)) {
                 $token->setValue($and);
                 $token->setType(T_LOGICAL_AND);
-            } elseif ($this->_isBooleanOrAndShouldBeReplaced($token)) {
+            } elseif ($this->isBooleanOrAndShouldBeReplaced($token)) {
                 $token->setValue($or);
                 $token->setType(T_LOGICAL_OR);
             }
@@ -59,20 +53,22 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isBooleanAndAndShouldBeReplaced(Token $token)
+    private function isBooleanAndAndShouldBeReplaced(Token $token)
     {
-        return ($this->isType($token, T_BOOLEAN_AND) && $this->getOption('replaceAnd'));
+        return ($token->isType(T_BOOLEAN_AND) && $this->getOption(self::OPTION_REPLACE_AND));
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isBooleanOrAndShouldBeReplaced(Token $token)
+    private function isBooleanOrAndShouldBeReplaced(Token $token)
     {
-        return ($this->isType($token, T_BOOLEAN_OR) && $this->getOption('replaceOr'));
+        return ($token->isType(T_BOOLEAN_OR) && $this->getOption(self::OPTION_REPLACE_OR));
     }
 }

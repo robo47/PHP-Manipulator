@@ -2,60 +2,56 @@
 
 namespace PHP;
 
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Action;
+use SplFileInfo;
 
 /**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
  * @todo Should be the class used by apps not using the CLI ... really needed ?
- * @uses    \PHP\Manipulator\Action
  */
 class Manipulator
 {
-    /**
-     * Version number
-     */
-    const VERSION = '0.0.1';
+    const VERSION = '2.0.0-DEV';
 
     /**
      * Array with used actions
      *
-     * @var array
+     * @var Action[]
      */
-    protected $_actions = array();
+    private $actions = [];
 
     /**
      * Array with files
      *
-     * @var array
+     * @var string[]
      */
-    protected $_files = array();
+    private $files = [];
 
     /**
-     * @param array $actions
+     * @param Action[]               $actions
+     * @param string[]|SplFileInfo[] $files
      */
-    public function __construct(array $actions = array(), $files = null)
+    public function __construct(array $actions = [], array $files = [])
     {
         $this->addActions($actions);
         $this->addFiles($files);
     }
 
     /**
-     * @param \PHP\Manipulator\Action $action
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     * @param Action $action
+     *
+     * @return Manipulator
      */
     public function addAction(Action $action)
     {
-        $this->_actions[] = $action;
+        $this->actions[] = $action;
 
         return $this;
     }
 
     /**
-     * @param array $actions
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     * @param Action[] $actions
+     *
+     * @return Manipulator
      */
     public function addActions(array $actions)
     {
@@ -67,14 +63,15 @@ class Manipulator
     }
 
     /**
-     * @param \PHP\Manipulator\Action $removeAction
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     * @param Action $removeAction
+     *
+     * @return Manipulator
      */
     public function removeAction(Action $removeAction)
     {
-        foreach ($this->_actions as $key => $action) {
+        foreach ($this->actions as $key => $action) {
             if ($action === $removeAction) {
-                unset($this->_actions[$key]);
+                unset($this->actions[$key]);
             }
         }
 
@@ -82,32 +79,33 @@ class Manipulator
     }
 
     /**
-     * @return array
+     * @return Action[]
      */
     public function getActions()
     {
-        return $this->_actions;
+        return $this->actions;
     }
 
     /**
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     * @return Manipulator
      */
     public function removeAllActions()
     {
-        $this->_actions = array();
+        $this->actions = [];
 
         return $this;
     }
 
     /**
      * @param string $classname
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     *
+     * @return Manipulator
      */
     public function removeActionByClassname($classname)
     {
-        foreach ($this->_actions as $key => $action) {
+        foreach ($this->actions as $key => $action) {
             if ($action instanceof $classname) {
-                unset($this->_actions[$key]);
+                unset($this->actions[$key]);
             }
         }
 
@@ -117,17 +115,15 @@ class Manipulator
     /**
      * Add a file or files (array, iterator [as long as it items are strings or implement __toString())]
      *
-     * @param array|Iterator|string $files
+     * @param string[]|SplFileInfo[] $files
+     *
+     * @return Manipulator
      */
     public function addFiles($files)
     {
-        if ($files instanceof \Iterator || is_array($files)) {
-            foreach ($files as $file) {
-                // string-cast if it is something else (SplFileInfo)
-                $this->addFile((string) $file);
-            }
-        } elseif (is_string($files)) {
-            $this->addFile($files);
+        foreach ($files as $file) {
+            // string-cast if it is something else (SplFileInfo)
+            $this->addFile((string) $file);
         }
 
         return $this;
@@ -135,28 +131,30 @@ class Manipulator
 
     /**
      * @param string $file
+     *
+     * @return Manipulator
      */
     public function addFile($file)
     {
-        $this->_files[] = $file;
+        $this->files[] = $file;
 
         return $this;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFiles()
     {
-        return $this->_files;
+        return $this->files;
     }
 
     /**
-     * @return \PHP\Manipulator *Provides Fluent Interface*
+     * @return Manipulator
      */
     public function removeAllFiles()
     {
-        $this->_files = array();
+        $this->files = [];
 
         return $this;
     }

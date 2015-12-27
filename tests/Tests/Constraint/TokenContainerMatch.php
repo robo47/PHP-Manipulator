@@ -2,78 +2,73 @@
 
 namespace Tests\Constraint;
 
-use \PHP\Manipulator\TokenContainer;
-use \PHP\Manipulator\Token;
-use \Tests\Util;
+use PHP\Manipulator\TokenContainer;
+use PHPUnit_Framework_Constraint;
+use PHPUnit_Util_InvalidArgumentHelper;
+use Tests\Util;
 
-class TokenContainerMatch extends \PHPUnit_Framework_Constraint
+class TokenContainerMatch extends PHPUnit_Framework_Constraint
 {
+    /**
+     * @var TokenContainer
+     */
+    protected $expectedContainer = null;
 
     /**
-     * @var PHP\Manipulator\TokenContainer
+     * @var bool
      */
-    protected $_expectedContainer = null;
-
-    /**
-     * @var boolean
-     */
-    protected $_strict = false;
+    protected $strict = false;
 
     /**
      * Constraint for checking two TokenContainer match
      *
      * Strict checking compares linenumbers too
      *
-     * @param \PHP\Manipulator\TokenContainer $expected
-     * @param boolean $strict
+     * @param TokenContainer $expected
+     * @param bool           $strict
      */
-    public function __construct($expected, $strict)
+    public function __construct(TokenContainer $expected, $strict)
     {
-        if (!$expected instanceof TokenContainer) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\TokenContainer'
-            );
-        }
-
+        parent::__construct();
         if (!is_bool($strict)) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                2, 'boolean'
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+                2,
+                'bool'
             );
         }
 
-        $this->_expectedContainer = $expected;
-        $this->_strict = $strict;
+        $this->expectedContainer = $expected;
+        $this->strict            = $strict;
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $other
-     * @param  string $description Additional information about the test
-     * @param  bool $returnResult Whether to return a result or throw an exception
-     * @return boolean
+     * @param TokenContainer $other
+     * @param string         $description  Additional information about the test
+     * @param bool           $returnResult Whether to return a result or throw an exception
+     *
+     * @return bool
      */
-    public function evaluate($other, $description = '', $returnResult = FALSE)
+    public function evaluate($other, $description = '', $returnResult = false)
     {
         if (!$other instanceof TokenContainer) {
-            throw \PHPUnit_Util_InvalidArgumentHelper::factory(
-                1, 'PHP\Manipulator\TokenContainer'
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(
+                1,
+                TokenContainer::class
             );
         }
 
-        $expectedIterator = $this->_expectedContainer->getIterator();
-        $actualIterator = $other->getIterator();
+        $expectedIterator = $this->expectedContainer->getIterator();
+        $actualIterator   = $other->getIterator();
 
         $i = 0;
         while ($expectedIterator->valid() && $actualIterator->valid()) {
-
             $expectedToken = $expectedIterator->current();
-            /* @var $expectedToken PHP\Manipulator\Token */
 
             $actualToken = $actualIterator->current();
-            /* @var $actualToken PHP\Manipulator\Token */
 
-            if (!$actualToken->equals($expectedToken, $this->_strict)) {
+            if (!$actualToken->equals($expectedToken, $this->strict)) {
                 if ($returnResult) {
-                    return FALSE;
+                    return false;
                 }
                 $this->fail($other, $description);
             }
@@ -85,7 +80,7 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
 
         if ($expectedIterator->valid() || $actualIterator->valid()) {
             if ($returnResult) {
-                return FALSE;
+                return false;
             }
             $this->fail($other, $description);
         }
@@ -93,28 +88,20 @@ class TokenContainerMatch extends \PHPUnit_Framework_Constraint
         return true;
     }
 
-    /**
-     * @param mixed   $other
-     * @param string  $description
-     * @param boolean $not
-     */
     protected function failureDescription($other)
     {
         $containerDiff = Util::compareContainers(
-            $this->_expectedContainer,
+            $this->expectedContainer,
             $other,
-            $this->_strict
+            $this->strict
         );
 
-        $message = 'Tokens are different:' . PHP_EOL .
-        PHP_EOL . $containerDiff;
+        $message = 'Tokens are different:'.PHP_EOL.
+            PHP_EOL.$containerDiff;
 
         return $message;
     }
 
-    /**
-     * @return string
-     */
     public function toString()
     {
         return 'TokenContainer matches another Container';

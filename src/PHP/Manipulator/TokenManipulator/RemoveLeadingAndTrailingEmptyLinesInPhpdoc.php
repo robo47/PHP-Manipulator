@@ -2,53 +2,38 @@
 
 namespace PHP\Manipulator\TokenManipulator;
 
-use PHP\Manipulator\TokenManipulator;
-use PHP\Manipulator\Token;
-use PHP\Manipulator\Helper\NewlineDetector;
-use ArrayIterator;
 use ArrayObject;
+use PHP\Manipulator\Helper\NewlineDetector;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\NewlineDetector
- */
-class RemoveLeadingAndTrailingEmptyLinesInPhpdoc
-extends TokenManipulator
+class RemoveLeadingAndTrailingEmptyLinesInPhpdoc extends TokenManipulator
 {
-
-    protected $_keys = array();
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @param mixed $params (unused)
-     */
     public function manipulate(Token $token, $params = null)
     {
-        $helper = new NewlineDetector();
+        $helper  = new NewlineDetector();
         $newline = $helper->getNewlineFromToken($token);
-        $lines = new ArrayObject(preg_split('~(\r\n|\r|\n)~', $token->getValue()));
+        $lines   = new ArrayObject(preg_split('~(\r\n|\r|\n)~', $token->getValue()));
 
         if (count($lines) >= 3) {
             // delete empty lines from begin
-            $this->_iterateLines($lines);
+            $this->iterateLines($lines);
             // delete empty lines from end
             $lines = new ArrayObject(array_reverse($lines->getArrayCopy()));
-            $this->_iterateLines($lines);
+            $this->iterateLines($lines);
             $token->setValue(implode($newline, array_reverse($lines->getArrayCopy())));
         }
     }
 
     /**
-     * @param \ArrayObject $lines
+     * @param ArrayObject $lines
      */
-    protected function _iterateLines(ArrayObject $lines)
+    private function iterateLines(ArrayObject $lines)
     {
         $iter = $lines->getIterator();
         $iter->next();
-        $keys = array();
-        while($iter->valid()) {
+        $keys = [];
+        while ($iter->valid()) {
             if (preg_match('~^([\n\r\t\* ]+)$~', $iter->current())) {
                 $keys[] = $iter->key();
             } else {
@@ -56,7 +41,7 @@ extends TokenManipulator
             }
             $iter->next();
         }
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             unset($lines[$key]);
         }
         $iter->rewind();

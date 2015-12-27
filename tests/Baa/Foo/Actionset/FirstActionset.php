@@ -2,19 +2,17 @@
 
 namespace Baa\Foo\Actionset;
 
-use PHP\Manipulator\Actionset;
-use PHP\Manipulator\Action;
-use Baa\Foo\Action\ThirdAction;
 use Baa\Foo\Action\FourthAction;
+use Baa\Foo\Action\ThirdAction;
+use PHP\Manipulator\Actionset;
 
-class FirstActionset
-extends Actionset
+class FirstActionset extends Actionset
 {
     public function getActions()
     {
-        return array(
-            new ThirdAction(array('blub' => 'bla')),
-            new FourthAction(array('bla' => 'blub')),
-        );
+        return [
+            new ThirdAction(['blub' => 'bla']),
+            new FourthAction(['bla' => 'blub']),
+        ];
     }
 }

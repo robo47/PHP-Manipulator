@@ -3,19 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\StripPhp;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\StripPhp
+ * @covers PHP\Manipulator\Action\StripPhp
  */
-class StripPhpTest extends \Tests\TestCase
+class StripPhpTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\StripPhp::init
-     */
     public function testConstructorDefaults()
     {
         $action = new StripPhp();
@@ -27,27 +22,21 @@ class StripPhpTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/StripPhp/';
+        $data              = [];
+        $data['Example 0'] = 0;
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/StripPhp/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\StripPhp::run
      * @dataProvider actionProvider
+     *
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-
-        $action = new StripPhp($options);
+        $action = new StripPhp();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }
@@ -57,29 +46,23 @@ class StripPhpTest extends \Tests\TestCase
      */
     public function shortTagsOnlyactionProvider()
     {
-        $data = array();
-        $path = '/Action/StripPhp/';
+        $data              = [];
+        $data['Example 1'] = 1;
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/StripPhp/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\StripPhp::run
-     * @covers \PHP\Manipulator\Action\StripPhp::<protected>
      * @dataProvider shortTagsOnlyactionProvider
+     *
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testActionWithShorttags($options, $input, $expectedTokens)
+    public function testActionWithShorttags(TokenContainer $input, TokenContainer $expectedTokens)
     {
         $this->checkShorttags();
 
-        $action = new StripPhp($options);
+        $action = new StripPhp();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

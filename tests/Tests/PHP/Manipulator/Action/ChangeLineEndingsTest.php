@@ -3,23 +3,22 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\ChangeLineEndings;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\ChangeLineEndings
+ * @covers PHP\Manipulator\Action\ChangeLineEndings
  */
-class ChangeLineEndingsTest extends \Tests\TestCase
+class ChangeLineEndingsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\ChangeLineEndings::init
-     */
     public function testConstructorDefaults()
     {
         $action = new ChangeLineEndings();
-        $this->assertEquals("\n", $action->getOption('newline'), 'Default Value for newline is wrong');
+        $this->assertSame(
+            "\n",
+            $action->getOption(ChangeLineEndings::OPTION_NEWLINE),
+            'Default Value for newline is wrong'
+        );
         $this->assertCount(1, $action->getOptions());
     }
 
@@ -28,62 +27,65 @@ class ChangeLineEndingsTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
+        $data = [];
 
-        $codeLinux = "<?php\necho \$foo;\n\n if(true) {\n    echo 'foo';\n} else {\n echo 'baa';\n}";
+        $codeLinux   = "<?php\necho \$foo;\n\n if(true) {\n    echo 'foo';\n} else {\n echo 'baa';\n}";
         $codeWindows = "<?php\r\necho \$foo;\r\n\r\n if(true) {\r\n    echo 'foo';\r\n} else {\r\n echo 'baa';\r\n}";
-        $codeMac = "<?php\recho \$foo;\r\r if(true) {\r    echo 'foo';\r} else {\r echo 'baa';\r}";
+        $codeMac     = "<?php\recho \$foo;\r\r if(true) {\r    echo 'foo';\r} else {\r echo 'baa';\r}";
 
         #0
-        $data[] = array(
-            array(),
-            new TokenContainer($codeWindows),
-            new TokenContainer($codeLinux),
-        );
+        $data[] = [
+            [],
+            TokenContainer::factory($codeWindows),
+            TokenContainer::factory($codeLinux),
+        ];
 
         #1
-        $data[] = array(
-            array('newline' => "\r\n"),
-            new TokenContainer($codeLinux),
-            new TokenContainer($codeWindows),
-        );
+        $data[] = [
+            [ChangeLineEndings::OPTION_NEWLINE => "\r\n"],
+            TokenContainer::factory($codeLinux),
+            TokenContainer::factory($codeWindows),
+        ];
 
         #2
-        $data[] = array(
-            array('newline' => "\r"),
-            new TokenContainer($codeLinux),
-            new TokenContainer($codeMac),
-        );
+        $data[] = [
+            [ChangeLineEndings::OPTION_NEWLINE => "\r"],
+            TokenContainer::factory($codeLinux),
+            TokenContainer::factory($codeMac),
+        ];
 
         #3
-        $data[] = array(
-            array('newline' => "\n"),
-            new TokenContainer($codeMac),
-            new TokenContainer($codeLinux),
-        );
+        $data[] = [
+            [ChangeLineEndings::OPTION_NEWLINE => "\n"],
+            TokenContainer::factory($codeMac),
+            TokenContainer::factory($codeLinux),
+        ];
 
         #4
-        $data[] = array(
-            array('newline' => "\r\n"),
-            new TokenContainer($codeMac),
-            new TokenContainer($codeWindows),
-        );
+        $data[] = [
+            [ChangeLineEndings::OPTION_NEWLINE => "\r\n"],
+            TokenContainer::factory($codeMac),
+            TokenContainer::factory($codeWindows),
+        ];
 
         #5
-        $data[] = array(
-            array('newline' => "\r"),
-            new TokenContainer($codeWindows),
-            new TokenContainer($codeMac),
-        );
+        $data[] = [
+            [ChangeLineEndings::OPTION_NEWLINE => "\r"],
+            TokenContainer::factory($codeWindows),
+            TokenContainer::factory($codeMac),
+        ];
 
         return $data;
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\ChangeLineEndings::run
      * @dataProvider actionProvider
+     *
+     * @param array          $options
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(array $options, TokenContainer $input, TokenContainer $expectedTokens)
     {
         $action = new ChangeLineEndings($options);
         $action->run($input);

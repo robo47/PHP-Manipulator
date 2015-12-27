@@ -2,113 +2,58 @@
 
 namespace Tests\PHP\Manipulator;
 
+use Closure;
 use PHP\Manipulator\AHelper;
+use PHP\Manipulator\MatcherFactory;
+use PHP\Manipulator\Exception\HelperException;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\ClosureFactory;
-
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
+use PHP\Manipulator\TokenFinder\Result;
+use stdClass;
+use Tests\Stub\ActionStub;
+use Tests\Stub\TokenFinderStub;
+use Tests\Stub\TokenManipulatorStub;
+use Tests\TestCase;
 
 /**
- * @group AHelper
+ * @covers PHP\Manipulator\AHelper
  */
-class AHelperTest extends \Tests\TestCase
+class AHelperTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::getClassInstance
-     */
-    public function testGetClassInstanceWithAutoPrefix()
-    {
-        $abstractHelper = new AHelper();
-        $instance = $abstractHelper->getClassInstance('Dummy1', 'Baa\\Foo\\', true);
-        $this->assertTrue(class_exists('Baa\\Foo\\Dummy1', false), 'Class not loaded');
-        $this->assertInstanceOf('Baa\\Foo\\Dummy1', $instance, 'Wrong type');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::getClassInstance
-     */
-    public function testGetClassInstanceWithoutAutoPrefix()
-    {
-        $abstractHelper = new AHelper();
-        $instance = $abstractHelper->getClassInstance('Baa\\Foo\\Dummy2', '', false);
-        $this->assertTrue(class_exists('Baa\\Foo\\Dummy2', false), 'Class not loaded');
-        $this->assertInstanceOf('Baa\\Foo\\Dummy2', $instance, 'Wrong type');
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::getClassInstance
-     */
-    public function testGetClassInstanceWithDirectClass()
-    {
-        $class = new \Baa\Foo\Dummy2();
-        $abstractHelper = new AHelper();
-        $instance = $abstractHelper->getClassInstance($class, '', false);
-        $this->assertSame($class, $instance);
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::evaluateConstraint
-     */
-    public function testEvaluateTokenConstraintEvaluatesTokenConstraint()
-    {
-        \Tests\Stub\TokenConstraintStub::$return = false;
-        $abstractHelper = new AHelper();
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $result = $abstractHelper->evaluateConstraint(
-            'Tests\\Stub\\TokenConstraintStub',
-            $token,
-            null,
-            false
-        );
-        $this->assertFalse($result);
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::runAction
-     */
     public function testrunActionManipulatesContainer()
     {
-        \Tests\Stub\ActionStub::$called = false;
-        $abstractHelper = new AHelper();
+        ActionStub::$called = false;
+        $abstractHelper     = new AHelper();
 
         $abstractHelper->runAction(
-            'Tests\\Stub\\ActionStub',
-            new TokenContainer(),
-            null,
-            false
+            ActionStub::class,
+            TokenContainer::createEmptyContainer()
         );
 
-        $this->assertTrue(\Tests\Stub\ActionStub::$called);
+        $this->assertTrue(ActionStub::$called);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::manipulateToken
-     */
     public function testManipulateTokenManipulatesToken()
     {
-        \Tests\Stub\TokenManipulatorStub::$called = false;
-        $abstractHelper = new AHelper();
+        TokenManipulatorStub::$called = false;
+        $abstractHelper               = new AHelper();
 
         $abstractHelper->manipulateToken(
-            'Tests\\Stub\\TokenManipulatorStub',
-            Token::factory(array(T_WHITESPACE, "\n")),
-            null,
-            false
+            TokenManipulatorStub::class,
+            Token::createFromMixed([T_WHITESPACE, "\n"]),
+            null
         );
 
-        $this->assertTrue(\Tests\Stub\TokenManipulatorStub::$called);
+        $this->assertTrue(TokenManipulatorStub::$called);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::findTokens
-     */
     public function testFindTokensFindsTokens()
     {
-        $expectedResult = new \PHP\Manipulator\TokenFinder\Result();
-        $finder = new \Tests\Stub\TokenFinderStub($expectedResult);
-        $token = new Token('Foo');
-        $container = new TokenContainer();
+        $expectedResult = new Result();
+        $finder         = new TokenFinderStub($expectedResult);
+        $token          = Token::createFromValue('Foo');
+        $container      = TokenContainer::createEmptyContainer();
         $abstractHelper = new AHelper();
 
         $actualResult = $abstractHelper->findTokens(
@@ -120,515 +65,45 @@ class AHelperTest extends \Tests\TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::evaluateConstraint
-     */
-    public function testEvaluateConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
-    {
-        $abstractHelper = new AHelper();
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $constraint = new \stdClass();
-
-        try {
-            $abstractHelper->evaluateConstraint($constraint, $token);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('constraint is not instance of PHP\\Manipulator\\TokenConstraint', $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @covers \PHP\Manipulator\AHelper::findTokens
-     */
     public function testFindTokensThrowsExceptionIfFinderIstNotValidFinder()
     {
         $abstractHelper = new AHelper();
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $container = new TokenContainer();
-        $constraint = new \stdClass();
+        $token          = Token::createFromMixed([T_WHITESPACE, "\n"]);
+        $container      = TokenContainer::createEmptyContainer();
+        $constraint     = new stdClass();
 
-        try {
-            $abstractHelper->findTokens($constraint, $token, $container);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('finder is not instance of PHP\\Manipulator\\TokenFinder', $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            HelperException::class,
+            '',
+            HelperException::FINDER_IS_NOT_INSTANCE_OF_TOKENFINDER
+        );
+        $abstractHelper->findTokens($constraint, $token, $container);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::runAction
-     */
     public function testManipulateContainterConstraintThrowsExceptionIfConstraintIstNotValidConstraint()
     {
         $abstractHelper = new AHelper();
-        $container = new TokenContainer();
-        $manipulator = new \stdClass();
+        $container      = TokenContainer::createEmptyContainer();
+        $manipulator    = new stdClass();
 
-        try {
-            $abstractHelper->runAction($manipulator, $container);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of PHP\\Manipulator\\Action', $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            HelperException::class,
+            '',
+            HelperException::ACTION_IS_NOT_INSTANCE_OF_ACTION
+        );
+        $abstractHelper->runAction($manipulator, $container);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::manipulateToken
-     */
     public function testManipulateTokenThrowsExceptionIfConstraintIstNotValidConstraint()
     {
         $abstractHelper = new AHelper();
-        $token = Token::factory(array(T_WHITESPACE, "\n"));
-        $manipulator = new \stdClass();
-
-        try {
-            $abstractHelper->manipulateToken($manipulator, $token);
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('manipulator is not instance of PHP\Manipulator\TokenManipulator', $e->getMessage(), 'Wrong exception message');
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function isColonProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, ':')),
-            true
+        $token          = Token::createFromMixed([T_WHITESPACE, "\n"]);
+        $this->setExpectedException(
+            HelperException::class,
+            '',
+            HelperException::MANIPULATOR_IS_NOT_INSTANCE_OF_TOKEN_MANIPULATOR
         );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_WHITESPACE, ':')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(null, ';')),
-            false
-        );
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isColonProvider
-     * @covers \PHP\Manipulator\AHelper::isColon
-     */
-    public function testIsColon($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isColon($token), 'Wrong result');
-    }
-
-    /**
-     * @return array
-     */
-    public function isCommaProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, ',')),
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_WHITESPACE, ',')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(null, ':')),
-            false
-        );
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isCommaProvider
-     * @covers \PHP\Manipulator\AHelper::isComma
-     */
-    public function testIsComma($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isComma($token), 'Wrong result');
-    }
-
-    /**
-     * @return array
-     */
-    public function isTypeProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "// some comment")),
-            T_COMMENT,
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "// some comment")),
-            T_WHITESPACE,
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "// some comment")),
-            array(T_WHITESPACE, T_CLOSE_TAG, T_COMMENT),
-            true
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, "// some comment")),
-            array(T_WHITESPACE, T_CLOSE_TAG, T_DOC_COMMENT),
-            false
-        );
-
-
-        return $data;
-    }
-
-
-    /**
-     * @dataProvider isTypeProvider
-     * @covers \PHP\Manipulator\AHelper::isType
-     */
-    public function testIsType($token, $param, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isType($token, $param), 'Wrong result');
-    }
-
-
-    /**
-     * @return array
-     */
-    public function hasValueProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(T_COMMENT, 'foo')),
-            'foo',
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_COMMENT, 'foo')),
-            'baa',
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, 'foo')),
-            array('baa', 'foo', 'blub'),
-            true
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, 'foo')),
-            array('baa', 'blub', 'blubber'),
-            false
-        );
-
-
-        return $data;
-    }
-
-
-    /**
-     * @dataProvider hasValueProvider
-     * @covers \PHP\Manipulator\AHelper::hasValue
-     */
-    public function testHasValue($token, $value, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->hasValue($token, $value), 'Wrong result');
-    }
-
-    /**
-     * @return array
-     */
-    public function isClosingBraceProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, '(')),
-            false
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(null, ')')),
-            true
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '(')),
-            false
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, ')')),
-            false
-        );
-
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isClosingBraceProvider
-     * @covers \PHP\Manipulator\AHelper::isClosingBrace
-     */
-    public function testIsClosingBrace($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isClosingBrace($token), 'Wrong result');
-    }
-
-
-    /**
-     * @return array
-     */
-    public function isClosingCurlyBraceProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, '{')),
-            false
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(null, '}')),
-            true
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '{')),
-            false
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '}')),
-            false
-        );
-
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isClosingCurlyBraceProvider
-     * @covers \PHP\Manipulator\AHelper::isClosingCurlyBrace
-     */
-    public function testIsClosingCurlyBrace($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isClosingCurlyBrace($token), 'Wrong result');
-    }
-
-    /**
-     * @return array
-     */
-    public function isOpeningBraceProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, '(')),
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(null, ')')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '(')),
-            false
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, ')')),
-            false
-        );
-
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isOpeningBraceProvider
-     * @covers \PHP\Manipulator\AHelper::isOpeningBrace
-     */
-    public function testIsOpeningBrace($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isOpeningBrace($token), 'Wrong result');
-    }
-
-    /**
-     * @return array
-     */
-    public function isOpeningCurlyBraceProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, '{')),
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(null, '}')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '{')),
-            false
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_COMMENT, '}')),
-            false
-        );
-
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isOpeningCurlyBraceProvider
-     * @covers \PHP\Manipulator\AHelper::isOpeningCurlyBrace
-     */
-    public function testIsOpeningCurlyBrace($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isOpeningCurlyBrace($token), 'Wrong result');
-    }
-
-
-    /**
-     * @return array
-     */
-    public function isSemicolonProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, ';')),
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_WHITESPACE, ';')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(null, ':')),
-            false
-        );
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isSemicolonProvider
-     * @covers \PHP\Manipulator\AHelper::isSemicolon
-     */
-    public function testIsSemicolon($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isSemicolon($token), 'Wrong result');
-    }
-
-
-    /**
-     * @return array
-     */
-    public function isQuestionMarkProvider()
-    {
-        $data = array();
-
-        #0
-        $data[] = array(
-            Token::factory(array(null, '?')),
-            true
-        );
-
-        #1
-        $data[] = array(
-            Token::factory(array(T_WHITESPACE, '?')),
-            false
-        );
-
-        #2
-        $data[] = array(
-            Token::factory(array(null, ':')),
-            false
-        );
-
-        #3
-        $data[] = array(
-            Token::factory(array(T_WHITESPACE, ':')),
-            false
-        );
-
-        return $data;
-    }
-
-    /**
-     * @dataProvider isQuestionMarkProvider
-     * @covers \PHP\Manipulator\AHelper::isQuestionMark
-     */
-    public function testIsQuestionMark($token, $result)
-    {
-        $ahelper = new AHelper();
-        $this->assertSame($result, $ahelper->isQuestionMark($token), 'Wrong result');
+        $abstractHelper->manipulateToken(new stdClass(), $token);
     }
 
     /**
@@ -636,36 +111,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isFollowedByTokenTypeProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowedByTokenType/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowedByTokenType/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
             T_ECHO,
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
             T_ECHO,
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isFollowedByTokenTypeProvider
-     * @covers \PHP\Manipulator\AHelper::isFollowedByTokenType
+     *
+     * @param TokenContainerIterator $iterator
+     * @param array                  $followedByType
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsFollowedByTokenType($iterator, $followedByType, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsFollowedByTokenType(
+        TokenContainerIterator $iterator,
+        $followedByType,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isFollowedByTokenType(
+        $result     = $ahelper->isFollowedByTokenType(
             $iterator,
             $followedByType,
             $allowedTokens
@@ -679,36 +162,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isPrecededByTokenTypeProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowedByTokenType/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowedByTokenType/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
             T_ELSE,
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
             T_ELSE,
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isPrecededByTokenTypeProvider
-     * @covers \PHP\Manipulator\AHelper::isPrecededByTokenType
+     *
+     * @param TokenContainerIterator $iterator
+     * @param array                  $followedByType
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsPrecededByTokenType($iterator, $followedByType, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsPrecededByTokenType(
+        TokenContainerIterator $iterator,
+        $followedByType,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isPrecededByTokenType(
+        $result     = $ahelper->isPrecededByTokenType(
             $iterator,
             $followedByType,
             $allowedTokens
@@ -722,40 +213,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isPrecededByTokenMatchedByClosureProvider()
     {
-        $data = array();
-        $path = '/AHelper/isPrecededByTokenMatchedByClosure/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isPrecededByTokenMatchedByClosure/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(T_ELSE),
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            MatcherFactory::createIsTypeMatcher(T_ELSE),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(T_ELSE),
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            MatcherFactory::createIsTypeMatcher(T_ELSE),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isPrecededByTokenMatchedByClosureProvider
-     * @param \Iterator $iterator
-     * @param \Closure $closure
-     * @param array $allowedTokens
-     * @param boolean $expectedResult
-     * @covers \PHP\Manipulator\AHelper::isPrecededByTokenMatchedByClosure
+     *
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $closure
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsPrecededByTokenMatchedByClosure($iterator, $closure, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsPrecededByTokenMatchedByClosure(
+        TokenContainerIterator $iterator,
+        Closure $closure,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isPrecededByTokenMatchedByClosure(
+        $result     = $ahelper->isPrecededByTokenMatchedByClosure(
             $iterator,
             $closure,
             $allowedTokens
@@ -769,36 +264,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isFollowedByTokenValueProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowedByTokenValue/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowedByTokenValue/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
             'echo',
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
             'echo',
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isFollowedByTokenValueProvider
-     * @covers \PHP\Manipulator\AHelper::isFollowedByTokenValue
+     *
+     * @param TokenContainerIterator $iterator
+     * @param array                  $followedByType
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsFollowedByTokenValue($iterator, $followedByType, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsFollowedByTokenValue(
+        TokenContainerIterator $iterator,
+        $followedByType,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isFollowedByTokenValue(
+        $result     = $ahelper->isFollowedByTokenValue(
             $iterator,
             $followedByType,
             $allowedTokens
@@ -812,36 +315,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isFollowedByTokenMatchedByClosureProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowedByTokenMatchedByClosure/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowedByTokenMatchedByClosure/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
-            ClosureFactory::getHasValueClosure('echo'),
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            MatcherFactory::createHasValueMatcher('echo'),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
-            ClosureFactory::getHasValueClosure('echo'),
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            MatcherFactory::createHasValueMatcher('echo'),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isFollowedByTokenMatchedByClosureProvider
-     * @covers \PHP\Manipulator\AHelper::isFollowedByTokenMatchedByClosure
+     *
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $closure
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsFollowedByTokenMatchedByClosure($iterator, $closure, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsFollowedByTokenMatchedByClosure(
+        TokenContainerIterator $iterator,
+        Closure $closure,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isFollowedByTokenMatchedByClosure(
+        $result     = $ahelper->isFollowedByTokenMatchedByClosure(
             $iterator,
             $closure,
             $allowedTokens
@@ -855,36 +366,44 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isPrecededByTokenValueProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowedByTokenValue/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowedByTokenValue/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
             'else',
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
             false,
-        );
+        ];
 
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
             'else',
-            array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null),
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null],
             true,
-        );
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isPrecededByTokenValueProvider
-     * @covers \PHP\Manipulator\AHelper::isPrecededByTokenValue
+     *
+     * @param TokenContainerIterator $iterator
+     * @param string                 $value
+     * @param array                  $allowedTokens
+     * @param bool                   $expectedResult
      */
-    public function testIsPrecededByTokenValue($iterator, $value, $allowedTokens, $expectedResult)
-    {
-        $ahelper = new AHelper();
+    public function testIsPrecededByTokenValue(
+        TokenContainerIterator $iterator,
+        $value,
+        $allowedTokens,
+        $expectedResult
+    ) {
+        $ahelper    = new AHelper();
         $startToken = $iterator->current();
-        $result = $ahelper->isPrecededByTokenValue(
+        $result     = $ahelper->isPrecededByTokenValue(
             $iterator,
             $value,
             $allowedTokens
@@ -898,48 +417,58 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isPrecededProvider()
     {
-        $data = array();
-        $path = '/AHelper/isPreceded/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isPreceded/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
         #0
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(array(T_ELSE)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            MatcherFactory::createIsTypeMatcher([T_ELSE]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null]),
             $container[21],
-            true
-        );
+            true,
+        ];
 
         #1
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(array(T_ELSE)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            MatcherFactory::createIsTypeMatcher([T_ELSE]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]),
             null,
-            false
-        );
+            false,
+        ];
 
         #2
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(array(T_FOR)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            MatcherFactory::createIsTypeMatcher([T_FOR]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null]),
             null,
-            false
-        );
+            false,
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isPrecededProvider
-     * @covers \PHP\Manipulator\AHelper::isPreceded
+     *
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $isSearchedToken
+     * @param Closure                $isAllowedToken
+     * @param bool                   $expectedFound
+     * @param bool                   $expectedResult
      */
-    public function testIsPreceded($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
-    {
-        $startToken = $iterator->current();
-        $ahelper = new AHelper();
+    public function testIsPreceded(
+        TokenContainerIterator $iterator,
+        Closure $isSearchedToken,
+        Closure $isAllowedToken,
+        $expectedFound,
+        $expectedResult
+    ) {
+        $startToken   = $iterator->current();
+        $ahelper      = new AHelper();
         $actualResult = $ahelper->isPreceded($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
 
         $this->assertSame($expectedFound, $actualFound, 'Found wrong token');
@@ -952,48 +481,58 @@ class AHelperTest extends \Tests\TestCase
      */
     public function isFollowedProvider()
     {
-        $data = array();
-        $path = '/AHelper/isFollowed/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/isFollowed/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
         #0
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
-            ClosureFactory::getIsTypeClosure(array(T_ECHO)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            MatcherFactory::createIsTypeMatcher([T_ECHO]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null]),
             $container[25],
-            true
-        );
+            true,
+        ];
 
         #1
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[21]),
-            ClosureFactory::getIsTypeClosure(array(T_ECHO)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT)),
+            MatcherFactory::createIsTypeMatcher([T_ECHO]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]),
             null,
-            false
-        );
+            false,
+        ];
 
         #2
-        $data[] = array(
+        $data[] = [
             $container->getIterator()->seekToToken($container[25]),
-            ClosureFactory::getIsTypeClosure(array(T_FOR)),
-            ClosureFactory::getIsTypeClosure(array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null)),
+            MatcherFactory::createIsTypeMatcher([T_FOR]),
+            MatcherFactory::createIsTypeMatcher([T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, null]),
             null,
-            false
-        );
+            false,
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider isFollowedProvider
-     * @covers \PHP\Manipulator\AHelper::isFollowed
+     *
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $isSearchedToken
+     * @param Closure                $isAllowedToken
+     * @param Token                  $expectedFound
+     * @param bool                   $expectedResult
      */
-    public function testIsFollowed($iterator, $isSearchedToken, $isAllowedToken, $expectedFound, $expectedResult)
-    {
-        $startToken = $iterator->current();
-        $ahelper = new AHelper();
+    public function testIsFollowed(
+        TokenContainerIterator $iterator,
+        $isSearchedToken,
+        $isAllowedToken,
+        $expectedFound,
+        $expectedResult
+    ) {
+        $startToken   = $iterator->current();
+        $ahelper      = new AHelper();
         $actualResult = $ahelper->isFollowed($iterator, $isSearchedToken, $isAllowedToken, $actualFound);
 
         $this->assertSame($expectedFound, $actualFound, 'Found wrong token');
@@ -1006,76 +545,71 @@ class AHelperTest extends \Tests\TestCase
      */
     public function getMatchingBraceProvider()
     {
-        $data = array();
-        $path = '/AHelper/getMatchingBrace/';
-        $container0 = $this->getContainerFromFixture($path . 'input0.php');
-        $container1 = $this->getContainerFromFixture($path . 'input1.php');
-        $container2 = $this->getContainerFromFixture($path . 'input2.php');
+        $data       = [];
+        $path       = '/AHelper/getMatchingBrace/';
+        $container0 = $this->getContainerFromFixture($path.'input0.php');
+        $container1 = $this->getContainerFromFixture($path.'input1.php');
+        $container2 = $this->getContainerFromFixture($path.'input2.php');
 
         #0 forwards normal brace
-        $data[] = array(
+        $data[] = [
             $container0->getIterator()->seekToToken($container0[3]),
-            $container0[9]
-        );
+            $container0[9],
+        ];
 
         #1 backwards normal brace
-        $data[] = array(
+        $data[] = [
             $container0->getIterator()->seekToToken($container0[9]),
-            $container0[3]
-        );
+            $container0[3],
+        ];
 
         #2 forwards curly brace
-        $data[] = array(
+        $data[] = [
             $container1->getIterator()->seekToToken($container1[7]),
-            $container1[29]
-        );
+            $container1[29],
+        ];
 
         #3 backwards curly brace
-        $data[] = array(
+        $data[] = [
             $container1->getIterator()->seekToToken($container1[29]),
-            $container1[7]
-        );
+            $container1[7],
+        ];
 
         #4 forwards square bracket
-        $data[] = array(
+        $data[] = [
             $container2->getIterator()->seekToToken($container2[2]),
-            $container2[13]
-        );
+            $container2[13],
+        ];
 
         #5 backwards square bracket
-        $data[] = array(
+        $data[] = [
             $container2->getIterator()->seekToToken($container2[13]),
-            $container2[2]
-        );
+            $container2[2],
+        ];
 
         return $data;
     }
 
     /**
-     * @param  \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param  \PHP\Manipulator\Token $token
+     * @param TokenContainerIterator $iterator
+     * @param Token                  $token
      *
      * @dataProvider getMatchingBraceProvider
-     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
-     * @covers \PHP\Manipulator\AHelper::_nextToken
      */
-    public function testGetMatchingBrace($iterator, $token)
+    public function testGetMatchingBrace(TokenContainerIterator $iterator, $token)
     {
-        $ahelper = new AHelper();
-        $start = $iterator->current();
+        $ahelper       = new AHelper();
+        $start         = $iterator->current();
         $matchingBrace = $ahelper->getMatchingBrace($iterator);
         $this->assertTrue($iterator->valid(), 'Iterator is not valid');
         $this->assertSame($start, $iterator->current(), 'Iterator is not at starting-position');
         $this->assertSame($token, $matchingBrace);
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
-     */
     public function testGetMatchingBraceWithoutAMatchingBrace()
     {
         $container = $this->getContainerFromFixture('/AHelper/getMatchingBrace/input0.php');
-        $iterator = $container->getIterator()->seekToToken($container[3]);
+        $iterator  = $container->getIterator()->seekToToken($container[3]);
         $container[9]->setValue('blub');
 
         $ahelper = new AHelper();
@@ -1085,36 +619,28 @@ class AHelperTest extends \Tests\TestCase
         $this->assertNull($ahelper->getMatchingBrace($iterator));
     }
 
-    /**
-     * @covers \PHP\Manipulator\AHelper::getMatchingBrace
-     */
     public function testGetMatchingBraceThrowsExceptionIfIteratorIsNotAtABrace()
     {
         $container = $this->getContainerFromFixture('/AHelper/getMatchingBrace/input0.php');
-        $iterator = $container->getIterator()->seekToToken($container[2]);
+        $iterator  = $container->getIterator()->seekToToken($container[2]);
+        $ahelper   = new AHelper();
 
-        $ahelper = new AHelper();
+        $this->setExpectedException(HelperException::class, '', HelperException::UNSUPPORTED_BRACE_EXCEPTION);
 
-        try {
-            $ahelper->getMatchingBrace($iterator);
-            $this->fail('Expected Exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('Token is no brace like (,),{,},[ or ]', $e->getMessage(), 'Wrong exception message');
-        }
+        $ahelper->getMatchingBrace($iterator);
     }
-
 
     /**
      * @return array
      */
     public function getNextMatchingTokenProvider()
     {
-        $data = array();
-        $path = '/AHelper/getNextMatchingToken/';
-        $container = $this->getContainerFromFixture($path . 'input0.php');
+        $data      = [];
+        $path      = '/AHelper/getNextMatchingToken/';
+        $container = $this->getContainerFromFixture($path.'input0.php');
 
         #0 Finding a Token
-        $data[] = array(
+        $data[] = [
             $container->getIterator(),
             function (Token $token) {
                 if (null === $token->getType() && ')' === $token->getValue()) {
@@ -1123,11 +649,11 @@ class AHelperTest extends \Tests\TestCase
                     return false;
                 }
             },
-            $container[6]
-        );
+            $container[6],
+        ];
 
         #1 Not finding a Token
-        $data[] = array(
+        $data[] = [
             $container->getIterator(),
             function (Token $token) {
                 if (null === $token->getType() && '$' === $token->getValue()) {
@@ -1136,24 +662,23 @@ class AHelperTest extends \Tests\TestCase
                     return false;
                 }
             },
-            null
-        );
+            null,
+        ];
 
         return $data;
     }
 
     /**
-     * @param  \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param  \Closure $closure
-     * @param  \PHP\Manipulator\Token $token
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $closure
+     * @param Token                  $token
      *
      * @dataProvider getNextMatchingTokenProvider
-     * @covers \PHP\Manipulator\AHelper::getNextMatchingToken
      */
     public function testGetNextMatchingToken($iterator, $closure, $token)
     {
         $ahelper = new AHelper();
-        $start = $iterator->current();
+        $start   = $iterator->current();
 
         $matchingToken = $ahelper->getNextMatchingToken($iterator, $closure);
         $this->assertTrue($iterator->valid(), 'Iterator is not valid');

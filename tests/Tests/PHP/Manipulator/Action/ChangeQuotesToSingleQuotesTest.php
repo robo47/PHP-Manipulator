@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\ChangeQuotesToSingleQuotes;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\ChangeQuotesToSingleQuotes
+ * @covers PHP\Manipulator\Action\ChangeQuotesToSingleQuotes
  */
-class ChangeQuotesToSingleQuotesTest extends \Tests\TestCase
+class ChangeQuotesToSingleQuotesTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\ChangeQuotesToSingleQuotes::init
-     */
     public function testConstructorDefaults()
     {
         $action = new ChangeQuotesToSingleQuotes();
@@ -26,47 +22,24 @@ class ChangeQuotesToSingleQuotesTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/ChangeQuotesToSingleQuotes/';
+        $data                                                        = [];
+        $data['simple string']                                       = 0;
+        $data['array-index']                                         = 1;
+        $data['Test string containing variables is not "destroyed"'] =2;
+        $data['Test strings containing linebreaks are not changed']  = 3;
 
-        #0 simple string
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
-
-        #1 array-index
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2 Test string containing variables is not "destroyed"
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        #3 Test Strings containing linebreaks are not changed
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/ChangeQuotesToSingleQuotes/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\ChangeQuotesToSingleQuotes
      * @dataProvider actionProvider
+     *
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-        $action = new ChangeQuotesToSingleQuotes($options);
+        $action = new ChangeQuotesToSingleQuotes();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

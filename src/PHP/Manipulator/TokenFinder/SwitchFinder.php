@@ -2,51 +2,35 @@
 
 namespace PHP\Manipulator\TokenFinder;
 
-use PHP\Manipulator\TokenFinder;
-use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Exception\TokenFinderException;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\TokenFinder
- * @uses    \PHP\Manipulator\TokenFinder\Result
- */
-class SwitchFinder
-extends TokenFinder
+class SwitchFinder extends TokenFinder
 {
-
-    /**
-     * Finds tokens
-     *
-     * @param \PHP\Manipulator\Token $token
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @return \PHP\Manipulator\TokenFinder\Result
-     */
     public function find(Token $token, TokenContainer $container, $params = null)
     {
-        if (!$this->isType($token, T_SWITCH)) {
-            throw new \Exception('Starttoken is not T_SWITCH');
+        if (!$token->isType(T_SWITCH)) {
+            $message = 'Starttoken is not T_SWITCH';
+            throw new TokenFinderException($message, TokenFinderException::UNSUPPORTED_START_TOKEN);
         }
-        $result = new Result();
+        $result   = new Result();
         $iterator = $container->getIterator();
         $iterator->seekToToken($token);
 
-        $level = 0;
+        $level  = 0;
         $inside = false;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isOpeningCurlyBrace( $token)) {
+            if ($token->isOpeningCurlyBrace()) {
                 if (0 === $level) {
                     $inside = true;
                 }
                 $level++;
             }
-            if ($this->isClosingCurlyBrace( $token)) {
+            if ($token->isClosingCurlyBrace()) {
                 $level--;
             }
             $result->addToken($token);

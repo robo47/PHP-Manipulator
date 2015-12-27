@@ -5,154 +5,143 @@ namespace PHP\Manipulator\Action;
 use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class UppercaseConstants
-extends Action
+class UppercaseConstants extends Action
 {
+    /**
+     * @var bool
+     */
+    private $isConstant = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_isConstant = false;
+    private $isClassDeclaration = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_isClassDeclaration = false;
+    private $isFunctionDeclaration = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_isFunctionDeclaration = false;
+    private $isUse = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_isUse = false;
-
-    /**
-     * @var boolean
-     */
-    protected $_isNamespace = false;
+    private $isNamespace = false;
 
     /**
      * @var TokenContainer
      */
-    protected $_container = null;
+    private $container;
 
     /**
      * @var Token
      */
-    protected $_next = null;
+    private $next;
 
-    /**
-     * Make all Constants uppercase
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $iterator = $container->getIterator();
-        $this->_container = $container;
+        $iterator        = $container->getIterator();
+        $this->container = $container;
 
-        $this->_setNext($iterator);
+        $this->setNext($iterator);
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            $this->_checkCurrentToken($token);
+            $this->checkCurrentToken($token);
 
-            if ($this->_isConstant($iterator)) {
+            if ($this->isConstant($iterator)) {
                 $token->setValue(strtoupper($token->getValue()));
             }
-            $this->_setNext($iterator);
+            $this->setNext($iterator);
             $iterator->next();
         }
         $container->retokenize();
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainerIterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _setNext(TokenContainer\Iterator $iterator)
+    private function setNext(TokenContainerIterator $iterator)
     {
         $iterator->next();
         $iterator->next();
         if ($iterator->valid()) {
-            $this->_next = $iterator->current();
+            $this->next = $iterator->current();
         } else {
-            $this->_next = null;
+            $this->next = null;
         }
         $iterator->previous();
         $iterator->previous();
     }
 
     /**
-     * @var boolean
+     * @return bool
      */
-    protected function _notInsideClassFunctionMethodUseOrNamespace()
+    private function notInsideClassFunctionMethodUseOrNamespace()
     {
-        return (false === $this->_isUse &&
-            false === $this->_isNamespace &&
-            false === $this->_isFunctionDeclaration &&
-            false === $this->_isClassDeclaration);
+        return (false === $this->isUse &&
+            false === $this->isNamespace &&
+            false === $this->isFunctionDeclaration &&
+            false === $this->isClassDeclaration);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @var boolean
+     * @param TokenContainerIterator $iterator
+     *
+     * @return bool
      */
-    protected function _isConstant(Iterator $iterator)
+    private function isConstant(TokenContainerIterator $iterator)
     {
-        return $this->isType($iterator->current(), T_STRING) &&
-        ( (true === $this->_isConstant) ||
-            ($this->_notInsideClassFunctionMethodUseOrNamespace() &&
+        return $iterator->current()->isType(T_STRING) &&
+        ((true === $this->isConstant) ||
+            ($this->notInsideClassFunctionMethodUseOrNamespace() &&
                 !$this->isFollowedByTokenValue($iterator, '::') &&
                 !$this->isFollowedByTokenValue($iterator, '(')));
     }
 
     /**
-     * Checks the current token and sets internal flags to true or false
-     *
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _checkCurrentToken(Token $token)
+    private function checkCurrentToken(Token $token)
     {
-        if ($this->isType($token, T_CONST)) {
-            $this->_isConstant = true;
-        } elseif ($this->isType($token, T_USE)) {
-            $this->_isUse = true;
-        } elseif ($this->isType($token, T_NAMESPACE)) {
-            $this->_isNamespace = true;
-        } elseif ($this->isType($token, T_CLASS)) {
-            $this->_isClassDeclaration = true;
-        } elseif ($this->isType($token, T_FUNCTION)) {
-            $this->_isFunctionDeclaration = true;
-        } if ($this->isSemicolon( $token)) {
-            if (true === $this->_isConstant) {
-                $this->_isConstant = false;
+        if ($token->isType(T_CONST)) {
+            $this->isConstant = true;
+        } elseif ($token->isType(T_USE)) {
+            $this->isUse = true;
+        } elseif ($token->isType(T_NAMESPACE)) {
+            $this->isNamespace = true;
+        } elseif ($token->isType(T_CLASS)) {
+            $this->isClassDeclaration = true;
+        } elseif ($token->isType(T_FUNCTION)) {
+            $this->isFunctionDeclaration = true;
+        }
+
+        if ($token->isSemicolon()) {
+            if (true === $this->isConstant) {
+                $this->isConstant = false;
             }
-            if (true === $this->_isUse) {
-                $this->_isUse = false;
+            if (true === $this->isUse) {
+                $this->isUse = false;
             }
-        } elseif ($this->isOpeningBrace($token)) {
-            if (true === $this->_isClassDeclaration) {
-                $this->_isClassDeclaration = false;
+        } elseif ($token->isOpeningBrace()) {
+            if (true === $this->isClassDeclaration) {
+                $this->isClassDeclaration = false;
             }
-            if (true === $this->_isFunctionDeclaration) {
-                $this->_isFunctionDeclaration = false;
+            if (true === $this->isFunctionDeclaration) {
+                $this->isFunctionDeclaration = false;
             }
         }
 
-        if (true === $this->_isNamespace &&
-            ($this->isSemicolon($token) || $this->isClosingCurlyBrace($token))) {
-            $this->_isNamespace = false;
+        if (true === $this->isNamespace &&
+            ($token->isSemicolon() || $token->isClosingCurlyBrace())
+        ) {
+            $this->isNamespace = false;
         }
     }
 }

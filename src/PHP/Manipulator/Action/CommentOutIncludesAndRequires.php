@@ -3,46 +3,38 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder\IncludeAndRequireFinder;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\CreateMultilineCommentFromTokenToToken;
- */
-class CommentOutIncludesAndRequires
-extends Action
+class CommentOutIncludesAndRequires extends Action
 {
+    const OPTION_GLOBAL_SCOPE_ONLY = 'globalScopeOnly';
 
     public function init()
     {
-        if (!$this->hasOption('globalScopeOnly')) {
-            $this->setOption('globalScopeOnly', true);
+        if (!$this->hasOption(self::OPTION_GLOBAL_SCOPE_ONLY)) {
+            $this->setOption(self::OPTION_GLOBAL_SCOPE_ONLY, true);
         }
     }
 
-    /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $tokens = $this->_searchStartTokens($container);
-        $this->_handleTokens($container, $tokens);
+        $tokens = $this->searchStartTokens($container);
+        $this->handleTokens($container, $tokens);
         $container->retokenize();
     }
 
     /**
-     * @param array $tokens
+     * @param TokenContainer $container
+     * @param array          $tokens
      */
-    protected function _handleTokens(TokenContainer $container, array $tokens)
+    protected function handleTokens(TokenContainer $container, array $tokens)
     {
         foreach ($tokens as $start) {
             if ($container->contains($start)) {
                 $result = $this->findTokens(
-                    'IncludeAndRequire',
+                    IncludeAndRequireFinder::class,
                     $start,
                     $container
                 );
@@ -57,54 +49,55 @@ extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
+     * @param TokenContainer $container
+     *
      * @return array
      */
-    protected function _searchStartTokens(TokenContainer $container)
+    private function searchStartTokens(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
-        $searchedTokens = array(
+        $searchedTokens = [
             T_INCLUDE,
             T_INCLUDE_ONCE,
             T_REQUIRE,
-            T_REQUIRE_ONCE
-        );
+            T_REQUIRE_ONCE,
+        ];
 
-        $foundPairs = array();
+        $foundPairs = [];
 
-        $inClass = false;
-        $inFunction = false;
-        $bracesStatus = 0;
+        $insideClass      = false;
+        $insideFunction   = false;
+        $bracesStatus     = 0;
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_CLASS)) {
-                $inClass = true;
-                $bracesStatus = 0;
+            if ($token->isType(T_CLASS)) {
+                $insideClass      = true;
+                $bracesStatus     = 0;
             }
-            if ($this->isType($token, T_FUNCTION)) {
-                $inFunction = true;
-                $bracesStatus = 0;
+            if ($token->isType(T_FUNCTION)) {
+                $insideFunction   = true;
+                $bracesStatus     = 0;
             }
-            if ($inClass || $inFunction) {
-                if ($this->isOpeningCurlyBrace( $token)) {
+            if ($insideClass || $insideFunction) {
+                if ($token->isOpeningCurlyBrace()) {
                     $bracesStatus++;
                 }
-                if ($this->isClosingCurlyBrace( $token)) {
+                if ($token->isClosingCurlyBrace()) {
                     $bracesStatus--;
                     if ($bracesStatus === 0) {
-                        if ($inClass) {
-                            $inClass = false;
+                        if ($insideClass) {
+                            $insideClass = false;
                         }
-                        if ($inFunction) {
-                            $inFunction = false;
+                        if ($insideFunction) {
+                            $insideFunction = false;
                         }
                     }
                 }
             }
-            if ($this->_shouldCheckAndReplace($inClass, $inFunction)) {
-                if ($this->isType($token, $searchedTokens)) {
+            if ($this->shouldCheckAndReplace($insideClass, $insideFunction)) {
+                if ($token->isType($searchedTokens)) {
                     $foundPairs[] = $token;
                 }
             }
@@ -115,14 +108,15 @@ extends Action
     }
 
     /**
-     * @param boolean $inClass
-     * @param boolean $inFunction
-     * @return boolean
+     * @param bool $insideClass
+     * @param bool $insideFunction
+     *
+     * @return bool
      */
-    protected function _shouldCheckAndReplace($inClass, $inFunction)
+    protected function shouldCheckAndReplace($insideClass, $insideFunction)
     {
-        $globalScopeOnly = $this->getOption('globalScopeOnly');
-        if (true === $globalScopeOnly && !($inClass || $inFunction)) {
+        $globalScopeOnly = $this->getOption(self::OPTION_GLOBAL_SCOPE_ONLY);
+        if (true === $globalScopeOnly && !($insideClass || $insideFunction)) {
             return true;
         } elseif (false === $globalScopeOnly) {
             return true;

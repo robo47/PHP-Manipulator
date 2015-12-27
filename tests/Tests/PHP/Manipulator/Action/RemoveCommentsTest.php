@@ -3,24 +3,25 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveComments;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\RemoveComments
+ * @covers PHP\Manipulator\Action\RemoveComments
  */
-class RemoveCommentsTest extends \Tests\TestCase
+class RemoveCommentsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveComments::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveComments();
-        $this->assertTrue($action->getOption('removeDocComments'), 'Default value for removeDocComments is wrong');
-        $this->assertTrue($action->getOption('removeStandardComments'), 'Default value for removeStandardComments is wrong');
+        $this->assertTrue(
+            $action->getOption(RemoveComments::OPTION_REMOVE_DOC_COMMENTS),
+            'Default value for removeDocComments is wrong'
+        );
+        $this->assertTrue(
+            $action->getOption(RemoveComments::OPTION_REMOVE_STANDARD_COMMENTS),
+            'Default value for removeStandardComments is wrong'
+        );
         $this->assertCount(2, $action->getOptions());
     }
 
@@ -29,94 +30,97 @@ class RemoveCommentsTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
+        $data = [];
         $path = '/Action/RemoveComments/';
 
         #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input0.php'),
+            $this->getContainerFromFixture($path.'output0.php'),
+        ];
 
         #1
-        $data[] = array(
-            array('removeDocComments' => false, 'removeStandardComments' => true),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
+        $data[] = [
+            ['removeDocComments' => false, 'removeStandardComments' => true],
+            $this->getContainerFromFixture($path.'input1.php'),
+            $this->getContainerFromFixture($path.'output1.php'),
+        ];
 
         #2
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input2.php'),
+            $this->getContainerFromFixture($path.'output2.php'),
+        ];
 
         #3
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input3.php'),
-            $this->getContainerFromFixture($path . 'output3.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input3.php'),
+            $this->getContainerFromFixture($path.'output3.php'),
+        ];
 
         #4
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input4.php'),
-            $this->getContainerFromFixture($path . 'output4.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input4.php'),
+            $this->getContainerFromFixture($path.'output4.php'),
+        ];
 
         #5
-        $data[] = array(
-            array('removeDocComments' => true, 'removeStandardComments' => false),
-            $this->getContainerFromFixture($path . 'input5.php'),
-            $this->getContainerFromFixture($path . 'output5.php'),
-        );
+        $data[] = [
+            ['removeDocComments' => true, 'removeStandardComments' => false],
+            $this->getContainerFromFixture($path.'input5.php'),
+            $this->getContainerFromFixture($path.'output5.php'),
+        ];
 
         #6
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input6.php'),
-            $this->getContainerFromFixture($path . 'output6.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input6.php'),
+            $this->getContainerFromFixture($path.'output6.php'),
+        ];
 
         #7
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input7.php'),
-            $this->getContainerFromFixture($path . 'output7.php'),
-        );
+        $data[] = [
+            [],
+            $this->getContainerFromFixture($path.'input7.php'),
+            $this->getContainerFromFixture($path.'output7.php'),
+        ];
 
         #8 big real-life example
-        $data[] = array(
-            array('removeDocComments' => true, 'removeStandardComments' => true),
-            $this->getContainerFromFixture($path . 'input8.php'),
-            $this->getContainerFromFixture($path . 'output8.php'),
-        );
+        $data[] = [
+            ['removeDocComments' => true, 'removeStandardComments' => true],
+            $this->getContainerFromFixture($path.'input8.php'),
+            $this->getContainerFromFixture($path.'output8.php'),
+        ];
 
         #9 check works with \r\n
-        $data[] = array(
-            array(),
-            new TokenContainer("<?php\r\necho \$foo;// foo\r\necho \$baa;\r\n ?>"),
-            new TokenContainer("<?php\r\necho \$foo;\r\necho \$baa;\r\n ?>"),
-        );
+        $data[] = [
+            [],
+            TokenContainer::factory("<?php\r\necho \$foo;// foo\r\necho \$baa;\r\n ?>"),
+            TokenContainer::factory("<?php\r\necho \$foo;\r\necho \$baa;\r\n ?>"),
+        ];
 
         #10 check works with \r
-        $data[] = array(
-            array(),
-            new TokenContainer("<?php\recho \$foo;// foo\recho \$baa;\r ?>"),
-            new TokenContainer("<?php\recho \$foo;\recho \$baa;\r ?>"),
-        );
+        $data[] = [
+            [],
+            TokenContainer::factory("<?php\recho \$foo;// foo\recho \$baa;\r ?>"),
+            TokenContainer::factory("<?php\recho \$foo;\recho \$baa;\r ?>"),
+        ];
 
         return $data;
     }
 
     /**
+     * @param array          $options
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
-     * @covers \PHP\Manipulator\Action\RemoveComments
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(array $options, TokenContainer $input, TokenContainer $expectedTokens)
     {
         $action = new RemoveComments($options);
         $action->run($input);

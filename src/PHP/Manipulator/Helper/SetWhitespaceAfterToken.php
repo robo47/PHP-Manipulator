@@ -3,36 +3,30 @@
 namespace PHP\Manipulator\Helper;
 
 use PHP\Manipulator\AHelper;
+use PHP\Manipulator\Exception\HelperException;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class SetWhitespaceAfterToken
-extends AHelper
+class SetWhitespaceAfterToken extends AHelper
 {
-
     /**
-     * @var PHP\Manipulator\TokenContainer
+     * @var TokenContainer
      */
-    protected $_container = null;
+    protected $container;
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param array $tokens
-     * @param string $whitespace
+     * @param TokenContainer $container
+     * @param Token[]        $tokens
+     * @param string[]       $whitespace
      */
     public function run(TokenContainer $container, array $tokens, array $whitespace)
     {
-        $this->_container = $container;
-        $iterator = $container->getIterator();
+        $this->container = $container;
+        $iterator        = $container->getIterator();
 
-        while($iterator->valid()) {
-            if (in_array($iterator->current(), $tokens)) {
+        while ($iterator->valid()) {
+            if (in_array($iterator->current(), $tokens, true)) {
                 $this->setWhitespace($iterator, $whitespace);
             }
             $iterator->next();
@@ -40,73 +34,72 @@ extends AHelper
     }
 
     /**
-     * @param Iterator $iterator
-     * @param array $whitespace
+     * @param TokenContainerIterator $iterator
+     * @param string[]               $whitespace
      */
-    public function setWhitespace(Iterator $iterator, array $whitespace)
+    private function setWhitespace(TokenContainerIterator $iterator, array $whitespace)
     {
         $token = $iterator->current();
-        $this->_moveIteratorToTargetToken($iterator);
+        $this->moveIteratorToTargetToken($iterator);
         $targetToken = $iterator->current();
 
         $tokenValue = $this->getWhitespaceForToken($token, $whitespace);
 
         $containerChanger = false;
         if (null !== $targetToken) {
-            if ($this->isType($targetToken, T_WHITESPACE)) {
+            if ($targetToken->isWhitespace()) {
                 if (empty($tokenValue)) {
-                    $this->_container->removeToken($targetToken);
+                    $this->container->removeToken($targetToken);
                     $containerChanger = true;
                 } else {
                     $targetToken->setValue($tokenValue);
                 }
             } else {
                 if (!empty($tokenValue)) {
-                    $newToken = Token::factory(array(T_WHITESPACE, $tokenValue));
-                    $this->_insertToken($newToken, $iterator);
+                    $newToken = Token::createFromMixed([T_WHITESPACE, $tokenValue]);
+                    $this->insertToken($newToken, $iterator);
                     $containerChanger = true;
                 }
             }
         }
-        $this->_moveIteratorBackFromTagetToken($iterator);
+        $this->moveIteratorBackFromTagetToken($iterator);
         if (true === $containerChanger) {
             $iterator->update($iterator->current());
         }
     }
 
     /**
-     * @param Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _moveIteratorToTargetToken(Iterator $iterator)
+    protected function moveIteratorToTargetToken(TokenContainerIterator $iterator)
     {
         $iterator->next();
     }
 
-
     /**
-     * @param Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _moveIteratorBackFromTagetToken(Iterator $iterator)
+    protected function moveIteratorBackFromTagetToken(TokenContainerIterator $iterator)
     {
         $iterator->previous();
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param \PHP\Manipulator\Token $targetToken
-     * @param \PHP\Manipulator\Token $newToken
+     * @param Token                  $newToken
+     * @param TokenContainerIterator $iterator
      */
-    protected function _insertToken(Token $newToken, Iterator $iterator)
+    protected function insertToken(Token $newToken, TokenContainerIterator $iterator)
     {
-        $this->_container->insertTokenBefore($iterator->current(), $newToken);
+        $this->container->insertTokenBefore($iterator->current(), $newToken);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @param array $whitespaces
+     * @param Token    $token
+     * @param string[] $whitespaces
+     *
      * @return mixed
      */
-    public function getWhitespaceForToken(Token $token, array $whitespaces)
+    private function getWhitespaceForToken(Token $token, array $whitespaces)
     {
         if (null === $token->getType()) {
             $tokenval = $token->getValue();
@@ -115,10 +108,8 @@ extends AHelper
         }
         if (array_key_exists($tokenval, $whitespaces)) {
             return $whitespaces[$tokenval];
-        } else {
-            $message = 'No option found for: ' . $token->getTokenName() .
-            ' (' . $tokenval . ')';
-            throw new \Exception($message);
         }
+        $message = sprintf('No option found for: %s (%s)', $token->getTokenName(), $tokenval);
+        throw new HelperException($message, HelperException::OPTION_NOT_FOUND);
     }
 }

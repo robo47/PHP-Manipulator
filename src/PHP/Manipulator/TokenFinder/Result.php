@@ -2,111 +2,101 @@
 
 namespace PHP\Manipulator\TokenFinder;
 
+use Countable;
+use PHP\Manipulator\Exception\ResultException;
 use PHP\Manipulator\Token;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class Result
-implements \Countable
+class Result implements Countable
 {
-
     /**
-     * Array with the found tokens
-     *
-     * @var array
+     * @var Token[]
      */
-    protected $_tokens = array();
+    private $tokens = [];
 
     /**
-     * Add a token
+     * @param Token $token
      *
-     * @param \PHP\Manipulator\Token $token
-     * @return \PHP\Manipulator\TokenFinder\Result *Provides Fluent Interface*
+     * @return Result
      */
     public function addToken(Token $token)
     {
-        $this->_tokens[] = $token;
+        $this->tokens[] = $token;
 
         return $this;
     }
 
     /**
-     * @return array
+     * @return Token[]
      */
     public function getTokens()
     {
-        return $this->_tokens;
+        return $this->tokens;
     }
 
     /**
-     * @return \PHP\Manipulator\Token
+     * @throws ResultException
+     *
+     * @return Token
      */
     public function getFirstToken()
     {
         if (!$this->isEmpty()) {
-            reset($this->_tokens);
+            reset($this->tokens);
 
-            return current($this->_tokens);
-        } else {
-            throw new \Exception('Result is Empty');
+            return current($this->tokens);
         }
+        throw new ResultException('Result is Empty', ResultException::EMPTY_RESULT);
     }
 
     /**
-     * @return \PHP\Manipulator\Token
-     * @throws Exception if result is empty
+     * @throws ResultException
+     *
+     * @return Token
      */
     public function getLastToken()
     {
         if (!$this->isEmpty()) {
-            end($this->_tokens);
+            end($this->tokens);
 
-            return current($this->_tokens);
-        } else {
-            throw new \Exception('Result is Empty');
+            return current($this->tokens);
         }
+        throw new ResultException('Result is Empty', ResultException::EMPTY_RESULT);
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEmpty()
     {
-        return (count($this->_tokens) === 0);
+        return (count($this->tokens) === 0);
     }
 
     /**
-     * Cleans the result
-     *
-     * @return \PHP\Manipulator\TokenFinder\Result *Provides Fluent Interface*
+     * @return Result
      */
     public function clean()
     {
-        $this->_tokens = array();
+        $this->tokens = [];
 
         return $this;
     }
 
     /**
-     * Implements SPL::Countable
-     *
-     * @return integer
+     * @return int
      */
     public function count()
     {
-        return count($this->_tokens);
+        return count($this->tokens);
     }
 
     /**
-     * @param array $tokens
-     * @return \PHP\Manipulator\TokenFinder\Result
+     * @param Token[] $tokens
+     *
+     * @return Result
      */
-    public static function factory(array $tokens = array())
+    public static function factory(array $tokens = [])
     {
-        $result = new Result();
+        $result = new self();
 
         foreach ($tokens as $token) {
             $result->addToken($token);

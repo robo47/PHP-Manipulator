@@ -3,36 +3,31 @@
 namespace Tests\PHP;
 
 use PHP\Manipulator;
+use PHP\Manipulator\Action\ChangeLineEndings;
+use PHP\Manipulator\Action\RemoveComments;
+use PHP\Manipulator\Action\RemoveTrailingWhitespace;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Tests\TestCase;
 
 /**
- * @group Manipulator
+ * @covers PHP\Manipulator
  */
-class ManipulatorTest extends \Tests\TestCase
+class ManipulatorTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator::__construct
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testDefaultConstruct()
     {
         $manipulator = new Manipulator();
-        $this->assertEquals(array(), $manipulator->getActions());
+        $this->assertSame([], $manipulator->getActions());
     }
 
-    /**
-     * @covers \PHP\Manipulator::__construct
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testConstructAddsActions()
     {
-        $addActions = array(
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
-
-        );
+        $addActions = [
+            new RemoveComments(),
+            new RemoveComments(),
+            new RemoveComments(),
+        ];
 
         $manipulator = new Manipulator($addActions);
 
@@ -44,33 +39,25 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
     }
 
-    /**
-     * @covers \PHP\Manipulator::__construct
-     * @covers \PHP\Manipulator::getFiles
-     */
     public function testConstructAddsFiles()
     {
-        $files = array(
+        $files = [
             'some File',
             'another File',
-        );
+        ];
 
-        $manipulator = new Manipulator(array(), $files);
+        $manipulator = new Manipulator([], $files);
 
         $this->assertCount(2, $manipulator->getFiles());
         $this->assertContains($files[0], $manipulator->getFiles());
         $this->assertContains($files[1], $manipulator->getFiles());
     }
 
-    /**
-     * @covers \PHP\Manipulator::addAction
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testAddAction()
     {
-        $action = new \PHP\Manipulator\Action\RemoveComments();
+        $action      = new RemoveComments();
         $manipulator = new Manipulator();
-        $fluent = $manipulator->addAction($action);
+        $fluent      = $manipulator->addAction($action);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $actions = $manipulator->getActions();
 
@@ -78,20 +65,16 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($action, $actions, 'Action not found');
     }
 
-    /**
-     * @covers \PHP\Manipulator::addActions
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testAddActions()
     {
-        $addActions = array(
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
+        $addActions = [
+            new RemoveComments(),
+            new RemoveComments(),
+            new RemoveComments(),
 
-        );
+        ];
         $manipulator = new Manipulator();
-        $fluent = $manipulator->addActions($addActions);
+        $fluent      = $manipulator->addActions($addActions);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
         $actions = $manipulator->getActions();
 
@@ -101,20 +84,16 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
     }
 
-    /**
-     * @covers \PHP\Manipulator::removeAction
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testRemoveAction()
     {
-        $addActions = array(
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
+        $addActions = [
+            new RemoveComments(),
+            new RemoveComments(),
+            new RemoveComments(),
 
-        );
+        ];
         $manipulator = new Manipulator($addActions);
-        $fluent = $manipulator->removeAction($addActions[1]);
+        $fluent      = $manipulator->removeAction($addActions[1]);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
         $actions = $manipulator->getActions();
@@ -131,20 +110,16 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
-    /**
-     * @covers \PHP\Manipulator::removeAllActions
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testRemoveAllActions()
     {
-        $addActions = array(
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\RemoveComments(),
+        $addActions = [
+            new RemoveComments(),
+            new RemoveComments(),
+            new RemoveComments(),
 
-        );
+        ];
         $manipulator = new Manipulator($addActions);
-        $fluent = $manipulator->removeAllActions();
+        $fluent      = $manipulator->removeAllActions();
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
         $actions = $manipulator->getActions();
@@ -152,20 +127,16 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
-    /**
-     * @covers \PHP\Manipulator::removeActionByClassname
-     * @covers \PHP\Manipulator::getActions
-     */
     public function testRemoveActionByClassname()
     {
-        $addActions = array(
-            new \PHP\Manipulator\Action\RemoveComments(),
-            new \PHP\Manipulator\Action\ChangeLineEndings(),
-            new \PHP\Manipulator\Action\RemoveTrailingWhitespace(),
+        $addActions = [
+            new RemoveComments(),
+            new ChangeLineEndings(),
+            new RemoveTrailingWhitespace(),
 
-        );
+        ];
         $manipulator = new Manipulator($addActions);
-        $fluent = $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\ChangeLineEndings');
+        $fluent      = $manipulator->removeActionByClassname(ChangeLineEndings::class);
         $this->assertSame($fluent, $manipulator, 'No fluent interface');
 
         $actions = $manipulator->getActions();
@@ -174,64 +145,42 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($addActions[0], $actions, 'Action1 not found');
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\RemoveComments');
+        $manipulator->removeActionByClassname(RemoveComments::class);
 
         $actions = $manipulator->getActions();
 
         $this->assertCount(1, $actions, 'Wrong actions count');
         $this->assertContains($addActions[2], $actions, 'Action3 not found');
 
-        $manipulator->removeActionByClassname('PHP\\Manipulator\\Action\\RemoveTrailingWhitespace');
+        $manipulator->removeActionByClassname(RemoveTrailingWhitespace::class);
 
         $actions = $manipulator->getActions();
 
         $this->assertCount(0, $actions, 'Wrong actions count');
     }
 
-    /**
-     * @covers \PHP\Manipulator::addFiles
-     * @covers \PHP\Manipulator::getFiles
-     */
     public function testAddFilesWithIteratorAndGetFiles()
     {
-        $finder = new Finder();
-        $iterator = $finder->files()->in(TESTS_PATH . '/Foo/');
+        $finder   = new Finder();
+        $iterator = $finder->files()->in(TESTS_PATH.'/Foo/');
 
         $manipulator = new Manipulator();
         $manipulator->addFiles($iterator->getIterator());
 
         $this->assertCount(iterator_count($iterator), $manipulator->getFiles());
 
+        /** @var SplFileInfo $file */
         foreach ($iterator as $file) {
-            $this->assertContains($file->__toString(), $manipulator->getFiles());
+            $this->assertContains((string) $file, $manipulator->getFiles());
         }
     }
 
-    /**
-     * @covers \PHP\Manipulator::addFiles
-     * @covers \PHP\Manipulator::getFiles
-     */
-    public function testAddFilesWithStringAndGetFiles()
-    {
-        $file = 'baa';
-
-        $manipulator = new Manipulator();
-        $manipulator->addFiles($file);
-
-        $this->assertCount(1, $manipulator->getFiles());
-        $this->assertContains($file, $manipulator->getFiles());
-    }
-
-    /**
-     * @covers \PHP\Manipulator::addFiles
-     * @covers \PHP\Manipulator::getFiles
-     */
     public function testAddFilesWithArrayAndGetFiles()
     {
-        $files = array(
+        $files = [
             'some File',
             'another File',
-        );
+        ];
 
         $manipulator = new Manipulator();
         $manipulator->addFiles($files);
@@ -241,15 +190,12 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertContains($files[1], $manipulator->getFiles());
     }
 
-    /**
-     * @covers \PHP\Manipulator::removeAllFiles
-     */
     public function testRemoveAllFiles()
     {
-        $files = array(
+        $files = [
             'some File',
             'another File',
-        );
+        ];
 
         $manipulator = new Manipulator();
         $manipulator->addFiles($files);
@@ -261,9 +207,6 @@ class ManipulatorTest extends \Tests\TestCase
         $this->assertCount(0, $manipulator->getFiles());
     }
 
-    /**
-     * @covers \PHP\Manipulator::addFile
-     */
     public function testAddFile()
     {
         $manipulator = new Manipulator();

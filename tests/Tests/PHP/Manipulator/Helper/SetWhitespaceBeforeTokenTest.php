@@ -3,64 +3,65 @@
 namespace Tests\PHP\Manipulator\Helper;
 
 use PHP\Manipulator\Helper\SetWhitespaceBeforeToken;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Helper
- * @group Helper\SetWhitespaceBeforeToken
+ * @covers PHP\Manipulator\Helper\SetWhitespaceBeforeToken
  */
-class SetWhitespaceBeforeTokenTest extends \Tests\TestCase
+class SetWhitespaceBeforeTokenTest extends TestCase
 {
-
     /**
      * @return array
      */
     public function manipulateProvider()
     {
-        $data = array();
-
-        $data = array();
+        $data = [];
         $path = '/Helper/SetWhitespaceBeforeToken/';
 
         #0
-        $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            array($inputContainer[3]),
-            array(T_CONCAT_EQUAL => ' '),
-            false
-        );
+        $data[] = [
+            $inputContainer = $this->getContainerFromFixture($path.'input0.php'),
+            $this->getContainerFromFixture($path.'output0.php'),
+            [$inputContainer[3]],
+            [T_CONCAT_EQUAL => ' '],
+        ];
 
         #1
-        $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-            array($inputContainer[4]),
-            array(T_CONCAT_EQUAL => '  '),
-            false
-        );
+        $data[] = [
+            $inputContainer = $this->getContainerFromFixture($path.'input1.php'),
+            $this->getContainerFromFixture($path.'output1.php'),
+            [$inputContainer[4]],
+            [T_CONCAT_EQUAL => '  '],
+        ];
 
         #2
-        $data[] = array(
-            $inputContainer = $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-            array($inputContainer[4]),
-            array(T_CONCAT_EQUAL => ''),
-            false
-        );
+        $data[] = [
+            $inputContainer = $this->getContainerFromFixture($path.'input2.php'),
+            $this->getContainerFromFixture($path.'output2.php'),
+            [$inputContainer[4]],
+            [T_CONCAT_EQUAL => ''],
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider manipulateProvider
-     * @covers \PHP\Manipulator\Helper\SetWhitespaceBeforeToken
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
+     * @param array          $tokens
+     * @param array          $whitespace
      */
-    public function testManipulate($container, $expectedContainer, $tokens, $whitespace, $strict)
-    {
+    public function testManipulate(
+        TokenContainer $container,
+        TokenContainer $expectedContainer,
+        $tokens,
+        $whitespace
+    ) {
         $manipulator = new SetWhitespaceBeforeToken();
         $manipulator->run($container, $tokens, $whitespace);
-        $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
+        $this->assertTokenContainerMatch($expectedContainer, $container, false);
     }
 }

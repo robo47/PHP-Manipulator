@@ -2,38 +2,22 @@
 
 namespace Tests\PHP\Manipulator\Cli\Command;
 
-use PHP\Manipulator\Cli;
 use PHP\Manipulator\Cli\Command\ShowTokens;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\StreamOutput;
+use PHP\Manipulator\Exception\FileException;
+use Symfony\Component\Console\Tester\CommandTester;
+use Tests\TestCase;
 
 /**
- * @group Cli
- * @group Cli\Command
- * @group Cli\Command\ShowTokens
+ * @covers PHP\Manipulator\Cli\Command\ShowTokens
  */
-class ShowTokensTest extends \Tests\TestCase
+class ShowTokensTest extends TestCase
 {
-    public function setUp()
-    {
-        ob_start();
-    }
-
-    public function tearDown()
-    {
-        ob_end_clean();
-    }
-
-    /**
-     * @covers PHP\Manipulator\Cli\Command\ShowTokens::execute
-     */
     public function testExecute()
     {
-        $command = new ShowTokens();
+        $tester = new CommandTester(new ShowTokens());
 
-        $command->execute(new ArgvInput(array('showTokens', TESTS_PATH . '/_fixtures/Cli/Command/ShowTokens/helloWorld.php'), $command->getDefinition()), new StreamOutput(fopen('php://output', 'w')));
-        $output = ob_get_contents();
-        $this->assertEquals('Filesize: 26 bytes
+        $tester->execute(['file' => TESTS_PATH.'/_fixtures/Cli/Command/ShowTokens/helloWorld.php']);
+        $this->assertSame('Filesize: 26 bytes
 Tokens: 6
 
 0)  T_OPEN_TAG                   | <?php\n
@@ -42,21 +26,20 @@ Tokens: 6
 3)  T_WHITESPACE                 | .
 4)  T_CONSTANT_ENCAPSED_STRING   | \'hello.world\'
 5)  UNKNOWN                      | ;
-', $output);
+', $tester->getDisplay());
     }
 
-    /**
-     * @covers PHP\Manipulator\Cli\Command\ShowTokens::execute
-     */
     public function testExecuteThrowsExceptionIfFileIsNotOpenable()
     {
-        $command = new ShowTokens();
+        $tester = new CommandTester(new ShowTokens());
 
-        try {
-            $command->execute(new ArgvInput(array('showTokens', TESTS_PATH . '/_fixtures/nonExistingFile.php'), $command->getDefinition()), new StreamOutput(fopen('php://output', 'w')));
-            $this->fail('Expected exception not thrown');
-        } catch (\Exception $e) {
-            $this->assertEquals('Unable to open file: ' . TESTS_PATH . '/_fixtures/nonExistingFile.php', $e->getMessage(), 'Wrong exception message');
-        }
+        $this->setExpectedException(
+            FileException::class,
+            'nonExistingFile.php',
+            FileException::EXPECTED_FILE_TO_EXIST
+        );
+        $tester->execute([
+            'file' => TESTS_PATH.'/_fixtures/nonExistingFile.php',
+        ]);
     }
 }

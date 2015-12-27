@@ -2,44 +2,33 @@
 
 namespace PHP\Manipulator\Helper;
 
-use PHP\Manipulator\AHelper;
 use PHP\Manipulator\Token;
-use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\SetWhitespaceAfterToken
- */
-class SetWhitespaceBeforeToken
-extends SetWhitespaceAfterToken
+class SetWhitespaceBeforeToken extends SetWhitespaceAfterToken
 {
-
     /**
-     * @param Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _moveIteratorToTargetToken(Iterator $iterator)
+    protected function moveIteratorToTargetToken(TokenContainerIterator $iterator)
     {
         $iterator->previous();
     }
 
     /**
-     * @param Iterator $iterator
+     * @param TokenContainerIterator $iterator
      */
-    protected function _moveIteratorBackFromTagetToken(Iterator $iterator)
+    protected function moveIteratorBackFromTagetToken(TokenContainerIterator $iterator)
     {
         $iterator->next();
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param \PHP\Manipulator\Token $targetToken
-     * @param \PHP\Manipulator\Token $newToken
+     * @param Token                  $newToken
+     * @param TokenContainerIterator $iterator
      */
-    protected function _insertToken(Token $newToken, Iterator $iterator)
+    protected function insertToken(Token $newToken, TokenContainerIterator $iterator)
     {
-        $this->_container->insertTokenAfter($iterator->current(), $newToken);
+        $this->container->insertTokenAfter($iterator->current(), $newToken);
     }
 }

@@ -2,22 +2,20 @@
 
 namespace Tests\Stub;
 
-use PHP\Manipulator\TokenFinder\Result;
-use PHP\Manipulator\TokenFinder;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenFinder;
+use PHP\Manipulator\TokenFinder\Result;
 
-class TokenFinderStub
-extends TokenFinder
+class TokenFinderStub extends TokenFinder
 {
-
     /**
-     * @var \PHP\Manipulator\TokenFinder\Result
+     * @var Result
      */
     public $result = null;
 
     /**
-     * @param \PHP\Manipulator\TokenFinder\Result $result
+     * @param Result $result
      */
     public function __construct(Result $result = null)
     {
@@ -27,10 +25,11 @@ extends TokenFinder
     /**
      * Finds tokens
      *
-     * @param \PHP\Manipulator\Token $token
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @return \PHP\Manipulator\TokenFinder\Result
+     * @param Token          $token
+     * @param TokenContainer $container
+     * @param mixed          $params
+     *
+     * @return Result
      */
     public function find(Token $token, TokenContainer $container, $params = null)
     {

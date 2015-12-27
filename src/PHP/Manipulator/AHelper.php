@@ -2,414 +2,218 @@
 
 namespace PHP\Manipulator;
 
-use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
-use PHP\Manipulator\Token;
-use PHP\Manipulator\Config;
-use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenConstraint;
-use PHP\Manipulator\TokenFinder;
-use PHP\Manipulator\TokenManipulator;
+use Closure;
+use PHP\Manipulator\Exception\HelperException;
+use PHP\Manipulator\TokenContainer\TokenContainerIterator;
+use PHP\Manipulator\TokenFinder\Result;
 
 /**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
  * @todo ugly name
  */
 class AHelper
 {
-
-    /**
-     * Load/Instantiate/Evaluate Token Constraint on a Token
-     *
-     * @param \PHP\Manipulator\TokenConstraint|string $constraint
-     * @param \PHP\Manipulator\Token $token
-     * @param mixed $params
-     * @param boolean $autoPrefix
-     * @return boolean
-     */
-    public function evaluateConstraint($constraint, Token $token, $params = null, $autoPrefix = true)
-    {
-        $constraint = $this->getClassInstance(
-            $constraint,
-            'PHP\\Manipulator\\TokenConstraint\\',
-            $autoPrefix
-        );
-
-        if (!$constraint instanceof TokenConstraint) {
-            $message = 'constraint is not instance of PHP\\Manipulator\\TokenConstraint';
-            throw new \Exception($message);
-        }
-
-        /* @var $constraint \PHP\Manipulator\TokenConstraint */
-
-        return $constraint->evaluate($token, $params);
-    }
-
     /**
      * Load/Instantiate/Run a TokenManipulator on a Token
      *
-     * @param \PHP\Manipulator\TokenManipulator $manipulator
-     * @param \PHP\Manipulator\Token $token
-     * @param mixed $params
-     * @param boolean $autoPrefix
+     * @param TokenManipulator|string $manipulator
+     * @param Token                   $token
+     * @param mixed                   $params
      */
-    public function manipulateToken($manipulator, Token $token, $params = null, $autoPrefix = true)
+    public function manipulateToken($manipulator, Token $token, $params = null)
     {
-        $manipulator = $this->getClassInstance(
-            $manipulator,
-            'PHP\\Manipulator\\TokenManipulator\\',
-            $autoPrefix
-        );
+        $manipulator = $this->createClassInstance($manipulator);
 
         if (!$manipulator instanceof TokenManipulator) {
-            $message = 'manipulator is not instance of PHP\\Manipulator\\TokenManipulator';
-            throw new \Exception($message);
+            $type    = is_object($manipulator) ? get_class($manipulator) : gettype($manipulator);
+            $message = sprintf('Manipulator is not instance of PHP\\Manipulator\\TokenManipulator, got "%s"', $type);
+            throw new HelperException($message, HelperException::MANIPULATOR_IS_NOT_INSTANCE_OF_TOKEN_MANIPULATOR);
         }
 
-        /* @var $manipulator \PHP\Manipulator\TokenManipulator */
         $manipulator->manipulate($token, $params);
     }
 
     /**
      * Load/Instantiate/Run a ContainManipulator on a Container
      *
-     * @param \PHP\Manipulator\Action|string $manipulator
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @param boolean $autoPrefix
+     * @param Action|string  $action
+     * @param TokenContainer $container
      */
-    public function runAction($action, TokenContainer $container, $params = null, $autoPrefix = true)
+    public function runAction($action, TokenContainer $container)
     {
-        $action = $this->getClassInstance(
-            $action,
-            'PHP\\Manipulator\\Action\\',
-            $autoPrefix
-        );
+        $action = $this->createClassInstance($action);
 
         if (!$action instanceof Action) {
-            $message = 'manipulator is not instance of PHP\\Manipulator\\Action';
-            throw new \Exception($message);
+            $type    = is_object($action) ? get_class($action) : gettype($action);
+            $message = sprintf('Action is not instance of PHP\\Manipulator\\Action, got "%s"', $type);
+            throw new HelperException($message, HelperException::ACTION_IS_NOT_INSTANCE_OF_ACTION);
         }
 
-        /* @var $manipulator  \PHP\Manipulator\Action */
-        $action->run($container, $params);
+        $action->run($container);
     }
 
     /**
      * Searches a Tokencontainer starting from a Token and returns a Result-Set
      *
-     * @param \PHP\Manipulator\TokenFinder|string $finder
-     * @param \PHP\Manipulator\Token $token
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     * @param boolean $autoPrefix
-     * @return \PHP\Manipulator\TokenFinder\Result
+     * @param TokenFinder|string $finder
+     * @param Token              $token
+     * @param TokenContainer     $container
+     * @param mixed              $params
+     *
+     * @return Result
      */
-    public function findTokens($finder, Token $token, TokenContainer $container, $params = null, $autoPrefix = true)
+    public function findTokens($finder, Token $token, TokenContainer $container, $params = null)
     {
-        $finder = $this->getClassInstance(
-            $finder,
-            'PHP\\Manipulator\\TokenFinder\\',
-            $autoPrefix
-        );
+        $finder = $this->createClassInstance($finder);
 
         if (!$finder instanceof TokenFinder) {
-            $message = 'finder is not instance of PHP\\Manipulator\\TokenFinder';
-            throw new \Exception($message);
+            $type    = is_object($finder) ? get_class($finder) : gettype($finder);
+            $message = sprintf('Finder is not instance of PHP\\Manipulator\\TokenFinder, got "%s"', $type);
+            throw new HelperException($message, HelperException::FINDER_IS_NOT_INSTANCE_OF_TOKENFINDER);
         }
-
-        /* @var $finder \PHP\Manipulator\TokenFinder */
 
         return $finder->find($token, $container, $params);
     }
 
     /**
-     * Get class instance
+     * @param TokenContainerIterator $iterator
+     * @param int|int[]              $type
+     * @param int[]                  $allowedTypes
      *
-     * @param string $class
-     * @param string $prefix
-     * @param boolean $autoPrefix
-     * @return object
+     * @return bool
      */
-    public function getClassInstance($class, $prefix, $autoPrefix = true)
-    {
-        if (!is_string($class)) {
-            return $class;
-        }
-        $classname = $class;
-        if ($autoPrefix) {
-            $classname = $prefix . $class;
-        }
-
-        return new $classname;
-    }
-
-
-    /**
-     * @param Token $token
-     * @param string|array $value
-     * @return boolean
-     */
-    public function hasValue(Token $token, $value)
-    {
-        if (is_array($value)) {
-            foreach ($value as $tokenValue) {
-                if ($token->getValue() === $tokenValue) {
-                    return true;
-                }
-            }
-        } else {
-            if ($token->getValue() === $value) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @param array|integer $type
-     * @return boolean
-     */
-    public function isType(Token $token, $type)
-    {
-        if (is_array($type)) {
-            foreach ($type as $tokenType) {
-                if ($token->getType() === $tokenType) {
-                    return true;
-                }
-            }
-        } else {
-            if ($token->getType() === $type) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isColon(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === ':') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     */
-    public function isComma(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === ',') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isClosingBrace(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === ')') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isOpeningBrace(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === '(') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isClosingCurlyBrace(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === '}') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isOpeningCurlyBrace(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === '{') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isSemicolon(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === ';') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
-     */
-    public function isQuestionMark(Token $token)
-    {
-        if ($token->getType() === null && $token->getValue() === '?') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param integer|array $type
-     * @param array $allowedTypes
-     * @return boolean
-     */
-    public function isFollowedByTokenType(Iterator $iterator, $type,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
-
+    public function isFollowedByTokenType(
+        TokenContainerIterator $iterator,
+        $type,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
-            ClosureFactory::getIsTypeClosure($type),
+            MatcherFactory::createIsTypeMatcher($type),
             $allowedTypes
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param integer|array $type
-     * @param array $allowedTypes
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param int|int[]              $type
+     * @param string[]               $allowedTypes
+     *
+     * @return bool
      */
-    public function isPrecededByTokenType(Iterator $iterator, $type,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
+    public function isPrecededByTokenType(
+        TokenContainerIterator $iterator,
+        $type,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
-            ClosureFactory::getIsTypeClosure($type),
+            MatcherFactory::createIsTypeMatcher($type),
             $allowedTypes
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param string $value
-     * @param array $allowedTypes
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param string                 $value
+     * @param string[]               $allowedTypes
+     *
+     * @return bool
      */
-    public function isFollowedByTokenValue(Iterator $iterator, $value,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
+    public function isFollowedByTokenValue(
+        TokenContainerIterator $iterator,
+        $value,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isFollowedByTokenMatchedByClosure(
             $iterator,
-            ClosureFactory::getHasValueClosure($value),
+            MatcherFactory::createHasValueMatcher($value),
             $allowedTypes
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param string $value
-     * @param array $allowedTypes
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param string                 $value
+     * @param string[]               $allowedTypes
+     *
+     * @return bool
      */
-    public function isPrecededByTokenValue(Iterator $iterator, $value,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
+    public function isPrecededByTokenValue(
+        TokenContainerIterator $iterator,
+        $value,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isPrecededByTokenMatchedByClosure(
             $iterator,
-            ClosureFactory::getHasValueClosure($value),
+            MatcherFactory::createHasValueMatcher($value),
             $allowedTypes
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param \Closure $closure
-     * @param array $allowedTypes
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $closure
+     * @param string[]               $allowedTypes
+     *
+     * @return bool
+     *
      * @todo ugly name
      */
-    public function isFollowedByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
+    public function isFollowedByTokenMatchedByClosure(
+        TokenContainerIterator $iterator,
+        Closure $closure,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isFollowed(
             $iterator,
             $closure,
-            ClosureFactory::getIsTypeClosure($allowedTypes)
+            MatcherFactory::createIsTypeMatcher($allowedTypes)
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param \Closure $closure
-     * @param array $allowedTypes
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $isAllowedTokenMatcher
+     * @param string[]               $allowedTypes
+     *
+     * @return bool
+     *
      * @todo ugly name
      */
-    public function isPrecededByTokenMatchedByClosure(Iterator $iterator, \Closure $closure,
-        array $allowedTypes = array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))
-    {
+    public function isPrecededByTokenMatchedByClosure(
+        TokenContainerIterator $iterator,
+        Closure $isAllowedTokenMatcher,
+        array $allowedTypes = [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT]
+    ) {
         return $this->isPreceded(
             $iterator,
-            $closure,
-            ClosureFactory::getIsTypeClosure($allowedTypes)
+            $isAllowedTokenMatcher,
+            MatcherFactory::createIsTypeMatcher($allowedTypes)
         );
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param \Closure $isSearchedToken
-     * @param \Closure $isAllowedToken
-     * @param \PHP\Manipulator\Token $found
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $isSearchedToken
+     * @param Closure                $isAllowedToken
+     * @param Token                  $found
+     *
+     * @return bool
      */
-    public function isPreceded(Iterator $iterator, \Closure $isSearchedToken, \Closure $isAllowedToken, Token &$found = null)
-    {
-        $token = $iterator->current();
+    public function isPreceded(
+        TokenContainerIterator $iterator,
+        Closure $isSearchedToken,
+        Closure $isAllowedToken,
+        Token &$found = null
+    ) {
+        $token  = $iterator->current();
         $result = false;
         $iterator->previous();
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $currentToken = $iterator->current();
             if ($isSearchedToken($currentToken)) {
-                $found = $currentToken;
+                $found  = $currentToken;
                 $result = true;
                 break;
             }
@@ -425,22 +229,27 @@ class AHelper
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param \Closure $isSearchedToken
-     * @param \Closure $isAllowedToken
-     * @param \PHP\Manipulator\Token $found
-     * @return boolean
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $isSearchedToken
+     * @param Closure                $isAllowedToken
+     * @param Token                  $found
+     *
+     * @return bool
      */
-    public function isFollowed(Iterator $iterator, \Closure $isSearchedToken, \Closure $isAllowedToken, Token &$found = null)
-    {
-        $token = $iterator->current();
+    public function isFollowed(
+        TokenContainerIterator $iterator,
+        Closure $isSearchedToken,
+        Closure $isAllowedToken,
+        Token &$found = null
+    ) {
+        $token  = $iterator->current();
         $result = false;
         $iterator->next();
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $currentToken = $iterator->current();
             if ($isSearchedToken($currentToken)) {
-                $found = $currentToken;
+                $found  = $currentToken;
                 $result = true;
                 break;
             }
@@ -456,17 +265,16 @@ class AHelper
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @return \PHP\Manipulator\Token
+     * @param TokenContainerIterator $iterator
+     *
+     * @return Token
      */
-    public function getMatchingBrace(Iterator $iterator)
+    public function getMatchingBrace(TokenContainerIterator $iterator)
     {
         $token = $iterator->current();
         $brace = $token->getValue();
 
         $searchForward = true;
-        $incrementBrace = '';
-        $decrementBrace = '';
         switch ($brace) {
             case '[':
                 $incrementBrace = '[';
@@ -475,16 +283,16 @@ class AHelper
             case ']':
                 $incrementBrace = ']';
                 $decrementBrace = '[';
-                $searchForward = false;
+                $searchForward  = false;
                 break;
             case '(':
                 $incrementBrace = '(';
                 $decrementBrace = ')';
                 break;
             case ')':
-                $searchForward = false;
                 $incrementBrace = ')';
                 $decrementBrace = '(';
+                $searchForward  = false;
                 break;
             case '{':
                 $incrementBrace = '{';
@@ -493,30 +301,30 @@ class AHelper
             case '}':
                 $incrementBrace = '}';
                 $decrementBrace = '{';
-                $searchForward = false;
+                $searchForward  = false;
                 break;
             default:
-                $message = 'Token is no brace like (,),{,},[ or ]';
-                throw new \Exception($message);
+                $message = sprintf('Token is no brace like (,),{,},[ or ], got value "%s"', $brace);
+                throw new HelperException($message, HelperException::UNSUPPORTED_BRACE_EXCEPTION);
         }
 
-            $level = 1;
-            $this->_nextToken($iterator, $searchForward);
-            $foundToken = null;
-            while($iterator->valid()) {
-                $currentToken = $iterator->current();
-                if (null === $currentToken->getType()) {
-                    if ($currentToken->getValue() === $incrementBrace) {
-                        $level++;
-                    } elseif ($currentToken->getValue() === $decrementBrace) {
-                        $level--;
-                    }
+        $level = 1;
+        $this->nextToken($iterator, $searchForward);
+        $foundToken = null;
+        while ($iterator->valid()) {
+            $currentToken = $iterator->current();
+            if (null === $currentToken->getType()) {
+                if ($currentToken->getValue() === $incrementBrace) {
+                    $level++;
+                } elseif ($currentToken->getValue() === $decrementBrace) {
+                    $level--;
                 }
-                if ($level === 0) {
-                    $foundToken = $currentToken;
-                    break;
             }
-            $this->_nextToken($iterator, $searchForward);
+            if ($level === 0) {
+                $foundToken = $currentToken;
+                break;
+            }
+            $this->nextToken($iterator, $searchForward);
         }
         $iterator->update($token);
 
@@ -524,10 +332,10 @@ class AHelper
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param boolean $forward
+     * @param TokenContainerIterator $iterator
+     * @param bool                   $forward
      */
-    protected function _nextToken(Iterator $iterator, $forward = true)
+    private function nextToken(TokenContainerIterator $iterator, $forward = true)
     {
         if ($forward) {
             $iterator->next();
@@ -537,18 +345,18 @@ class AHelper
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer\Iterator $iterator
-     * @param \Closure $closure
-     * @return \PHP\Manipulator\Token
+     * @param TokenContainerIterator $iterator
+     * @param Closure                $closure
+     *
+     * @return Token
      */
-    public function getNextMatchingToken(Iterator $iterator, \Closure $closure)
+    public function getNextMatchingToken(TokenContainerIterator $iterator, Closure $closure)
     {
         $token = $iterator->current();
 
         $foundToken = null;
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             $currentToken = $iterator->current();
-
             if ($closure($currentToken)) {
                 $foundToken = $currentToken;
                 break;
@@ -558,5 +366,19 @@ class AHelper
         $iterator->update($token);
 
         return $foundToken;
+    }
+
+    /**
+     * @param string|object $object
+     *
+     * @return object
+     */
+    private function createClassInstance($object)
+    {
+        if (is_string($object)) {
+            return new $object();
+        }
+
+        return $object;
     }
 }

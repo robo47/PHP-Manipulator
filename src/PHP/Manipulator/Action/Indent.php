@@ -3,138 +3,130 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\Action\RemoveIndention;
-use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\Exception\ActionException;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
+use PHP\Manipulator\TokenManipulator\IndentMultilineComment;
 use SplStack;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\TokenConstraint\IsSinglelineComment
- * @uses    \PHP\Manipulator\TokenConstraint\IsMultilineComment
- * @uses    \PHP\Manipulator\TokenConstraint\ContainsNewline
- * @uses    \PHP\Manipulator\TokenConstraint\IsDoublequote
- * @uses    \PHP\Manipulator\Action\IndentMultilineComment
- */
 class Indent extends Action
 {
+    const OPTION_USE_SPACES              = 'useSpaces';
+    const OPTION_TAB_WIDTH               = 'tabWidth';
+    const OPTION_INDENTION_WIDTH         = 'indentionWidth';
+    const OPTION_INITIAL_INDENTION_WIDTH = 'initialIndentionWidth';
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_insideUse = false;
+    private $insideUse = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_insideCase = false;
+    private $insideCase = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_insideSwitch = false;
+    private $insideSwitch = false;
 
     /**
-     * @var integer
+     * @var int
      */
-    protected $_indentionLevel = 0;
+    private $indentionLevel = 0;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    protected $_insideString = false;
+    private $insideString = false;
 
     /**
      * @var TokenContainer
      */
-    protected $_container = null;
+    private $container;
 
     /**
-     * @var  SplStack
+     * @var SplStack
      */
-    protected $_switchStack = null;
+    private $switchStack;
 
     public function init()
     {
         // indentions are always given in tabs!
-        if (!$this->hasOption('useSpaces')) {
-            $this->setOption('useSpaces', true);
+        if (!$this->hasOption(self::OPTION_USE_SPACES)) {
+            $this->setOption(self::OPTION_USE_SPACES, true);
         }
-        if (!$this->hasOption('tabWidth')) {
-            $this->setOption('tabWidth', 4);
+        if (!$this->hasOption(self::OPTION_TAB_WIDTH)) {
+            $this->setOption(self::OPTION_TAB_WIDTH, 4);
         }
-        if (!$this->hasOption('indentionWidth')) {
-            $this->setOption('indentionWidth', 4);
+        if (!$this->hasOption(self::OPTION_INDENTION_WIDTH)) {
+            $this->setOption(self::OPTION_INDENTION_WIDTH, 4);
         }
-        if (!$this->hasOption('initialIndentionWidth')) {
-            $this->setOption('initialIndentionWidth', 0);
+        if (!$this->hasOption(self::OPTION_INITIAL_INDENTION_WIDTH)) {
+            $this->setOption(self::OPTION_INITIAL_INDENTION_WIDTH, 0);
         }
     }
 
     /**
      * Since Actions can be used multiple times, they need to reset themself each time they are used!
      */
-    protected function _reset()
+    private function reset()
     {
-        $this->_insideUse = false;
-        $this->_insideCase = false;
-        $this->_insideSwitch = false;
-        $this->_indentionLevel = 0;
-        $this->_switchStack = new SplStack();
+        $this->insideUse      = false;
+        $this->insideCase     = false;
+        $this->insideSwitch   = false;
+        $this->indentionLevel = 0;
+        $this->switchStack    = new SplStack();
     }
 
-    /**
-     * Unindents all Code and then indent it right
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
-        $this->_reset();
-        $this->_container = $container;
+        $this->reset();
+        $this->container = $container;
 
         $removeIndention = new RemoveIndention();
         $removeIndention->run($container);
 
         $iterator = $container->getIterator();
 
+        /** @var Token $previous */
         $previous = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
-            $this->_checkAndChangeIndentionLevel($token);
-            $this->_checkForMultilineCommentAndIndent($token);
-            $this->_useIndentionCheck($token);
-            $this->_switchIndentionCheck($token);
+            $this->checkAndChangeIndentionLevel($token);
+            $this->checkForMultilineCommentAndIndent($token);
+            $this->useIndentionCheck($token);
+            $this->switchIndentionCheck($token);
             if (null !== $previous &&
-                $this->evaluateConstraint('IsSinglelineComment', $previous) &&
-                ! $this->_isWhitespaceWithBreak($token)) {
-                $newToken = new Token('', T_WHITESPACE);
-                $this->_indentWhitespace($newToken);
+                $previous->isSingleLineComment() &&
+                !$this->isWhitespaceWithNewline($token)
+            ) {
+                $newToken = Token::createFromValueAndType('', T_WHITESPACE);
+                $this->indentWhitespace($newToken);
                 $container->insertTokenAfter($previous, $newToken);
                 $iterator = $container->getIterator();
                 $iterator->seekToToken($token);
-            } elseif ($this->_isWhitespaceWithBreak($token)) {
+            } elseif ($this->isWhitespaceWithNewline($token)) {
                 $iterator->next();
                 if (!$iterator->valid()) {
                     break;
                 }
                 $nextToken = $iterator->current();
-                $this->_checkAndChangeIndentionLevelDecreasment($nextToken);
-                $this->_indentWhitespace($token);
-                if ($this->isClosingCurlyBrace($nextToken) &&
-                    true === $this->_insideSwitch &&
-                    true === $this->_insideCase) {
-                    if ($this->_isSwitchClosingCurlyBrace($nextToken)) {
-                        $this->_removeLastIndention($token);
+                $this->checkAndChangeIndentionLevelDecreasment($nextToken);
+                $this->indentWhitespace($token);
+                if ($nextToken->isClosingCurlyBrace() &&
+                    true === $this->insideSwitch &&
+                    true === $this->insideCase
+                ) {
+                    if ($this->isSwitchClosingCurlyBrace()) {
+                        $this->removeLastIndention($token);
                     }
                 }
-                $this->_checkForMultilineCommentAndIndent($nextToken);
-                $this->_checkAndChangeIndentionLevelIncreasment($nextToken);
-                $this->_useIndentionCheck($nextToken);
-                $this->_switchIndentionCheck($nextToken);
+                $this->checkForMultilineCommentAndIndent($nextToken);
+                $this->checkAndChangeIndentionLevelIncreasment($nextToken);
+                $this->useIndentionCheck($nextToken);
+                $this->switchIndentionCheck($nextToken);
             }
             $previous = $iterator->current();
             $iterator->next();
@@ -143,33 +135,30 @@ class Indent extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @return bool
      */
-    protected function _isSwitchClosingCurlyBrace(Token $token)
+    private function isSwitchClosingCurlyBrace()
     {
-        return (($this->_switchStack[$this->_switchStack->count() - 1] + 1) === $this->_indentionLevel);
+        return (($this->switchStack[$this->switchStack->count() - 1] + 1) === $this->indentionLevel);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _removeLastIndention(Token $token)
+    private function removeLastIndention(Token $token)
     {
         $length = mb_strlen($this->getIndention(1));
         $token->setValue(substr($token->getValue(), 0, -$length));
     }
 
     /**
-     * Check if a Token is a Multilinecomment and indent it
-     *
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _checkForMultilineCommentAndIndent(Token $token)
+    private function checkForMultilineCommentAndIndent(Token $token)
     {
-        if ($this->evaluateConstraint('IsMultilineComment', $token)) {
+        if ($token->isMultilineComment()) {
             $this->manipulateToken(
-                'IndentMultilineComment',
+                IndentMultilineComment::class,
                 $token,
                 $this->getIndention($this->getIndentionLevel())
             );
@@ -177,212 +166,221 @@ class Indent extends Action
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _useIndentionCheck(Token $token)
+    private function useIndentionCheck(Token $token)
     {
-        if ($this->isType($token, T_USE)) {
-            $this->_insideUse = true;
-            $this->_indentionLevel++;
+        if ($token->isType(T_USE)) {
+            $this->insideUse = true;
+            $this->indentionLevel++;
         }
 
-        if ($this->isSemicolon($token) && true === $this->_insideUse) {
-            $this->_insideUse = false;
-            $this->_indentionLevel--;
+        if ($token->isSemicolon() && true === $this->insideUse) {
+            $this->insideUse = false;
+            $this->indentionLevel--;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _switchIndentionCheck(Token $token)
+    private function switchIndentionCheck(Token $token)
     {
-        if ($this->isClosingCurlyBrace($token) && true === $this->_insideSwitch) {
-            if ($this->_switchStack[$this->_switchStack->count() - 1] === $this->_indentionLevel) {
-                $this->_switchStack->pop();
-                $this->_insideSwitch = false;
+        if ($token->isClosingCurlyBrace() && true === $this->insideSwitch) {
+            if ($this->switchStack[$this->switchStack->count() - 1] === $this->indentionLevel) {
+                $this->switchStack->pop();
+                $this->insideSwitch = false;
             }
         }
-        if ($this->isType($token, T_SWITCH)) {
-            $this->_insideSwitch = true;
-            $this->_switchStack->push($this->_indentionLevel);
+        if ($token->isType(T_SWITCH)) {
+            $this->insideSwitch = true;
+            $this->switchStack->push($this->indentionLevel);
         }
 
-        if ($this->isType($token, T_BREAK) && true === $this->_insideCase) {
-            $this->_insideCase = false;
-            $this->_indentionLevel--;
+        if ($token->isType(T_BREAK) && true === $this->insideCase) {
+            $this->insideCase = false;
+            $this->indentionLevel--;
         }
 
         // only indent if case/default is not directly followed by case/default
-        if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
-            ! $this->_caseIsDirectlyFollowedByAnotherCase($token)) {
-            if ($this->isType($token, array(T_CASE, T_DEFAULT)) &&
-                true === $this->_insideCase &&
-                ! $this->_isCasePreceededByBreak($token)) {
-                $this->_indentionLevel--;
+        if ($token->isType([T_CASE, T_DEFAULT]) &&
+            !$this->caseIsDirectlyFollowedByAnotherCase($token)
+        ) {
+            if ($token->isType([T_CASE, T_DEFAULT]) &&
+                true === $this->insideCase &&
+                !$this->isCasePreceededByBreak($token)
+            ) {
+                $this->indentionLevel--;
             }
-            $this->_insideCase = true;
-            $this->_indentionLevel++;
+            $this->insideCase = true;
+            $this->indentionLevel++;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $caseToken
-     * @return boolean
+     * @param Token $caseToken
+     *
+     * @return bool
      */
-    protected function _isCasePreceededByBreak(Token $caseToken)
+    private function isCasePreceededByBreak(Token $caseToken)
     {
-        $iterator = $this->_container->getReverseIterator();
+        $iterator = $this->container->getReverseIterator();
         $iterator->seekToToken($caseToken);
-        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML (important for alternate syntax ?)
+
         return $this->isPrecededByTokenType($iterator, T_BREAK);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $caseToken
-     * @return \PHP\Manipulator\Token
+     * @param Token $caseToken
+     *
+     * @return Token
      */
-    protected function _findNextColonToken(Token $caseToken)
+    private function findNextColonToken(Token $caseToken)
     {
-        $iterator = $this->_container->getIterator();
+        $iterator = $this->container->getIterator();
         $iterator->seekToToken($caseToken);
         $iterator->next();
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isColon($token)) {
+            if ($token->isColon()) {
                 return $iterator->current();
             }
             $iterator->next();
         }
-        throw new \Exception('no colon found');
+        throw new ActionException('No colon found', ActionException::NO_COLON_FOUND);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $caseToken
-     * @return boolean
+     * @param Token $caseToken
+     *
+     * @return bool
      */
-    protected function _caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
+    private function caseIsDirectlyFollowedByAnotherCase(Token $caseToken)
     {
-        $iterator = $this->_container->getIterator();
-        $iterator->seekToToken($this->_findNextColonToken($caseToken));
-        // @todo add/test T_CLOSE_TAG, T_OPEN_TAG, T_INLINE_HTML (important for alternate syntax ?)
-        return $this->isFollowedByTokenType($iterator, array(T_DEFAULT, T_CASE));
+        $iterator = $this->container->getIterator();
+        $iterator->seekToToken($this->findNextColonToken($caseToken));
+
+        return $this->isFollowedByTokenType($iterator, [T_DEFAULT, T_CASE]);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $whitespaceToken
+     * @param Token $whitespaceToken
      */
-    protected function _indentWhitespace(Token $whitespaceToken)
+    private function indentWhitespace(Token $whitespaceToken)
     {
-        $newValue = $whitespaceToken->getValue() .
-        $this->getIndention($this->getIndentionLevel());
+        $newValue = sprintf(
+            '%s%s',
+            $whitespaceToken->getValue(),
+            $this->getIndention($this->getIndentionLevel())
+        );
         $whitespaceToken->setValue($newValue);
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isWhitespaceWithBreak(Token $token)
+    private function isWhitespaceWithNewline(Token $token)
     {
-        return $this->isType($token, T_WHITESPACE) &&
-        $this->evaluateConstraint('ContainsNewline', $token);
+        return $token->isWhitespace() && $token->containsNewline();
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    protected function _checkInsideString(Token $token)
+    private function checkInsideString(Token $token)
     {
-        if ($this->evaluateConstraint('IsDoublequote', $token)) {
-            $this->_insideString = !$this->_insideString;
+        if ($token->isDoublequote()) {
+            $this->insideString = !$this->insideString;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    public function _checkAndChangeIndentionLevel(Token $token)
+    public function checkAndChangeIndentionLevel(Token $token)
     {
-        $this->_checkInsideString($token);
-        if (false === $this->_insideString) {
-            $this->_checkAndChangeIndentionLevelDecreasment($token);
-            $this->_checkAndChangeIndentionLevelIncreasment($token);
+        $this->checkInsideString($token);
+        if (false === $this->insideString) {
+            $this->checkAndChangeIndentionLevelDecreasment($token);
+            $this->checkAndChangeIndentionLevelIncreasment($token);
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    public function _checkAndChangeIndentionLevelIncreasment(Token $token)
+    public function checkAndChangeIndentionLevelIncreasment(Token $token)
     {
-        if ($this->isColon($token)) {
-            $iterator = $this->_container->getIterator();
+        if ($token->isColon()) {
+            $iterator = $this->container->getIterator();
             $iterator->seekToToken($token);
-            $allowedTypes = array(null, T_STRING, T_WHITESPACE, T_COMMENT, T_DOC_COMMENT);
+            $allowedTypes = [null, T_STRING, T_WHITESPACE, T_COMMENT, T_DOC_COMMENT];
 
             if ($this->isPrecededByTokenType($iterator, T_IF, $allowedTypes)) {
-                $this->_indentionLevel++;
+                $this->indentionLevel++;
             }
         }
-        if ($this->_isIndentionLevelIncreasment($token)) {
-            $this->_indentionLevel++;
+        if ($this->isIndentionLevelIncreasment($token)) {
+            $this->indentionLevel++;
         }
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      */
-    public function _checkAndChangeIndentionLevelDecreasment(Token $token)
+    public function checkAndChangeIndentionLevelDecreasment(Token $token)
     {
-        if ($this->isType($token, T_ENDIF)) {
-            $this->_indentionLevel--;
+        if ($token->isType(T_ENDIF)) {
+            $this->indentionLevel--;
         }
-        if ($this->_isIndentionLevelDecreasement($token)) {
-            $this->_indentionLevel--;
+        if ($this->isIndentionLevelDecreasement($token)) {
+            $this->indentionLevel--;
         }
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getIndentionLevel()
     {
-        return $this->_indentionLevel;
+        return $this->indentionLevel;
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isIndentionLevelIncreasment(Token $token)
+    private function isIndentionLevelIncreasment(Token $token)
     {
-        return $this->isOpeningCurlyBrace($token)
-        || $this->isOpeningBrace($token);
+        return $token->isOpeningCurlyBrace() || $token->isOpeningBrace();
     }
 
     /**
-     * @param \PHP\Manipulator\Token $token
-     * @return boolean
+     * @param Token $token
+     *
+     * @return bool
      */
-    protected function _isIndentionLevelDecreasement(Token $token)
+    private function isIndentionLevelDecreasement(Token $token)
     {
-        return $this->isClosingCurlyBrace($token)
-        || $this->isClosingBrace($token);
+        return $token->isClosingCurlyBrace() || $token->isClosingBrace();
     }
 
     /**
-     * @param integer $depth
+     * @param int $depth
+     *
      * @return string
      */
     public function getIndention($depth)
     {
-        $useSpaces = $this->getOption('useSpaces');
-        $tabWidth = $this->getOption('tabWidth');
-        $indentionWidth = $this->getOption('indentionWidth');
-        $initialIndentionWidth = $this->getOption('initialIndentionWidth');
+        $useSpaces             = $this->getOption(self::OPTION_USE_SPACES);
+        $tabWidth              = $this->getOption(self::OPTION_TAB_WIDTH);
+        $indentionWidth        = $this->getOption(self::OPTION_INDENTION_WIDTH);
+        $initialIndentionWidth = $this->getOption(self::OPTION_INITIAL_INDENTION_WIDTH);
 
-        $indentionLength = ($indentionWidth * $depth)  + $initialIndentionWidth;
+        $indentionLength = ($indentionWidth * $depth) + $initialIndentionWidth;
         if (!$useSpaces) {
             $indention = $this->getAsTabs($indentionLength, $tabWidth);
         } else {
@@ -393,15 +391,16 @@ class Indent extends Action
     }
 
     /**
-     * @param integer $spaceLength
-     * @param integer $tabWith
+     * @param int $spaceLength
+     * @param int $tabWidth
+     *
      * @return string
      */
     public function getAsTabs($spaceLength, $tabWidth)
     {
-        $tabCount = floor($spaceLength / $tabWidth);
+        $tabCount         = floor($spaceLength / $tabWidth);
         $additionalSpaces = $spaceLength % $tabWidth;
 
-        return str_repeat("\t", $tabCount) . str_repeat(' ', $additionalSpaces);
+        return sprintf('%s%s', str_repeat("\t", $tabCount), str_repeat(' ', $additionalSpaces));
     }
 }

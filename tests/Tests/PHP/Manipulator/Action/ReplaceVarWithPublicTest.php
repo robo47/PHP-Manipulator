@@ -3,17 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\ReplaceVarWithPublic;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action\ReplaceVarWithPublic
+ * @covers PHP\Manipulator\Action\ReplaceVarWithPublic
  */
-class ReplaceVarWithPublicTest extends \Tests\TestCase
+class ReplaceVarWithPublicTest extends TestCase
 {
-    /**
-     * @covers \PHP\Manipulator\Action\ReplaceVarWithPublic::init
-     */
     public function testConstructorDefaults()
     {
         $action = new ReplaceVarWithPublic();
@@ -25,27 +22,22 @@ class ReplaceVarWithPublicTest extends \Tests\TestCase
      */
     public function manipulateProvider()
     {
-        $data = array();
-        $path = '/Action/ReplaceVarWithPublic/';
+        $data              = [];
+        $data['Example 0'] = 0;
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-            false
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/ReplaceVarWithPublic/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\ReplaceVarWithPublic
-     *      * @dataProvider manipulateProvider
+     * @dataProvider manipulateProvider
+     *
+     * @param TokenContainer $container
+     * @param TokenContainer $expectedContainer
      */
-    public function testManipulate($container, $expectedContainer, $strict)
+    public function testManipulate(TokenContainer $container, TokenContainer $expectedContainer)
     {
         $manipulator = new ReplaceVarWithPublic();
         $manipulator->run($container);
-        $this->assertTokenContainerMatch($expectedContainer, $container, $strict);
+        $this->assertTokenContainerMatch($expectedContainer, $container);
     }
 }

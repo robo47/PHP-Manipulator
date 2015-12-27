@@ -2,20 +2,18 @@
 
 namespace Tests\Stub;
 
-use PHP\Manipulator\TokenManipulator;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator;
 
-class TokenManipulatorStub
-extends TokenManipulator
+class TokenManipulatorStub extends TokenManipulator
 {
-
     /**
-     * @var boolean
+     * @var bool
      */
     public static $called = false;
 
     /**
-     * @param \PHP\Manipulator\Token $token
+     * @param Token $token
      * @param mixed $params
      */
     public function manipulate(Token $token, $params = null)

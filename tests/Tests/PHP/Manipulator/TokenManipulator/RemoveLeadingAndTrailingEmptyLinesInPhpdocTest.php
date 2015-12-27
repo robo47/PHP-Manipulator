@@ -2,67 +2,83 @@
 
 namespace Tests\PHP\Manipulator\TokenManipulator;
 
-use PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
 use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc;
+use Tests\TestCase;
 
 /**
- * @group TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
+ * @covers PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
  */
-class RemoveLeadingAndTrailingEmptyLinesInPhpdocTest
-extends \Tests\TestCase
+class RemoveLeadingAndTrailingEmptyLinesInPhpdocTest extends TestCase
 {
-
     /**
      * @return array
      */
     public function manipluateProvider()
     {
-        $data = array();
+        $data = [];
 
         #0
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\n     *\n     * @var boolean\n     *\n     */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\n     * @var boolean\n     */")),
-        );
+        $data[] = [
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n     *\n     * @var bool\n     *\n     */"]),
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n     * @var bool\n     */"]),
+        ];
 
         #1
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\n     *\n     *\n     * @var boolean\n     *\n     *\n     */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\n     * @var boolean\n     */")),
-        );
+        $data[] = [
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n     *\n     *\n     * @var bool\n     *\n     *\n     */"]),
+            Token::createFromMixed([T_DOC_COMMENT, "/**\n     * @var bool\n     */"]),
+        ];
 
         #2 Other linebreaks (\r\n)
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\r\n     *\r\n     *\r\n     * @var boolean\r\n     *\r\n     *\r\n     */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\r\n     * @var boolean\r\n     */")),
-        );
+        $data[] = [
+            Token::createFromMixed([
+                T_DOC_COMMENT,
+                "/**\r\n     *\r\n     *\r\n     * @var bool\r\n     *\r\n     *\r\n     */",
+            ]),
+            Token::createFromMixed([T_DOC_COMMENT, "/**\r\n     * @var bool\r\n     */"]),
+        ];
 
         #3 Other linebreaks 2 (\r)
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\r     *\r     *\r     * @var boolean\r     *\r     *\r     */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\r     * @var boolean\r     */")),
-        );
+        $data[] = [
+            Token::createFromMixed([T_DOC_COMMENT, "/**\r     *\r     *\r     * @var bool\r     *\r     *\r     */"]),
+            Token::createFromMixed([T_DOC_COMMENT, "/**\r     * @var bool\r     */"]),
+        ];
 
         #4 Don't kill lines ending with *
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\n      * @param array \$actions\n      * @return \\PHP\\Manipulator *Provides Fluent Interface*\n      */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\n      * @param array \$actions\n      * @return \\PHP\\Manipulator *Provides Fluent Interface*\n      */")),
-        );
+        $data[] = [
+            Token::createFromMixed([
+                T_DOC_COMMENT,
+                "/**\n      * @param array \$var\n      * @return int\n      */",
+            ]),
+            Token::createFromMixed([
+                T_DOC_COMMENT,
+                "/**\n      * @param array \$var\n      * @return int\n      */",
+            ]),
+        ];
 
         #5 Empty lines between other lines don't get deleted
-        $data[] = array(
-            Token::factory(array(T_DOC_COMMENT, "/**\n     *\n      * @param array \$actions\n      *\n      * @return \\PHP\\Manipulator *Provides Fluent Interface*\n     *\n      */")),
-            Token::factory(array(T_DOC_COMMENT, "/**\n      * @param array \$actions\n      *\n      * @return \\PHP\\Manipulator *Provides Fluent Interface*\n      */")),
-        );
+        $data[] = [
+            Token::createFromMixed([
+                T_DOC_COMMENT,
+                "/**\n     *\n      * @param array \$var\n      *\n      * @return int\n     *\n      */",
+            ]),
+            Token::createFromMixed([
+                T_DOC_COMMENT,
+                "/**\n      * @param array \$var\n      *\n      * @return int\n      */",
+            ]),
+        ];
 
         return $data;
     }
 
     /**
      * @dataProvider manipluateProvider
-     * @covers \PHP\Manipulator\TokenManipulator\RemoveLeadingAndTrailingEmptyLinesInPhpdoc
+     *
+     * @param Token $actualToken
+     * @param Token $expectedToken
      */
-    public function testManipulate($actualToken, $expectedToken)
+    public function testManipulate(Token $actualToken, Token $expectedToken)
     {
         $manipulator = new RemoveLeadingAndTrailingEmptyLinesInPhpdoc();
         $manipulator->manipulate($actualToken);

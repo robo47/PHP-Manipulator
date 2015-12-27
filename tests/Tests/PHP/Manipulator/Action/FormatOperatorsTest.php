@@ -3,27 +3,30 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\FormatOperators;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\FormatOperators
+ * @covers PHP\Manipulator\Action\FormatOperators
  */
-class FormatOperatorsTest extends \Tests\TestCase
+class FormatOperatorsTest extends TestCase
 {
-
-    /**
-     * @covers \PHP\Manipulator\Action\FormatOperators::init
-     */
     public function testConstructorDefaults()
     {
         $action = new FormatOperators();
-        $this->assertInternalType('array', $action->getOption('beforeOperator'), 'Default value for beforeOperator is wrong');
-        $this->assertInternalType('array', $action->getOption('afterOperator'), 'Default value for afterOperator is wrong');
+        $this->assertInternalType(
+            'array',
+            $action->getOption(FormatOperators::OPTION_BEFORE_OPERATOR),
+            'Default value for beforeOperator is wrong'
+        );
+        $this->assertInternalType(
+            'array',
+            $action->getOption(FormatOperators::OPTION_AFTER_OPERATOR),
+            'Default value for afterOperator is wrong'
+        );
 
-        $this->assertCount(28, $action->getOption('beforeOperator'), 'Wrong number of operators');
-        $this->assertCount(28, $action->getOption('afterOperator'), 'Wrong number of operators');
+        $this->assertCount(28, $action->getOption(FormatOperators::OPTION_BEFORE_OPERATOR), 'Wrong number of operators');
+        $this->assertCount(28, $action->getOption(FormatOperators::OPTION_AFTER_OPERATOR), 'Wrong number of operators');
 
         $this->assertCount(2, $action->getOptions());
     }
@@ -33,34 +36,23 @@ class FormatOperatorsTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/FormatOperators/';
+        $data = [];
 
-        #0
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $data['Example 0'] = 0;
+        $data['Example 1'] = 1;
 
-        #1
-        $data[] = array(
-            array(),
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/FormatOperators/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\FormatOperators::run
-     * @covers \PHP\Manipulator\Action\FormatOperators::<protected>
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
      */
-    public function testAction($options, $input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
-        $action = new FormatOperators($options);
+        $action = new FormatOperators();
         $action->run($input);
         $this->assertTokenContainerMatch($expectedTokens, $input, false, 'Wrong output');
     }

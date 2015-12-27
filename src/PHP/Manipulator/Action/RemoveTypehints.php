@@ -6,70 +6,57 @@ use PHP\Manipulator\Action;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class RemoveTypehints
-extends Action
+class RemoveTypehints extends Action
 {
-
-    /**
-     * Remove Typehints
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
         $iterator = $container->getIterator();
 
-        $functionTokens = array();
+        $functionTokens = [];
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_FUNCTION)) {
+            if ($token->isType(T_FUNCTION)) {
                 $functionTokens[] = $token;
             }
             $iterator->next();
         }
         foreach ($functionTokens as $token) {
-            $this->_parseFunctionArguments($container, $token);
+            $this->parseFunctionArguments($container, $token);
         }
         $container->retokenize();
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param \PHP\Manipulator\Token $token
+     * @param TokenContainer $container
+     * @param Token          $startToken
      */
-    protected function _parseFunctionArguments(TokenContainer $container, Token $startToken)
+    private function parseFunctionArguments(TokenContainer $container, Token $startToken)
     {
         $iterator = $container->getIterator();
         $iterator->seekToToken($startToken);
         $indentionLevel = 0;
-        $inside = false;
-        $arguments = array();
-        $argumentTokens = array();
+        $inside         = false;
+        $arguments      = [];
+        $argumentTokens = [];
 
         while ($iterator->valid()) {
             $token = $iterator->current();
 
-            if ($this->isOpeningBrace( $token)) {
+            if ($token->isOpeningBrace()) {
                 $indentionLevel++;
-            } elseif ($this->isClosingBrace( $token)) {
+            } elseif ($token->isClosingBrace()) {
                 $indentionLevel--;
             }
 
             // next argument
-            if ($this->isComma($token)) {
-                $arguments[] = $argumentTokens;
-                $argumentTokens = array();
+            if ($token->isComma()) {
+                $arguments[]    = $argumentTokens;
+                $argumentTokens = [];
             }
 
             if ($indentionLevel > 0) {
                 $argumentTokens[] = $token;
-                $inside = true;
+                $inside           = true;
             } elseif ($indentionLevel === 0 && true === $inside) {
                 // break if we are at the end of the arguments
                 break;
@@ -83,21 +70,21 @@ extends Action
         }
 
         foreach ($arguments as $argument) {
-            $this->_parseSingleArgument($argument, $container);
+            $this->parseSingleArgument($argument, $container);
         }
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param array $argumentTokens
+     * @param TokenContainer $container
+     * @param Token[]        $argumentTokens
      */
-    protected function _parseSingleArgument(array $argumentTokens, $container)
+    private function parseSingleArgument(array $argumentTokens, $container)
     {
         foreach ($argumentTokens as $token) {
             if ('=' === $token->getValue()) {
                 break;
             }
-            if ($this->isType($token, array(T_STRING, T_ARRAY, T_NS_SEPARATOR))) {
+            if ($token->isType([T_STRING, T_ARRAY, T_NS_SEPARATOR])) {
                 $container->removeToken($token);
             }
         }

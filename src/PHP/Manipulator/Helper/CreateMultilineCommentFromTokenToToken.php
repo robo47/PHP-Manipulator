@@ -3,72 +3,67 @@
 namespace PHP\Manipulator\Helper;
 
 use PHP\Manipulator\AHelper;
+use PHP\Manipulator\Exception\HelperException;
 use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenConstraint\IsMultilineComment;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class CreateMultilineCommentFromTokenToToken
-extends AHelper
+class CreateMultilineCommentFromTokenToToken extends AHelper
 {
-
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
+     * @param TokenContainer $container
+     * @param Token          $from
+     * @param Token          $to
      */
     public function run(TokenContainer $container, Token $from, Token $to)
     {
         if (!$container->contains($from)) {
-            $message = "element 'from' not found in \$container";
-            throw new \Exception($message);
+            $message = "Element 'from' not found in container";
+            throw new HelperException($message, HelperException::FROM_NOT_FOUND_IN_CONTAINER);
         }
-
 
         if (!$container->contains($to)) {
-            $message = "element 'to' not found in \$container";
-            throw new \Exception($message);
+            $message = "Element 'to' not found in container";
+            throw new HelperException($message, HelperException::TO_NOT_FOUND_IN_CONTAINER);
         }
 
+        // @todo lets try to moveoffset usage to only class-internal use
         $startOffset = $container->getOffsetByToken($from);
-
-        $endOffset = $container->getOffsetByToken($to);
+        $endOffset   = $container->getOffsetByToken($to);
 
         if ($startOffset > $endOffset) {
-            $message = 'startOffset is behind endOffset';
-            throw new \Exception($message);
+            $message = sprintf('StartOffset (%u) is behind EndOffset (%u)', $startOffset, $endOffset);
+            throw new HelperException($message, HelperException::START_OFFSET_BEHIND_END_OFFSET);
         }
 
-        $tokens = $this->_getTokensFromStartToEnd($container, $startOffset, $endOffset);
+        $tokens = $this->getTokensFromStartToEnd($container, $from, $to);
 
-        $value = $this->_mergeTokenValuesIntoString($tokens);
+        $value = $this->mergeTokenValuesIntoString($tokens);
 
-        $value = '/*' . $value . '*/';
+        $value = '/*'.$value.'*/';
 
-        $commentToken = new Token($value, T_COMMENT);
+        $commentToken = Token::createFromValueAndType($value, T_COMMENT);
 
         $container->insertAtOffset($startOffset, $commentToken);
         $container->removeTokens($tokens);
     }
 
     /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param integer $startOffset
-     * @param integer $endOffset
+     * @param TokenContainer $container
+     * @param Token          $startToken
+     * @param Token          $endToken
+     *
      * @return array
      */
-    protected function _getTokensFromStartToEnd(TokenContainer $container, $startOffset, $endOffset)
+    private function getTokensFromStartToEnd(TokenContainer $container, Token $startToken, Token $endToken)
     {
         $iterator = $container->getIterator();
-        $iterator->seek($startOffset);
+        $iterator->seekToToken($startToken);
 
-        $tokens = array();
+        $tokens = [];
+
         while ($iterator->valid()) {
             $tokens[] = $iterator->current();
-            if ($iterator->key() === $endOffset) {
+            if ($iterator->current() === $endToken) {
                 break;
             }
             $iterator->next();
@@ -78,14 +73,15 @@ extends AHelper
     }
 
     /**
-     * @param array $tokens
+     * @param Token[] $tokens
+     *
      * @return string
      */
-    protected function _mergeTokenValuesIntoString(array $tokens)
+    private function mergeTokenValuesIntoString(array $tokens)
     {
         $value = '';
         foreach ($tokens as $token) {
-            if (!$this->evaluateConstraint('IsMultilineComment', $token)) {
+            if (!$token->isMultilineComment()) {
                 $value .= $token->getValue();
             }
         }

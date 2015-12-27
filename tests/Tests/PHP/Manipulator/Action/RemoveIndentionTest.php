@@ -3,18 +3,14 @@
 namespace Tests\PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action\RemoveIndention;
-use PHP\Manipulator\Token;
 use PHP\Manipulator\TokenContainer;
+use Tests\TestCase;
 
 /**
- * @group Action
- * @group Action\RemoveIndention
+ * @covers PHP\Manipulator\Action\RemoveIndention
  */
-class RemoveIndentionTest extends \Tests\TestCase
+class RemoveIndentionTest extends TestCase
 {
-    /**
-     * @covers \PHP\Manipulator\Action\RemoveIndention::init
-     */
     public function testConstructorDefaults()
     {
         $action = new RemoveIndention();
@@ -26,35 +22,22 @@ class RemoveIndentionTest extends \Tests\TestCase
      */
     public function actionProvider()
     {
-        $data = array();
-        $path = '/Action/RemoveIndention/';
+        $data = [];
 
-        #0
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input0.php'),
-            $this->getContainerFromFixture($path . 'output0.php'),
-        );
+        $data['Example 0'] = 0;
+        $data['Example 1'] = 1;
+        $data['Example 2'] = 2;
 
-        #1
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input1.php'),
-            $this->getContainerFromFixture($path . 'output1.php'),
-        );
-
-        #2
-        $data[] = array(
-            $this->getContainerFromFixture($path . 'input2.php'),
-            $this->getContainerFromFixture($path . 'output2.php'),
-        );
-
-        return $data;
+        return $this->convertContainerFixtureToProviderData($data, '/Action/RemoveIndention/');
     }
 
     /**
-     * @covers \PHP\Manipulator\Action\RemoveIndention::run
+     * @param TokenContainer $input
+     * @param TokenContainer $expectedTokens
+     *
      * @dataProvider actionProvider
      */
-    public function testAction($input, $expectedTokens)
+    public function testAction(TokenContainer $input, TokenContainer $expectedTokens)
     {
         $action = new RemoveIndention();
         $action->run($input);

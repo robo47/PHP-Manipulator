@@ -14,7 +14,7 @@ class ConfigStub extends Config
     /**
      * @param mixed $data
      */
-    protected function _initConfig($data)
+    protected function initConfig($data)
     {
         $this->data = $data;
     }
@@ -25,6 +25,6 @@ class ConfigStub extends Config
      */
     public function setOption($option, $value)
     {
-        $this->_options[$option] = $value;
+        $this->addOption($option, $value);
     }
 }

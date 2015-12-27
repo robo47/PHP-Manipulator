@@ -2,62 +2,39 @@
 
 namespace PHP\Manipulator;
 
-use PHP\Manipulator\AHelper;
+use PHP\Manipulator\Exception\ActionException;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @todo    Create IAction whenapi is stable
- */
-abstract class Action
-extends AHelper
+abstract class Action extends AHelper
 {
-
     /**
-     * Array with options
-     *
-     * @var array
+     * @var mixed[]
      */
-    protected $_options = array();
+    private $options = [];
 
     /**
-     * Performs the action on the container
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $container
+     * @param TokenContainer $container
      */
     abstract public function run(TokenContainer $container);
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function __construct(array $options = array())
-    {
-        $this->addOptions($options);
-        $this->init();
-    }
-
-    /**
-     * @param array $options
-     * @return \PHP\Manipulator\AHelper *Provides Fluent Interface*
-     */
-    public function addOptions(array $options)
+    public function __construct(array $options = [])
     {
         foreach ($options as $option => $value) {
             $this->setOption($option, $value);
         }
-
-        return $this;
+        $this->init();
     }
 
     /**
      * @param string $option
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasOption($option)
     {
-        if (isset($this->_options[$option])) {
+        if (isset($this->options[$option])) {
             return true;
         }
 
@@ -66,46 +43,40 @@ extends AHelper
 
     /**
      * @param string $option
-     * @param mixed $value
-     * @return \PHP\Manipulator\AHelper *Provides Fluent Interface*
+     * @param mixed  $value
+     *
+     * @return AHelper
      */
     public function setOption($option, $value)
     {
-        $this->_options[$option] = $value;
+        $this->options[$option] = $value;
 
         return $this;
     }
 
     /**
-     * Returns options
-     *
-     * @return array
+     * @return mixed[]
      */
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
 
     /**
-     * Returns an options value
-     *
      * @param string $option
+     *
      * @return mixed
      */
     public function getOption($option)
     {
         if (!$this->hasOption($option)) {
-            $message = "Option '$option' not found";
-            throw new \Exception($message);
+            $message = sprintf('Option "%s" not found', $option);
+            throw new ActionException($message, ActionException::NO_OPTION_BY_NAME);
         }
 
-        return $this->_options[$option];
+        return $this->options[$option];
     }
 
-    /**
-     * Called from constructor for checking options, adding default options
-     * whatever you want to do.
-     */
     public function init()
     {
     }

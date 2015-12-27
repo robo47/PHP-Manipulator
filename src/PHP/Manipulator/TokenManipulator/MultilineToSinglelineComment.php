@@ -2,40 +2,28 @@
 
 namespace PHP\Manipulator\TokenManipulator;
 
-use PHP\Manipulator\TokenManipulator;
-use PHP\Manipulator\Token;
+use PHP\Manipulator\Exception\TokenManipulatorException;
 use PHP\Manipulator\Helper\NewlineDetector;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenManipulator;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\NewlineDetector
- * @uses    \PHP\Manipulator\TokenConstraint\IsMultilineComment
- * @uses    \PHP\Manipulator\TokenManipulator\RemoveCommentIndention
- */
-class MultilineToSinglelineComment
-extends TokenManipulator
+class MultilineToSinglelineComment extends TokenManipulator
 {
-
-    /**
-     * @param \PHP\Manipulator\Token $token
-     * @param mixed $params
-     */
     public function manipulate(Token $token, $params = null)
     {
-        if (!$this->evaluateConstraint('IsMultilineComment', $token)) {
-            throw new \Exception('Token is no Multiline-comment');
+        if (!$token->isMultilineComment()) {
+            $message = 'Token is no Multiline-comment';
+            throw new TokenManipulatorException($message, TokenManipulatorException::TOKEN_IS_NO_MULTILINE_COMMENT);
         }
-        $this->manipulateToken('RemoveCommentIndention', $token);
+        $this->manipulateToken(RemoveCommentIndention::class, $token);
         $value = preg_split('~(\r\n|\n|\r)~', $token->getValue());
 
         $newValue = '';
-        $helper = new NewlineDetector();
-        $newline = $helper->getNewlineFromToken($token);
+        $helper   = new NewlineDetector();
+        $newline  = $helper->getNewlineFromToken($token);
         foreach ($value as $line) {
             // removes */ and * and /** and /**
-            $newValue .= '//' . preg_replace('~^(\*\/|\*|\/\*\*|\/\*){1,}(.*?)$~', '\2', $line) . $newline;
+            $newValue .= '//'.preg_replace('~^(\*/|\*|/\*\*|/\*)+(.*?)$~', '\2', $line).$newline;
         }
 
         $token->setType(T_COMMENT);

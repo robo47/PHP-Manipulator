@@ -3,71 +3,62 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
-use PHP\Manipulator\TokenContainer\Iterator;
-use PHP\Manipulator\Token;
-use PHP\Manipulator\ClosureFactory;
+use PHP\Manipulator\MatcherFactory;
 use PHP\Manipulator\Helper\NewlineDetector;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- */
-class FormatSwitch
-extends Action
+class FormatSwitch extends Action
 {
+    const OPTION_BREAK_BEFORE_CURLY_BRACE = 'breakBeforeCurlyBrace';
+    const OPTION_SPACE_BEFORE_CURLY_BRACE = 'spaceAfterSwitchVariable';
+    const OPTION_SPACE_AFTER_SWITCH       = 'spaceAfterSwitch';
+
     /**
      * @var string
      */
-    protected $_defaultLineBreak = "\n";
+    private $defaultLineBreak = "\n";
 
     public function init()
     {
-        if (!$this->hasOption('spaceAfterSwitch')) {
-            $this->setOption('spaceAfterSwitch', true);
+        if (!$this->hasOption(self::OPTION_SPACE_AFTER_SWITCH)) {
+            $this->setOption(self::OPTION_SPACE_AFTER_SWITCH, true);
         }
         // @todo rename to spaceBeforeCurlyBrace ?
-        if (!$this->hasOption('spaceAfterSwitchVariable')) {
-            $this->setOption('spaceAfterSwitchVariable', true);
+        if (!$this->hasOption(self::OPTION_SPACE_BEFORE_CURLY_BRACE)) {
+            $this->setOption(self::OPTION_SPACE_BEFORE_CURLY_BRACE, true);
         }
-        if (!$this->hasOption('breakBeforeCurlyBrace')) {
-            $this->setOption('breakBeforeCurlyBrace', false);
+        if (!$this->hasOption(self::OPTION_BREAK_BEFORE_CURLY_BRACE)) {
+            $this->setOption(self::OPTION_BREAK_BEFORE_CURLY_BRACE, false);
         }
     }
 
-
-    /**
-     * Run Action
-     *
-     * @param \PHP\Manipulator\TokenContainer $container
-     */
     public function run(TokenContainer $container, $params = null)
     {
         $iterator = $container->getIterator();
 
-        $helper = new NewlineDetector();
-        $this->_defaultLineBreak = $helper->getNewlineFromContainer($container);
+        $helper                 = new NewlineDetector();
+        $this->defaultLineBreak = $helper->getNewlineFromContainer($container);
 
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_SWITCH)) {
-                if ($this->getOption('spaceAfterSwitch')) {
+            if ($token->isType(T_SWITCH)) {
+                if ($this->getOption(self::OPTION_SPACE_AFTER_SWITCH)) {
                     $iterator->next();
 
-                    if ($this->isType($iterator->current(), T_WHITESPACE)) {
+                    if ($iterator->current()->isWhitespace()) {
                         $iterator->current()->setValue(' ');
                     } else {
-                        $whitespaceToken = new Token(' ', T_WHITESPACE);
+                        $whitespaceToken = Token::createFromValueAndType(' ', T_WHITESPACE);
                         $container->insertTokenAfter($token, $whitespaceToken);
                     }
 
                     $iterator->update($token);
                 }
-                if ($this->getOption('spaceAfterSwitchVariable')) {
+                if ($this->getOption(self::OPTION_SPACE_BEFORE_CURLY_BRACE)) {
                     $nextOpeningBrace = $this->getNextMatchingToken(
                         $iterator,
-                        ClosureFactory::getTypeAndValueClosure(null, '(')
+                        MatcherFactory::getTypeAndValueClosure(null, '(')
                     );
                     if (null !== $nextOpeningBrace) {
                         $iterator->seekToToken($nextOpeningBrace);
@@ -75,10 +66,10 @@ extends Action
                         if (null !== $matchingBrace) {
                             $iterator->seekToToken($matchingBrace);
                             $iterator->next();
-                            if ($this->isType($iterator->current(), T_WHITESPACE)) {
+                            if ($iterator->current()->isWhitespace()) {
                                 $iterator->current()->setValue(' ');
                             } else {
-                                $whitespaceToken = new Token(' ', T_WHITESPACE);
+                                $whitespaceToken = Token::createFromValueAndType(' ', T_WHITESPACE);
                                 $container->insertTokenBefore($iterator->current(), $whitespaceToken);
                             }
                         }
@@ -86,44 +77,43 @@ extends Action
                     $iterator->update($token);
                 }
             }
-            if ($this->isOpeningCurlyBrace($token)) {
+            if ($token->isOpeningCurlyBrace()) {
                 $iterator->next();
-                if (!$this->isType($iterator->current(), T_WHITESPACE)) {
-                    $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
+                if (!$iterator->current()->isWhitespace()) {
+                    $whitespaceToken = Token::createFromValueAndType($this->defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenBefore($iterator->current(), $whitespaceToken);
-                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
-                    $iterator->current()->setValue($this->_defaultLineBreak . $iterator->current()->getValue());
+                } elseif (!$iterator->current()->containsNewline()) {
+                    $iterator->current()->setValue($this->defaultLineBreak.$iterator->current()->getValue());
                 }
                 $iterator->update($token);
             }
-            if ($this->isClosingCurlyBrace($token)) {
+            if ($token->isClosingCurlyBrace()) {
                 $iterator->previous();
-                if (!$this->isType($iterator->current(), T_WHITESPACE)) {
-                    $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
+                if (!$iterator->current()->isWhitespace()) {
+                    $whitespaceToken = Token::createFromValueAndType($this->defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenAfter($iterator->current(), $whitespaceToken);
-                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
-                    $iterator->current()->setValue($iterator->current()->getValue() . $this->_defaultLineBreak);
+                } elseif (!$iterator->current()->containsNewline()) {
+                    $iterator->current()->setValue($iterator->current()->getValue().$this->defaultLineBreak);
                 }
                 $iterator->update($token);
             }
-            if ($this->isType($token, T_CASE)) {
+            if ($token->isType(T_CASE)) {
                 $iterator->next();
-                if (!$this->isType($iterator->current(), T_WHITESPACE)) {
-                    $whitespaceToken = new Token(' ', T_WHITESPACE);
+                if (!$iterator->current()->isWhitespace()) {
+                    $whitespaceToken = Token::createFromValueAndType(' ', T_WHITESPACE);
                     $container->insertTokenBefore($iterator->current(), $whitespaceToken);
-                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
+                } elseif (!$iterator->current()->containsNewline()) {
                     $iterator->current()->setValue(' ');
                 }
                 $iterator->update($token);
                 $iterator->previous();
-                if (!$this->isType($iterator->current(), T_WHITESPACE)) {
-                    $whitespaceToken = new Token($this->_defaultLineBreak, T_WHITESPACE);
+                if (!$iterator->current()->isWhitespace()) {
+                    $whitespaceToken = Token::createFromValueAndType($this->defaultLineBreak, T_WHITESPACE);
                     $container->insertTokenAfter($iterator->current(), $whitespaceToken);
-                } elseif (!$this->evaluateConstraint('ContainsNewline', $iterator->current())) {
-                    $iterator->current()->setValue($iterator->current()->getValue() . $this->_defaultLineBreak);
+                } elseif (!$iterator->current()->containsNewline()) {
+                    $iterator->current()->setValue($iterator->current()->getValue().$this->defaultLineBreak);
                 }
                 $iterator->update($token);
-
             }
             $iterator->next();
         }

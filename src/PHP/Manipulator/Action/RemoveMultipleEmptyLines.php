@@ -3,49 +3,39 @@
 namespace PHP\Manipulator\Action;
 
 use PHP\Manipulator\Action;
-use PHP\Manipulator\TokenContainer;
 use PHP\Manipulator\Helper\NewlineDetector;
+use PHP\Manipulator\Token;
+use PHP\Manipulator\TokenContainer;
 
-/**
- * @package PHP\Manipulator
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link    http://github.com/robo47/php-manipulator
- * @uses    \PHP\Manipulator\Helper\NewlineDetector
- * @uses    \PHP\Manipulator\TokenConstraint\IsSinglelineComment
- */
-class RemoveMultipleEmptyLines
-extends Action
+class RemoveMultipleEmptyLines extends Action
 {
+    const OPTION_MAX_EMPTY_LINES = 'maxEmptyLines';
+
     public function init()
     {
-        if (!$this->hasOption('maxEmptyLines')) {
-            $this->setOption('maxEmptyLines', 2);
+        if (!$this->hasOption(self::OPTION_MAX_EMPTY_LINES)) {
+            $this->setOption(self::OPTION_MAX_EMPTY_LINES, 2);
         }
     }
 
-    /**
-     * @param \PHP\Manipulator\TokenContainer $container
-     * @param mixed $params
-     */
     public function run(TokenContainer $container)
     {
         $newlineDetector = new NewlineDetector();
-        $iterator = $container->getIterator();
-        $maxEmptyLines = $this->getOption('maxEmptyLines');
-        $defaultBreak = $newlineDetector->getNewlineFromContainer($container);
+        $iterator        = $container->getIterator();
+        $defaultBreak    = $newlineDetector->getNewlineFromContainer($container);
 
+        /** @var Token $previous */
         $previous = null;
         while ($iterator->valid()) {
             $token = $iterator->current();
-            if ($this->isType($token, T_WHITESPACE)) {
-                if (null !== $previous && $this->evaluateConstraint('IsSinglelineComment', $previous)) {
-                    $maxEmptyLines = $this->getOption('maxEmptyLines') - 1;
-                } else {
-                    $maxEmptyLines = $this->getOption('maxEmptyLines');
+            if ($token->isWhitespace()) {
+                $maxEmptyLines = $this->getOption(self::OPTION_MAX_EMPTY_LINES);
+                if (null !== $previous && $previous->isSingleLineComment()) {
+                    $maxEmptyLines = $this->getOption(self::OPTION_MAX_EMPTY_LINES) - 1;
                 }
-                $pattern = '~(((\r\n|\r|\n)([\t| ]{0,})){' . ($maxEmptyLines + 1) . ',}([\t| ]{0,}))~';
-                $replace = str_repeat($defaultBreak, $maxEmptyLines) . '\4';
-                $value = preg_replace($pattern, $replace, $token->getValue());
+                $pattern = sprintf('~(((\r\n|\r|\n)([\t| ]*)){%u,}([\t| ]*))~', $maxEmptyLines+1);
+                $replace = str_repeat($defaultBreak, $maxEmptyLines).'\4';
+                $value   = preg_replace($pattern, $replace, $token->getValue());
                 $token->setValue($value);
             }
             $previous = $token;
